@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import {useCookies} from "react-cookie"; 
+import { useNavigate } from "react-router-dom"; 
 
 function Auth() {
     return (
@@ -33,12 +35,16 @@ export function Register() {
             username: "",
             password: ""
         });
+        try {
+            const response = await axios.post(
+                "http://localhost:4001/auth/register",
+                registerInfo
+            );
+            console.log(response.data);
+        } catch (error) {
+            console.error(error)
+        }
 
-        const response = await axios.post(
-            "http://localhost:4001/auth/register",
-            registerInfo
-        );
-        console.log(response);
     };
 
     return (
@@ -70,6 +76,10 @@ export function Login() {
         password: ""
     });
 
+    const [ , setCookies] = useCookies(["access_token"]);
+
+    const navigate = useNavigate();
+
     function handleOnChange(event){
         const {value, name} = event.target;
         
@@ -89,11 +99,17 @@ export function Login() {
             password: ""
         });
 
-        const response = await axios.post(
-            "http://localhost:4001/auth/login",
-            loginInfo
-        );
-        console.log(response);
+        try {
+            const response = await axios.post(
+                "http://localhost:4001/auth/login",
+                loginInfo
+            );
+            setCookies("access_token",  response.data.token);
+            window.localStorage.setItem("adminUserID", response.data.adminUserID);
+            navigate("/manager")
+        } catch (error) {
+            console.error(error)
+        }
     };
 
     return (

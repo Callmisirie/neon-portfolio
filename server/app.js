@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -6,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 
 import { adminRouter } from "./routes/admin.js";
-import { portfolioRouter } from "./routes/portfolio.js";
+import { mangaRouter } from "./routes/manga.js";
 
 const app = express();
 
@@ -14,9 +15,11 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/auth", adminRouter);
-app.use("/portfolio", portfolioRouter);
+app.use("/manga", mangaRouter);
 
-mongoose.connect("mongodb://127.0.0.1:27017/neonProject");
+const password = process.env.MONGO_DB;
+
+mongoose.connect("mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/mangacontent?retryWrites=true&w=majority");
 
 app.listen(4001, ()=> {
     console.log("Server Running");
