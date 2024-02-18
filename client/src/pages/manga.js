@@ -1,6 +1,38 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 function Manga() {
+
+    const [mangas, setMangas] = useState([]);
+
+    useEffect(() => {
+        const fetchCoverImage = async () =>{
+            try {
+                const response = await axios.get("http://localhost:4001/manga") 
+                setMangas(response.data)
+            } catch (error) {
+               console.error(error);
+            }
+        }
+
+        fetchCoverImage();
+    }, []);
+
+   
+
     return (
-        <h1>Manga</h1>
+        <div>
+        <h1>Manga List</h1>
+        <ul>
+          {mangas.map(manga => (
+            <li key={manga._id}>
+              <div>
+                  <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`}/>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     );
 };
 
