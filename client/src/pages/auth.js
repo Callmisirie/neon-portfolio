@@ -36,11 +36,10 @@ export function Register() {
             password: ""
         });
         try {
-            const response = await axios.post(
+                 await axios.post(
                 "http://localhost:4001/auth/register",
                 registerInfo
             );
-            console.log(response.data);
         } catch (error) {
             console.error(error)
         }

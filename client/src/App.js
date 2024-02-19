@@ -7,6 +7,8 @@ import Manga from './pages/manga';
 import Auth from './pages/auth';
 import Manager from './pages/manager';
 import Navbar from './components/Navbar';
+import NewManga from './pages/newManga';
+import ExistingManga from './pages/existingManga';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path="/manga" element={<Manga />}/>
           <Route path="/auth" element={<Auth />}/>
           <Route path="/manager" element={<Manager />}/>
+          <Route path="/manager/existingManga" element={<ExistingManga />}/>
+          <Route path="/manager/newManga" element={<NewManga />}/>
         </Routes>
       </Router>
     </div>

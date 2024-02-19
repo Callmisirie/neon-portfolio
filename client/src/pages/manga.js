@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function Manga() {
 
@@ -26,9 +26,10 @@ function Manga() {
         <ul>
           {mangas.map(manga => (
             <li key={manga._id}>
-              <div>
-                  <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`}/>
-              </div>
+                <div>
+                        <p>{manga.name}</p>
+                        <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
+                </div>
             </li>
           ))}
         </ul>

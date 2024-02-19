@@ -4,9 +4,9 @@ import {MangaModel, ChapterContentModel} from "../models/Manga.js";
 
 
 const storage = multer.diskStorage({
-    destination: 'uploads/',
+    destination: "uploads/",
     filename: function (req, file, cb) {
-      cb(null, file.originalname); // Use the original filename
+      cb(null, file.originalname);
     }
   });
   
@@ -48,9 +48,25 @@ router.get("/chapterContent", async (req, res)=> {
     }
 });
 
-router.post("/chapterContent", async (req, res)=> {
-    const chapterContent = new ChapterContentModel(req.body);
+router.post("/chapterContent", upload.array("pages"), async (req, res)=> {
+
+    const result = {
+        mangaID: req.body.mangaID,
+        mangaName: req.body.mangaName,
+        chapters: {
+            chapterNumber: req.body.chapterNumber,
+            title: req.body.title,
+            pages: req.files.map((file)=>
+                file.filename
+            )
+                
+        }
+    };
+
+    console.log(result);
+    
     try {
+        const chapterContent = new ChapterContentModel(result);
         const response =  await chapterContent.save();
         res.json(response)
     } catch (error) {
