@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 
 
@@ -49,7 +49,7 @@ function ExistingManga() {
         });
 
         try {
-        await axios.post("http://localhost:4001/manga/chapterContent", formData, {
+        await axios.post("http://localhost:4001/chapterContent", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
@@ -69,19 +69,21 @@ function ExistingManga() {
       <h2>Upload Manga Chapter</h2>
       {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+      <div>
         <ul>
-            {mangas.map((manga)=>
-                <li key={manga._id}>
-                    <button onClick={()=> {
-                        setMangaID(manga._id)
-                        setMangaName(manga.name)
-                    }}>
-                        {manga.name}
-                    </button>
-                </li>
-            )}
+          {mangas.map((manga)=>
+            <li key={manga._id}>
+                <button onClick={()=> {
+                    setMangaID(manga._id)
+                    setMangaName(manga.name)
+                }}>
+                  {manga.name}
+                </button>
+            </li>
+          )}
         </ul>
-      
+          <p>Upload To: {mangaName}</p>
+      </div>
       <form onSubmit={handleSubmit}>
         <label>
           Chapter Number:

@@ -6,6 +6,7 @@ import Grid from "gridfs-stream";
 
 import { adminRouter } from "./routes/admin.js";
 import { mangaRouter } from "./routes/manga.js";
+import { chapterContentRouter } from './routes/chapterContent.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ conn.once('open', () => {
     
     app.use("/auth", adminRouter);
     app.use("/manga", mangaRouter);
+    app.use("/chapterContent", chapterContentRouter);
 
     app.listen(4001, ()=> {
         console.log("Server Running");
