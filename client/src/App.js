@@ -29,7 +29,7 @@ function App() {
           <Route path="/manager/newManga" element={<NewManga />}/>
           <Route path="/manager/existingManga" element={<ExistingManga />}/>
           <Route path="/manga/:chapters" element={<Chapters />}/>
-          <Route path="/manga/chapters/pages" element={<Pages />}/>
+          <Route path="/manga/:chapters/:pages" element={<Pages />}/>
         </Routes>
       </Router>
     </div>

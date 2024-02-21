@@ -30,7 +30,7 @@ router.post("/", upload.array("pages"), async (req, res)=> {
         chapterNumber: req.body.chapterNumber,
         title: req.body.title,
         pages: req.files.map((file)=>
-            file.filename
+            file.path
         )
     };
     const result = {

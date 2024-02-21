@@ -6,7 +6,6 @@ function Manga() {
 
     const [mangas, setMangas] = useState([]);
     const navigate = useNavigate();
-    const [selectManga, setSelectManga] = useState("")
   
     useEffect(() => {
         const fetchCoverImage = async () =>{
@@ -22,8 +21,8 @@ function Manga() {
     }, []);
 
     function handleClick(id) {
-      setSelectManga(id);
-      navigate("/manga/" + selectManga);
+     
+      navigate("/manga/" + id);
 
     }
    
@@ -36,7 +35,7 @@ function Manga() {
               handleClick(manga._id)
             }}>
                 <div>
-                        <p>{manga.name}</p>
+                        <h3>{manga.name}</h3>
                         <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
                 </div>
             </li>

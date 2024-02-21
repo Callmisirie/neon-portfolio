@@ -1,32 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
 
 
 function Chapters() {
-    const [chapters, setChapters] = useState([]);
+    const [manga, setManga] = useState({});
     const location = useLocation();
+    const navigate = useNavigate();
     
     useEffect(()=>{
         const fetchChapters = async () =>{
             try {
                 const response = await axios.get(`http://localhost:4001${location.pathname}`);
-                const list = response.data.chapters
-                setChapters(...list) 
-                console.log(chapters);    
+                const mangaContent = response.data;
+                setManga(mangaContent)
             } catch (error) {
                 console.error(error)
             }
-       
         }
         fetchChapters();
-    }, []);
+    }, [location.pathname]);
+
+    useEffect(() => {
+    }, [manga]);
+
+    function handleClick(id) {
+        navigate(`${location.pathname}/${id}`);
+        console.log(`${location.pathname}/${id}`);
+    }
 
     return (
         <div>
-            Chapters
+           <ul>
+               {manga && (
+                    <>
+                        <h3>{manga.mangaName}</h3>
+                        {manga.chapters && manga.chapters.map((chapter) => (
+                            <div key={chapter._id}>
+                                <li>
+                                    <button onClick={() => {
+                                        handleClick(chapter._id)
+                                    }}>Chapter {chapter.chapterNumber} - {chapter.title}</button>
+                                </li>
+                            </div>
+                        ))}
+                    </>
+                )}
+               
+           </ul>
         </div>
     )
 };
