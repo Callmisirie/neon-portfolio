@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import Grid from "gridfs-stream";
 
+
+import { updateSignUpRouter } from './routes/updateSignUp.js';
 import { adminRouter } from "./routes/admin.js";
 import { mangaRouter } from "./routes/manga.js";
 import { chapterContentRouter } from './routes/chapterContent.js';
@@ -25,7 +27,7 @@ conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
 
-    
+    app.use("/updateSignUp", updateSignUpRouter);
     app.use("/auth", adminRouter);
     app.use("/manga", mangaRouter);
     app.use("/chapterContent", chapterContentRouter);

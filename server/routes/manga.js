@@ -42,7 +42,6 @@ router.get("/:mangaID", async (req, res)=> {
     if (mangaID) {
         const manga = await ChapterContentModel.findOne({mangaID})
         res.json(manga);
-        console.log(manga);
     }
 });
 
