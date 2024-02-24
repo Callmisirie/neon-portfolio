@@ -28,7 +28,6 @@ router.post("/", upload.single("coverImage"), async (req, res)=> {
             name: req.body.name, 
             coverImage: req.file.path
         };
-        console.log(result);
         const manga = new MangaModel(result);
         const response =  await manga.save();
         res.json(response)
