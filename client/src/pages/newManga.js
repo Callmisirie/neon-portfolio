@@ -50,7 +50,7 @@ function NewManga() {
         </label>
         <label>
           Select Cover Image:
-          <input type="file" onChange={handleFileChange} name={coverImage} />
+          <input type="file" onChange={handleFileChange}/>
         </label>
         <button type="submit">Upload Manga</button>
       </form>

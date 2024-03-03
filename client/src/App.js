@@ -11,6 +11,7 @@ import NewManga from './pages/newManga';
 import ExistingManga from './pages/existingManga';
 import Chapters from './pages/chapters';
 import Pages from './pages/pages';
+import Delete from './pages/delete';
 import { useCookies } from 'react-cookie';
 
 
@@ -32,6 +33,8 @@ function App() {
               <Route path="/manager" element={<Manager />}/>
               <Route path="/manager/newManga" element={<NewManga />}/>
               <Route path="/manager/existingManga" element={<ExistingManga />}/>
+              <Route path="manager/delete/:manga" element={<Delete />}/>
+              <Route path="manager/delete/:manga/:chapter" element={<Delete />}/>
             </>
           )}
           <Route path="/manga/:chapters" element={<Chapters />}/>
