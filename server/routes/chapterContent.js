@@ -16,9 +16,9 @@ const router =  express.Router();
 router.get("/", async (req, res)=> {
     try {
         const response = await ChapterContentModel.find({});
-        res.json(response)
+        res.json(response);
     } catch (error) {
-        res.json(error)
+        res.json(error);
     }
 });
 
@@ -44,9 +44,9 @@ router.post("/", upload.array("pages"), async (req, res)=> {
         try {
             const chapterContent = new ChapterContentModel(result);
             const response =  await chapterContent.save();
-            res.json(response)
+            res.json(response);
         } catch (error) {
-            res.json(error)
+            res.json(error);
         }
     } else if (mangaContent) {
         try {
@@ -55,7 +55,7 @@ router.post("/", upload.array("pages"), async (req, res)=> {
             const response =  await chapterContent.save();
             res.json(response)
         } catch (error) {
-            res.json(error)
+            res.json(error);
         }
     }
 
