@@ -15,7 +15,7 @@ const router =  express.Router();
 router.get("/", async (req, res)=> {
     try {
         const response = await MangaModel.find({});
-        res.json(response)
+        res.json(response);
     } catch (error) {
         res.json(error)
     }
@@ -30,9 +30,9 @@ router.post("/", upload.single("coverImage"), async (req, res)=> {
         };
         const manga = new MangaModel(result);
         const response =  await manga.save();
-        res.json(response)
+        res.json(response);
     } catch (error) {
-        res.json(error)
+        res.json(error);
     }
 });
 

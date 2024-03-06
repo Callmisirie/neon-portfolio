@@ -23,6 +23,15 @@ function Manager() {
   };
 
 
+  function handleEditManga() {
+    navigate("/manager/edit/manga")
+  };
+
+  function handleEditChapter() {
+    navigate("/manager/edit/manga/chapter")
+  };
+
+
   return (
     <div>
       <div>
@@ -30,13 +39,19 @@ function Manager() {
         <button onClick={handleNewManga}> Manga</button>
         <button onClick={handleUploadChapter}> Chapter</button>
       </div>
-      <div>
+    
       <div>
         <h2>Delete</h2>
         <button onClick={handleDeleteManga}> Manga</button>
         <button onClick={handleDeleteChapter}> Chapter</button>
       </div>
+
+      <div>
+        <h2>Edit</h2>
+        <button onClick={handleEditManga}> Manga</button>
+        <button onClick={handleEditChapter}> Chapter</button>
       </div>
+    
     </div>
  
   )

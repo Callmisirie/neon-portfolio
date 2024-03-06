@@ -1,6 +1,15 @@
 import express from "express";
+import multer from "multer";
 import { ChapterContentModel, MangaModel } from "../models/Manga.js";
 
+
+const storage = multer.diskStorage({
+    destination: "uploads/",
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    }
+}); 
+const upload = multer({ storage: storage });
 const router = express.Router();
 
 router.delete("/delete/manga", async (req, res) => {
@@ -49,5 +58,23 @@ router.delete("/delete/manga/chapter", async (req, res) => {
     }
 });
 
+
+router.put("/edit/manga", upload.single("coverImage"), async (req, res) => { 
+    const { mangaID, name } = req.body;
+    try {
+        const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name, coverImage: req.file.path }, { new: true });
+
+        const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
+        
+        if (!manga) {
+            return res.status(404).json({ message: "Manga not found" });
+        }
+
+        res.json({ message: "Manga updated successfully", manga });
+    } catch (error) {
+        console.error("Error updating manga:", error);
+        res.status(500).json({ message: "Failed to update manga" });
+    }
+});
 
 export {router as managerRouter};

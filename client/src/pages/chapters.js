@@ -28,7 +28,6 @@ function Chapters() {
 
     function handleClick(id) {
         navigate(`${location.pathname}/${id}`);
-        console.log(`${location.pathname}/${id}`);
     }
 
     return (

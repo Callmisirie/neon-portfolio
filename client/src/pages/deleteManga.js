@@ -35,7 +35,6 @@ function Delete() {
     }
 
     const handleDeleteChapterClick = async (mangaID, chapterID) => {
-        console.log("mangaID: " + mangaID, " chapterID:" + chapterID);
         try {
             const response = await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID, chapterID}})
         } catch (error) {
