@@ -4,8 +4,6 @@ import axios from "axios";
 
 
 function Edit() {
-
-    
     const [mangas, setMangas] = useState([]);
     const [mangaID, setMangaID] = useState("");
     const [mangaContents, setMangaContents] = useState([]);
@@ -14,7 +12,6 @@ function Edit() {
     const [newMangaName, setNewMangaName] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
     const [chapterID, setChapterID] = useState("");
     const [pages, setPages] = useState([]);
     const [chapterTitle, setChapterTitle] = useState("");

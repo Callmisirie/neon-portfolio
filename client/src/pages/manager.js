@@ -7,11 +7,11 @@ function Manager() {
   const navigate = useNavigate();
 
   function handleNewManga() {
-    navigate("/manager/newManga")
+    navigate("/manager/create/manga")
   };
 
   function handleUploadChapter() {
-    navigate("/manager/existingManga")
+    navigate("/manager/create/manga/chapter")
   };
 
   function handleDeleteManga() {

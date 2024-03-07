@@ -7,12 +7,11 @@ import Manga from './pages/manga';
 import Auth from './pages/auth';
 import Manager from './pages/manager';
 import Navbar from './components/Navbar';
-import NewManga from './pages/newManga';
-import ExistingManga from './pages/existingManga';
 import Chapters from './pages/chapters';
 import Pages from './pages/pages';
 import Delete from './pages/deleteManga';
 import Edit from './pages/editManga';
+import Create from './pages/createManga';
 import { useCookies } from 'react-cookie';
 
 
@@ -32,8 +31,8 @@ function App() {
           {cookies.access_token && (
             <>
               <Route path="/manager" element={<Manager />}/>
-              <Route path="/manager/newManga" element={<NewManga />}/>
-              <Route path="/manager/existingManga" element={<ExistingManga />}/>
+              <Route path="/manager/create/manga" element={<Create />}/>
+              <Route path="/manager/create/manga/chapter" element={<Create />}/>
               <Route path="/manager/delete/manga" element={<Delete />}/>
               <Route path="/manager/delete/manga/chapter" element={<Delete />}/>
               <Route path="/manager/edit/manga" element={<Edit />}/>
