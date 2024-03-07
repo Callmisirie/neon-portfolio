@@ -77,4 +77,37 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
     }
 });
 
+router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
+    const { mangaID, chapterID, title, chapterNumber } = req.body;
+ 
+    if (mangaID && chapterID && title && chapterNumber) {
+        const pages =  req.files.map(file => file.path);
+        try {
+            const result = await ChapterContentModel.findOneAndUpdate(
+                { mangaID, "chapters._id": chapterID },
+                { 
+                    $set: { 
+                        "chapters.$.chapterNumber": chapterNumber,
+                        "chapters.$.title": title,
+                        "chapters.$.pages":  pages
+                    } 
+                },
+                { new: true }
+            );
+
+            if (!result) {
+                return res.status(404).json({ message: "Chapter not found" });
+            }
+
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    } else {
+        res.status(400).json({ message: "Invalid request" });
+    }
+});
+
+
 export {router as managerRouter};

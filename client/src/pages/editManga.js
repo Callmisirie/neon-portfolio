@@ -14,8 +14,13 @@ function Edit() {
     const [newMangaName, setNewMangaName] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    
 
+    const [chapterID, setChapterID] = useState("");
+    const [pages, setPages] = useState([]);
+    const [chapterTitle, setChapterTitle] = useState("");
+    const [newChapterTitle, setNewChapterTitle] = useState("");
+    const [chapterNumber, setChapterNumber] = useState("");
+    const [newChapterNumber, setNewChapterNumber] = useState("");
     const [coverImage, setCoverImage] = useState("");
   
 
@@ -40,6 +45,13 @@ function Edit() {
     const handleMangaClick = (name, id) => {
         setMangaName(name);
         setMangaID(id);
+        setClickedMangaId(id === clickedMangaId ? null : id);
+    }
+
+    const handleChapterClick = (title, num, id) => {
+        setChapterTitle(title);
+        setChapterNumber(num);
+        setChapterID(id);
     }
 
     const handleChange = (e) => {
@@ -50,6 +62,12 @@ function Edit() {
         const files = e.target.files;
         setCoverImage(...files);
     };
+
+    
+    const handleFilesChange = (e) => {
+            const files = e.target.files;
+            setPages([...pages, ...files]);
+        };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,6 +88,37 @@ function Edit() {
           setMangaName("");
           setNewMangaName("");
           setCoverImage("");
+        } catch (error) {
+          setErrorMessage("Error updating chapter");
+          console.error(error);
+        }
+    };
+
+    const handleChapterSubmit = async (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData();
+        formData.append("chapterNumber", newChapterNumber);
+        formData.append("title", newChapterTitle);
+        formData.append("mangaID", mangaID);
+        formData.append("chapterID", chapterID);
+        pages.forEach(page => {
+            formData.append("pages", page);
+        });
+    
+    
+        try {
+          await axios.put("http://localhost:4001/manager/edit/manga/chapter", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          });
+          setSuccessMessage("Chapter updated successfully");
+          setChapterTitle("");
+          setNewChapterTitle("");
+          setChapterNumber("");
+          setNewChapterNumber("");
+          setPages([]);
         } catch (error) {
           setErrorMessage("Error updating chapter");
           console.error(error);
@@ -110,9 +159,57 @@ function Edit() {
                         </form>
                     </div>
                 ) : (
-                    <div> 
-                        UPDATE Chapter
-                    </div>
+                    <div>
+                        <ul>
+                            {mangas.map((manga)=> {
+                                return (
+                                    <div>
+                                        <li key={manga._id}>
+                                            <button
+                                                onClick={()=> {
+                                                    handleMangaClick(manga.name, manga._id)
+                                                }}
+                                            >
+                                                {manga.name}
+                                            </button>
+                                            <ul>
+                                                {clickedMangaId === manga._id && mangaContents
+                                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
+                                                    .map((mangaContent) =>
+                                                        mangaContent.chapters.map((chapter) => (
+                                                            <li key={chapter._id}>
+                                                                <button onClick={()=> {
+                                                                    handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
+                                                                }}>
+                                                                    {chapter.title}
+                                                                </button>
+                                                            </li>
+                                                        ))
+                                                    )}
+                                            </ul>
+                                        </li>
+                                        <h3>Manga: {mangaName}</h3>
+                                        <p>Update {chapterTitle} Chapter.</p>
+                                        <form onSubmit={handleChapterSubmit}>
+                                            <label>
+                                            Chapter Number:
+                                            <input type="number" value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} placeholder={chapterNumber} />
+                                            </label>
+                                            <label>
+                                            Title:
+                                            <input type="text" value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} placeholder={chapterTitle}/>
+                                            </label>
+                                            <label>
+                                            Select Pages:
+                                            <input type="file" multiple onChange={handleFilesChange} />
+                                            </label>
+                                            <button type="submit">Update Chapter</button>
+                                        </form>
+                                    </div>
+                                )
+                            })}
+                        </ul>
+                </div>
                 )}
         </div>
     )

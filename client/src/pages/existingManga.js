@@ -82,7 +82,7 @@ function ExistingManga() {
             </li>
           )}
         </ul>
-          <p>Upload To: {mangaName}</p>
+        <p>Upload To: {mangaName}</p>
       </div>
       <form onSubmit={handleSubmit}>
         <label>
