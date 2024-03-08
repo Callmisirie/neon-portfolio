@@ -1,18 +1,19 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import Home from "./pages/home"
-import Contact from './pages/contact';
-import About from './pages/about';
-import Manga from './pages/manga';
-import Auth from './pages/auth';
-import Manager from './pages/manager';
-import Navbar from './components/Navbar';
-import Chapters from './pages/chapters';
-import Pages from './pages/pages';
-import Delete from './pages/deleteManga';
-import Edit from './pages/editManga';
-import Create from './pages/createManga';
-import { useCookies } from 'react-cookie';
+import Manga from "./pages/manga";
+import Chapters from "./pages/chapters";
+import Pages from "./pages/pages";
+import Contact from "./pages/contact";
+import About from "./pages/about";
+
+import Manager from "./pages/manager";
+import { Create, Delete, Edit } from "./pages/manager";
+import Auth from "./pages/auth";
+
+import Navbar from "./components/Navbar";
+
+import { useCookies } from "react-cookie";
 
 
 function App() {

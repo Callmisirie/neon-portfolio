@@ -16,18 +16,15 @@ function Manga() {
                console.error(error);
             }
         }
-
         fetchCoverImage();
     }, []);
 
     function handleClick(id) {
-     
       navigate("/manga/" + id);
-
     }
    
     return (
-        <div>
+      <div>
         <h1>Manga List</h1>
         <ul>
           {mangas.map(manga => (
