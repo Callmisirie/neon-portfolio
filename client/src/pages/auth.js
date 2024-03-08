@@ -11,18 +11,18 @@ function Auth() {
     function handleClick(auth) {
         if (auth === "Register") { 
             if (isClickedRegister) {
-                setIsClickedRegister(false)
+                setIsClickedRegister(false);
             } else if (!isClickedRegister) {
-                setIsClickedRegister(true)
-                setIsClickedLogin(false)
+                setIsClickedRegister(true);
+                setIsClickedLogin(false);
             }
         }
         else if (auth === "Login") {
             if (isClickedLogin) {
-                setIsClickedLogin(false)
+                setIsClickedLogin(false);
             } else if (!isClickedLogin) {
-                setIsClickedLogin(true)
-                setIsClickedRegister(false)
+                setIsClickedLogin(true);
+                setIsClickedRegister(false);
             }
         } 
     }

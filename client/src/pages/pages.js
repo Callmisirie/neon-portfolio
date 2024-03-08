@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 
 function Pages() {
 
     const [chapter, setChapter] = useState({});
+    const [manga, setManga] = useState({});
     const location = useLocation();
-
+    const navigate = useNavigate();
     
     useEffect(()=>{
         const fetchPages = async () =>{
             try {
                 const response = await axios.get(`http://localhost:4001${location.pathname}`);
-                const chapterContent = response.data;
-                setChapter(chapterContent)
+                const {chapter, manga} = response.data; 
+                setChapter(chapter);
+                setManga(manga);
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
         }
         fetchPages();
@@ -25,9 +27,27 @@ function Pages() {
     useEffect(() => {
     }, [chapter]);
 
+    function handleChange(e) {
+        const value = e.target.value;
+        navigate("/manga/" + value);
+    }
 
     return (
         <div>
+            <select onChange={handleChange}>
+                {manga && manga.chapters && manga.chapters.map((chapter)=> {
+                    return (
+                        <option 
+                            key={chapter._id} 
+                            value={manga.mangaID + "/"+ chapter._id} 
+                            selected={"/manga/" + manga.mangaID + "/"+ chapter._id === location.pathname}
+                        >
+                            Chapter {chapter.chapterNumber}: {chapter.title}
+                        </option>
+                )
+                })}     
+    
+            </select>
             <ul>
                 {chapter && (
                     <>
