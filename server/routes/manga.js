@@ -18,8 +18,10 @@ router.get("/", async (req, res)=> {
 router.get("/:mangaID", async (req, res)=> {
         const { mangaID } = req.params;
     if (mangaID) {
-        const manga = await ChapterContentModel.findOne({mangaID})
-        res.json(manga);
+        const mangaContent = await ChapterContentModel.findOne({mangaID})
+        const manga = await MangaModel.findOne({_id: mangaID})
+
+        res.json({mangaContent, manga});
     }
 });
 

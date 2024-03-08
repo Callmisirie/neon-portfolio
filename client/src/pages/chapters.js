@@ -6,6 +6,7 @@ import axios from "axios";
 
 
 function Chapters() {
+    const [mangaContent, setMangaContent] = useState({});
     const [manga, setManga] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
@@ -14,8 +15,9 @@ function Chapters() {
         const fetchChapters = async () =>{
             try {
                 const response = await axios.get(`http://localhost:4001${location.pathname}`);
-                const mangaContent = response.data;
-                setManga(mangaContent)
+                const {mangaContent, manga} = response.data;
+                setMangaContent(mangaContent)
+                setManga(manga)
             } catch (error) {
                 console.error(error)
             }
@@ -24,7 +26,7 @@ function Chapters() {
     }, [location.pathname]);
 
     useEffect(() => {
-    }, [manga]);
+    }, [mangaContent]);
 
     function handleClick(id) {
         navigate(`${location.pathname}/${id}`);
@@ -33,10 +35,11 @@ function Chapters() {
     return (
         <div>
            <ul>
-               {manga && (
-                    <>
-                        <h3>{manga.mangaName}</h3>
-                        {manga.chapters && manga.chapters.map((chapter) => (
+               {mangaContent && (
+                    <>  
+                        <h3>{mangaContent.mangaName}</h3>
+                        <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
+                        {mangaContent.chapters && mangaContent.chapters.map((chapter) => (
                             <div key={chapter._id}>
                                 <li>
                                     <button onClick={() => {
