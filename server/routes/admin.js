@@ -7,7 +7,6 @@ import AdminModel from "../models/Admin.js";
 
 const router = express.Router();
 const saltRounds = 10;
-
 const secret = process.env.SECRET_KEY;
 
 router.post("/register", async (req, res)=> {

@@ -3,6 +3,11 @@ import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+
+
+//////////////////////////////////////////////////////////////////////////MANAGER//////////////////////////////////////////////////////////////////////////
+
+
 function Manager() {
   const navigate = useNavigate();
 
@@ -56,7 +61,7 @@ function Manager() {
 };
 
 
-///////CREATE MANGA
+//////////////////////////////////////////////////////////////////////////CREATE MANGA//////////////////////////////////////////////////////////////////////////
 
 
 function Create() {
@@ -107,7 +112,7 @@ function Create() {
 
 
       try {
-          await axios.post("http://localhost:4001/manga", formData, {
+          await axios.post("http://localhost:4001/manager/create/manga", formData, {
               headers: {
                   "Content-Type": "multipart/form-data"
               }
@@ -134,7 +139,7 @@ function Create() {
       });
 
       try {
-      await axios.post("http://localhost:4001/chapterContent", formData, {
+      await axios.post("http://localhost:4001/manager/create/manga/chapter", formData, {
           headers: {
           "Content-Type": "multipart/form-data"
           }
@@ -209,7 +214,7 @@ return (
 };
 
 
-///////DELETE MANGA
+//////////////////////////////////////////////////////////////////////////DELETE MANGA//////////////////////////////////////////////////////////////////////////
 
 
 function Delete() {
@@ -237,7 +242,7 @@ function Delete() {
 
   const handleDeleteMangaClick = async (id) => {
       try {
-          const response = await axios.delete("http://localhost:4001/manager/delete/manga", { data: { id } });
+        await axios.delete("http://localhost:4001/manager/delete/manga", { data: { id } });
       } catch (error) {
           console.error(error)
       }
@@ -245,7 +250,7 @@ function Delete() {
 
   const handleDeleteChapterClick = async (mangaID, chapterID) => {
       try {
-          const response = await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID, chapterID}})
+        await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID, chapterID}})
       } catch (error) {
           console.error(error)
       }
@@ -320,7 +325,7 @@ function Delete() {
 };
 
 
-///////EDIT MANGA
+//////////////////////////////////////////////////////////////////////////EDIT MANGA//////////////////////////////////////////////////////////////////////////
 
 
 function Edit() {

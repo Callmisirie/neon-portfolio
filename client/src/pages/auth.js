@@ -4,10 +4,47 @@ import {useCookies} from "react-cookie";
 import { useNavigate } from "react-router-dom"; 
 
 function Auth() {
+    const [isClickedRegister, setIsClickedRegister] = useState(false);
+    const [isClickedLogin, setIsClickedLogin] = useState(false);
+
+
+    function handleClick(auth) {
+        if (auth === "Register") { 
+            if (isClickedRegister) {
+                setIsClickedRegister(false)
+            } else if (!isClickedRegister) {
+                setIsClickedRegister(true)
+                setIsClickedLogin(false)
+            }
+        }
+        else if (auth === "Login") {
+            if (isClickedLogin) {
+                setIsClickedLogin(false)
+            } else if (!isClickedLogin) {
+                setIsClickedLogin(true)
+                setIsClickedRegister(false)
+            }
+        } 
+    }
+
     return (
         <div className="auth">
-            <Register />
-            <Login />
+            <button onClick={ ()=> {
+                handleClick("Register")
+            }}>Register</button>
+            <button onClick={()=> {
+                handleClick("Login")
+            }}>Login</button>
+            {isClickedRegister && 
+                <>
+                    <Register /> 
+                </> 
+            }
+            {isClickedLogin && 
+                <>
+                    <Login /> 
+                </> 
+            }
         </div>
     );
 };

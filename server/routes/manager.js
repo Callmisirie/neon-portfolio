@@ -12,6 +12,61 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const router = express.Router();
 
+
+router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
+    try {
+        const result = {
+            name: req.body.name, 
+            coverImage: req.file.path
+        };
+        const manga = new MangaModel(result);
+        const response =  await manga.save();
+        res.json(response);
+    } catch (error) {
+        res.json(error);
+    }
+});
+
+router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
+
+    const mangaID = req.body.mangaID;
+    const mangaName = req.body.mangaName;
+    const chapters = {
+        chapterNumber: req.body.chapterNumber,
+        title: req.body.title,
+        pages: req.files.map((file)=>
+            file.path
+        )
+    };
+    const result = {
+        mangaID,
+        mangaName, 
+        chapters 
+    }; 
+    const mangaContent = await ChapterContentModel.findOne({mangaID});
+
+    if (!mangaContent){     
+        try {
+            const chapterContent = new ChapterContentModel(result);
+            const response =  await chapterContent.save();
+            res.json(response);
+        } catch (error) {
+            res.json(error);
+        }
+    } else if (mangaContent) {
+        try {
+            const chapterContent = await ChapterContentModel.findOne({mangaID});
+            chapterContent.chapters.push(chapters);
+            const response =  await chapterContent.save();
+            res.json(response)
+        } catch (error) {
+            res.json(error);
+        }
+    }
+
+});
+
+
 router.delete("/delete/manga", async (req, res) => {
     const id = req.body.id;
     console.log("Deleting manga with ID:", id);
@@ -108,6 +163,5 @@ router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
         res.status(400).json({ message: "Invalid request" });
     }
 });
-
 
 export {router as managerRouter};
