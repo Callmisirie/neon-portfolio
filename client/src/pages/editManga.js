@@ -125,92 +125,94 @@ function Edit() {
 
     return (
         <div>
-               {currentLocation === "/manager/edit/manga" ? (
-                    <div>
-                        <ul>
-                            {mangas.map((manga)=> {
-                                return (
-                                    <li key={manga._id}>
-                                        <button onClick={()=> {
-                                            handleMangaClick(manga.name, manga._id)
-                                        }}>
-                                            {manga.name}
-                                        </button>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                        <h3>Update: {mangaName}</h3>
-                        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Manga Name: 
-                                <input type="text" onChange={handleChange} value={newMangaName} placeholder={mangaName}/>
-                            </label>
-                            <label>
-                                Select Cover Image:
-                                <input type="file" onChange={handleFileChange}/>
-                            </label>
-                            <button  type="submit"> Update Manga </button>
-                        </form>
-                    </div>
-                ) : (
-                    <div>
-                        <ul>
-                            {mangas.map((manga)=> {
-                                return (
-                                    <div>
-                                        <li key={manga._id}>
-                                            <button
-                                                onClick={()=> {
-                                                    handleMangaClick(manga.name, manga._id)
-                                                }}
-                                            >
-                                                {manga.name}
-                                            </button>
-                                            <ul>
-                                                {clickedMangaId === manga._id && mangaContents
-                                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                                    .map((mangaContent) =>
-                                                        mangaContent.chapters.map((chapter) => (
-                                                            <li key={chapter._id}>
-                                                                <button onClick={()=> {
-                                                                    handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
-                                                                }}>
-                                                                    {chapter.title}
-                                                                </button>
-                                                            </li>
-                                                        ))
-                                                    )}
-                                            </ul>
-                                        </li>
-                                        <h3>Manga: {mangaName}</h3>
-                                        <p>Update {chapterTitle} Chapter.</p>
-                                        <form onSubmit={handleChapterSubmit}>
-                                            <label>
-                                            Chapter Number:
-                                            <input type="number" value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} placeholder={chapterNumber} />
-                                            </label>
-                                            <label>
-                                            Title:
-                                            <input type="text" value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} placeholder={chapterTitle}/>
-                                            </label>
-                                            <label>
-                                            Select Pages:
-                                            <input type="file" multiple onChange={handleFilesChange} />
-                                            </label>
-                                            <button type="submit">Update Chapter</button>
-                                        </form>
-                                    </div>
-                                )
-                            })}
-                        </ul>
+            {currentLocation === "/manager/edit/manga" ? (
+                <div>
+                    <ul>
+                        {mangas.map((manga)=> {
+                            return (
+                                <li key={manga._id}>
+                                    <button onClick={()=> {
+                                        handleMangaClick(manga.name, manga._id)
+                                    }}>
+                                        {manga.name}
+                                    </button>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <h3>Update: {mangaName}</h3>
+                    {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Manga Name: 
+                            <input type="text" onChange={handleChange} value={newMangaName} placeholder={mangaName}/>
+                        </label>
+                        <label>
+                            Select Cover Image:
+                            <input type="file" onChange={handleFileChange}/>
+                        </label>
+                        <button  type="submit"> Update Manga </button>
+                    </form>
                 </div>
-                )}
+            ) : (
+            <div>
+                <ul> 
+                    {mangas.map((manga)=> {
+                        return (
+                        <div key={manga._id}>
+                            <li>
+                                <button
+                                    onClick={()=> {
+                                        handleMangaClick(manga.name, manga._id)
+                                    }}
+                                >
+                                    {manga.name}
+                                </button>
+                                <ul>
+                                    {clickedMangaId === manga._id && mangaContents
+                                        .filter((mangaContent) => mangaContent.mangaID === manga._id)
+                                        .map((mangaContent) =>
+                                            mangaContent.chapters.map((chapter) => (
+                                                <li key={chapter._id}>
+                                                    <button onClick={()=> {
+                                                        handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
+                                                    }}>
+                                                        {chapter.title}
+                                                    </button>
+                                                </li>
+                                            ))
+                                        )}
+                                </ul>
+                            </li>
+                            
+                        </div>
+                        )
+                    })}
+                </ul>
+                <div>
+                    <h3>Manga: {mangaName}</h3>
+                    <p>Update {chapterTitle} Chapter.</p>
+                    <form onSubmit={handleChapterSubmit}>
+                        <label>
+                        Chapter Number:
+                        <input type="number" value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} placeholder={chapterNumber} />
+                        </label>
+                        <label>
+                        Title:
+                        <input type="text" value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} placeholder={chapterTitle}/>
+                        </label>
+                        <label>
+                        Select Pages:
+                        <input type="file" multiple onChange={handleFilesChange} />
+                        </label>
+                        <button type="submit">Update Chapter</button>
+                    </form>
+                </div>
+            </div>
+            )}
         </div>
     )
-
 };
 
 

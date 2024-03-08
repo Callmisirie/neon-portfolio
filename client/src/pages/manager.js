@@ -1,9 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-
-
 function Manager() {
-
   const navigate = useNavigate();
 
   function handleNewManga() {
@@ -51,19 +48,9 @@ function Manager() {
         <button onClick={handleEditManga}> Manga</button>
         <button onClick={handleEditChapter}> Chapter</button>
       </div>
-    
     </div>
- 
-  )
-  
+  )  
 };
-{/* 
-function Management({action, firstButton, secondButton}) {
-  <div>
-    <h2>Create</h2>
-    <button onClick={handleNewManga}> New Manga</button>
-    <button onClick={handleExistingManga}> Existing Manga</button>
-  </div>
-} */}
+
 
 export default Manager;
