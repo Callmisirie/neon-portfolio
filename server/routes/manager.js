@@ -117,15 +117,31 @@ router.delete("/delete/manga/chapter", async (req, res) => {
 router.put("/edit/manga", upload.single("coverImage"), async (req, res) => { 
     const { mangaID, name } = req.body;
     try {
-        const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name, coverImage: req.file.path }, { new: true });
+        if (mangaID) {
+            if (req.file && name){
+                const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name, coverImage: req.file.path}, { new: true });
+                const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
 
-        const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
-        
-        if (!manga) {
-            return res.status(404).json({ message: "Manga not found" });
+                if (!manga) {
+                    return res.status(404).json({ message: "Manga not found" });
+                }
+                res.json({ message: "Manga updated successfully", manga });
+            
+            }  else if (req.file || name){
+                if (req.file) {
+                    const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, {coverImage: req.file.path}, { new: true });
+                } else if (name) {
+                    const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name}, { new: true });
+                    const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
+
+                    if (!manga) {
+                        return res.status(404).json({ message: "Manga not found" });
+                    }
+                    res.json({ message: "Manga updated successfully", manga });
+                }
+             }
         }
-
-        res.json({ message: "Manga updated successfully", manga });
+       
     } catch (error) {
         console.error("Error updating manga:", error);
         res.status(500).json({ message: "Failed to update manga" });
@@ -135,18 +151,23 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
 router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
     const { mangaID, chapterID, title, chapterNumber } = req.body;
  
-    if (mangaID && chapterID && title && chapterNumber) {
-        const pages =  req.files.map(file => file.path);
+    if (mangaID && chapterID) {
+        const updateFields = {};
+        if (title) {
+            updateFields["chapters.$.title"] = title;
+        }
+        if (chapterNumber) {
+            updateFields["chapters.$.chapterNumber"] = chapterNumber;
+        }
+        if (req.files && req.files.length > 0) {
+            const pages = req.files.map(file => file.path);
+            updateFields["chapters.$.pages"] = pages;
+        }
+
         try {
             const result = await ChapterContentModel.findOneAndUpdate(
                 { mangaID, "chapters._id": chapterID },
-                { 
-                    $set: { 
-                        "chapters.$.chapterNumber": chapterNumber,
-                        "chapters.$.title": title,
-                        "chapters.$.pages":  pages
-                    } 
-                },
+                { $set: updateFields },
                 { new: true }
             );
 

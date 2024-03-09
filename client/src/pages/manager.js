@@ -503,7 +503,7 @@ function Edit() {
                                                   <button onClick={()=> {
                                                       handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
                                                   }}>
-                                                      {chapter.title}
+                                                    Chapter {chapter.chapterNumber}: {chapter.title}
                                                   </button>
                                               </li>
                                           ))
