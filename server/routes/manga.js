@@ -25,6 +25,15 @@ router.get("/:mangaID", async (req, res)=> {
     }
 });
 
+router.get("/find/:mangaName", async (req, res)=> {
+    const {mangaName} = req.params;
+if (mangaName) {
+    const mangas = await MangaModel.find({})
+    const filteredMangas = mangas.filter(manga => manga.name.toLowerCase().includes(mangaName.toLowerCase()));
+    res.json(filteredMangas);
+}
+});
+
 router.get("/:mangaID/:chapterID", async (req, res) => {
     const { mangaID, chapterID } = req.params;
     if (mangaID && chapterID) {

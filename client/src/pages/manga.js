@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 function Manga() {
 
@@ -25,6 +26,7 @@ function Manga() {
    
     return (
       <div>
+       <SearchBar />
         <h1>Manga List</h1>
         <ul>
           {mangas.map(manga => (

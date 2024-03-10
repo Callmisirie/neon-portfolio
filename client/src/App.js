@@ -6,6 +6,7 @@ import Chapters from "./pages/chapters";
 import Pages from "./pages/pages";
 import Contact from "./pages/contact";
 import About from "./pages/about";
+import Find from "./pages/find";
 
 import Manager from "./pages/manager";
 import { Create, Delete, Edit } from "./pages/manager";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/about" element={<About />}/>
           <Route path="/manga" element={<Manga />}/>
           <Route path="/auth" element={<Auth />}/>
+          <Route path="/manga/find/:mangaName" element={<Find />}/>
           {cookies.access_token && (
             <>
               <Route path="/manager" element={<Manager />}/>
