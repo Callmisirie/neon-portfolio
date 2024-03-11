@@ -9,6 +9,9 @@ function Pages() {
     const [manga, setManga] = useState({});
     const location = useLocation();
     const navigate = useNavigate();
+    const [toggleView, setToggleView] = useState(true);
+    const [selectedPage, setSelectedPage] = useState(1);
+    const [selectedChapter, setSelectedChapter] = useState(1)
     
     useEffect(()=>{
         const fetchPages = async () =>{
@@ -27,41 +30,136 @@ function Pages() {
     useEffect(() => {
     }, [chapter]);
 
-    function handleChange(e) {
-        const value = e.target.value;
-        navigate("/manga/" + value);
+    function handleChapterChange(e) {
+        const value = parseInt(e.target.value, 10);
+        setSelectedChapter(value);
+        manga.chapters.map((chapter, index) => {
+            if (value === (index + 1)) {
+                navigate("/manga/" + manga.mangaID + "/" + chapter._id);
+            }
+        });
+        setSelectedPage(1);
     }
+    
+
+    function handlePageChange(e) {
+        const value = e.target.value;
+        setSelectedPage(value);
+    };
+
+    function handleToggleClick() {
+        if (toggleView) {
+            setToggleView(false);
+        } else {
+            setToggleView(true);
+            setSelectedPage(selectedPage)
+        }
+    };
+
+    function handleNextPageClick(pagesLength) {
+        const value = parseInt(selectedPage, 10);
+        if (value < pagesLength){
+            setSelectedPage((value + 1));
+        } 
+    };
+    
+    function handleNextChapter() {
+        const value = (parseInt(selectedChapter, 10) + 1);
+        manga.chapters.map((chapter, index) => {
+            if (value === (index + 1)) {
+                navigate("/manga/" + manga.mangaID + "/" + chapter._id);
+            }
+        });
+        if (parseInt(selectedChapter, 10) < manga.chapters.length){
+            setSelectedChapter(value);
+        }
+        
+        if (!toggleView) {
+            setSelectedPage(1);
+        }
+    }
+
+    function handlePreviousChapter() {
+        const value = (parseInt(selectedChapter, 10) - 1);
+        manga.chapters.map((chapter, index) => {
+            if (value === (index + 1)) {
+                navigate("/manga/" + manga.mangaID + "/" + chapter._id);
+            }
+        });
+        if ( selectedChapter > 1){
+            setSelectedChapter(value);
+        }
+        if (!toggleView) {
+            setSelectedPage(1);
+        }
+    }
+    
 
     return (
         <div>
-            <select onChange={handleChange}>
-                {manga && manga.chapters && manga.chapters.map((chapter)=> {
+            <select onChange={handleChapterChange}>
+                {manga && manga.chapters && manga.chapters.map((chapter, index)=> {
                     return (
                         <option 
                             key={chapter._id} 
-                            value={manga.mangaID + "/"+ chapter._id} 
+                            value={(index + 1)} 
                             selected={"/manga/" + manga.mangaID + "/"+ chapter._id === location.pathname}
                         >
                             Chapter {chapter.chapterNumber}: {chapter.title}
                         </option>
                 )
                 })}     
-    
             </select>
+
+            {!toggleView && (
+                <select onChange={handlePageChange}>
+                    {chapter && chapter.pages && chapter.pages.map((page, index)=> {
+                        return (
+                            <option 
+                                key={index} 
+                                value={(index + 1)} 
+                                selected={selectedPage === (index + 1)}
+                            >
+                                Page: {(index + 1)}
+                            </option>
+                    )
+                    })}     
+                </select>
+            )}
+            <button onClick={handlePreviousChapter}>Previous</button>
+            <button onClick={handleToggleClick}><span><p>Scroll</p></span><span><p>Click</p></span></button>
             <ul>
                 {chapter && (
                     <>
                         <h3>{chapter.title}</h3>
-                        {chapter.pages && chapter.pages.map((page, index)=>(
-                            <div key={index}>
-                                <li >
-                                    <img src={`http://localhost:4001/${page}`} alt={`Chapter ${page}`} style={{ width: "666px" }}/>
-                                </li>
+                        {toggleView ? (
+                            chapter.pages && chapter.pages.map((page, index)=>(
+                                <div key={index}>
+                                    <li >
+                                        <img src={`http://localhost:4001/${page}`} alt={`Chapter ${page}`} style={{ width: "666px" }}/>
+                                    </li>
+                                </div>
+                            ))
+                        ) : (
+                            <div>
+                                {chapter.pages && chapter.pages.map((page, index)=>(
+                                        selectedPage == (index + 1) && (
+                                            <div key={index} onClick={()=> {
+                                                handleNextPageClick(chapter.pages.length)
+                                            }}> 
+                                                    <li >
+                                                        <img src={`http://localhost:4001/${page}`} alt={`Chapter ${page}`} style={{ width: "666px" }}/>
+                                                    </li>
+                                            </div>
+                                        )
+                                    ))   
+                                } 
                             </div>
-                        ))}
+                        )}
                     </>
                 )}        
             </ul> 
+            <button onClick={handleNextChapter}>Next</button>
         </div>
     );
 };
