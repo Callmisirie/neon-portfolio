@@ -60,6 +60,7 @@ function Pages() {
         const value = parseInt(selectedPage, 10);
         if (value < pagesLength){
             setSelectedPage((value + 1));
+            window.scrollTo(0, 0);
         } 
     };
     
@@ -77,6 +78,7 @@ function Pages() {
         if (!toggleView) {
             setSelectedPage(1);
         }
+        window.scrollTo(0, 0);
     }
 
     function handlePreviousChapter() {
@@ -92,6 +94,7 @@ function Pages() {
         if (!toggleView) {
             setSelectedPage(1);
         }
+        window.scrollTo(0, 0);
     }
     
 
