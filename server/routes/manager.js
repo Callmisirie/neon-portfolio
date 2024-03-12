@@ -68,30 +68,35 @@ router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
 
 
 router.delete("/delete/manga", async (req, res) => {
-    const id = req.body.id;
+    const {id, name} = req.body;
     console.log("Deleting manga with ID:", id);
     console.log("Testing:", req.body);
 
-    try {
-        const manga = await MangaModel.findOneAndDelete({_id: id});
-        console.log("Deleted manga:", manga);
+    const manga = await MangaModel.findOne({_id: id});
 
-        const deletedChapterContent = await ChapterContentModel.findOneAndDelete({mangaID: id});
-        console.log("Deleted chapter content:", deletedChapterContent);
-
-        if (manga || deletedChapterContent) {
-            res.json({message: "Manga deleted"});
-        } else {
-            res.status(404).json({message: "Manga not found"});
+    if (name === manga.name) {
+        try {
+            const manga = await MangaModel.findOneAndDelete({_id: id});
+            console.log("Deleted manga:", manga);
+    
+            const deletedChapterContent = await ChapterContentModel.findOneAndDelete({mangaID: id});
+            console.log("Deleted chapter content:", deletedChapterContent);
+    
+            if (manga || deletedChapterContent) {
+                res.json({message: "Manga deleted"});
+            } else {
+                res.status(404).json({message: "Manga not found"});
+            }
+        } catch (error) {
+            console.error("Error deleting manga:", error);
+            res.status(500).json({message: "Failed to delete manga"});
         }
-    } catch (error) {
-        console.error("Error deleting manga:", error);
-        res.status(500).json({message: "Failed to delete manga"});
     }
+
 });
 
 router.delete("/delete/manga/chapter", async (req, res) => {
-    const { mangaID, chapterID } = req.body;
+    const { mangaID, chapterID, title } = req.body;
 
     if (!mangaID || !chapterID) {
         return res.status(400).json({ message: "Invalid request" });
@@ -103,8 +108,12 @@ router.delete("/delete/manga/chapter", async (req, res) => {
             return res.status(404).json({ message: "Manga not found" });
         }
 
-        manga.chapters = manga.chapters.filter(chapter => chapter._id.toString() !== chapterID);
-        await manga.save();
+        const foundTitle = manga.chapters.find(chapter => chapter.title === title);
+        console.log(foundTitle);
+        if (foundTitle) {
+            manga.chapters = manga.chapters.filter(chapter => chapter._id.toString() !== chapterID);
+            await manga.save();
+        }
 
         res.json({ message: "Chapter deleted" });
     } catch (error) {
