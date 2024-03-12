@@ -146,7 +146,7 @@ function Pages() {
                         ) : (
                             <div>
                                 {chapter.pages && chapter.pages.map((page, index)=>(
-                                        selectedPage == (index + 1) && (
+                                    parseInt(selectedPage, 10) === (index + 1) && (
                                             <div key={index} onClick={()=> {
                                                 handleNextPageClick(chapter.pages.length)
                                             }}> 
