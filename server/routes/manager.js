@@ -1,12 +1,17 @@
 import express from "express";
 import multer from "multer";
+import { GridFsStorage } from "multer-gridfs-storage";
 import { ChapterContentModel, MangaModel } from "../models/Manga.js";
 
 
-const storage = multer.diskStorage({
-    destination: "uploads/",
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
+const password = process.env.MONGO_DB;
+
+const storage = new GridFsStorage({
+    url: "mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/mangacontent?retryWrites=true&w=majority", // Your MongoDB connection URI
+    file: (req, file) => {
+        return {
+            filename: file.originalname
+        };
     }
 }); 
 const upload = multer({ storage: storage });
@@ -17,7 +22,7 @@ router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
     try {
         const result = {
             name: req.body.name, 
-            coverImage: req.file.path
+            coverImage: req.file.id
         };
         const manga = new MangaModel(result);
         const response =  await manga.save();
