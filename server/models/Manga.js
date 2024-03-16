@@ -10,6 +10,10 @@ const mangaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    coverImageData: {
+      type: Buffer,
+      required: true
+  },
     // about: {
     //     type: String,
     //     required: true
@@ -42,6 +46,10 @@ const chapterContentSchema = new mongoose.Schema({
     },
     pages: [{   
       type: String,
+      required: true
+    }],
+    pagesData: [{   
+      type: Buffer,
       required: true
     }]
   }]

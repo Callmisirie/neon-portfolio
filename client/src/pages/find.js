@@ -36,7 +36,7 @@ function Find() {
                         handleClick(manga._id)
                     }}>
                         <h3>{manga.name}</h3>
-                        <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "111px" }}/>
+                        <img src={`http://localhost:4001/display/${manga._id}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
                     </div>
                 )
             })

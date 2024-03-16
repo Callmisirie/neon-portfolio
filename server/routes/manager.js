@@ -1,28 +1,25 @@
 import express from "express";
 import multer from "multer";
-import { GridFsStorage } from "multer-gridfs-storage";
 import { ChapterContentModel, MangaModel } from "../models/Manga.js";
 
 
 const password = process.env.MONGO_DB;
 
-const storage = new GridFsStorage({
-    url: "mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/mangacontent?retryWrites=true&w=majority", // Your MongoDB connection URI
-    file: (req, file) => {
-        return {
-            filename: file.originalname
-        };
-    }
-}); 
-const upload = multer({ storage: storage });
+const storage = multer.memoryStorage();
+const upload = multer({ 
+    storage: storage,
+    // limits: {fields: 1, fileSize: 6000000, files: 2, parts: 3}
+});
 const router = express.Router();
 
 
 router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
+    console.log(req.file);
     try {
         const result = {
             name: req.body.name, 
-            coverImage: req.file.id
+            coverImage: req.file.originalname,
+            coverImageData: req.file.buffer
         };
         const manga = new MangaModel(result);
         const response =  await manga.save();
@@ -40,7 +37,10 @@ router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
         chapterNumber: req.body.chapterNumber,
         title: req.body.title,
         pages: req.files.map((file)=>
-            file.path
+            file.originalname
+        ),
+        pagesData: req.files.map((file)=>
+            file.buffer
         )
     };
     const result = {

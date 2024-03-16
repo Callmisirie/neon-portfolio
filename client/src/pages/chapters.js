@@ -38,7 +38,7 @@ function Chapters() {
                {mangaContent && (
                     <>  
                         <h3>{mangaContent.mangaName}</h3>
-                        <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
+                        <img src={`http://localhost:4001/display/${manga._id}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
                         {mangaContent.chapters && mangaContent.chapters.map((chapter) => (
                             <div key={chapter._id}>
                                 <li>

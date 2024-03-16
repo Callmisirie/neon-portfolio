@@ -35,7 +35,7 @@ function Manga() {
             }}>
                 <div>
                         <h3>{manga.name}</h3>
-                        <img src={`http://localhost:4001/${manga.coverImage}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
+                        <img src={`http://localhost:4001/display/${manga._id}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
                 </div>
             </li>
           ))}

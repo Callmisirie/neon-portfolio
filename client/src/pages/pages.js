@@ -138,8 +138,8 @@ function Pages() {
                         {toggleView ? (
                             chapter.pages && chapter.pages.map((page, index)=>(
                                 <div key={index}>
-                                    <li >
-                                        <img src={`http://localhost:4001/${page}`} alt={`Chapter ${page}`} style={{ width: "666px" }}/>
+                                    <li > 
+                                        <img src={`http://localhost:4001/display/${manga.mangaID +"/"+ chapter._id +"/"+ index}`} alt={`Manga ${page}`} style={{ width: "666px" }}/>
                                     </li>
                                 </div>
                             ))
@@ -150,9 +150,9 @@ function Pages() {
                                             <div key={index} onClick={()=> {
                                                 handleNextPageClick(chapter.pages.length)
                                             }}> 
-                                                    <li >
-                                                        <img src={`http://localhost:4001/${page}`} alt={`Chapter ${page}`} style={{ width: "666px" }}/>
-                                                    </li>
+                                                <li >
+                                                    <img src={`http://localhost:4001/display/${manga.mangaID +"/"+ chapter._id}/${index}`} alt={`Manga ${page}`} style={{ width: "666px" }}/>
+                                                </li>
                                             </div>
                                         )
                                     ))   
