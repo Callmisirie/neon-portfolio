@@ -139,7 +139,7 @@ function Pages() {
                             chapter.pages && chapter.pages.map((page, index)=>(
                                 <div key={index}>
                                     <li > 
-                                        <img src={`http://localhost:4001/display/${manga.mangaID +"/"+ chapter._id +"/"+ index}`} alt={`Manga ${page}`} style={{ width: "666px" }}/>
+                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
                                     </li>
                                 </div>
                             ))
@@ -151,7 +151,7 @@ function Pages() {
                                                 handleNextPageClick(chapter.pages.length)
                                             }}> 
                                                 <li >
-                                                    <img src={`http://localhost:4001/display/${manga.mangaID +"/"+ chapter._id}/${index}`} alt={`Manga ${page}`} style={{ width: "666px" }}/>
+                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
                                                 </li>
                                             </div>
                                         )

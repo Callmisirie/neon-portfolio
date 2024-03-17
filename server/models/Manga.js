@@ -10,10 +10,6 @@ const mangaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    coverImageData: {
-      type: Buffer,
-      required: true
-  },
     // about: {
     //     type: String,
     //     required: true
@@ -44,13 +40,10 @@ const chapterContentSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    pages: [{   
+    pages: [{  
+      name:{ 
       type: String,
-      required: true
-    }],
-    pagesData: [{   
-      type: Buffer,
-      required: true
+      required: true}
     }]
   }]
 });
@@ -58,4 +51,23 @@ const chapterContentSchema = new mongoose.Schema({
 
 const ChapterContentModel = mongoose.model("ChapterContent", chapterContentSchema);
 
-export {MangaModel, ChapterContentModel};
+
+const imageSchema = new mongoose.Schema({
+  imageID: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  name: {
+      type: String,
+      required: true,
+      unique: true
+  },
+  imageData: {
+    type: Buffer,
+    required: true
+  },
+});
+
+const ImageModel = mongoose.model("Image", imageSchema);
+
+export {MangaModel, ChapterContentModel, ImageModel};

@@ -1,8 +1,6 @@
 import express from "express";
 import { ChapterContentModel, MangaModel } from "../models/Manga.js";
 
-
-
 const router =  express.Router();
 
 router.get("/", async (req, res)=> {
@@ -33,7 +31,6 @@ router.get("/:mangaID", async (req, res)=> {
         res.json({mangaContent, manga});
     }
 });
-
 
 router.get("/:mangaID/:chapterID", async (req, res) => {
     const { mangaID, chapterID } = req.params;

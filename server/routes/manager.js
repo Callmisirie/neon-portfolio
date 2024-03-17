@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { ChapterContentModel, MangaModel } from "../models/Manga.js";
+import { ChapterContentModel, MangaModel, ImageModel } from "../models/Manga.js";
 
 
 const password = process.env.MONGO_DB;
@@ -14,49 +14,66 @@ const router = express.Router();
 
 
 router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
-    console.log(req.file);
+    
     try {
-        const result = {
+        const mangaDetails = {
             name: req.body.name, 
             coverImage: req.file.originalname,
-            coverImageData: req.file.buffer
         };
-        const manga = new MangaModel(result);
-        const response =  await manga.save();
-        res.json(response);
+
+        const manga = new MangaModel(mangaDetails);
+        const mangaResponse =  await manga.save();
+
+        const imageDetails = {
+            imageID: mangaResponse._id,
+            name: req.file.originalname, 
+            imageData: req.file.buffer
+        };
+
+        const image = new ImageModel( imageDetails);
+        const imageResponse =  await image.save();
+
+        res.json({mangaResponse, imageResponse});
+
+        
     } catch (error) {
         res.json(error);
     }
 });
 
 router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
+    const {mangaID, mangaName} = req.body;
 
-    const mangaID = req.body.mangaID;
-    const mangaName = req.body.mangaName;
-    const chapters = {
-        chapterNumber: req.body.chapterNumber,
-        title: req.body.title,
-        pages: req.files.map((file)=>
-            file.originalname
-        ),
-        pagesData: req.files.map((file)=>
-            file.buffer
-        )
-    };
-    const result = {
-        mangaID,
-        mangaName, 
-        chapters 
-    }; 
-    
     if (mangaID) {
+        
+        const chapters = {
+            chapterNumber: req.body.chapterNumber,
+            title: req.body.title,
+            pages: req.files.map((file) => ({ name: file.originalname })),
+        };
+        
+        const chapterDetails = {
+            mangaID,
+            mangaName, 
+            chapters 
+        }; 
+        
         const mangaContent = await ChapterContentModel.findOne({mangaID});
 
         if (!mangaContent){     
             try {
-                const chapterContent = new ChapterContentModel(result);
-                const response =  await chapterContent.save();
-                res.json(response);
+                const chapterContent = new ChapterContentModel(chapterDetails);
+                const chapterResponse =  await chapterContent.save();
+
+                const imageDetails = req.files.map((file, index) => ({
+                    imageID: chapterResponse.chapters[0].pages[index]._id,
+                    name: file.originalname,
+                    imageData: file.buffer,
+                }));
+            
+                const imageResponse = await ImageModel.insertMany( imageDetails);
+
+                res.json({chapterResponse, imageResponse});
             } catch (error) {
                 res.json(error);
             }
@@ -64,8 +81,17 @@ router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
             try {
                 const chapterContent = await ChapterContentModel.findOne({mangaID});
                 chapterContent.chapters.push(chapters);
-                const response =  await chapterContent.save();
-                res.json(response)
+                const chapterResponse =  await chapterContent.save();
+
+                const imageDetails = req.files.map((file, index) => ({
+                    imageID: chapterResponse.chapters[chapterResponse.chapters.length - 1].pages[index]._id,
+                    name: file.originalname,
+                    imageData: file.buffer,
+                }));
+
+                const imageResponse = await ImageModel.insertMany( imageDetails);
+
+                res.json({chapterResponse, imageResponse});
             } catch (error) {
                 res.json(error);
             }
@@ -183,8 +209,10 @@ router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
             updateFields["chapters.$.chapterNumber"] = chapterNumber;
         }
         if (req.files && req.files.length > 0) {
-            const pages = req.files.map(file => file.path);
+            const pages = req.files.map(file => file.originalname);
+            const pagesData = req.files.map(file => file.buffer);
             updateFields["chapters.$.pages"] = pages;
+            updateFields["chapters.$.pagesData"] = pagesData;
         }
 
         try {
