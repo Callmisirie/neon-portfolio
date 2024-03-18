@@ -377,7 +377,7 @@ function Edit() {
   const [coverImage, setCoverImage] = useState("");
 
 
-  //use useLocation hook to switch beween delete manga and delete chapter code.
+  //use useLocation hook to switch beween edit manga and edit chapter code.
   const location = useLocation();
   const currentLocation = location.pathname;
 
@@ -549,6 +549,8 @@ function Edit() {
               <div>
                   <h3>Manga: {mangaName}</h3>
                   <p>Update {chapterTitle} Chapter.</p>
+                  {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                   <form onSubmit={handleChapterSubmit}>
                       <label>
                       Chapter Number:
