@@ -33,8 +33,6 @@ router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
         const imageResponse =  await image.save();
 
         res.json({mangaResponse, imageResponse});
-
-        
     } catch (error) {
         res.json(error);
     }
@@ -96,8 +94,6 @@ router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
             }
         }
     }
-
-
 });
 
 
@@ -139,8 +135,6 @@ router.delete("/delete/manga", async (req, res) => {
             }
         }
     }
-   
-
 });
 
 router.delete("/delete/manga/chapter", async (req, res) => {
@@ -177,8 +171,7 @@ router.delete("/delete/manga/chapter", async (req, res) => {
             console.error(error);
             res.status(500).json({ message: "Internal server error" });
         }
-    }
-    
+    } 
 });
 
 
@@ -210,7 +203,7 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
                 }
              }
         }
-       
+ 
     } catch (error) {
         console.error("Error updating manga:", error);
         res.status(500).json({ message: "Failed to update manga" });
@@ -218,7 +211,73 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
 });
 
 router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
+    const { mangaID, chapterID, title, chapterNumber } = req.body;
+ 
+    if (mangaID && chapterID) {
+        const updateChapterFields = {};
+
+        if (title) {
+            updateChapterFields["chapters.$.title"] = title;
+        }
+        if (chapterNumber) {
+            updateChapterFields["chapters.$.chapterNumber"] = chapterNumber;
+        }
+        if (req.files && req.files.length > 0) {
+
+            const manga = await ChapterContentModel.findOne({ mangaID });
+            if (!manga) {
+                return res.status(404).json({ message: "Manga not found" });
+            }
     
+            const chapterIndex = manga.chapters.findIndex(chapter => chapter._id.toString() === chapterID);
+            if (chapterIndex === -1) {
+                return res.status(404).json({ message: "Chapter not found" });
+            }
+    
+            const chapter = manga.chapters[chapterIndex];
+            const imageIDs = chapter.pages.map(page => page._id);
+    
+
+            manga.chapters[chapterIndex].pages.splice(0, manga.chapters[chapterIndex].pages.length);
+            await manga.save();
+            
+            // Delete images associated with the chapter
+            const images = await ImageModel.deleteMany({ imageID: { $in: imageIDs } });
+            console.log("Deleted all manga images:", images.deletedCount);
+            
+            const pages = req.files.map(file => ({name : file.originalname}));
+
+            manga.chapters[chapterIndex].pages.push(...pages);
+            await manga.save();
+
+            const imageDetails = req.files.map((file, index) => ({
+                imageID: manga.chapters[chapterIndex].pages[index]._id,
+                name: file.originalname,
+                imageData: file.buffer,
+            }));
+
+            await ImageModel.insertMany( imageDetails);
+        }
+
+        try {
+            const result = await ChapterContentModel.findOneAndUpdate(
+                { mangaID, "chapters._id": chapterID },
+                { $set: updateChapterFields },
+                { new: true }
+            );
+    
+            if (!result) {
+                return res.status(404).json({ message: "Chapter not found" });
+            }
+
+            res.json({result});
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    } else {
+        res.status(400).json({ message: "Invalid request" });
+    }
 });
 
 export {router as managerRouter};
