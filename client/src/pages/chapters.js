@@ -37,17 +37,21 @@ function Chapters() {
            <ul>
                {mangaContent && (
                     <>  
-                        <h3>{mangaContent.mangaName}</h3>
-                        <img src={`http://localhost:4001/display/${manga._id}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
-                        {mangaContent.chapters && mangaContent.chapters.map((chapter) => (
-                            <div key={chapter._id}>
-                                <li>
-                                    <button onClick={() => {
-                                        handleClick(chapter._id)
-                                    }}>Chapter {chapter.chapterNumber} - {chapter.title}</button>
-                                </li>
+                        {manga._id && (
+                            <div>
+                                <h3>{mangaContent.mangaName}</h3>
+                                <img src={`http://localhost:4001/display/${manga._id}`} alt="Manga" style={{ width: "222px" }}/>
+                                {mangaContent.chapters && mangaContent.chapters.map((chapter) => (
+                                    <div key={chapter._id}>
+                                        <li>
+                                            <button onClick={() => {
+                                                handleClick(chapter._id)
+                                            }}>Chapter {chapter.chapterNumber} - {chapter.title}</button>
+                                        </li>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        )}
                     </>
                 )}
                
