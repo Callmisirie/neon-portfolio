@@ -11,7 +11,8 @@ function Pages() {
     const navigate = useNavigate();
     const [toggleView, setToggleView] = useState(true);
     const [selectedPage, setSelectedPage] = useState(1);
-    const [selectedChapter, setSelectedChapter] = useState(1)
+    const [selectedChapter, setSelectedChapter] = useState(1);
+    const [displayView, setDisplayView] = useState("Page");
     
     useEffect(()=>{
         const fetchPages = async () =>{
@@ -50,19 +51,29 @@ function Pages() {
     function handleToggleClick() {
         if (toggleView) {
             setToggleView(false);
+            setDisplayView("Long Strip")
         } else {
             setToggleView(true);
+            setDisplayView("Page")
             setSelectedPage(selectedPage)
         }
     };
 
-    function handleNextPageClick(pagesLength) {
+    function handleNextPageClick(pagesLength, chaptersLength) {
         const value = parseInt(selectedPage, 10);
-        if (value < pagesLength){
-            setSelectedPage((value + 1));
+        if (value < pagesLength) {
+            setSelectedPage(value + 1);
             window.scrollTo(0, 0);
-        } 
-    };
+        } else if (value === pagesLength && parseInt(selectedChapter, 10) < chaptersLength) {
+            // Navigate to the next chapter
+            const nextChapterIndex = parseInt(selectedChapter, 10) + 1;
+            const nextChapter = manga.chapters[nextChapterIndex - 1]; // Index is 0-based
+            navigate(`/manga/${manga.mangaID}/${nextChapter._id}`);
+            setSelectedChapter(nextChapterIndex);
+            setSelectedPage(1);
+            window.scrollTo(0, 0);
+        }
+    }
     
     function handleNextChapter() {
         const value = (parseInt(selectedChapter, 10) + 1);
@@ -130,7 +141,7 @@ function Pages() {
                 </select>
             )}
             <button onClick={handlePreviousChapter}>Previous</button>
-            <button onClick={handleToggleClick}><span><p>Scroll</p></span><span><p>Click</p></span></button>
+            <button onClick={handleToggleClick}><p>{displayView}</p></button>
             <ul>
                 {chapter && (
                     <>
@@ -148,7 +159,7 @@ function Pages() {
                                 {chapter.pages && chapter.pages.map((page, index)=>(
                                     parseInt(selectedPage, 10) === (index + 1) && (
                                             <div key={index} onClick={()=> {
-                                                handleNextPageClick(chapter.pages.length)
+                                                handleNextPageClick(chapter.pages.length, manga.chapters.length)
                                             }}> 
                                                 <li >
                                                     <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
