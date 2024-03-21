@@ -12,7 +12,7 @@ function Pages() {
     const [toggleView, setToggleView] = useState(true);
     const [selectedPage, setSelectedPage] = useState(1);
     const [selectedChapter, setSelectedChapter] = useState(1);
-    const [displayView, setDisplayView] = useState("Page");
+    const [displayView, setDisplayView] = useState("Long Strip");
     
     useEffect(()=>{
         const fetchPages = async () =>{
@@ -30,6 +30,7 @@ function Pages() {
 
     useEffect(() => {
     }, [chapter]);
+
 
     function handleChapterChange(e) {
         const value = parseInt(e.target.value, 10);
@@ -51,10 +52,10 @@ function Pages() {
     function handleToggleClick() {
         if (toggleView) {
             setToggleView(false);
-            setDisplayView("Long Strip")
+            setDisplayView("Page")
         } else {
             setToggleView(true);
-            setDisplayView("Page")
+            setDisplayView("Long Strip")
             setSelectedPage(selectedPage)
         }
     };
@@ -65,6 +66,8 @@ function Pages() {
             setSelectedPage(value + 1);
             window.scrollTo(0, 0);
         } else if (value === pagesLength && parseInt(selectedChapter, 10) < chaptersLength) {
+
+            setSelectedPage("loading");
             // Navigate to the next chapter
             const nextChapterIndex = parseInt(selectedChapter, 10) + 1;
             const nextChapter = manga.chapters[nextChapterIndex - 1]; // Index is 0-based
@@ -79,10 +82,12 @@ function Pages() {
         const value = (parseInt(selectedChapter, 10) + 1);
         manga.chapters.map((chapter, index) => {
             if (value === (index + 1)) {
+                setSelectedPage("loading");
                 navigate("/manga/" + manga.mangaID + "/" + chapter._id);
             }
         });
         if (parseInt(selectedChapter, 10) < manga.chapters.length){
+            
             setSelectedChapter(value);
         }
         
@@ -156,18 +161,18 @@ function Pages() {
                             ))
                         ) : (
                             <div>
-                                {chapter.pages && chapter.pages.map((page, index)=>(
-                                    parseInt(selectedPage, 10) === (index + 1) && (
-                                            <div key={index} onClick={()=> {
+                                {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
+                                        parseInt(selectedPage, 10) === (index + 1) && (
+                                            <div key={index} onClick={() => {
                                                 handleNextPageClick(chapter.pages.length, manga.chapters.length)
-                                            }}> 
-                                                <li >
-                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                            }}>
+                                                <li>
+                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
                                                 </li>
                                             </div>
                                         )
-                                    ))   
-                                } 
+                                    ))
+                                }
                             </div>
                         )}
                     </>
