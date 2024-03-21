@@ -151,29 +151,28 @@ function Pages() {
                 {chapter && (
                     <>
                         <h3>{chapter.title}</h3>
-                        {toggleView ? (
-                            chapter.pages && chapter.pages.map((page, index)=>(
-                                <div key={index}>
-                                    <li > 
-                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
-                                    </li>
-                                </div>
+                        {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
+                            <div key={index}>
+                                <li > 
+                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                </li>
+                            </div>
                             ))
                         ) : (
-                            <div>
-                                {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
-                                        parseInt(selectedPage, 10) === (index + 1) && (
-                                            <div key={index} onClick={() => {
-                                                handleNextPageClick(chapter.pages.length, manga.chapters.length)
-                                            }}>
-                                                <li>
-                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
-                                                </li>
-                                            </div>
-                                        )
-                                    ))
-                                }
-                            </div>
+                        <div>
+                            {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
+                                parseInt(selectedPage, 10) === (index + 1) && (
+                                    <div key={index} onClick={() => {
+                                        handleNextPageClick(chapter.pages.length, manga.chapters.length)
+                                    }}>
+                                        <li>
+                                            <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
+                                        </li>
+                                    </div>
+                                )
+                            ))
+                            }
+                        </div>
                         )}
                     </>
                 )}        
