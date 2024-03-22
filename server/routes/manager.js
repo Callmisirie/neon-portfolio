@@ -150,22 +150,25 @@ router.delete("/delete/manga/chapter", async (req, res) => {
             if (!manga) {
                 return res.status(404).json({ message: "Manga not found" });
             }
-    
-            const chapterIndex = manga.chapters.findIndex(chapter => chapter._id.toString() === chapterID);
-            if (chapterIndex === -1) {
-                return res.status(404).json({ message: "Chapter not found" });
+
+            const foundTitle = manga.chapters.find(chapter => chapter.title === title);
+            console.log(foundTitle);
+            if (foundTitle) {
+                const chapterIndex = manga.chapters.findIndex(chapter => chapter._id.toString() === chapterID);
+                if (chapterIndex === -1) {
+                    return res.status(404).json({ message: "Chapter not found" });
+                }
+        
+                const chapter = manga.chapters[chapterIndex];
+                const imageIDs = chapter.pages.map(page => page._id);
+        
+                manga.chapters.splice(chapterIndex, 1);
+                await manga.save();
+        
+                // Delete images associated with the chapter
+                const images = await ImageModel.deleteMany({ imageID: { $in: imageIDs } });
+                console.log("Deleted all manga images:", images.deletedCount);
             }
-    
-            const chapter = manga.chapters[chapterIndex];
-            const imageIDs = chapter.pages.map(page => page._id);
-    
-            manga.chapters.splice(chapterIndex, 1);
-            await manga.save();
-    
-            // Delete images associated with the chapter
-            const images = await ImageModel.deleteMany({ imageID: { $in: imageIDs } });
-            console.log("Deleted all manga images:", images.deletedCount);
-    
             res.json({ message: "Chapter deleted" });
         } catch (error) {
             console.error(error);
