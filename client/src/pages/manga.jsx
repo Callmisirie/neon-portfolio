@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/SearchBar.jsx";
 
 function Manga() {
 

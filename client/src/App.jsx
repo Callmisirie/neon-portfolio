@@ -1,18 +1,18 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Home from "./pages/home"
-import Manga from "./pages/manga";
-import Chapters from "./pages/chapters";
-import Pages from "./pages/pages";
-import Contact from "./pages/contact";
-import About from "./pages/about";
-import Find from "./pages/find";
+import Home from "./pages/home.jsx"
+import Manga from "./pages/manga.jsx";
+import Chapters from "./pages/chapters.jsx";
+import Pages from "./pages/pages.jsx";
+import Contact from "./pages/contact.jsx";
+import About from "./pages/about.jsx";
+import Find from "./pages/find.jsx";
 
-import Manager from "./pages/manager";
-import { Create, Delete, Edit } from "./pages/manager";
-import Auth from "./pages/auth";
+import Manager from "./pages/manager.jsx";
+import { Create, Delete, Edit } from "./pages/manager.jsx";
+import Auth from "./pages/auth.jsx";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar.jsx";
 
 import { useCookies } from "react-cookie";
 
@@ -24,7 +24,7 @@ function App() {
     <div className="App">
       <Router>
         <Navbar/>
-        <Routes>
+        <Routes>  
           <Route path="/" element={<Home />}/>
           <Route path="/contact" element={<Contact />}/>
           <Route path="/about" element={<About />}/>
