@@ -1,4 +1,7 @@
-import { Link } from "react-router-dom";
+import {hamburger} from "../assets/icons"
+import {headerLogo} from "../assets/images"
+
+import { Link } from "react-router-dom"; 
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 
@@ -13,25 +16,44 @@ function Navbar() {
     };
 
     return (   
-        <div class="navbar">
-            <div class="container">
-                <ul>
-                    <li><Link to="/"> Home </Link></li>
-                    <li><Link to="/manga"> Manga </Link></li>
-                    <li><Link to="/about"> About </Link></li>
-                    <li><Link to="/contact"> Contact </Link></li>
-                    {cookies.access_token ? (
-                        <>
-                            <li><Link to="/auth"> Auth </Link></li>
-                            <li><Link to="/manager"> Manager </Link></li> 
-                            <li>
-                                <button onClick={Logout}> Logout </button>
-                            </li> 
-                        </>         
-                    ): null}
-                </ul>
-            </div>
-        </div>
+        <header className="padding-x absoloute py-8 z-10 w-full">
+                    <nav className=" flex justify-between items-center max-container">
+                        <a href="/">
+                            <img 
+                                src={headerLogo}
+                                alt="Logo"
+                                width={130}
+                                height={29}
+                            />
+                            
+                        </a>
+                        <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
+                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/"> Home </Link></li>
+                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/manga"> Manga </Link></li>
+                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/about"> About </Link></li>
+                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/contact"> Contact </Link></li>
+                            {cookies.access_token ? (
+                                <>
+                                    <li className="font-montserrat leading-normal text-lg text-black"><Link to="/auth"> Auth </Link></li>
+                                    <li className="font-montserrat leading-normal text-lg text-black"><Link to="/manager"> Manager </Link></li> 
+                                    <li className="font-montserrat leading-normal text-lg text-black">
+                                        <button onClick={Logout}> Logout </button>
+                                    </li> 
+                                </>         
+                            ): null}
+                        </ul>
+                        <div className="hidden max-lg:block">
+                            <img 
+                                src={hamburger}
+                                alt="Hamburger"
+                                width={25}
+                                height={25}
+                            />
+                        </div>
+                    </nav>
+                    
+                   
+        </header>
     )
 };
   
