@@ -28,24 +28,48 @@ function Auth() {
     }
 
     return (
-        <div className="auth">
-            <button onClick={ ()=> {
-                handleClick("Register")
-            }}>Register</button>
-            <button onClick={()=> {
-                handleClick("Login")
-            }}>Login</button>
-            {isClickedRegister && 
-                <>
-                    <Register /> 
-                </> 
-            }
-            {isClickedLogin && 
-                <>
-                    <Login /> 
-                </> 
-            }
-        </div>
+        <section className="xl:padding-l wide:padding-r padding-b">
+            <section className="w-full flex 
+            xl:flex-row flex-col justify-center 
+            min-h-screen gap-10 max-container"
+            >
+                <div className="flex flex-col m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5 "
+                >
+                    <button 
+                        className="text-white px-4 py-2 text-sm
+                        font-montserrat font-medium mt-8 mx-5
+                        bg-purple-600 rounded-md "
+                        onClick={ ()=> {
+                        handleClick("Register")
+                    }}>
+                        Register
+                    </button>    
+                    <button
+                        className="text-white px-4 py-2 text-sm
+                        font-montserrat font-medium mt-8 mx-5
+                        bg-purple-400 rounded-md " 
+                        onClick={()=> {
+                        handleClick("Login")
+                    }}>
+                        Login
+                    </button>
+                    {isClickedRegister && 
+                        <>
+                            <Register /> 
+                        </> 
+                    }
+                    {isClickedLogin && 
+                        <>
+                            <Login /> 
+                        </> 
+                    }
+                </div>  
+            </section>
+  
+        </section>
+
     );
 };
 
@@ -84,9 +108,23 @@ export function Register() {
     };
 
     return (
-        <form onSubmit={handleRegisterSubmit}>
-            <h2>Register</h2>
+        <form 
+            className="flex flex-col justify-center items-center m-10 rounded-lg 
+            bg-white px-6 py-8 shadow-xl
+            ring-slate-900/5"
+            onSubmit={handleRegisterSubmit}
+        >
+            <h2 className="font-montserrat 
+                text-slate-gray text-lg 
+                leading-8 mt-6 mb-14"
+            >
+                Register
+            </h2>
             <input 
+                className="w-full flex items-center 
+                gap-5 p-2.5 my-2
+                sm:border sm:border-slate-gray 
+                rounded-full"
                 onChange={handleOnChange}
                 name="username"
                 value={registerInfo.username}
@@ -94,13 +132,25 @@ export function Register() {
                 type="text"
             />
             <input 
+                className="w-full flex items-center 
+                gap-5 p-2.5 my-2
+                sm:border sm:border-slate-gray 
+                rounded-full"
                 onChange={handleOnChange}
                 name="password"
                 value={registerInfo.password}
                 placeholder="Password" 
                 type="password" 
             />
-            <button type="submit">Register</button>
+            <button 
+                className="gap-2 px-7 py-4 my-2 border 
+                font-montserrat text-lg leading-none bg-black
+                rounded-full text-white border-black"
+            
+                type="submit"
+            >
+                Register
+            </button>
         </form>
     )
 };
@@ -149,9 +199,23 @@ export function Login() {
     };
 
     return (
-        <form onSubmit={handleLoginSubmit}>
-            <h2>Login</h2>
+        <form 
+            className="flex flex-col justify-center items-center m-10 rounded-lg 
+            bg-white px-6 py-8 shadow-xl
+            ring-slate-900/5"
+            onSubmit={handleLoginSubmit}
+        >
+            <h2 className="font-montserrat 
+                text-slate-gray text-lg 
+                leading-8 mt-6 mb-14"
+            >
+                Login
+            </h2>
             <input 
+                className="w-full flex items-center 
+                gap-5 p-2.5 my-2
+                sm:border sm:border-slate-gray 
+                rounded-full"
                 onChange={handleOnChange}
                 name="username"
                 value={loginInfo.username}
@@ -159,13 +223,24 @@ export function Login() {
                 type="text"
             />
             <input 
+                className="w-full flex items-center 
+                gap-5 p-2.5 my-2
+                sm:border sm:border-slate-gray 
+                rounded-full"
                 onChange={handleOnChange}
                 name="password"
                 value={loginInfo.password}
                 placeholder="Password" 
                 type="password" 
             />
-            <button type="submit">Login</button>
+            <button
+                className="gap-2 px-7 py-4 my-2 border 
+                font-montserrat text-lg leading-none bg-black
+                rounded-full text-white border-black" 
+                type="submit"
+            >
+                Login
+            </button>
         </form>
     )
 };

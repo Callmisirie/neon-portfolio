@@ -38,25 +38,89 @@ function Manager() {
 
 
   return (
-    <div>
-      <div>
-        <h2>Create</h2>
-        <button onClick={handleNewManga}> Manga</button>
-        <button onClick={handleUploadChapter}> Chapter</button>
-      </div>
-    
-      <div>
-        <h2>Delete</h2>
-        <button onClick={handleDeleteManga}> Manga</button>
-        <button onClick={handleDeleteChapter}> Chapter</button>
-      </div>
+    <section className="xl:padding-l wide:padding-r padding-b">
+        <section className="w-full flex 
+            xl:flex-row flex-col justify-center 
+            min-h-screen gap-10 max-container"
+        >
+            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
+                bg-white px-6 py-8 shadow-xl
+                ring-slate-900/5"
+            >
+                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5"
+                >
+                    <h2 className="font-montserrat 
+                        text-slate-gray text-lg 
+                        leading-8 mt-6 mb-14"
+                    >
+                        Create
+                    </h2>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleNewManga}> 
+                        Manga
+                    </button>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleUploadChapter}> 
+                        Chapter
+                    </button>
+                </div>
+                
+                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5"
+                >
+                    <h2 className="font-montserrat 
+                        text-slate-gray text-lg 
+                        leading-8 mt-6 mb-14"
+                    >
+                        Delete
+                    </h2>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleDeleteManga}> 
+                        Manga
+                    </button>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleDeleteChapter}> 
+                        Chapter
+                    </button>
+                </div>
 
-      <div>
-        <h2>Edit</h2>
-        <button onClick={handleEditManga}> Manga</button>
-        <button onClick={handleEditChapter}> Chapter</button>
-      </div>
-    </div>
+                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5"
+                >
+                    <h2 className="font-montserrat 
+                        text-slate-gray text-lg 
+                        leading-8 mt-6 mb-14"
+                    >
+                        Edit
+                    </h2>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleEditManga}> 
+                        Manga
+                    </button>
+                    <button className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium mt-8 mx-5
+                            bg-purple-600 rounded-md "
+                        onClick={handleEditChapter}>
+                        Chapter
+                    </button>
+                </div>
+            </div>
+        </section>
+    </section>
   )  
 };
 
