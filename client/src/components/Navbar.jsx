@@ -1,5 +1,5 @@
 import {hamburger} from "../assets/icons"
-import {headerLogo} from "../assets/images"
+import {headerLogoPurple} from "../assets/images"
 
 import { Link } from "react-router-dom"; 
 import { useCookies } from 'react-cookie';
@@ -20,10 +20,10 @@ function Navbar() {
                     <nav className=" flex justify-between items-center max-container">
                         <a href="/">
                             <img 
-                                src={headerLogo}
+                                src={headerLogoPurple}
                                 alt="Logo"
-                                width={130}
-                                height={29}
+                                width={90}
+                                height={20}
                             />
                             
                         </a>
@@ -37,7 +37,14 @@ function Navbar() {
                                     <li className="font-montserrat leading-normal text-lg text-black"><Link to="/auth"> Auth </Link></li>
                                     <li className="font-montserrat leading-normal text-lg text-black"><Link to="/manager"> Manager </Link></li> 
                                     <li className="font-montserrat leading-normal text-lg text-black">
-                                        <button onClick={Logout}> Logout </button>
+                                        <button
+                                            className="gap-2 px-7 py-4 border 
+                                            font-montserrat text-lg leading-none bg-black
+                                            rounded-full text-white border-black"
+                                            onClick={Logout}
+                                        > 
+                                            Logout 
+                                        </button>
                                     </li> 
                                 </>         
                             ): null}

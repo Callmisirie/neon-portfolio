@@ -1,4 +1,4 @@
-import arrowRight from './arrow-right.svg'
+import arrowRight from './arrow-right.png'
 import chevronLeft from './chevron-left.svg'
 import cheveronRight from './chevron-right.svg'
 import copyrightSign from './copyright-sign.svg'
