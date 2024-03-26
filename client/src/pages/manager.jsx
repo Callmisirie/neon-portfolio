@@ -65,7 +65,7 @@ function Manager() {
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                             font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                            bg-purple-400 rounded-md "
                         onClick={handleUploadChapter}> 
                         Chapter
                     </button>
@@ -89,7 +89,7 @@ function Manager() {
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                             font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                            bg-purple-400 rounded-md "
                         onClick={handleDeleteChapter}> 
                         Chapter
                     </button>
@@ -113,7 +113,7 @@ function Manager() {
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                             font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                            bg-purple-400 rounded-md "
                         onClick={handleEditChapter}>
                         Chapter
                     </button>
@@ -219,61 +219,151 @@ function Create() {
 };
 
 return (
-  <div>
-      {currentLocation === "/manager/create/manga" ? (
-          <div> 
-              <h2>Upload Manga</h2>
-              {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-              {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-              <form onSubmit={handleSubmit}>
-                  <label>
-                  Manga Name:
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                  </label>
-                  <label>
-                  Select Cover Image:
-                  <input type="file" onChange={handleFileChange}/>
-                  </label>
-                  <button type="submit">Upload Manga</button>
-              </form>
-          </div>
-      ) : (
-          <div>
-              <h2>Upload Manga Chapter</h2>
-              {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              <div>
-                  <ul>
-                      {mangas.map((manga)=>
-                          <li key={manga._id}>
-                              <button onClick={()=> {
-                                  setMangaID(manga._id)
-                                  setMangaName(manga.name)
-                              }}>
-                                  {manga.name}
-                              </button>
-                          </li>
-                      )}
-                  </ul>
-                  <p>Upload To: {mangaName}</p>
-              </div>
-              <form onSubmit={handleChapterSubmit}>
-                  <label>Chapter Number:
-                      <input type="number" value={chapterNumber} onChange={(e) => setChapterNumber(e.target.value)} />
-                  </label>
-                  <label>Title:
-                      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                  </label>
-                  <label>Select Pages:
-                      <input type="file" multiple onChange={handleFilesChange} />
-                  </label>
-                  <button type="submit">Upload Chapter</button>
-              </form>
-          </div>
-      )
-      }
-      
-  </div>
+    <section className="xl:padding-l wide:padding-r padding-b">
+        <section className="w-full flex 
+        xl:flex-row flex-col justify-center 
+        min-h-screen gap-10 max-container"
+        >
+            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
+                bg-white px-6 py-8 shadow-xl
+                ring-slate-900/5"
+            >
+                {currentLocation === "/manager/create/manga" ? (
+                    <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5"
+                    > 
+                        <h2 className="text-3xl leading-[68px] 
+                        lg:max-w-md font-palanquin font-bold"
+                        >
+                            Manga
+                        </h2>
+                        {successMessage && <p className="font-montserrat text-lg 
+                        leading-8 mt-6 mb-14"
+                            style={{ color: 'green' }}>{successMessage}</p>}
+                        {errorMessage && <p className="font-montserrat text-lg 
+                        leading-8 mt-6 mb-14"
+                            style={{ color: 'red' }}>{errorMessage}</p>}
+                        <form  className="flex flex-col justify-center items-center m-10 rounded-lg 
+                        bg-white px-6 py-8 shadow-xl
+                        ring-slate-900/5"
+                            onSubmit={handleSubmit}>
+                            <label className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-14"
+                            >
+                            Manga Name: <span> </span>
+                            <input className="gap-5 p-2.5 my-2
+                            sm:border sm:border-slate-gray 
+                            rounded-full"
+                                type="text" 
+                                value={name} 
+                                onChange={(e) => setName(e.target.value)} />
+                            </label>
+                            <label className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-14"
+                            >
+                            Select Cover Image: <span> </span>
+                            <input  className='input'
+                                type="file" 
+                                onChange={handleFileChange}
+                             />
+                            </label>
+                            <button className="gap-2 px-7 py-4 my-2 border 
+                            font-montserrat text-lg leading-none bg-black
+                            rounded-full text-white border-black"
+                                type="submit"
+                            >
+                                Upload Manga
+                            </button>
+                        </form>
+                    </div>
+                ) : (
+                    <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5"
+                    >
+                        <h2  className="text-3xl leading-[68px] 
+                         font-palanquin font-bold"
+                        >
+                            Manga Chapter
+                        </h2>
+                        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+                        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                        <div className="flex flex-col justify-center items-center m-5 rounded-lg 
+                        bg-white px-6 py-8 shadow-xl
+                        ring-slate-900/5"
+                        >
+                            <ul>
+                                {mangas.map((manga)=>
+                                    <li key={manga._id}>
+                                        <button  className="text-white px-4 py-2 text-sm
+                                        font-montserrat font-medium mt-8 mx-5
+                                        bg-slate-gray rounded-md "
+                                            onClick={()=> {
+                                            setMangaID(manga._id)
+                                            setMangaName(manga.name)
+                                        }}>
+                                            {manga.name}
+                                        </button>
+                                    </li>
+                                )}
+                            </ul>
+                            <p className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-14"
+                            >
+                                Upload to: {mangaName}
+                            </p>
+                        </div>
+                        <form  className="flex flex-col justify-center m-10 rounded-lg 
+                        bg-white px-6 py-8 shadow-xl
+                        ring-slate-900/5"
+                            onSubmit={handleChapterSubmit}
+                        >
+                            <label  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-5"
+                            >
+                                Chapter Number:
+                                <input className="gap-5 p-2.5 my-5
+                                sm:border sm:border-slate-gray 
+                                rounded-full"
+                                type="number" value={chapterNumber} onChange={(e) => setChapterNumber(e.target.value)} />
+                            </label>
+                            <label className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-5"
+                            >
+                                Title:
+                                <input className="gap-5 p-2.5 my-5
+                                sm:border sm:border-slate-gray 
+                                rounded-full"
+                                type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                            </label>
+                            <label  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-5"
+                            >
+                                Select Pages:
+                                <input type="file" multiple onChange={handleFilesChange} />
+                            </label>
+                            <button className="gap-2 px-7 py-4 my-2 border 
+                            font-montserrat text-lg leading-none bg-black
+                            rounded-full text-white border-black"
+                            type="submit"
+                            >
+                                Upload Chapter
+                            </button>
+                        </form>
+                    </div>
+                )
+                }
+                
+            </div>
+        </section>
+    </section>
 );
 };
 
