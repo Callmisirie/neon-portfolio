@@ -118,26 +118,27 @@ export function Register() {
         >
             <h2 className="font-montserrat 
                 text-slate-gray text-lg 
-                leading-8 my-2"
+                leading-8 my-2 font-bold"
             >
                 Register
             </h2>
             <input 
-                className="w-full flex items-center 
-                gap-2 p-2.5 my-2
+                className="w-full flex
+                items-center p-2.5 my-2
                 border border-slate-gray 
-                rounded-full"
+                rounded-full text-center font-montserrat"
                 onChange={handleOnChange}
                 name="username"
                 value={registerInfo.username}
                 placeholder="Username"
                 type="text"
+                autoComplete="off"
             />
             <input 
-                className="w-full flex items-center 
-                gap-2 p-2.5 my-2
+                className="w-full flex 
+                items-center p-2.5 my-2
                 border border-slate-gray 
-                rounded-full"
+                rounded-full text-center font-montserrat"
                 onChange={handleOnChange}
                 name="password"
                 value={registerInfo.password}
@@ -209,26 +210,27 @@ export function Login() {
         >
             <h2 className="font-montserrat 
                 text-slate-gray text-lg 
-                leading-8 my-2"
+                leading-8 my-2 font-bold"
             >
                 Login
             </h2>
             <input 
-                className="w-full flex items-center 
-                gap-2 p-2.5 my-2
+                className="w-full flex 
+                items-center p-2.5 my-2
                 border border-slate-gray 
-                rounded-full"
+                rounded-full text-center font-montserrat"
                 onChange={handleOnChange}
                 name="username"
                 value={loginInfo.username}
                 placeholder="Username"
                 type="text"
+                autoComplete="off"
             />
             <input 
-                className="w-full flex items-center 
-                gap-2 p-2.5 my-2
+                className="w-full flex 
+                items-center p-2.5 my-2
                 border border-slate-gray 
-                rounded-full"
+                rounded-full text-center font-montserrat"
                 onChange={handleOnChange}
                 name="password"
                 value={loginInfo.password}

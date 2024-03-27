@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from "../components/Navbar.jsx";
+import Footer from '../components/Footer.jsx';
+
 
 
 
@@ -38,11 +41,10 @@ function Manager() {
 
 
   return (
-    <section className="xl:padding-l wide:padding-r padding-b">
-        <section className="w-full flex 
-            xl:flex-row flex-col justify-center 
-            min-h-screen gap-10 max-container"
+    <section className="relatve">
+        <section className="min-h-screen flex flex-col items-center"
         >
+        <Navbar/>
             <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
                 ring-slate-900/5"
@@ -53,19 +55,19 @@ function Manager() {
                 >
                     <h2 className="font-montserrat 
                         text-slate-gray text-lg 
-                        leading-8 mt-6 mb-14"
+                        leading-8 my-6 font-bold"
                     >
                         Create
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md"
                         onClick={handleNewManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-400 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md "
                         onClick={handleUploadChapter}> 
                         Chapter
                     </button>
@@ -77,19 +79,19 @@ function Manager() {
                 >
                     <h2 className="font-montserrat 
                         text-slate-gray text-lg 
-                        leading-8 mt-6 mb-14"
+                        leading-8 my-6 font-bold"
                     >
                         Delete
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md"
                         onClick={handleDeleteManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-400 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md"
                         onClick={handleDeleteChapter}> 
                         Chapter
                     </button>
@@ -101,25 +103,26 @@ function Manager() {
                 >
                     <h2 className="font-montserrat 
                         text-slate-gray text-lg 
-                        leading-8 mt-6 mb-14"
+                        leading-8 my-6 font-bold"
                     >
                         Edit
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-600 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md "
                         onClick={handleEditManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium mt-8 mx-5
-                            bg-purple-400 rounded-md "
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md"
                         onClick={handleEditChapter}>
                         Chapter
                     </button>
                 </div>
             </div>
         </section>
+        <Footer />
     </section>
   )  
 };
@@ -219,60 +222,60 @@ function Create() {
 };
 
 return (
-    <section className="xl:padding-l wide:padding-r padding-b">
-        <section className="w-full flex 
-        xl:flex-row flex-col justify-center 
-        min-h-screen gap-10 max-container"
+    <section className="relative">
+        <section className="w-full min-h-screen"
         >
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-                bg-white px-6 py-8 shadow-xl
-                ring-slate-900/5"
+        <Navbar/>
+            <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+                bg-white px-6"
             >
                 {currentLocation === "/manager/create/manga" ? (
-                    <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-                    bg-white px-6 py-8 shadow-xl
-                    ring-slate-900/5"
+                    <div className="flex flex-col justify-center items-center"
                     > 
                         <h2 className="text-3xl leading-[68px] 
-                        lg:max-w-md font-palanquin font-bold"
+                        lg:max-w-md font-palanquin font-bold p-2"
                         >
                             Manga
                         </h2>
                         {successMessage && <p className="font-montserrat text-lg 
-                        leading-8 mt-6 mb-14"
+                        leading-8 my-2"
                             style={{ color: 'green' }}>{successMessage}</p>}
                         {errorMessage && <p className="font-montserrat text-lg 
-                        leading-8 mt-6 mb-14"
+                        leading-8 my-2"
                             style={{ color: 'red' }}>{errorMessage}</p>}
-                        <form  className="flex flex-col justify-center items-center m-10 rounded-lg 
-                        bg-white px-6 py-8 shadow-xl
+                        <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
                         ring-slate-900/5"
                             onSubmit={handleSubmit}>
-                            <label className="font-montserrat 
-                            text-slate-gray text-lg 
-                            leading-8 mt-6 mb-14"
-                            >
-                            Manga Name: <span> </span>
                             <input className="gap-5 p-2.5 my-2
-                            sm:border sm:border-slate-gray 
-                            rounded-full"
+                            border border-slate-gray 
+                            rounded-full text-center font-montserrat"
                                 type="text" 
                                 value={name} 
-                                onChange={(e) => setName(e.target.value)} />
-                            </label>
-                            <label className="font-montserrat 
-                            text-slate-gray text-lg 
-                            leading-8 mt-6 mb-14"
-                            >
-                            Select Cover Image: <span> </span>
-                            <input  className='input'
-                                type="file" 
-                                onChange={handleFileChange}
-                             />
-                            </label>
+                                onChange={(e) => setName(e.target.value)} 
+                                placeholder='Manga Name'
+                                />   
+                            <div className='flex flex-col items-center'>
+                                <label className="flex flex-col items-center font-montserrat 
+                                text-slate-gray text-lg 
+                                leading-8 my-4 text-center" 
+                                >
+                                    <p className='mb-4 font-bold'>Select Cover Image</p>
+                                    <input  className='block w-full text-sm text-slate-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-violet-50 file:text-violet-700
+                                    hover:file:bg-violet-100'
+                                        type="file" 
+                                        onChange={handleFileChange}
+                                    />
+                                </label>
+                            </div>
+                            
                             <button className="gap-2 px-7 py-4 my-2 border 
                             font-montserrat text-lg leading-none bg-black
-                            rounded-full text-white border-black"
+                            rounded-full text-white border-black mb-5"
                                 type="submit"
                             >
                                 Upload Manga
@@ -280,27 +283,31 @@ return (
                         </form>
                     </div>
                 ) : (
-                    <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-                    bg-white px-6 py-8 shadow-xl
-                    ring-slate-900/5"
+                    <div className="flex flex-col justify-center items-center rounded-lg 
+                        bg-white px-6 shadow-xl
+                        ring-slate-900/5"
                     >
                         <h2  className="text-3xl leading-[68px] 
-                         font-palanquin font-bold"
+                        lg:max-w-md font-palanquin font-bold p-2"
                         >
                             Manga Chapter
                         </h2>
-                        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-                        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+                        {successMessage && <p  className="font-montserrat text-lg 
+                        leading-8 my-2" 
+                        style={{ color: "green" }}>{successMessage}</p>}
+                        {errorMessage && <p  className="font-montserrat text-lg 
+                        leading-8 my-2" 
+                        style={{ color: "red" }}>{errorMessage}</p>}
                         <div className="flex flex-col justify-center items-center m-5 rounded-lg 
                         bg-white px-6 py-8 shadow-xl
                         ring-slate-900/5"
                         >
-                            <ul>
+                            <ul className='flex flex-col items-center'>
                                 {mangas.map((manga)=>
                                     <li key={manga._id}>
                                         <button  className="text-white px-4 py-2 text-sm
-                                        font-montserrat font-medium mt-8 mx-5
-                                        bg-slate-gray rounded-md "
+                                        font-montserrat font-medium my-2 mx-5
+                                        bg-purple-600 rounded-md hover:bg-purple-500"
                                             onClick={()=> {
                                             setMangaID(manga._id)
                                             setMangaName(manga.name)
@@ -310,48 +317,53 @@ return (
                                     </li>
                                 )}
                             </ul>
-                            <p className="font-montserrat 
+                            <h3 className="font-montserrat 
                             text-slate-gray text-lg 
-                            leading-8 mt-6 mb-14"
+                            leading-8 my-6"
                             >
-                                Upload to: {mangaName}
-                            </p>
+                                <span className='font-bold font-montserrat'>UPLOAD TO - </span>{mangaName}
+                            </h3>
                         </div>
-                        <form  className="flex flex-col justify-center m-10 rounded-lg 
-                        bg-white px-6 py-8 shadow-xl
+                        <form  className="flex flex-col justify-center items-center mx-5 mt-5 mb-10 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
                         ring-slate-900/5"
                             onSubmit={handleChapterSubmit}
                         >
-                            <label  className="font-montserrat 
-                            text-slate-gray text-lg 
-                            leading-8 mt-6 mb-5"
+                    
+                                <input className="p-2.5 my-3
+                                border border-slate-gray 
+                                rounded-full text-center font-montserrat"
+                                    type="number" 
+                                    value={chapterNumber} 
+                                    onChange={(e) => setChapterNumber(e.target.value)}
+                                    placeholder='Chapter Number'
+                                />
+                                <input className="p-2.5 my-3
+                                border border-slate-gray 
+                                rounded-full text-center font-montserrat" 
+                                type="text" 
+                                value={title} 
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder='Title'
+                                />
+                            <label  className="flex flex-col items-center font-montserrat 
+                                text-slate-gray text-lg 
+                                leading-8 my-3 text-center"
                             >
-                                Chapter Number:
-                                <input className="gap-5 p-2.5 my-5
-                                sm:border sm:border-slate-gray 
-                                rounded-full"
-                                type="number" value={chapterNumber} onChange={(e) => setChapterNumber(e.target.value)} />
-                            </label>
-                            <label className="font-montserrat 
-                            text-slate-gray text-lg 
-                            leading-8 mt-6 mb-5"
-                            >
-                                Title:
-                                <input className="gap-5 p-2.5 my-5
-                                sm:border sm:border-slate-gray 
-                                rounded-full"
-                                type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                            </label>
-                            <label  className="font-montserrat 
-                            text-slate-gray text-lg 
-                            leading-8 mt-6 mb-5"
-                            >
-                                Select Pages:
-                                <input type="file" multiple onChange={handleFilesChange} />
+                                <p className='mb-4 font-bold font-montserrat'>Select Pages</p>
+                                <input className='block w-full text-sm text-slate-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-full file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-violet-50 file:text-violet-700
+                                    hover:file:bg-violet-100'
+                                    type="file" multiple 
+                                    onChange={handleFilesChange} 
+                                    />
                             </label>
                             <button className="gap-2 px-7 py-4 my-2 border 
                             font-montserrat text-lg leading-none bg-black
-                            rounded-full text-white border-black"
+                            rounded-full text-white border-black mb-5"
                             type="submit"
                             >
                                 Upload Chapter
@@ -363,6 +375,7 @@ return (
                 
             </div>
         </section>
+        <Footer />
     </section>
 );
 };
