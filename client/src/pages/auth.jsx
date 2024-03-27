@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie"; 
 import { useNavigate } from "react-router-dom"; 
+import Navbar from "../components/Navbar.jsx";
+import Footer from '../components/Footer.jsx';
 
 function Auth() {
     const [isClickedRegister, setIsClickedRegister] = useState(false);
@@ -28,18 +30,18 @@ function Auth() {
     }
 
     return (
-        <section className="xl:padding-l wide:padding-r padding-b">
-            <section className="w-full flex 
-            xl:flex-row flex-col justify-center 
-            min-h-screen gap-10 max-container"
-            >
-                <div className="flex flex-col m-10 rounded-lg 
-                    bg-white px-6 py-8 shadow-xl
-                    ring-slate-900/5 "
+        <section className="relative">
+            <section className="min-h-screen flex flex-col items-center">
+            <Navbar/> 
+                <div className="h-full flex 
+                flex-col justify-center items-center  
+                max-container m-10 rounded-lg 
+                bg-white px-6 py-8 shadow-xl
+                ring-slate-900/5"
                 >
                     <button 
                         className="text-white px-4 py-2 text-sm
-                        font-montserrat font-medium mt-8 mx-5
+                        font-montserrat font-medium my-3 mx-5
                         bg-purple-600 rounded-md "
                         onClick={ ()=> {
                         handleClick("Register")
@@ -48,7 +50,7 @@ function Auth() {
                     </button>    
                     <button
                         className="text-white px-4 py-2 text-sm
-                        font-montserrat font-medium mt-8 mx-5
+                        font-montserrat font-medium my-3 mx-5
                         bg-purple-400 rounded-md " 
                         onClick={()=> {
                         handleClick("Login")
@@ -67,7 +69,7 @@ function Auth() {
                     }
                 </div>  
             </section>
-  
+            <Footer />
         </section>
 
     );
@@ -109,21 +111,21 @@ export function Register() {
 
     return (
         <form 
-            className="flex flex-col justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-8 shadow-xl
+            className="flex flex-col justify-center items-center rounded-lg 
+            bg-white px-6 py-6 shadow-xl
             ring-slate-900/5"
             onSubmit={handleRegisterSubmit}
         >
             <h2 className="font-montserrat 
                 text-slate-gray text-lg 
-                leading-8 mt-6 mb-14"
+                leading-8 my-2"
             >
                 Register
             </h2>
             <input 
                 className="w-full flex items-center 
-                gap-5 p-2.5 my-2
-                sm:border sm:border-slate-gray 
+                gap-2 p-2.5 my-2
+                border border-slate-gray 
                 rounded-full"
                 onChange={handleOnChange}
                 name="username"
@@ -133,8 +135,8 @@ export function Register() {
             />
             <input 
                 className="w-full flex items-center 
-                gap-5 p-2.5 my-2
-                sm:border sm:border-slate-gray 
+                gap-2 p-2.5 my-2
+                border border-slate-gray 
                 rounded-full"
                 onChange={handleOnChange}
                 name="password"
@@ -143,7 +145,7 @@ export function Register() {
                 type="password" 
             />
             <button 
-                className="gap-2 px-7 py-4 my-2 border 
+                className="px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black"
             
@@ -200,21 +202,21 @@ export function Login() {
 
     return (
         <form 
-            className="flex flex-col justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-8 shadow-xl
+            className="flex flex-col justify-center items-center rounded-lg 
+            bg-white px-6 py-6 shadow-xl
             ring-slate-900/5"
             onSubmit={handleLoginSubmit}
         >
             <h2 className="font-montserrat 
                 text-slate-gray text-lg 
-                leading-8 mt-6 mb-14"
+                leading-8 my-2"
             >
                 Login
             </h2>
             <input 
                 className="w-full flex items-center 
-                gap-5 p-2.5 my-2
-                sm:border sm:border-slate-gray 
+                gap-2 p-2.5 my-2
+                border border-slate-gray 
                 rounded-full"
                 onChange={handleOnChange}
                 name="username"
@@ -224,8 +226,8 @@ export function Login() {
             />
             <input 
                 className="w-full flex items-center 
-                gap-5 p-2.5 my-2
-                sm:border sm:border-slate-gray 
+                gap-2 p-2.5 my-2
+                border border-slate-gray 
                 rounded-full"
                 onChange={handleOnChange}
                 name="password"
@@ -234,7 +236,7 @@ export function Login() {
                 type="password" 
             />
             <button
-                className="gap-2 px-7 py-4 my-2 border 
+                className="px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black" 
                 type="submit"
