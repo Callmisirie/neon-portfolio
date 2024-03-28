@@ -42,13 +42,18 @@ function Manager() {
 
   return (
     <section className="relatve">
-        <section className="min-h-screen flex flex-col items-center"
-        >
-        <Navbar/>
+        <section className="min-h-screen flex flex-col items-center">
+            <Navbar/>
+            <h2  className="text-3xl leading-[68px] 
+            lg:max-w-md font-montserrat  font-bold p-2 text-center min-h-full"
+            >
+                ADMIN MANAGER
+            </h2>
             <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-                bg-white px-6 py-8 shadow-xl
+                bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
             >
+                
                 <div className="flex flex-col justify-center items-center m-10 rounded-lg 
                     bg-white px-6 py-8 shadow-xl
                     ring-slate-900/5"
@@ -61,13 +66,13 @@ function Manager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md"
+                        bg-purple-600 rounded-md hover:bg-purple-500"
                         onClick={handleNewManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md "
+                        bg-purple-500 rounded-md hover:bg-purple-400 "
                         onClick={handleUploadChapter}> 
                         Chapter
                     </button>
@@ -85,13 +90,13 @@ function Manager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md"
+                        bg-purple-600 rounded-md hover:bg-purple-500"
                         onClick={handleDeleteManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md"
+                        bg-purple-500 rounded-md hover:bg-purple-400"
                         onClick={handleDeleteChapter}> 
                         Chapter
                     </button>
@@ -109,13 +114,13 @@ function Manager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md "
+                        bg-purple-600 rounded-md hover:bg-purple-500 "
                         onClick={handleEditManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md"
+                        bg-purple-500 rounded-md hover:bg-purple-400"
                         onClick={handleEditChapter}>
                         Chapter
                     </button>
@@ -223,9 +228,8 @@ function Create() {
 
 return (
     <section className="relative">
-        <section className="w-full min-h-screen"
-        >
-        <Navbar/>
+        <section className="w-full min-h-screen">
+            <Navbar/>
             <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
                 bg-white px-6"
             >
@@ -288,7 +292,7 @@ return (
                         ring-slate-900/5"
                     >
                         <h2  className="text-3xl leading-[68px] 
-                        lg:max-w-md font-palanquin font-bold p-2"
+                        lg:max-w-md font-palanquin font-bold p-2 text-center"
                         >
                             Manga Chapter
                         </h2>
@@ -298,14 +302,14 @@ return (
                         {errorMessage && <p  className="font-montserrat text-lg 
                         leading-8 my-2" 
                         style={{ color: "red" }}>{errorMessage}</p>}
-                        <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                        bg-white px-6 py-8 shadow-xl
+                        <div className="flex flex-col justify-center items-center mx-5 mb-5 mt-2.5 rounded-lg 
+                        bg-white px-6 pb-6 shadow-xl
                         ring-slate-900/5"
                         >
                             <ul className='flex flex-col items-center'>
                                 {mangas.map((manga)=>
                                     <li key={manga._id}>
-                                        <button  className="text-white px-4 py-2 text-sm
+                                        <button className="text-white px-4 py-2 text-sm
                                         font-montserrat font-medium my-2 mx-5
                                         bg-purple-600 rounded-md hover:bg-purple-500"
                                             onClick={()=> {
@@ -449,40 +453,82 @@ const handleChapterClick = (mangaID, chapterID, title) => {
   }
 
   return (
-      <div>
-          {currentLocation === "/manager/delete/manga" ? (
-              <div>
-                    <ul>
+    <section className="relative">
+        <section className="w-full min-h-screen">
+            <Navbar/>
+            <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+                bg-white px-6">
+                {currentLocation === "/manager/delete/manga" ? (
+                    <div  className="flex flex-col justify-center items-center rounded-lg 
+                        bg-white px-6 shadow-xl
+                        ring-slate-900/5">
+                        <h2 className="text-3xl leading-[68px] 
+                        lg:max-w-md font-palanquin font-bold p-2"
+                        >
+                            Manga
+                        </h2>
+                        <ul className='flex flex-col items-center'>
+                            {mangas.map((manga)=> {
+                                return (
+                                    <>
+                                        <li 
+                                            onClick={()=> {
+                                                handleMangaClick(manga._id, manga.name )
+                                            }}
+                                            key={manga._id}
+                                        >
+                                            <button className="text-white px-4 py-2 text-sm
+                                            font-montserrat font-medium my-2 mx-5
+                                            bg-purple-600 rounded-md hover:bg-purple-500">
+                                                {manga.name}
+                                            </button>
+                                        </li>
+                                    </>
+                                )
+                            })}
+                        </ul>
+                        <p  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 my-6 text-center"
+                        >
+                             <span className='font-bold font-montserrat'>Write "</span>
+                             {selectedMangaName}
+                             <span className='font-bold font-montserrat'>" to delete Manga.</span>
+                        </p>
+                        <input className="p-2.5 my-3
+                        border border-slate-gray 
+                        rounded-full text-center font-montserrat" 
+                            onChange={(e)=> {setDeleteMangaName(e.target.value)}} 
+                            placeholder="Manga Name" 
+                            value={deleteMangaName} />
+                        <button className="gap-2 px-7 py-4 my-2 border 
+                        font-montserrat text-lg leading-none bg-black
+                        rounded-full text-white border-black mb-5"
+                            onClick={handleDeleteMangaClick}
+                        >
+                            Delete Manga
+                        </button>
+                    </div>
+                ) : (
+                <div className="flex flex-col justify-center items-center rounded-lg 
+                    bg-white px-6 shadow-xl
+                    ring-slate-900/5">
+                    <h2  className="text-3xl leading-[68px] 
+                    lg:max-w-md font-palanquin font-bold p-2 text-center"
+                    >
+                        Manga Chapter
+                    </h2>
+                    <ul className='flex flex-col items-center'>
                         {mangas.map((manga)=> {
                             return (
-                                <>
-                                    <li 
-                                        onClick={()=> {
-                                            handleMangaClick(manga._id, manga.name )
-                                        }}
-                                        key={manga._id}
-                                    >
-                                        <button>
-                                            {manga.name}
-                                        </button>
-                                    </li>
-                                </>
-                            )
-                        })}
-                    </ul>
-                    <p>Type "{selectedMangaName}" to delete Manga</p>
-                    <input onChange={(e)=> {setDeleteMangaName(e.target.value)}} placeholder="Manga Name" value={deleteMangaName}></input>
-                    <button onClick={handleDeleteMangaClick}>
-                        Delete Manga
-                    </button>
-              </div>
-          ) : (
-              <div>
-                    <ul>
-                        {mangas.map((manga)=> {
-                            return (
-                                <li key={manga._id}>
-                                    <button
+                                <li className="flex flex-col justify-center items-center rounded-lg 
+                                bg-white px-6 shadow-xl
+                                ring-slate-900/5 my-2"
+                                    key={manga._id}
+                                >
+                                    <button className="text-white px-4 py-2 text-sm
+                                    font-montserrat font-medium my-3 mx-5
+                                    bg-purple-600 rounded-md hover:bg-purple-500"
                                         onClick={()=> {
                                             handleClick(manga._id)
                                         }}
@@ -495,7 +541,10 @@ const handleChapterClick = (mangaID, chapterID, title) => {
                                             .map((mangaContent) =>
                                                 mangaContent.chapters.map((chapter) => (
                                                     <li key={chapter._id}>
-                                                        <button onClick={()=> {
+                                                        <button className="text-white px-4 py-2 text-sm
+                                                        font-montserrat font-medium my-2 mx-5
+                                                        bg-purple-400 rounded-md hover:bg-purple-300"
+                                                            onClick={()=> {
                                                             handleChapterClick(manga._id, chapter._id, chapter.title)
                                                         }}>
                                                             {chapter.title}
@@ -508,17 +557,35 @@ const handleChapterClick = (mangaID, chapterID, title) => {
                             )
                         })}
                     </ul>
-                    <p>Type "{selectedChapterTitle}" to delete Chapter</p>
-                    <input onChange={(e)=> {setDeleteChapterTitle(e.target.value)}} placeholder="Chapter Title" value={deleteChapterTitle}></input>
-                    <button onClick={handleDeleteChapterClick}>
+                    <p  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 my-2 text-center"
+                    >
+                            <span className='font-bold font-montserrat'>Write "</span>
+                            {selectedChapterTitle}
+                            <span className='font-bold font-montserrat'>" to delete Chapter.</span>
+                    </p>
+                    <input className="p-2.5 my-3
+                    border border-slate-gray 
+                    rounded-full text-center font-montserrat" 
+                        onChange={(e)=> {setDeleteChapterTitle(e.target.value)}}     
+                        placeholder="Chapter Title"
+                        value={deleteChapterTitle} />
+                    <button className="gap-2 px-7 py-4 my-2 border 
+                    font-montserrat text-lg leading-none bg-black
+                    rounded-full text-white border-black mb-5"
+                        onClick={handleDeleteChapterClick}>
                         Delete Chapter
                     </button>
-              </div>
-          )
-      }
-          
-         
-      </div>
+                </div>
+                )
+            }
+                
+                
+            </div>
+        </section>
+        <Footer />
+    </section>
   )
 };
 
@@ -647,96 +714,217 @@ function Edit() {
   
 
   return (
-      <div>
-          {currentLocation === "/manager/edit/manga" ? (
-              <div>
-                  <ul>
-                      {mangas.map((manga)=> {
-                          return (
-                              <li key={manga._id}>
-                                  <button onClick={()=> {
-                                      handleMangaClick(manga.name, manga._id)
-                                  }}>
-                                      {manga.name}
-                                  </button>
-                              </li>
-                          )
-                      })}
-                  </ul>
-                  <h3>Update: {mangaName}</h3>
-                  {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                  <form onSubmit={handleSubmit}>
-                      <label>
-                          Manga Name: 
-                          <input type="text" onChange={handleChange} value={newMangaName} placeholder={mangaName}/>
-                      </label>
-                      <label>
-                          Select Cover Image:
-                          <input type="file" onChange={handleFileChange}/>
-                      </label>
-                      <button  type="submit"> Update Manga </button>
-                  </form>
-              </div>
-          ) : (
-          <div>
-              <ul> 
-                  {mangas.map((manga)=> {
-                      return (
-                      <div key={manga._id}>
-                          <li>
-                              <button
-                                  onClick={()=> {
-                                      handleMangaClick(manga.name, manga._id)
-                                  }}
-                              >
-                                  {manga.name}
-                              </button>
-                              <ul>
-                                  {clickedMangaId === manga._id && mangaContents
-                                      .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                      .map((mangaContent) =>
-                                          mangaContent.chapters.map((chapter) => (
-                                              <li key={chapter._id}>
-                                                  <button onClick={()=> {
-                                                      handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
-                                                  }}>
-                                                    Chapter {chapter.chapterNumber}: {chapter.title}
-                                                  </button>
-                                              </li>
-                                          ))
-                                      )}
-                              </ul>
-                          </li>
-                          
-                      </div>
-                      )
-                  })}
-              </ul>
-              <div>
-                  <h3>Manga: {mangaName}</h3>
-                  <p>Update {chapterTitle} Chapter.</p>
-                  {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                  {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-                  <form onSubmit={handleChapterSubmit}>
-                      <label>
-                      Chapter Number:
-                      <input type="number" value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} placeholder={chapterNumber} />
-                      </label>
-                      <label>
-                      Title:
-                      <input type="text" value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} placeholder={chapterTitle}/>
-                      </label>
-                      <label>
-                      Select Pages:
-                      <input type="file" multiple onChange={handleFilesChange} />
-                      </label>
-                      <button type="submit">Update Chapter</button>
-                  </form>
-              </div>
-          </div>
-          )}
-      </div>
+    <section className="relative">
+        <section className="w-full min-h-screen">
+            <Navbar/>
+            <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+                bg-white px-6">
+                {currentLocation === "/manager/edit/manga" ? (
+                    <div className="flex flex-col justify-center items-center rounded-lg 
+                    bg-white px-6 shadow-xl
+                    ring-slate-900/5"
+                    >
+                        <h2 className="text-3xl leading-[68px] 
+                        lg:max-w-md font-palanquin font-bold p-2"
+                        >
+                            Manga
+                        </h2>
+                        <ul className='flex flex-col items-center'>
+                            {mangas.map((manga)=> {
+                                return (
+                                    <li key={manga._id}>
+                                        <button className="text-white px-4 py-2 text-sm
+                                        font-montserrat font-medium my-2 mx-5
+                                        bg-purple-600 rounded-md hover:bg-purple-500"
+                                            onClick={()=> {
+                                            handleMangaClick(manga.name, manga._id)
+                                        }}>
+                                            {manga.name}
+                                        </button>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                        <h3 className="font-montserrat 
+                        text-slate-gray text-lg 
+                        leading-8 mt-6 text-center"
+                        >
+                            <span className='font-montserrat font-bold'>UPDATE - </span>     
+                            {mangaName} 
+                        </h3>
+                        {successMessage && <p className="font-montserrat text-lg 
+                        leading-8 my-2"
+                            style={{ color: 'green' }}>{successMessage}</p>}
+                        {errorMessage && <p className="font-montserrat text-lg 
+                        leading-8 my-2"
+                            style={{ color: 'red' }}>{errorMessage}</p>}
+                        <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5"
+                            onSubmit={handleSubmit}>
+                            <div className="flex flex-col justify-center items-center m-5 rounded-lg 
+                            bg-white px-6 py-4 shadow-xl
+                            ring-slate-900/5">
+                                <p className='mb-4 font-bold font-montserrat'>Manga Name</p>
+                                <input className="p-2.5 mb-3
+                                border border-slate-gray 
+                                rounded-full text-center font-montserrat" 
+                                    type="text" onChange={handleChange} 
+                                    value={newMangaName} 
+                                    placeholder={mangaName
+                                }/>
+                            </div>                 
+                            <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                            bg-white px-6 py-4 shadow-xl
+                            ring-slate-900/5">
+                                <p className='mb-4 font-bold font-montserrat'>Select Cover Image</p>
+                                <input className='block w-full text-sm text-slate-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-violet-50 file:text-violet-700
+                                hover:file:bg-violet-100'
+                                    type="file" 
+                                    onChange={handleFileChange}
+                                />
+                            </div>
+                            
+                            <button className="gap-2 px-7 py-4 my-2 border 
+                            font-montserrat text-lg leading-none bg-black
+                            rounded-full text-white border-black mb-5" 
+                                type="submit">
+                                Update Manga 
+                            </button>
+                        </form>
+                    </div>
+                ) : (
+                <div className="flex flex-col justify-center items-center rounded-lg 
+                    bg-white px-6 shadow-xl
+                    ring-slate-900/5">
+                    <h2  className="text-3xl leading-[68px] 
+                    lg:max-w-md font-palanquin font-bold p-2 text-center"
+                    >
+                        Manga Chapter
+                    </h2>
+                    <ul className='flex flex-col items-center'> 
+                        {mangas.map((manga)=> {
+                            return (
+                                <li className="flex flex-col justify-center items-center rounded-lg 
+                                bg-white px-6 shadow-xl
+                                ring-slate-900/5 my-3"
+                                    key={manga._id}>
+                                    <button className="text-white px-4 py-2 text-sm
+                                    font-montserrat font-medium my-2 mx-5
+                                    bg-purple-600 rounded-md hover:bg-purple-500"
+                                        onClick={()=> {
+                                            handleMangaClick(manga.name, manga._id)
+                                        }}
+                                    >
+                                        {manga.name}
+                                    </button>
+                                    <ul>
+                                        {clickedMangaId === manga._id && mangaContents
+                                            .filter((mangaContent) => mangaContent.mangaID === manga._id)
+                                            .map((mangaContent) =>
+                                                mangaContent.chapters.map((chapter) => (
+                                                    <li key={chapter._id}>
+                                                        <button className="text-white px-4 py-2 text-sm
+                                                        font-montserrat font-medium my-2 mx-5
+                                                        bg-purple-400 rounded-md hover:bg-purple-300"
+                                                            onClick={()=> {
+                                                            handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
+                                                        }}>
+                                                        Chapter {chapter.chapterNumber}: {chapter.title}
+                                                        </button>
+                                                    </li>
+                                                ))
+                                            )}
+                                    </ul>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <div className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col justify-center items-center rounded-lg m-5 
+                        bg-white px-6 shadow-xl
+                        ring-slate-900/5">
+                            <p  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 my3 text-center">
+                            <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
+                            </p>
+                            <p  className="font-montserrat 
+                            text-slate-gray text-lg 
+                            leading-8 my-3 text-center">
+                            <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
+                            <span className='font-montserrat font-bold'>" CHAPTER.</span>
+                            </p>
+                        </div>
+
+                       
+                        {successMessage && <p className="font-montserrat text-lg 
+                        leading-8 my-2"
+                            style={{ color: 'green' }}>{successMessage}</p>}
+                        {errorMessage && <p className="font-montserrat text-lg 
+                        leading-8 my-2"
+                            style={{ color: 'red' }}>{errorMessage}</p>}
+                        <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5"
+                            onSubmit={handleChapterSubmit}
+                        >
+                            <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                            bg-white px-6 py-4 shadow-xl
+                            ring-slate-900/5">
+                            <p className='mb-4 font-bold font-montserrat'>Chapter Number</p> 
+                            <input className="p-2.5 mb-3
+                            border border-slate-gray 
+                            rounded-full text-center font-montserrat" 
+                                type="number" 
+                                value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} 
+                                placeholder={chapterNumber} 
+                            />
+                            </label>
+                            <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                            bg-white px-6 py-4 shadow-xl
+                            ring-slate-900/5">
+                                <p className='mb-4 font-bold font-montserrat'>Title</p> 
+                                <input className="p-2.5 mb-3
+                                border border-slate-gray 
+                                rounded-full text-center font-montserrat" 
+                                    type="text" 
+                                    value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} 
+                                    placeholder={chapterTitle}
+                                />
+                            </label>
+                            <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                            bg-white px-6 py-4 shadow-xl
+                            ring-slate-900/5">
+                                <p className='mb-4 font-bold font-montserrat'> Select Pages</p> 
+                                <input  className='block w-full text-sm text-slate-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-full file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-violet-50 file:text-violet-700
+                                hover:file:bg-violet-100'
+                                    type="file" 
+                                    multiple onChange={handleFilesChange} 
+                                />
+                            </label>
+                            <button className="gap-2 px-7 py-4 my-2 border 
+                            font-montserrat text-lg leading-none bg-black
+                            rounded-full text-white border-black mb-5"
+                                type="submit">
+                                Update Chapter
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                )}
+            </div>
+        </section>
+        <Footer />
+    </section>
   )
 };
 
