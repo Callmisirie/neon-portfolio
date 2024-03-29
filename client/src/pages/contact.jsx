@@ -1,14 +1,10 @@
-import Navbar from "../components/Navbar.jsx";
-import Footer from "../components/Footer.jsx";
+
 
 
 function Contact() {
     return (
-        <section className=""
-        >
-            <section className="min-h-screen"
+            <section className="min-h-full"
             >
-             <Navbar />
                 <div className="min-h-full flex flex-col justify-center items-center  max-container">
                     <div className="mt-5">
                         <h1 className="my-2.5 
@@ -25,8 +21,6 @@ function Contact() {
                 </div>
                 
             </section>
-            <Footer />
-        </section>
     );
 };
 

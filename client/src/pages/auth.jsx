@@ -30,10 +30,8 @@ function Auth() {
     }
 
     return (
-        <section className="relative">
-            <section className="min-h-screen flex flex-col items-center">
-            <Navbar/> 
-                <div className="h-full flex 
+            <section className="min-h-full flex flex-col items-center">
+                <div className="flex 
                 flex-col justify-center items-center  
                 max-container m-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
@@ -42,7 +40,7 @@ function Auth() {
                     <button 
                         className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md "
+                        bg-purple-600 rounded-md hover:bg-purple-500 "
                         onClick={ ()=> {
                         handleClick("Register")
                     }}>
@@ -51,7 +49,7 @@ function Auth() {
                     <button
                         className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-400 rounded-md " 
+                        bg-purple-400 rounded-md hover:bg-purple-300 " 
                         onClick={()=> {
                         handleClick("Login")
                     }}>
@@ -69,8 +67,6 @@ function Auth() {
                     }
                 </div>  
             </section>
-            <Footer />
-        </section>
 
     );
 };

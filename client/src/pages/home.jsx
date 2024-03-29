@@ -25,7 +25,7 @@ function Home() {
            
 
     return (
-        <div>
+        <div className="min-h-full">
             <section className="xl:padding-l wide:padding-r padding-b">
                 <section className="w-full flex 
                     xl:flex-row flex-col justify-center 
@@ -106,7 +106,7 @@ function Home() {
                         />
                         <div className="flex sm:gap-6 
                             gap-4 absolute -bottom-[5%]
-                            sm:left-[10%] max-sm:px-6"
+                            sm:left-[10%] max-sm:px-6 cursor-pointer"
                         >
                             {shoes.map((shoe)=> 
                                 <div key={shoe}>    

@@ -23,29 +23,31 @@ function App() {
   return (
     <main className='relative'>
       <Router> 
-              {/* <Navbar/>       */}
-          <Routes>
-            <Route path="/" element={<Home />}/>
-            <Route path="/contact" element={<Contact />}/>
-            <Route path="/about" element={<About />}/>
-            <Route path="/manga" element={<Manga />}/>
-            <Route path="/auth" element={<Auth />}/>
-            <Route path="/manga/find/:mangaName" element={<Find />}/>
-            {cookies.access_token && (
-              <>
-                <Route path="/manager" element={<Manager />}/>
-                <Route path="/manager/create/manga" element={<Create />}/>
-                <Route path="/manager/create/manga/chapter" element={<Create />}/>
-                <Route path="/manager/delete/manga" element={<Delete />}/>
-                <Route path="/manager/delete/manga/chapter" element={<Delete />}/>
-                <Route path="/manager/edit/manga" element={<Edit />}/>
-                <Route path="/manager/edit/manga/chapter" element={<Edit />}/>
-              </>
-            )}
-            <Route path="/manga/:chapters" element={<Chapters />}/>
-            <Route path="/manga/:chapters/:pages" element={<Pages />}/>
-          </Routes>       
-        {/* <Footer /> */}
+          <div className='min-h-screen'>
+            <Navbar/>      
+            <Routes>
+              <Route path="/" element={<Home />}/>
+              <Route path="/contact" element={<Contact />}/>
+              <Route path="/about" element={<About />}/>
+              <Route path="/manga" element={<Manga />}/>
+              <Route path="/auth" element={<Auth />}/>
+              <Route path="/manga/find/:mangaName" element={<Find />}/>
+              {cookies.access_token && (
+                <>
+                  <Route path="/manager" element={<Manager />}/>
+                  <Route path="/manager/create/manga" element={<Create />}/>
+                  <Route path="/manager/create/manga/chapter" element={<Create />}/>
+                  <Route path="/manager/delete/manga" element={<Delete />}/>
+                  <Route path="/manager/delete/manga/chapter" element={<Delete />}/>
+                  <Route path="/manager/edit/manga" element={<Edit />}/>
+                  <Route path="/manager/edit/manga/chapter" element={<Edit />}/>
+                </>
+              )}
+              <Route path="/manga/:chapters" element={<Chapters />}/>
+              <Route path="/manga/:chapters/:pages" element={<Pages />}/>
+            </Routes>    
+          </div>  
+          <Footer />
       </Router>
     </main>
   );

@@ -20,7 +20,13 @@ function SearchBar() {
         <div>
             <form >
                 <input onClick={handleClick} type="submit" value="" />
-                <input name="search" type="text" placeholder="Search" onChange={(e)=> setMangaName(e.target.value)}/>
+                <input className="p-2.5 my-3
+                border border-slate-gray 
+                rounded-full text-center font-montserrat"
+                    name="search" type="text" 
+                    placeholder="Search" 
+                    onChange={(e)=> setMangaName(e.target.value)}
+                />
             </form>
         </div>
     )
