@@ -19,13 +19,12 @@ function Navbar() {
         <header className="padding-x absoloute py-8 z-10 w-full">
                     <nav className=" flex justify-between items-center max-container">
                         <a href="/">
-                            <img 
+                            <img className=""
                                 src={headerLogoPurple}
                                 alt="Logo"
                                 width={90}
                                 height={20}
                             />
-                            
                         </a>
                         <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/"> Home </Link></li>
@@ -57,9 +56,7 @@ function Navbar() {
                                 height={25}
                             />
                         </div>
-                    </nav>
-                    
-                   
+                    </nav>   
         </header>
     )
 };

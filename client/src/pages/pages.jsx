@@ -12,8 +12,14 @@ function Pages() {
     const [toggleView, setToggleView] = useState(true);
     const [selectedPage, setSelectedPage] = useState(1);
     const [selectedChapter, setSelectedChapter] = useState(1);
-    const [displayView, setDisplayView] = useState("Long Strip");
-    
+    const [displayView, setDisplayView] = useState("Long Strip Page");
+    const [isChecked, setIsChecked] = useState(false);
+
+    const toggle = () => {
+      setIsChecked(!isChecked);
+      handleToggleClick();
+    }
+
     useEffect(()=>{
         const fetchPages = async () =>{
             try {
@@ -52,10 +58,10 @@ function Pages() {
     function handleToggleClick() {
         if (toggleView) {
             setToggleView(false);
-            setDisplayView("Page")
+            setDisplayView("Single Page")
         } else {
             setToggleView(true);
-            setDisplayView("Long Strip")
+            setDisplayView("Long Strip Page")
             setSelectedPage(selectedPage)
         }
     };
@@ -115,70 +121,117 @@ function Pages() {
     
 
     return (
-        <div>
-            <select onChange={handleChapterChange}>
-                {manga && manga.chapters && manga.chapters.map((chapter, index)=> {
-                    return (
-                        <option 
-                            key={chapter._id} 
-                            value={(index + 1)} 
-                            selected={"/manga/" + manga.mangaID + "/"+ chapter._id === location.pathname}
-                        >
-                            Chapter {chapter.chapterNumber}: {chapter.title}
-                        </option>
-                )
-                })}     
-            </select>
-
-            {!toggleView && (
-                <select onChange={handlePageChange}>
-                    {chapter && chapter.pages && chapter.pages.map((page, index)=> {
-                        return (
-                            <option 
-                                key={index} 
-                                value={(index + 1)} 
-                                selected={selectedPage === (index + 1)}
-                            >
-                                Page: {(index + 1)}
-                            </option>
-                    )
-                    })}     
-                </select>
-            )}
-            <button onClick={handlePreviousChapter}>Previous</button>
-            <button onClick={handleToggleClick}><p>{displayView}</p></button>
-            <ul>
-                {chapter && (
-                    <>
-                        <h3>{chapter.title}</h3>
-                        {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
-                            <div key={index}>
-                                <li > 
-                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
-                                </li>
-                            </div>
-                            ))
-                        ) : (
-                        <div>
-                            {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
-                                parseInt(selectedPage, 10) === (index + 1) && (
-                                    <div key={index} onClick={() => {
-                                        handleNextPageClick(chapter.pages.length, manga.chapters.length)
-                                    }}>
-                                        <li>
-                                            <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
-                                        </li>
-                                    </div>
-                                )
-                            ))
-                            }
+        <section className="min-h-full">
+            <div className="flex flex-col justify-center 
+            items-center bg-white p-6">
+                <div className="flex">
+                    <label htmlFor="toggle" className="flex items-center cursor-pointer">
+                        <p className="font-montserrat 
+                        text-black text-md mx-2 text-center">
+                            {displayView}
+                        </p>
+                        <div className="flex items-center"
+                       >
+                            <input
+                                id="toggle"
+                                type="checkbox"
+                                className="sr-only"
+                                checked={isChecked}
+                                onChange={toggle}
+                            />
+                            <div className="w-10 h-4 border border-black rounded-full"></div>
+                            <div className={`dot absolute w-6 h-6 bg-purple-600 rounded-full shadow ${
+                            isChecked ? 'translate-x-full bg-purple-300' : ''
+                            } transition`}
+                            ></div>
                         </div>
-                        )}
-                    </>
-                )}        
-            </ul> 
-            <button onClick={handleNextChapter}>Next</button>
-        </div>
+                    </label>
+                    
+                    <select className="p-1 m-3 border border-black font-montserrat text-sm" 
+                    onChange={handleChapterChange}>
+                        {manga && manga.chapters && manga.chapters.map((chapter, index)=> {
+                            return (
+                                <option
+                                    key={chapter._id} 
+                                    value={(index + 1)} 
+                                    selected={"/manga/" + manga.mangaID + "/"+ chapter._id === location.pathname}
+                                >
+                                    Chapter {chapter.chapterNumber}: {chapter.title}
+                                </option>
+                        )
+                        })}     
+                    </select>
+
+                    {!toggleView && (
+                        <select className="p-1 m-3 border border-black font-montserrat text-sm"
+                        onChange={handlePageChange}>
+                            {chapter && chapter.pages && chapter.pages.map((page, index)=> {
+                                return (
+                                    <option 
+                                        key={index} 
+                                        value={(index + 1)} 
+                                        selected={selectedPage === (index + 1)}
+                                    >
+                                        Page: {(index + 1)}
+                                    </option>
+                            )
+                            })}     
+                        </select>
+                    )}
+                </div>
+                    <button className="px-4 py-2 my-2 border 
+                    font-montserrat text-md leading-none bg-black
+                    rounded-md text-white border-black mb-5"
+                    onClick={handlePreviousChapter}>
+                        Previous
+                    </button>
+                <ul className="flex flex-col justify-center 
+                items-center rounded-lg bg-white p-6 shadow-xl mb-4
+                ring-slate-900/5">
+                    {chapter && (
+                        <>
+                            <h3 className="font-montserrat 
+                            text-black text-xl 
+                            leading-8 my-2 cursor-pointer 
+                            w-full text-center font-bold">
+                                {chapter.title}
+                            </h3>
+                            {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
+                                <div className="mx-10"
+                                key={index}>
+                                    <li > 
+                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                    </li>
+                                </div>
+                                ))
+                            ) : (
+                            <div className="mx-10">
+                                {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
+                                    parseInt(selectedPage, 10) === (index + 1) && (
+                                        <div key={index} onClick={() => {
+                                            handleNextPageClick(chapter.pages.length, manga.chapters.length)
+                                        }}>
+                                            <li>
+                                                <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
+                                            </li>
+                                        </div>
+                                    )
+                                ))
+                                }
+                            </div>
+                            )}
+                        </>
+                    )}        
+                </ul> 
+                <button className="px-4 py-2 my-2 border 
+                font-montserrat text-md leading-none bg-black
+                rounded-md text-white border-black mb-5"
+                onClick={handleNextChapter}>
+                    Next
+                </button>
+            </div>
+        </section>
+
     );
 };
 
