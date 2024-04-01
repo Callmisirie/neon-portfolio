@@ -3,8 +3,6 @@ import multer from "multer";
 import { ChapterContentModel, MangaModel, ImageModel } from "../models/Manga.js";
 
 
-const password = process.env.MONGO_DB;
-
 const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage
@@ -104,7 +102,7 @@ router.delete("/delete/manga", async (req, res) => {
 
     if (id) {
         const manga = await MangaModel.findOne({_id: id});   
-        if (name === manga.name) {
+        if (manga && name === manga.name) {
             try {
                 const manga = await MangaModel.findOneAndDelete({_id: id});
                 console.log("Deleted manga:", manga);
@@ -180,37 +178,42 @@ router.delete("/delete/manga/chapter", async (req, res) => {
 
 router.put("/edit/manga", upload.single("coverImage"), async (req, res) => { 
     const { mangaID, name } = req.body;
-    try {
+   
         if (mangaID) {
-            if (req.file && name){
-                const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name, coverImage: req.file.originalname}, { new: true });
-                const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
-
-                if (!manga) {
-                    return res.status(404).json({ message: "Manga not found" });
-                }
-                res.json({ message: "Manga updated successfully", manga });
-            
-            }  else if (req.file || name){
-                if (req.file) {
-                    const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, {coverImage: req.file.originalname}, { new: true });
-                    const image = await ImageModel.findOneAndUpdate({imageID: mangaID}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
-                } else if (name) {
-                    const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name}, { new: true });
+            try {
+                if (req.file && name){
+                    const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name, coverImage: req.file.originalname}, { new: true });
                     const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
 
                     if (!manga) {
                         return res.status(404).json({ message: "Manga not found" });
                     }
                     res.json({ message: "Manga updated successfully", manga });
+                
+                }  else if (req.file || name){
+                    if (req.file) {
+                        const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, {coverImage: req.file.originalname}, { new: true });
+                        const image = await ImageModel.findOneAndUpdate({imageID: mangaID}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
+                    }   if (name) {
+                        const manga = await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name}, { new: true });
+                        const Chapter = await ChapterContentModel.findOneAndUpdate({mangaID}, { mangaName: name}, { new: true });
+
+                        if (manga) {
+                            res.json({ message: "Manga updated successfully", manga });
+                        }
+                        else{
+                            return res.status(404).json({ message: "Manga not found" });
+                        }
+                        
+                    }
                 }
-             }
+            } catch (error) {
+                console.error("Error updating manga:", error);
+                res.status(500).json({ message: "Failed to update manga" });
+            }
         }
  
-    } catch (error) {
-        console.error("Error updating manga:", error);
-        res.status(500).json({ message: "Failed to update manga" });
-    }
+
 });
 
 router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {

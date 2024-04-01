@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../components/SearchBar.jsx";
+
 
 function Manga() {
 
@@ -26,7 +26,7 @@ function Manga() {
    
     return (
       <section className="min-h-full">
-          {/* <SearchBar /> */}
+          
           <div className=" flex flex-wrap justify-center items-center mx-20 rounded-lg 
           bg-white px-6">
             <div className="flex flex-col justify-center items-center rounded-lg 

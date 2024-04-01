@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -131,8 +131,11 @@ function Create() {
     const currentLocation = location.pathname;
     const [name, setName] = useState("");
     const [coverImage, setCoverImage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+
+    const fileInputRef = useRef(null);
+
 
 
 useEffect(() => {
@@ -152,11 +155,13 @@ useEffect(() => {
 const handleFileChange = (e) => {
     const files = e.target.files;
     setCoverImage(...files);
+    setMessage("");
 };
 
 const handleFilesChange = (e) => {
     const files = e.target.files;
     setPages([...pages, ...files]);
+    setMessage("");
 };
 
 const handleSubmit = async (e) => {
@@ -173,11 +178,17 @@ const handleSubmit = async (e) => {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setSuccessMessage("Chapter uploaded successfully");
+        setMessage("Manga uploaded successfully");
         setName("");
         setCoverImage("");
+        setMessageColor("green");
+        fileInputRef.current.value = null;
+    
+        
     } catch (error) {
-        setErrorMessage("Error uploading chapter");
+        setMessage("Error uploading manga");
+        setName("");
+        setMessageColor("red");
         console.error(error);
     }
 };
@@ -198,13 +209,18 @@ const handleChapterSubmit = async (e) => {
         await axios.post("http://localhost:4001/manager/create/manga/chapter", formData, {headers: {
             "Content-Type": "multipart/form-data"
         }});
-        setSuccessMessage("Chapter uploaded successfully");
+        setMessage("Chapter uploaded successfully");
         setChapterNumber("");
         setTitle("");
         setPages([]);
+        setMangaName("");
+        setMessageColor("green");
+        fileInputRef.current.value = null;
     } catch (error) {
-        setErrorMessage("Error uploading chapter");
+        setMessage("Error uploading chapter");
+        setMessageColor("red");
         console.error(error);
+        setMangaName("");
     }
 };
 
@@ -217,12 +233,11 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2">
                     Manga
                 </h2>
-                {successMessage && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-lg 
                 leading-8 my-2"
-                    style={{ color: 'green' }}>{successMessage}</p>}
-                {errorMessage && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                    style={{ color: 'red' }}>{errorMessage}</p>}
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
@@ -232,7 +247,10 @@ return (
                     rounded-full text-center font-montserrat"
                     type="text" 
                     value={name} 
-                    onChange={(e) => setName(e.target.value)} 
+                    onChange={(e) => {
+                        setName(e.target.value)
+                        setMessage("")
+                    }} 
                     placeholder='Manga Name'/>   
                     <div className='flex flex-col items-center'>
                         <label className="flex flex-col items-center font-montserrat 
@@ -245,6 +263,7 @@ return (
                             file:text-sm file:font-semibold
                             file:bg-violet-50 file:text-violet-700
                             hover:file:bg-violet-100'
+                            ref={fileInputRef}
                             type="file" 
                             onChange={handleFileChange}/>
                         </label>
@@ -265,12 +284,11 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
                     Manga Chapter
                 </h2>
-                {successMessage && <p  className="font-montserrat text-lg 
-                leading-8 my-2" 
-                style={{ color: "green" }}>{successMessage}</p>}
-                {errorMessage && <p  className="font-montserrat text-lg 
-                leading-8 my-2" 
-                style={{ color: "red" }}>{errorMessage}</p>}
+                {message && <p  className="font-montserrat text-lg 
+                leading-8 my-2"
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <div className="flex flex-col justify-center items-center mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5">
@@ -303,7 +321,10 @@ return (
                     rounded-full text-center font-montserrat"
                     type="number" 
                     value={chapterNumber} 
-                    onChange={(e) => setChapterNumber(e.target.value)}
+                    onChange={(e) => {
+                        setChapterNumber(e.target.value)
+                        setMessage("")
+                    }}
                     placeholder='Chapter Number'
                     />
                     <input className="p-2.5 my-3
@@ -311,7 +332,10 @@ return (
                     rounded-full text-center font-montserrat" 
                     type="text" 
                     value={title} 
-                    onChange={(e) => setTitle(e.target.value)}
+                    onChange={(e) => {
+                        setTitle(e.target.value)
+                        setMessage("")
+                    }}
                     placeholder='Title'/>
                     <label  className="flex flex-col items-center font-montserrat 
                     text-slate-gray text-lg 
@@ -323,6 +347,7 @@ return (
                         file:text-sm file:font-semibold
                         file:bg-violet-50 file:text-violet-700
                         hover:file:bg-violet-100'
+                        ref={fileInputRef}
                         type="file" multiple 
                         onChange={handleFilesChange}/>
                     </label>
@@ -390,8 +415,11 @@ const handleDeleteMangaClick = async () => {
     try {
         await axios.delete("http://localhost:4001/manager/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
         setDeleteMangaName("");
+        setSelectedMangaName("");
     } catch (error) {
         console.error(error)
+        setDeleteMangaName("");
+        setSelectedMangaName("");
     }
 }
 
@@ -399,8 +427,11 @@ const handleDeleteChapterClick = async () => {
     try {
         await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
         setDeleteChapterTitle("");
+        setSelectedChapterTitle("");
     } catch (error) {
         console.error(error)
+        setDeleteChapterTitle("");
+        setSelectedChapterTitle("");
     }
     }
 
@@ -516,7 +547,9 @@ const handleClick = (mangaId) => {
             <input className="p-2.5 my-3
             border border-slate-gray 
             rounded-full text-center font-montserrat" 
-                onChange={(e)=> {setDeleteChapterTitle(e.target.value)}}     
+                onChange={(e)=> {
+                    setDeleteChapterTitle(e.target.value)
+                }}     
                 placeholder="Chapter Title"
                 value={deleteChapterTitle}/>
             <button className="gap-2 px-7 py-4 my-2 border 
@@ -542,8 +575,7 @@ function Edit() {
     const [clickedMangaId, setClickedMangaId] = useState(null);
     const [mangaName, setMangaName] = useState("");
     const [newMangaName, setNewMangaName] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [message, setMessage] = useState("");
     const [chapterID, setChapterID] = useState("");
     const [pages, setPages] = useState([]);
     const [chapterTitle, setChapterTitle] = useState("");
@@ -551,6 +583,8 @@ function Edit() {
     const [chapterNumber, setChapterNumber] = useState("");
     const [newChapterNumber, setNewChapterNumber] = useState("");
     const [coverImage, setCoverImage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const fileInputRef = useRef(null);
 
 
     //use useLocation hook to switch beween edit manga and edit chapter code.
@@ -575,27 +609,33 @@ function Edit() {
         setMangaName(name);
         setMangaID(id);
         setClickedMangaId(id === clickedMangaId ? null : id);
+        setMessage("");
+        setChapterTitle("");
     }
 
     const handleChapterClick = (title, num, id) => {
         setChapterTitle(title);
         setChapterNumber(num);
         setChapterID(id);
+        setMessage("");
     }
 
     const handleChange = (e) => {
         setNewMangaName(e.target.value);
+        setMessage("");
     }
   
     const handleFileChange = (e) => {
         const files = e.target.files;
         setCoverImage(...files);
+        setMessage("");
     };
 
 
     const handleFilesChange = (e) => {
         const files = e.target.files;
         setPages([...pages, ...files]);
+        setMessage("");
     };
 
     const handleSubmit = async (e) => {
@@ -613,13 +653,16 @@ function Edit() {
             "Content-Type": "multipart/form-data"
             }
         });
-        setSuccessMessage("Chapter updated successfully");
+        setMessage("Manga updated successfully");
         setMangaName("");
         setNewMangaName("");
         setCoverImage("");
+        setMessageColor("green")
+        fileInputRef.current.value = null;
         } catch (error) {
-        setErrorMessage("Error updating chapter");
-        console.error(error);
+        setMessage("Error updating manga");
+        setMessageColor("red")
+        console.error(error);  
         }
     };
 
@@ -642,14 +685,17 @@ function Edit() {
             "Content-Type": "multipart/form-data"
             }
         });
-        setSuccessMessage("Chapter updated successfully");
+        setMessage("Chapter updated successfully");
         setChapterTitle("");
         setNewChapterTitle("");
         setChapterNumber("");
         setNewChapterNumber("");
         setPages([]);
+        setMessageColor("green")
+        fileInputRef.current.value = null;
         } catch (error) {
-        setErrorMessage("Error updating chapter");
+        setMessage("Error updating chapter");
+        setMessageColor("red")
         console.error(error);
         }
     };
@@ -690,12 +736,10 @@ function Edit() {
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
                     {mangaName} 
                 </h3>
-                {successMessage && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                    style={{ color: 'green' }}>{successMessage}</p>}
-                {errorMessage && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                    style={{ color: 'red' }}>{errorMessage}</p>}
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <form  className="flex flex-col justify-center items-center mx-5 my-10 rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
@@ -721,6 +765,7 @@ function Edit() {
                         file:text-sm file:font-semibold
                         file:bg-violet-50 file:text-violet-700
                         hover:file:bg-violet-100'
+                        ref={fileInputRef}
                         type="file" 
                         onChange={handleFileChange}/>
                     </div>
@@ -793,12 +838,11 @@ function Edit() {
                 </div>
 
                 
-                {successMessage && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-lg 
                 leading-8 my-2"
-                    style={{ color: 'green' }}>{successMessage}</p>}
-                {errorMessage && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                    style={{ color: 'red' }}>{errorMessage}</p>}
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
@@ -811,7 +855,10 @@ function Edit() {
                     border border-slate-gray 
                     rounded-full text-center font-montserrat" 
                     type="number" 
-                    value={newChapterNumber} onChange={(e) => setNewChapterNumber(e.target.value)} 
+                    value={newChapterNumber} onChange={(e) => {
+                        setNewChapterNumber(e.target.value)
+                        setMessage("")
+                    }} 
                     placeholder={chapterNumber}/>
                     </label>
                     <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
@@ -822,7 +869,10 @@ function Edit() {
                         border border-slate-gray 
                         rounded-full text-center font-montserrat" 
                         type="text" 
-                        value={newChapterTitle} onChange={(e) => setNewChapterTitle(e.target.value)} 
+                        value={newChapterTitle} onChange={(e) => {
+                            setNewChapterTitle(e.target.value)
+                            setMessage("")
+                        }} 
                         placeholder={chapterTitle}/>
                     </label>
                     <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
@@ -835,8 +885,11 @@ function Edit() {
                         file:text-sm file:font-semibold
                         file:bg-violet-50 file:text-violet-700
                         hover:file:bg-violet-100'
+                        ref={fileInputRef}
                         type="file" 
-                        multiple onChange={handleFilesChange}/>
+                        multiple onChange={handleFilesChange}
+                            
+                        />
                     </label>
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black

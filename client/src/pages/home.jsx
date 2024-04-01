@@ -122,13 +122,25 @@ function Home() {
                 </section>
             </section>
             <section className="padding">
-                <h1 className="mt-10     
-                                font-palanquin text-8xl 
-                                max-sm:text-[72px] 
-                                font-bold flex justify-center"
-                >
-                    Special Offer
-                </h1>
+                <div className="flex flex-col justify-center items-center">
+                    <h1 className="my-5     
+                    font-palanquin text-8xl 
+                    max-sm:text-[72px] 
+                    font-bold flex justify-center">
+                        Sample
+                    </h1>
+                    <div className="flex flex-col justify-center items-center my-2 rounded-xl bg-white p-6 shadow-xl mb-5
+                        ring-slate-900/5">
+                        <button >
+                            <video className="rounded-lg" src="/Afro%20Samurai.mp4" width={500} controls muted loop>
+                            </video>
+                        </button>
+                        
+                    </div>
+                   
+                    
+                </div>
+         
             </section>
             <section className="padding-x sm:py-32 py-16 w-full">
                 <section className="max-container

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 
+import SearchBar from "../components/SearchBar.jsx";
+
 function Navbar() {
     const [cookies, setCookies] = useCookies(["access_token"]);
     const Navigate = useNavigate();
@@ -17,7 +19,7 @@ function Navbar() {
 
     return (   
         <header className="padding-x absoloute py-8 z-10 w-full">
-                    <nav className=" flex justify-between items-center max-container">
+                    <nav className=" flex justify-between items-center max-container">     
                         <a href="/">
                             <img className=""
                                 src={headerLogoPurple}
@@ -26,7 +28,9 @@ function Navbar() {
                                 height={20}
                             />
                         </a>
+                        
                         <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
+                            <li> <SearchBar /> </li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/"> Home </Link></li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/manga"> Manga </Link></li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/about"> About </Link></li>

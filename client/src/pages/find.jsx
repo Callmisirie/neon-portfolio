@@ -28,20 +28,39 @@ function Find() {
     }
 
    return (
-    <div>
-        {foundMangas && (
-            foundMangas.map((manga)=> {
-                return (
-                    <div key={manga._id} onClick={()=> {
-                        handleClick(manga._id)
-                    }}>
-                        <h3>{manga.name}</h3>
-                        <img src={`http://localhost:4001/display/${manga._id}`} alt={`Manga ${manga.coverImage}`} style={{ width: "222px" }}/>
-                    </div>
-                )
-            })
-        )}
-    </div>
+    <section className="min-h-full">
+        <div  className=" flex flex-col items-center justify-center mx-20 rounded-lg
+          bg-white px-6">
+            <h2 className="text-3xl leading-[68px] 
+              lg:max-w-md font-palanquin font-bold p-2 text-center mb-5">
+              Manga result
+            </h2>
+            {foundMangas && (
+                foundMangas.map((manga)=> {
+                    return (
+                        <div className="flex flex-col justify-center items-center rounded-lg 
+                        bg-white p-6 shadow-xl mb-10
+                        ring-slate-900/5"
+                        key={manga._id}>
+                            <h3 className="font-montserrat 
+                            text-slate-gray hover:text-black text-lg 
+                            leading-8 my-2 cursor-pointer w-full text-center hover:font-semibold"
+                            onClick={()=> {
+                            handleClick(manga._id)
+                            }}>
+                                {manga.name}
+                            </h3>
+                            <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
+                            src={`http://localhost:4001/display/${manga._id}`} 
+                            alt={`Manga ${manga.coverImage}`} 
+                            style={{ width: "160px" }}/>
+                        </div>
+                    )
+                })
+            )}
+        </div>
+    </section>
+    
    ) 
 }
 

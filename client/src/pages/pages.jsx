@@ -123,15 +123,14 @@ function Pages() {
     return (
         <section className="min-h-full">
             <div className="flex flex-col justify-center 
-            items-center bg-white p-6">
-                <div className="flex">
+            items-center bg-white sm:p-6">
+                <div className="flex sm:flex-row flex-col justify-center items-center">
                     <label htmlFor="toggle" className="flex items-center cursor-pointer">
                         <p className="font-montserrat 
                         text-black text-md mx-2 text-center">
                             {displayView}
                         </p>
-                        <div className="flex items-center"
-                       >
+                        <div className="flex items-center">
                             <input
                                 id="toggle"
                                 type="checkbox"
@@ -139,9 +138,9 @@ function Pages() {
                                 checked={isChecked}
                                 onChange={toggle}
                             />
-                            <div className="w-10 h-4 border border-black rounded-full"></div>
-                            <div className={`dot absolute w-6 h-6 bg-purple-600 rounded-full shadow ${
-                            isChecked ? 'translate-x-full bg-purple-300' : ''
+                            <div className="w-12 h-4 border border-black rounded-full"></div>
+                            <div className={`dot absolute w-6 h-6 bg-slate-gray rounded-full shadow ${
+                            isChecked ? 'translate-x-full bg-purple-500' : ''
                             } transition`}
                             ></div>
                         </div>
@@ -197,7 +196,7 @@ function Pages() {
                                 {chapter.title}
                             </h3>
                             {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
-                                <div className="mx-10"
+                                <div className="sm:mx-5"
                                 key={index}>
                                     <li > 
                                         <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
@@ -205,7 +204,7 @@ function Pages() {
                                 </div>
                                 ))
                             ) : (
-                            <div className="mx-10">
+                            <div className="sm:mx-5">
                                 {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
                                     parseInt(selectedPage, 10) === (index + 1) && (
                                         <div key={index} onClick={() => {

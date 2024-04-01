@@ -44,18 +44,17 @@ function Chapters() {
                         <>  
                             {manga._id && (
                                 <div className="flex flex-col justify-center 
-                                items-center rounded-lg bg-white p-6 shadow-xl mb-4
+                                items-center rounded-lg bg-white p-6 shadow-xl mb-4 mx-5
                                 ring-slate-900/5">
                                     <h3  className="font-montserrat 
                                     text-slate-gray  font-bold
-                                    leading-8 mx-2 mt-2 w-full text-center">
+                                    leading-8 m-2 w-full text-center">
                                         {mangaContent.mangaName}
                                     </h3>
-                                    <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
-                                    src={`http://localhost:4001/display/${manga._id}`} 
-                                    alt={`Manga ${manga.coverImage}`} style={{ width: "120px" }}/>
-
-                                    <div className="flex flex-col p-2 mx-5 mt-5 px-3">
+                                    <div className="flex flex-col justify-center items-center m-5 p-5">
+                                        <img className="flex flex-col justify-center rounded-xl my-5 mx-20 shadow-xl"
+                                        src={`http://localhost:4001/display/${manga._id}`} 
+                                        alt={`Manga ${manga.coverImage}`} style={{ width: "120px" }}/>
                                         <h3 className="font-montserrat 
                                         text-black text-lg w-full
                                         leading-8 my-2 font-bold">
@@ -63,12 +62,12 @@ function Chapters() {
                                         </h3>
                                         {mangaContent.chapters && mangaContent.chapters.map((chapter) => (
                                                 
-                                            <p className="font-montserrat 
+                                            <h3 className="font-montserrat 
                                             text-slate-gray hover:text-black text-md my-2
-                                            leading-8 cursor-pointer hover:font-semibold w-full"
+                                            leading-8 cursor-pointer hover:font-semibold w-full text-left"
                                             onClick={() => {handleClick(chapter._id)}}>
                                                 Chapter {chapter.chapterNumber} - {chapter.title}
-                                            </p>
+                                            </h3>
                                             
                                         ))}
                                     </div>
