@@ -24,6 +24,6 @@ const commissionSchema = new mongoose.Schema({
     }
 });
 
-const CommissionModel = mongoose.model("Manga", commissionSchema);
+const CommissionModel = mongoose.model("Commission", commissionSchema);
 
-export default CommissionModel;
+export {CommissionModel};

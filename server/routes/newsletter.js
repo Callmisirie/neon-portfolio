@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import UpdateSignUpModel from "../models/UpdateSignUp.js";
+import NewsletterModel from "../models/Newsletter.js";
 
 const router = express.Router();
 const saltRounds = 10;
@@ -8,10 +8,10 @@ const saltRounds = 10;
 
 router.post("/", async (req, res) => {
     const email = req.body.email;
-    const signUps = await UpdateSignUpModel.find({})
+    const newsletters = await NewsletterModel.find({})
     try {
-        const updateSignUp = new UpdateSignUpModel({email});
-        updateSignUp.save();
+        const newsletter = new NewsletterModel({email});
+        newsletter.save();
         res.json({message: "Submitted Successfully"})
     } catch (error) {
         console.error(error);
@@ -19,4 +19,4 @@ router.post("/", async (req, res) => {
 });
 
 
-export {router as updateSignUpRouter}
+export {router as newsletterRouter};

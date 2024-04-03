@@ -69,4 +69,4 @@ const imageSchema = new mongoose.Schema({
 
 const ImageModel = mongoose.model("Image", imageSchema);
 
-export {MangaModel, ChapterContentModel, ImageModel};
+export {MangaModel, ChapterContentModel, ImageModel}; 

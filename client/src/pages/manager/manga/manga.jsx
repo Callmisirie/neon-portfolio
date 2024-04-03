@@ -8,31 +8,31 @@ import { useNavigate } from 'react-router-dom';
 //////////////////////////////////////////////////////////////////////////MANAGER//////////////////////////////////////////////////////////////////////////
 
 
-function Manager() {
+function MangaManager() {
     const navigate = useNavigate();
 
     function handleNewManga() {
-        navigate("/manager/create/manga")
+        navigate("/manager/manga/create/manga")
     };
 
     function handleUploadChapter() {
-        navigate("/manager/create/manga/chapter")
+        navigate("/manager/manga/create/manga/chapter")
     };
 
     function handleDeleteManga() {
-        navigate("/manager/delete/manga")
+        navigate("/manager/manga/delete/manga")
     };
 
     function handleDeleteChapter() {
-        navigate("/manager/delete/manga/chapter")
+        navigate("/manager/manga/delete/manga/chapter")
     };
 
     function handleEditManga() {
-        navigate("/manager/edit/manga")
+        navigate("/manager/manga/edit/manga")
     };
 
     function handleEditChapter() {
-        navigate("/manager/edit/manga/chapter")
+        navigate("/manager/manga/edit/manga/chapter")
     };
 
 
@@ -40,7 +40,7 @@ function Manager() {
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                ADMIN MANAGER
+                MANGA MANAGER
             </h2>
             <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
             bg-white px-6 py-4 shadow-xl
@@ -120,7 +120,7 @@ function Manager() {
 //////////////////////////////////////////////////////////////////////////CREATE MANGA//////////////////////////////////////////////////////////////////////////
 
 
-function Create() {
+function MangaCreate() {
     const [mangas, setMangas] = useState([]);
     const [chapterNumber, setChapterNumber] = useState("");
     const [title, setTitle] = useState("")
@@ -173,7 +173,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        await axios.post("http://localhost:4001/manager/create/manga", formData, {
+        await axios.post("http://localhost:4001/manager/manga/create/manga", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -206,7 +206,7 @@ const handleChapterSubmit = async (e) => {
     });
 
     try {
-        await axios.post("http://localhost:4001/manager/create/manga/chapter", formData, {headers: {
+        await axios.post("http://localhost:4001/manager/manga/create/manga/chapter", formData, {headers: {
             "Content-Type": "multipart/form-data"
         }});
         setMessage("Chapter uploaded successfully");
@@ -227,7 +227,7 @@ const handleChapterSubmit = async (e) => {
 return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-        {currentLocation === "/manager/create/manga" ? (
+        {currentLocation === "/manager/manga/create/manga" ? (
             <div className="flex flex-col justify-center items-center"> 
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
@@ -369,7 +369,7 @@ return (
 //////////////////////////////////////////////////////////////////////////DELETE MANGA//////////////////////////////////////////////////////////////////////////
 
 
-function Delete() {
+function MangaDelete() {
     const [mangas, setMangas] = useState([]);
     const [mangaContents, setMangaContents] = useState([]);
     const [clickedMangaId, setClickedMangaId] = useState(null);
@@ -413,7 +413,7 @@ const handleChapterClick = (mangaID, chapterID, title) => {
 
 const handleDeleteMangaClick = async () => {
     try {
-        await axios.delete("http://localhost:4001/manager/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
+        await axios.delete("http://localhost:4001/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
         setDeleteMangaName("");
         setSelectedMangaName("");
     } catch (error) {
@@ -425,7 +425,7 @@ const handleDeleteMangaClick = async () => {
 
 const handleDeleteChapterClick = async () => {
     try {
-        await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
+        await axios.delete("http://localhost:4001/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
     } catch (error) {
@@ -442,7 +442,7 @@ const handleClick = (mangaId) => {
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-        {currentLocation === "/manager/delete/manga" ? (
+        {currentLocation === "/manager/manga/delete/manga" ? (
             <div  className="flex flex-col justify-center items-center rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5">
@@ -568,7 +568,7 @@ const handleClick = (mangaId) => {
 //////////////////////////////////////////////////////////////////////////EDIT MANGA//////////////////////////////////////////////////////////////////////////
 
 
-function Edit() {
+function MangaEdit() {
     const [mangas, setMangas] = useState([]);
     const [mangaID, setMangaID] = useState("");
     const [mangaContents, setMangaContents] = useState([]);
@@ -648,7 +648,7 @@ function Edit() {
 
 
         try {
-        await axios.put("http://localhost:4001/manager/edit/manga", formData, {
+        await axios.put("http://localhost:4001/manager/manga/edit/manga", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
@@ -680,7 +680,7 @@ function Edit() {
 
 
         try {
-        await axios.put("http://localhost:4001/manager/edit/manga/chapter", formData, {
+        await axios.put("http://localhost:4001/manager/manga/edit/manga/chapter", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
@@ -704,7 +704,7 @@ function Edit() {
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
         bg-white px-6">
-        {currentLocation === "/manager/edit/manga" ? (
+        {currentLocation === "/manager/manga/edit/manga" ? (
             <div className="flex flex-col justify-center items-center rounded-lg 
             bg-white px-6 shadow-xl
             ring-slate-900/5">
@@ -905,6 +905,6 @@ function Edit() {
 )};
 
 
-export default Manager;
+export default MangaManager;
 
-export {Create, Delete, Edit};
+export {MangaCreate, MangaDelete, MangaEdit};

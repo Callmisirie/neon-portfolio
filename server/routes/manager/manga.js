@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { ChapterContentModel, MangaModel, ImageModel } from "../models/Manga.js";
+import { ChapterContentModel, MangaModel, ImageModel } from "../../models/Manga.js";
 
 
 const storage = multer.memoryStorage();
@@ -15,7 +15,7 @@ router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
     try {
         const mangaDetails = {
             name: req.body.name, 
-            coverImage: req.file.originalname,
+            coverImage: req.file.originalname, 
         };
 
         const manga = new MangaModel(mangaDetails);
@@ -286,4 +286,4 @@ router.put("/edit/manga/chapter", upload.array('pages'), async (req, res) => {
     }
 });
 
-export {router as managerRouter};
+export {router as managerMangaRouter};

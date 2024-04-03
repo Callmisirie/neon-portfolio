@@ -1,51 +1,55 @@
 import express from "express";
 import multer from "multer";
-import CommissionModel from "../models/Commission";
+import { CommissionModel } from "../../models/Commission.js";
+import { ImageModel } from "../../models/Manga.js";
 
 
 const storage = multer.memoryStorage();
 const upload = multer({ 
     storage: storage
 });
+
 const router = express.Router();
+ 
+router.get("read", (req, res)=> {
+    const commission = CommissionModel.find({});
+    if(commission) {
+        res.json(commission)
+    }
+})
 
-
-router.post("/create/commission", upload.single("artImage"), async (req, res)=> {
-    const commissionNumber = CommissionModel.find({});
-
+router.post("/create", upload.single("artImage"), async (req, res)=> {
+    const commissionNumber = await CommissionModel.find();
+  
     if(commissionNumber.length < 3){
-        try {
-            const commissionDetails = {
-                artStyle: req.body.artStyle, 
-                artImage: req.file.originalname,
-                price: req.body.price,
-                discount: req.body.discount,
-                discountInterval: req.body.discountInterval
-            };
-    
-            const commission = new CommissionModel(commissionDetails);
-            const commissionResponse = await commission.save();
-    
-            const imageDetails = {
-                imageID: commissionResponse._id,
-                name: req.file.originalname, 
-                imageData: req.file.buffer
-            };
-    
-            const image = new ImageModel(imageDetails);
-            const imageResponse =  await image.save();
-    
-            res.json({commissionResponse, imageResponse});
-        } catch (error) {
-            res.json(error);
-        }
+        const commissionDetails = {
+            artStyle: req.body.artStyle, 
+            artImage: req.file.originalname,
+            price: req.body.price,
+            discount: req.body.discount,
+            discountInterval: req.body.discountInterval
+        };
+        const commission = new CommissionModel(commissionDetails);
+        const commissionResponse = await commission.save();
+
+        const imageDetails = {
+            imageID: commissionResponse._id,
+            name: req.file.originalname, 
+            imageData: req.file.buffer
+        };
+
+        const image = new ImageModel(imageDetails);
+        const imageResponse =  await image.save();
+
+        res.json({commissionResponse, imageResponse});
     } else {
         res.json({message: "Maximum Number of Commission"});
     }
+  
 });
 
 
-router.delete("/delete/commission", async (req, res) => {
+router.delete("/delete", async (req, res) => {
     const {id, artStyle} = req.body;
     console.log("Deleting commission with ID:", id);
     console.log("Testing:", req.body);
@@ -74,7 +78,7 @@ router.delete("/delete/commission", async (req, res) => {
 });
 
 
-router.put("/edit/commission", upload.single("artImage"), async (req, res) => { 
+router.put("/edit", upload.single("artImage"), async (req, res) => { 
     const { id, artStyle, price, discount, discountInterval } = req.body;
    
         if (id) {
@@ -145,3 +149,6 @@ router.put("/edit/commission", upload.single("artImage"), async (req, res) => {
             }
         }
 });
+
+
+export {router as commissionRouter};

@@ -3,12 +3,13 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import { updateSignUpRouter } from './routes/updateSignUp.js';
+import { newsletterRouter } from './routes/newsletter.js';
 import { adminRouter } from "./routes/admin.js";
 import { mangaRouter } from "./routes/manga.js";
 import { chapterContentRouter } from './routes/chapterContent.js';
-import { managerRouter } from './routes/manager.js';
+import { managerMangaRouter } from './routes/manager/manga.js';
 import { ImageModel } from './models/Manga.js';
+import { commissionRouter } from './routes/manager/commission.js';
 
 const app = express();
 const password = process.env.MONGO_DB;
@@ -19,11 +20,14 @@ app.use('/uploads', express.static('uploads'));
 
 mongoose.connect("mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/mangacontent?retryWrites=true&w=majority");
 
-app.use("/updateSignUp", updateSignUpRouter);
+app.use("/newsletter", newsletterRouter);
 app.use("/auth", adminRouter);
 app.use("/manga", mangaRouter);
 app.use("/chapterContent", chapterContentRouter);
-app.use("/manager", managerRouter);
+app.use("/manager/manga", managerMangaRouter);
+app.use("/manager/commission", commissionRouter);
+
+
 
 app.get("/display/:imageID", async (req, res) => {
     const imageID = req.params.imageID;
