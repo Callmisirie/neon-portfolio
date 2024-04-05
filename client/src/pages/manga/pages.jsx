@@ -138,11 +138,10 @@ function Pages() {
                                 checked={isChecked}
                                 onChange={toggle}
                             />
-                            <div className="w-12 h-4 border border-black rounded-full"></div>
-                            <div className={`dot absolute w-6 h-6 bg-slate-gray rounded-full shadow ${
-                            isChecked ? 'translate-x-full bg-purple-500' : ''
-                            } transition`}
-                            ></div>
+                            <div className="w-12 h-4 border  rounded-full"></div>
+                            <div className={`dot absolute w-6 h-6 ${isChecked ? 
+                            'bg-purple-600' : 'bg-slate-gray'} rounded-full shadow 
+                            ${isChecked ? 'translate-x-full' : ''} transition`}></div>
                         </div>
                     </label>
                     

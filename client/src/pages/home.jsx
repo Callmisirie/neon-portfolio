@@ -66,28 +66,13 @@ function Home() {
                             >
                                 A man who lives fully is prepared to die at anytime.
                             </p>
-                            <Button label="Commission now" 
+                            <Button label="Preview price" 
                                 iconURL={arrowRight}
                             />
                             <div className="flex 
                                 justify-starts items-start 
                                 flex-wrap w-full mt-30 gap-16"
                             >
-                               {statistics.map((stat)=> (
-                                <div key={stat.label}>
-                                    <p className="text-4xl
-                                        font-palanquin font-bold"
-                                    >
-                                        {stat.value}
-                                    </p>
-                                    <p className="leading-7
-                                        font-montserrat 
-                                        text-slate-gray"
-                                    >
-                                        {stat.label}
-                                    </p>
-                                </div>
-                               ))} 
                             </div>
                     </div>
                     <div className="relative 

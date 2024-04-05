@@ -21,7 +21,7 @@ function SearchBar() {
 
     return (
         <div className="">
-            <form className="flex justify-center items-center p-1 my-3
+            <form className="flex justify-center items-center p-1 my-2
                 border rounded-md border-slate-gray hover:border-black" >
                 <button className="flex justify-center mx-1"
                 onClick={handleClick} type="submit" value="">

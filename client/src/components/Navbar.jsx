@@ -29,10 +29,11 @@ function Navbar() {
                             />
                         </a>
                         
-                        <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
+                        <ul className="flex-1 flex justify-center items-center gap-8 max-lg:hidden">
                             <li> <SearchBar /> </li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/"> Home </Link></li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/manga"> Manga </Link></li>
+                            <li className="font-montserrat leading-normal text-lg text-purple-600"><Link to="/commission"> Commission </Link></li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/about"> About </Link></li>
                             <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/contact"> Contact </Link></li>
                             {cookies.access_token ? (

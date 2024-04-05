@@ -4,6 +4,7 @@ import Home from "./pages/home.jsx"
 import Manga from "./pages/manga/manga.jsx";
 import Chapters from "./pages/manga/chapters.jsx";
 import Pages from "./pages/manga/pages.jsx";
+import Commission from './pages/commission.jsx';
 import Contact from "./pages/contact.jsx";
 import About from "./pages/about.jsx";
 import Find from "./pages/find.jsx";
@@ -30,6 +31,7 @@ function App() {
             <Navbar/>      
             <Routes>
               <Route path="/" element={<Home />}/>
+              <Route path="/commission" element={<Commission />}/>
               <Route path="/contact" element={<Contact />}/>
               <Route path="/about" element={<About />}/>
               <Route path="/manga" element={<Manga />}/>

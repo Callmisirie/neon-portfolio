@@ -33,11 +33,11 @@ function Manager() {
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
                 ADMIN MANAGER
             </h2>
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
+            <div className="flex flex-wrap justify-center items-center mx-10 rounded-lg 
             bg-white px-6 py-4 shadow-xl
             ring-slate-900/5">
                 
-                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
+                <div className="flex flex-col justify-center items-center my-5 mx-10 rounded-lg 
                 bg-white px-10 py-8 shadow-xl
                 ring-slate-900/5">
                     <button className="text-white px-4 py-2 text-sm

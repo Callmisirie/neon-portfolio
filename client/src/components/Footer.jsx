@@ -31,6 +31,7 @@ const Footer = () => {
                 <div className="flex justify-center 
                   items-center w-12 h-12 bg-white
                   rounded-full"
+                  key={icon.src}
                 >
                   <img 
                     src={icon.src}
@@ -48,7 +49,7 @@ const Footer = () => {
               flex-wrap"
             >
             {footerLinks.map((section)=> (
-              <div key={section}>
+              <div key={section.title}>
                 <h4 className="text-white font-montserrat 
                   text-2xl leading-normal font-medium mb-6 "
                 >

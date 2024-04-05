@@ -11,8 +11,8 @@ const upload = multer({
 
 const router = express.Router();
  
-router.get("read", (req, res)=> {
-    const commission = CommissionModel.find({});
+router.get("/read", async (req, res)=> {
+    const commission = await CommissionModel.find({});
     if(commission) {
         res.json(commission)
     }
@@ -44,6 +44,7 @@ router.post("/create", upload.single("artImage"), async (req, res)=> {
         res.json({commissionResponse, imageResponse});
     } else {
         res.json({message: "Maximum Number of Commission"});
+        console.log(req.file)
     }
   
 });
@@ -96,52 +97,18 @@ router.put("/edit", upload.single("artImage"), async (req, res) => {
                 
                 }  else if (req.file || artStyle || price || discount || discountInterval){
                     if (req.file) {
-                        const commission = await CommissionModel.findOneAndUpdate({_id: id}, {artImage: req.file.originalname}, { new: true });
-                        const image = await ImageModel.findOneAndUpdate({imageID: id}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
-
-                        if (commission) {
-                            res.json({ message: "Commission updated successfully", commission });
-                        }
-                        else{
-                            return res.status(404).json({ message: "Commission not found" });
-                        }
+                        await CommissionModel.findOneAndUpdate({_id: id}, {artImage: req.file.originalname}, { new: true });
+                        await ImageModel.findOneAndUpdate({imageID: id}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
                     }   if (artStyle) {
-                            const commission = await CommissionModel.findOneAndUpdate({_id: id}, { artStyle: artStyle}, { new: true });
-
-                        if (commission) {
-                            res.json({ message: "Commission updated successfully", commission });
-                        }
-                        else{
-                            return res.status(404).json({ message: "Commission not found" });
-                        }
+                        await CommissionModel.findOneAndUpdate({_id: id}, { artStyle: artStyle}, { new: true });   
                     }   if (price) {
-                            const commission = await CommissionModel.findOneAndUpdate({_id: id}, { price: price}, { new: true });
-
-                        if (commission) {
-                            res.json({ message: "Commission updated successfully", commission });
-                        }
-                        else{
-                            return res.status(404).json({ message: "Commission not found" });
-                        }
+                        await CommissionModel.findOneAndUpdate({_id: id}, { price: price}, { new: true });   
                     }   if (discount) {
-                            const commission = await CommissionModel.findOneAndUpdate({_id: id}, { discount: discount}, { new: true });
-
-                        if (commission) {
-                            res.json({ message: "Commission updated successfully", commission });
-                        }
-                        else{
-                            return res.status(404).json({ message: "Commission not found" });
-                        }
+                        await CommissionModel.findOneAndUpdate({_id: id}, { discount: discount}, { new: true }); 
                     }   if (discountInterval) {
-                        const commission = await CommissionModel.findOneAndUpdate({_id: id}, { discountInterval: discountInterval}, { new: true });
-
-                        if (commission) {
-                            res.json({ message: "Commission updated successfully", commission });
-                        }
-                        else{
-                            return res.status(404).json({ message: "Commission not found" });
-                        }
-                    }       
+                        await CommissionModel.findOneAndUpdate({_id: id}, { discountInterval: discountInterval}, { new: true });  
+                    }  
+                    res.json({ message: "Commission updated successfully"});     
                 }
             } catch (error) {
                 console.error("Error updating commission:", error);

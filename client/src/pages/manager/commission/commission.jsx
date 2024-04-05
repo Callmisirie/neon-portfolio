@@ -66,10 +66,6 @@ function CommissionManager() {
 
 function CommissionCreate() {
     const [commissions, setCommissions] = useState([]);
-    const [chapterNumber, setChapterNumber] = useState("");
-    const [title, setTitle] = useState("")
-    const [mangaID, setMangaID] = useState("")
-    const [mangaName, setMangaName] = useState("")
     const [artStyle, setArtStyle] = useState("");
     const [artImage, setArtImage] = useState("");
     const [price, setPrice] = useState("");
@@ -77,7 +73,6 @@ function CommissionCreate() {
     const [discountInterval, setDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-
     const fileInputRef = useRef(null);
 
 
@@ -145,7 +140,6 @@ const handleSubmit = async (e) => {
 return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-        
             <div className="flex flex-col justify-center items-center"> 
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
@@ -209,101 +203,67 @@ return (
 
 
 function CommissionDelete() {
-    const [mangas, setMangas] = useState([]);
-    const [mangaContents, setMangaContents] = useState([]);
-    const [clickedMangaId, setClickedMangaId] = useState(null);
-    const [selectedMangaName, setSelectedMangaName] = useState("");
-    const [selectedMangaID, setSelectedMangaID] = useState("");
-    const [deleteMangaName, setDeleteMangaName] = useState("");
-    const [selectedChapterTitle, setSelectedChapterTitle] = useState("");
-    const [selectedChapterID, setSelectedChapterID] = useState("");
-    const [deleteChapterTitle, setDeleteChapterTitle] = useState("");
+    const [commissions, setCommissions] = useState([]);
+    const [selectedCommission, setSelectedCommission] = useState("");
+    const [selectedCommissionID, setSelectedCommissionID] = useState("");
+    const [deleteCommission, setDeleteCommission] = useState("");
 
 
-    //use useLocation hook to switch beween delete manga and delete chapter code.
-    const location = useLocation();
-    const currentLocation = location.pathname;
+    useEffect(() => {
+        const fetchCommission = async () =>{
+            try {
+                const response = await axios.get("http://localhost:4001/manager/commission/read") 
+                setCommissions(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
-useEffect(()=> {
-    const fetchManga = async () => {
-        try {
-            const MangaResponse = await axios.get("http://localhost:4001/manga");
-            setMangas(MangaResponse.data);
-            const mangaContentsResponse = await axios.get("http://localhost:4001/chapterContent");
-            setMangaContents(mangaContentsResponse.data);
-        } catch (error) {
-            console.error(error);
-        }   
-    }
-    fetchManga();
-}, [mangas]);
+        fetchCommission();
+    }, [commissions]);
 
-const handleMangaClick = (id, name) => {
-    setSelectedMangaID(id);
-    setSelectedMangaName(name);
+const handleCommissionClick = (id, name) => {
+    setSelectedCommissionID(id);
+    setSelectedCommission(name);
 }
 
-const handleChapterClick = (mangaID, chapterID, title) => {
-    setSelectedMangaID(mangaID);
-    setSelectedChapterID(chapterID);
-    setSelectedChapterTitle(title);
-}
-
-
-const handleDeleteMangaClick = async () => {
+const handleDeleteCommissionClick = async () => {
     try {
-        await axios.delete("http://localhost:4001/manager/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
-        setDeleteMangaName("");
-        setSelectedMangaName("");
+        await axios.delete("http://localhost:4001/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
+        setDeleteCommission("");
+        setSelectedCommission("");
     } catch (error) {
         console.error(error)
-        setDeleteMangaName("");
-        setSelectedMangaName("");
+        setDeleteCommission("");
+        setSelectedCommission("");
     }
-}
-
-const handleDeleteChapterClick = async () => {
-    try {
-        await axios.delete("http://localhost:4001/manager/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
-        setDeleteChapterTitle("");
-        setSelectedChapterTitle("");
-    } catch (error) {
-        console.error(error)
-        setDeleteChapterTitle("");
-        setSelectedChapterTitle("");
-    }
-    }
-
-const handleClick = (mangaId) => {
-    setClickedMangaId(mangaId === clickedMangaId ? null : mangaId);
 }
 
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-        {currentLocation === "/manager/manga/delete/manga" ? (
             <div  className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-6 py-4 shadow-xl
+                bg-white px-10 py-4 shadow-xl
                 ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
-                    Manga
+                    Delete Commission
                 </h2>
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
-                    {mangas.map((manga)=> {
+                    {commissions.map((commission)=> {
                         return (
                             <>
                                 <li 
                                 onClick={()=> {
-                                    handleMangaClick(manga._id, manga.name )
+                                    handleCommissionClick(commission._id, commission.artStyle )
                                 }}
-                                key={manga._id}>
+                                key={commission._id}>
                                     <p  className="font-montserrat 
                                     text-slate-gray hover:text-black text-md 
                                     leading-8 my-2 cursor-pointer w-full">
-                                        {manga.name}
+                                        {commission.artStyle}
                                     </p>
                                 </li>
                             </>
@@ -314,92 +274,22 @@ const handleClick = (mangaId) => {
                 text-slate-gray text-lg 
                 leading-8 my-6 text-center">
                     <span className='font-bold font-montserrat'>Write "</span>
-                    {selectedMangaName}
-                    <span className='font-bold font-montserrat'>" to delete Manga.</span>
+                    {selectedCommission}
+                    <span className='font-bold font-montserrat'>" to delete Commission.</span>
                 </p>
                 <input className="p-2.5 my-3
                 border border-slate-gray 
                 rounded-full text-center font-montserrat" 
-                onChange={(e)=> {setDeleteMangaName(e.target.value)}} 
-                placeholder="Manga Name" 
-                value={deleteMangaName} />
+                onChange={(e)=> {setDeleteCommission(e.target.value)}} 
+                placeholder="Art Style" 
+                value={deleteCommission} />
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                onClick={handleDeleteMangaClick}>
-                    Delete Manga
+                onClick={handleDeleteCommissionClick}>
+                    Delete Commission
                 </button>
             </div>
-        ) : (
-        <div className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 shadow-xl py-4
-        ring-slate-900/5">
-            <h2  className="text-3xl leading-[68px] 
-            lg:max-w-md font-palanquin font-bold p-2 text-center">
-                Manga Chapter
-            </h2>
-            <ul className=''>
-                {mangas.map((manga)=> {
-                    return (
-                        <li className=""
-                            key={manga._id}>
-                            <p className="font-montserrat 
-                            text-slate-gray hover:text-black text-md 
-                            leading-8 my-2 cursor-pointer w-full"
-                                onClick={()=> {
-                                    handleClick(manga._id)
-                                }}>
-                                {manga.name}
-                            </p>
-                            <ul  className="flex flex-col my-2 rounded-lg 
-                            bg-white px-6 shadow-xl
-                            ring-slate-900/5">
-                                {clickedMangaId === manga._id && mangaContents
-                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                    .map((mangaContent) =>
-                                        mangaContent.chapters.map((chapter) => (
-                                            <li key={chapter._id}>
-                                                <p className="font-montserrat 
-                                                text-slate-gray hover:text-black text-sm 
-                                                leading-8 my-2 cursor-pointer w-full"
-                                                    onClick={()=> {
-                                                    handleChapterClick(manga._id, chapter._id, chapter.title)
-                                                }}>
-                                                Chapter {chapter.chapterNumber} - {chapter.title}
-                                                </p>
-                                            </li>
-                                        ))
-                                    )
-                                }
-                            </ul>
-                        </li>
-                    )
-                })}
-            </ul>
-            <p className="font-montserrat 
-            text-slate-gray text-lg 
-            leading-8 my-2 text-center">
-                <span className='font-bold font-montserrat'>Write "</span>
-                {selectedChapterTitle}
-                <span className='font-bold font-montserrat'>" to delete Chapter.</span>
-            </p>
-            <input className="p-2.5 my-3
-            border border-slate-gray 
-            rounded-full text-center font-montserrat" 
-                onChange={(e)=> {
-                    setDeleteChapterTitle(e.target.value)
-                }}     
-                placeholder="Chapter Title"
-                value={deleteChapterTitle}/>
-            <button className="gap-2 px-7 py-4 my-2 border 
-            font-montserrat text-lg leading-none bg-black
-            rounded-full text-white border-black mb-5"
-                onClick={handleDeleteChapterClick}>
-                Delete Chapter
-            </button>
-        </div>
-        )
-    }   
     </div>
 )};
 
@@ -408,72 +298,46 @@ const handleClick = (mangaId) => {
 
 
 function CommissionEdit() {
-    const [mangas, setMangas] = useState([]);
-    const [mangaID, setMangaID] = useState("");
-    const [mangaContents, setMangaContents] = useState([]);
-    const [clickedMangaId, setClickedMangaId] = useState(null);
-    const [mangaName, setMangaName] = useState("");
-    const [newMangaName, setNewMangaName] = useState("");
+    const [commissions, setCommissions] = useState([]);
+    const [commissionID, setCommissionID] = useState("");
+    const [artStyle, setArtStyle] = useState("");
+    const [artImage, setArtImage] = useState("");
+    const [price, setPrice] = useState("");
+    const [discount, setDiscount] = useState("");
+    const [discountInterval, setDiscountInterval] = useState("");
+    const [newArtStyle, setNewArtStyle] = useState("");
+    const [newPrice, setNewPrice] = useState("");
+    const [newDiscount, setNewDiscount] = useState("");
+    const [newDiscountInterval, setNewDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
-    const [chapterID, setChapterID] = useState("");
-    const [pages, setPages] = useState([]);
-    const [chapterTitle, setChapterTitle] = useState("");
-    const [newChapterTitle, setNewChapterTitle] = useState("");
-    const [chapterNumber, setChapterNumber] = useState("");
-    const [newChapterNumber, setNewChapterNumber] = useState("");
-    const [coverImage, setCoverImage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const fileInputRef = useRef(null);
 
 
-    //use useLocation hook to switch beween edit manga and edit chapter code.
-    const location = useLocation();
-    const currentLocation = location.pathname;
-
-    useEffect(()=> {
-        const fetchManga = async () => {
+    useEffect(() => {
+        const fetchCommission = async () =>{
             try {
-                const MangaResponse = await axios.get("http://localhost:4001/manga");
-                setMangas(MangaResponse.data);
-                const mangaContentsResponse = await axios.get("http://localhost:4001/chapterContent");
-                setMangaContents(mangaContentsResponse.data);
+                const response = await axios.get("http://localhost:4001/manager/commission/read") 
+                setCommissions(response.data)
             } catch (error) {
                 console.error(error);
-            }   
+            }
         }
-        fetchManga();
-    }, [mangas]);
+        fetchCommission();
+    }, [commissions]);
 
-    const handleMangaClick = (name, id) => {
-        setMangaName(name);
-        setMangaID(id);
-        setClickedMangaId(id === clickedMangaId ? null : id);
-        setMessage("");
-        setChapterTitle("");
-    }
-
-    const handleChapterClick = (title, num, id) => {
-        setChapterTitle(title);
-        setChapterNumber(num);
-        setChapterID(id);
+    const handleClick = (artStyle, price, discount, discountInterval, id) => {
+        setArtStyle(artStyle);
+        setPrice(price);
+        setDiscount(discount);
+        setDiscountInterval(discountInterval);
+        setCommissionID(id);
         setMessage("");
     }
 
-    const handleChange = (e) => {
-        setNewMangaName(e.target.value);
-        setMessage("");
-    }
-  
     const handleFileChange = (e) => {
         const files = e.target.files;
-        setCoverImage(...files);
-        setMessage("");
-    };
-
-
-    const handleFilesChange = (e) => {
-        const files = e.target.files;
-        setPages([...pages, ...files]);
+        setArtImage(...files);
         setMessage("");
     };
 
@@ -481,89 +345,67 @@ function CommissionEdit() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append("mangaID", mangaID);
-        formData.append("name", newMangaName);
-        formData.append("coverImage", coverImage);
-
+        formData.append("id", commissionID);
+        formData.append("artStyle", newArtStyle);
+        formData.append("artImage", artImage);
+        formData.append("price", newPrice);
+        formData.append("discount", newDiscount);   
+        formData.append("discountInterval", newDiscountInterval);
 
         try {
-        await axios.put("http://localhost:4001/manager/edit/manga", formData, {
+        await axios.put("http://localhost:4001/manager/commission/edit", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Manga updated successfully");
-        setMangaName("");
-        setNewMangaName("");
-        setCoverImage("");
+        setMessage("Commission updated successfully");
+        setArtStyle("");
+        setArtImage("");
+        setPrice("");
+        setDiscount("");
+        setDiscountInterval("");
+        setNewArtStyle("");
+        setArtImage("");
+        setNewPrice("");
+        setNewDiscount("");
+        setNewDiscountInterval("");
         setMessageColor("green")
         fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating manga");
+        setMessage("Error updating commission");
         setMessageColor("red")
         console.error(error);  
         }
     };
 
-    const handleChapterSubmit = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append("chapterNumber", newChapterNumber);
-        formData.append("title", newChapterTitle);
-        formData.append("mangaID", mangaID);
-        formData.append("chapterID", chapterID);
-        pages.forEach(page => {
-            formData.append("pages", page);
-        });
-
-
-        try {
-        await axios.put("http://localhost:4001/manager/edit/manga/chapter", formData, {
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
-        setMessage("Chapter updated successfully");
-        setChapterTitle("");
-        setNewChapterTitle("");
-        setChapterNumber("");
-        setNewChapterNumber("");
-        setPages([]);
-        setMessageColor("green")
-        fileInputRef.current.value = null;
-        } catch (error) {
-        setMessage("Error updating chapter");
-        setMessageColor("red")
-        console.error(error);
-        }
-    };
-  
-
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
         bg-white px-6">
-        {currentLocation === "/manager/manga/edit/manga" ? (
             <div className="flex flex-col justify-center items-center rounded-lg 
             bg-white px-6 shadow-xl
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
-                    Manga
+                    Edit Commission
                 </h2>
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 py-3 shadow-xl
                 ring-slate-900/5'>
-                    {mangas.map((manga)=> {
+                    {commissions.map((commission)=> {
                         return (
-                            <li key={manga._id}>
+                            <li key={commission._id}>
                                 <p className="font-montserrat 
                                 text-slate-gray hover:text-black text-md 
                                 leading-8 my-2 cursor-pointer w-full"
                                     onClick={()=> {
-                                    handleMangaClick(manga.name, manga._id)
+                                    handleClick(
+                                        commission.artStyle,
+                                        commission.price,
+                                        commission.discount,
+                                        commission.discountInterval, 
+                                        commission._id)
                                 }}>
-                                    {manga.name}
+                                    {commission.artStyle}
                                 </p>
                             </li>
                         )
@@ -573,31 +415,48 @@ function CommissionEdit() {
                 text-slate-gray text-xl 
                 leading-8 mt-6 text-center">
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
-                    {mangaName} 
+                    {artStyle} 
                 </h3>
                 {message && <p className="font-montserrat text-lg 
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 my-10 rounded-lg 
+                <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
                 onSubmit={handleSubmit}>
                     <div className="flex flex-col justify-center items-center m-5 rounded-lg 
                     bg-white px-6 py-4 shadow-xl
                     ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
-                        <input className="p-2.5 mb-3
-                        border border-slate-gray 
-                        rounded-full text-center font-montserrat" 
-                        type="text" onChange={handleChange} 
-                        value={newMangaName} 
-                        placeholder={mangaName}/>
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Art Style</p>
+                        <Input type="text" 
+                        value={newArtStyle} 
+                        placeholder={artStyle} 
+                        handleChange={setNewArtStyle}
+                        resetMessage={setMessage} />
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Price</p>
+                        <Input type="number" 
+                        value={newPrice} 
+                        placeholder={price} 
+                        handleChange={setNewPrice}
+                        resetMessage={setMessage} />
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount</p>
+                        <Input type="number" 
+                        value={newDiscount} 
+                        placeholder={discount} 
+                        handleChange={setNewDiscount}
+                        resetMessage={setMessage} />
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount Interval</p>
+                        <Input type="number" 
+                        value={newDiscountInterval} 
+                        placeholder={discountInterval} 
+                        handleChange={setNewDiscountInterval}
+                        resetMessage={setMessage} />
                     </div>                 
                     <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                     bg-white px-6 py-4 shadow-xl
                     ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Cover Image</p>
+                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Art Image</p>
                         <input className='block w-full text-sm text-slate-500
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0
@@ -612,138 +471,13 @@ function CommissionEdit() {
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5" 
                     type="submit">
-                        Update Manga 
+                        Update Commission 
                     </button>
                 </form>
             </div>
-        ) : (
-        <div className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 shadow-xl
-        ring-slate-900/5">
-            <h2  className="text-3xl leading-[68px] 
-            lg:max-w-md font-palanquin font-bold p-2 text-center">
-                Manga Chapter
-            </h2>
-            <ul  className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
-                ring-slate-900/5'> 
-                {mangas.map((manga)=> {
-                    return (
-                        <li key={manga._id}>
-                            <p className="font-montserrat 
-                            text-slate-gray hover:text-black text-md
-                            leading-8 my-2 cursor-pointer w-full"
-                            onClick={()=> {handleMangaClick(manga.name, manga._id)}}>
-                                {manga.name}
-                            </p>
-                            <ul className="flex flex-col my-2 rounded-lg 
-                            bg-white px-6 shadow-xl
-                            ring-slate-900/5">
-                                {clickedMangaId === manga._id && mangaContents
-                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                    .map((mangaContent) =>
-                                        mangaContent.chapters.map((chapter) => (
-                                            <li key={chapter._id}>
-                                                <p className="font-montserrat 
-                                                text-slate-gray hover:text-black text-sm
-                                                leading-8 my-2 cursor-pointer w-full"
-                                                onClick={()=> {
-                                                    handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
-                                                }}>
-                                                Chapter {chapter.chapterNumber} - {chapter.title}
-                                                </p>
-                                            </li>
-                                        ))
-                                    )
-                                }
-                            </ul>   
-                        </li>
-                    )
-                })}
-            </ul>
-            <div className="flex flex-col justify-center items-center m-3">
-                <div className="flex flex-col justify-center items-center m-3">
-                    <p  className="font-montserrat 
-                    text-slate-gray text-xl 
-                    leading-8 my3 text-center">
-                    <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
-                    </p>
-                    <p className="font-montserrat 
-                    text-slate-gray text-lg 
-                    leading-8 my-3 text-center">
-                    <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
-                    <span className='font-montserrat font-bold'>" CHAPTER.</span>
-                    </p>
-                </div>
-
-                
-                {message && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                style={{ color:`${messageColor}`}}>
-                    {message}
-                </p>}
-                <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
-                onSubmit={handleChapterSubmit}>
-                    <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                    <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
-                    <input className="p-2.5 mb-3
-                    border border-slate-gray 
-                    rounded-full text-center font-montserrat" 
-                    type="number" 
-                    value={newChapterNumber} onChange={(e) => {
-                        setNewChapterNumber(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder={chapterNumber}/>
-                    </label>
-                    <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Title</p> 
-                        <input className="p-2.5 mb-3
-                        border border-slate-gray 
-                        rounded-full text-center font-montserrat" 
-                        type="text" 
-                        value={newChapterTitle} onChange={(e) => {
-                            setNewChapterTitle(e.target.value)
-                            setMessage("")
-                        }} 
-                        placeholder={chapterTitle}/>
-                    </label>
-                    <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'> Select Pages</p> 
-                        <input  className='block w-full text-sm text-slate-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-violet-50 file:text-violet-700
-                        hover:file:bg-violet-100'
-                        ref={fileInputRef}
-                        type="file" 
-                        multiple onChange={handleFilesChange}
-                            
-                        />
-                    </label>
-                    <button className="gap-2 px-7 py-4 my-2 border 
-                    font-montserrat text-lg leading-none bg-black
-                    rounded-full text-white border-black mb-5"
-                    type="submit">
-                        Update Chapter
-                    </button>
-                </form>
-            </div>
-        </div>
-        )}
     </div>
 )};
 
 
 export default CommissionManager;
-
 export {CommissionCreate, CommissionDelete, CommissionEdit};
