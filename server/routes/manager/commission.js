@@ -26,6 +26,7 @@ router.post("/create", upload.single("artImage"), async (req, res)=> {
             artStyle: req.body.artStyle, 
             artImage: req.file.originalname,
             price: req.body.price,
+            pricePer: req.body.pricePer,
             discount: req.body.discount,
             discountInterval: req.body.discountInterval
         };
@@ -80,14 +81,14 @@ router.delete("/delete", async (req, res) => {
 
 
 router.put("/edit", upload.single("artImage"), async (req, res) => { 
-    const { id, artStyle, price, discount, discountInterval } = req.body;
+    const { id, artStyle, price, pricePer, discount, discountInterval } = req.body;
    
         if (id) {
             try {
-                if (req.file && artStyle && price && discount && discountInterval){
+                if (req.file && artStyle && price && pricePer && discount && discountInterval){
                     const commission = await CommissionModel.findOneAndUpdate(
                         {_id: id}, 
-                        { artStyle: artStyle, artImage: req.file.originalname, price: price, discount: discount, discountInterval: discountInterval}, 
+                        { artStyle: artStyle, artImage: req.file.originalname, price: price, pricePer: pricePer, discount: discount, discountInterval: discountInterval}, 
                         { new: true });
 
                     if (!commission) {
@@ -95,7 +96,7 @@ router.put("/edit", upload.single("artImage"), async (req, res) => {
                     }
                     res.json({ message: "Commission updated successfully", commission });
                 
-                }  else if (req.file || artStyle || price || discount || discountInterval){
+                }  else if (req.file || artStyle || price || pricePer || discount || discountInterval){
                     if (req.file) {
                         await CommissionModel.findOneAndUpdate({_id: id}, {artImage: req.file.originalname}, { new: true });
                         await ImageModel.findOneAndUpdate({imageID: id}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
@@ -103,6 +104,8 @@ router.put("/edit", upload.single("artImage"), async (req, res) => {
                         await CommissionModel.findOneAndUpdate({_id: id}, { artStyle: artStyle}, { new: true });   
                     }   if (price) {
                         await CommissionModel.findOneAndUpdate({_id: id}, { price: price}, { new: true });   
+                    }   if (pricePer) {
+                        await CommissionModel.findOneAndUpdate({_id: id}, { pricePer: pricePer}, { new: true });   
                     }   if (discount) {
                         await CommissionModel.findOneAndUpdate({_id: id}, { discount: discount}, { new: true }); 
                     }   if (discountInterval) {

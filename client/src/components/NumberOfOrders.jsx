@@ -43,18 +43,23 @@ const NumberOfOrders = ({commission}) => {
         <div  className="flex justify-center items-center">
             <button onClick={handleDecreaseClick}>-</button> 
             <input className="text-center font-montserrat
-            text-black text-sm border border-slate-gray input
+            text-black text-sm border border-slate-gray
             leading-8 m-2"
             type="number" 
             value={numberOfOrders}
             onChange={handleChange}/>
             <button onClick={handleIncreaseClick}>+</button>
         </div>
-        <div>
-            <p className="font-montserrat text-green-600
+        <div className="flex flex-col justify-center items-center">
+            <p className="font-montserrat text-green-600 text-center
             text-lg leading-8 my-2 w-full">
                 ${priceOfOrders}
             </p>
+            <p className="font-montserrat text-slate-gray text-center font-semibold
+            text-sm leading-4 my-2 w-full">
+                {commission.pricePer}
+            </p>
+            
         </div>
     </div>
 

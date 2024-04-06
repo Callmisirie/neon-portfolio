@@ -1,5 +1,6 @@
 import {useState} from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { arrowRight } from "../assets/icons";
 import {bigShoe1} from "../assets/images"
@@ -9,7 +10,14 @@ import ShoeCard from "../components/ShoeCard.jsx";
 
 function Home() {
     const [email, setEmail] = useState("");
+    const navigate = useNavigate();
+
     const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
+
+    function handleClick() {
+        navigate("/commission");
+        window.scrollTo(0, 0);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,6 +76,7 @@ function Home() {
                             </p>
                             <Button label="Preview price" 
                                 iconURL={arrowRight}
+                                handleClick={handleClick}
                             />
                             <div className="flex 
                                 justify-starts items-start 

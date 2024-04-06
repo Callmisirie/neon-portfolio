@@ -14,6 +14,10 @@ const commissionSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    pricePer: {
+        type: String,
+        required: true
+    },
     discount: {
         type: Number,
         required: true

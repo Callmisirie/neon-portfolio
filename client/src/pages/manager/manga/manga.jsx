@@ -13,26 +13,32 @@ function MangaManager() {
 
     function handleNewManga() {
         navigate("/manager/manga/create/manga")
+        window.scrollTo(0, 0);
     };
 
     function handleUploadChapter() {
         navigate("/manager/manga/create/manga/chapter")
+        window.scrollTo(0, 0);
     };
 
     function handleDeleteManga() {
         navigate("/manager/manga/delete/manga")
+        window.scrollTo(0, 0);
     };
 
     function handleDeleteChapter() {
         navigate("/manager/manga/delete/manga/chapter")
+        window.scrollTo(0, 0);
     };
 
     function handleEditManga() {
         navigate("/manager/manga/edit/manga")
+        window.scrollTo(0, 0);
     };
 
     function handleEditChapter() {
         navigate("/manager/manga/edit/manga/chapter")
+        window.scrollTo(0, 0);
     };
 
 
@@ -133,6 +139,8 @@ function MangaCreate() {
     const [coverImage, setCoverImage] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Upload Manga");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Upload Chapter");
 
     const fileInputRef = useRef(null);
 
@@ -167,6 +175,7 @@ const handleFilesChange = (e) => {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setActionMangaMessage("Processing...");
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coverImage", coverImage);
@@ -182,6 +191,7 @@ const handleSubmit = async (e) => {
         setName("");
         setCoverImage("");
         setMessageColor("green");
+        setActionMangaMessage("Upload Manga")
         fileInputRef.current.value = null;
     
         
@@ -189,6 +199,7 @@ const handleSubmit = async (e) => {
         setMessage("Error uploading manga");
         setName("");
         setMessageColor("red");
+        setActionMangaMessage("Upload Manga")
         console.error(error);
     }
 };
@@ -196,6 +207,7 @@ const handleSubmit = async (e) => {
 const handleChapterSubmit = async (e) => {
     e.preventDefault();
 
+    setActionChapterMessage("Processing...");
     const formData = new FormData();
     formData.append("chapterNumber", chapterNumber);
     formData.append("title", title);
@@ -215,12 +227,14 @@ const handleChapterSubmit = async (e) => {
         setPages([]);
         setMangaName("");
         setMessageColor("green");
+        setActionChapterMessage("Upload Chapter")
         fileInputRef.current.value = null;
     } catch (error) {
         setMessage("Error uploading chapter");
         setMessageColor("red");
         console.error(error);
         setMangaName("");
+        setActionChapterMessage("Upload Chapter")
     }
 };
 
@@ -272,7 +286,7 @@ return (
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
                     type="submit">
-                        Upload Manga
+                        {actionMangaMessage}
                     </button>
                 </form>
             </div>
@@ -355,7 +369,7 @@ return (
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
                     type="submit">
-                        Upload Chapter
+                        {actionChapterMessage}
                     </button>
                 </form>
             </div>
@@ -379,6 +393,8 @@ function MangaDelete() {
     const [selectedChapterTitle, setSelectedChapterTitle] = useState("");
     const [selectedChapterID, setSelectedChapterID] = useState("");
     const [deleteChapterTitle, setDeleteChapterTitle] = useState("");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Delete Manga");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Delete Chapter");
 
 
     //use useLocation hook to switch beween delete manga and delete chapter code.
@@ -412,26 +428,32 @@ const handleChapterClick = (mangaID, chapterID, title) => {
 
 
 const handleDeleteMangaClick = async () => {
+    setActionMangaMessage("Processing...");
     try {
         await axios.delete("http://localhost:4001/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
         setDeleteMangaName("");
         setSelectedMangaName("");
+        setActionMangaMessage("Delete Manga");
     } catch (error) {
         console.error(error)
         setDeleteMangaName("");
         setSelectedMangaName("");
+        setActionMangaMessage("Delete Manga");
     }
 }
 
 const handleDeleteChapterClick = async () => {
+    setActionChapterMessage("Processing...");
     try {
         await axios.delete("http://localhost:4001/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
+        setActionChapterMessage("Delete Chapter");
     } catch (error) {
         console.error(error)
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
+        setActionChapterMessage("Delete Chapter");
     }
     }
 
@@ -488,7 +510,7 @@ const handleClick = (mangaId) => {
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
                 onClick={handleDeleteMangaClick}>
-                    Delete Manga
+                    {actionMangaMessage}
                 </button>
             </div>
         ) : (
@@ -556,7 +578,7 @@ const handleClick = (mangaId) => {
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black mb-5"
                 onClick={handleDeleteChapterClick}>
-                Delete Chapter
+                {actionChapterMessage}
             </button>
         </div>
         )
@@ -584,6 +606,8 @@ function MangaEdit() {
     const [newChapterNumber, setNewChapterNumber] = useState("");
     const [coverImage, setCoverImage] = useState("");
     const [messageColor, setMessageColor] = useState("");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Edit Manga");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Edit Chapter");
     const fileInputRef = useRef(null);
 
 
@@ -641,6 +665,7 @@ function MangaEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setActionMangaMessage("Processing...");
         const formData = new FormData();
         formData.append("mangaID", mangaID);
         formData.append("name", newMangaName);
@@ -658,10 +683,12 @@ function MangaEdit() {
         setNewMangaName("");
         setCoverImage("");
         setMessageColor("green")
+        setActionMangaMessage("Edit Manga");
         fileInputRef.current.value = null;
         } catch (error) {
         setMessage("Error updating manga");
         setMessageColor("red")
+        setActionMangaMessage("Edit Manga");
         console.error(error);  
         }
     };
@@ -669,6 +696,7 @@ function MangaEdit() {
     const handleChapterSubmit = async (e) => {
         e.preventDefault();
 
+        setActionChapterMessage("Processing...");
         const formData = new FormData();
         formData.append("chapterNumber", newChapterNumber);
         formData.append("title", newChapterTitle);
@@ -692,10 +720,12 @@ function MangaEdit() {
         setNewChapterNumber("");
         setPages([]);
         setMessageColor("green")
+        setActionChapterMessage("Edit Chapter");
         fileInputRef.current.value = null;
         } catch (error) {
         setMessage("Error updating chapter");
         setMessageColor("red")
+        setActionChapterMessage("Edit Chapter");
         console.error(error);
         }
     };
@@ -773,7 +803,7 @@ function MangaEdit() {
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5" 
                     type="submit">
-                        Update Manga 
+                        {actionMangaMessage} 
                     </button>
                 </form>
             </div>
@@ -895,7 +925,7 @@ function MangaEdit() {
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
                     type="submit">
-                        Update Chapter
+                        {actionChapterMessage}
                     </button>
                 </form>
             </div>

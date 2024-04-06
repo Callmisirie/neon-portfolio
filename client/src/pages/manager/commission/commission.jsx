@@ -14,14 +14,17 @@ function CommissionManager() {
 
     function handleCreate() {
         navigate("/manager/commission/create/commission")
+        window.scrollTo(0, 0);
     };
 
     function handleDelete() {
         navigate("/manager/commission/delete/commission")
+        window.scrollTo(0, 0);
     };
 
     function handleEdit() {
         navigate("/manager/commission/edit/commission")
+        window.scrollTo(0, 0);
     };
 
   return (
@@ -69,10 +72,12 @@ function CommissionCreate() {
     const [artStyle, setArtStyle] = useState("");
     const [artImage, setArtImage] = useState("");
     const [price, setPrice] = useState("");
+    const [pricePer, setPricePer] = useState("");
     const [discount, setDiscount] = useState("");
     const [discountInterval, setDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Upload Commission");
     const fileInputRef = useRef(null);
 
 
@@ -100,10 +105,12 @@ const handleFileChange = (e) => {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setActionMessage("Processing...")
     const formData = new FormData();
     formData.append("artStyle", artStyle);
     formData.append("artImage", artImage);
     formData.append("price", price);
+    formData.append("pricePer", pricePer);
     formData.append("discount", discount);   
     formData.append("discountInterval", discountInterval);
 
@@ -118,8 +125,10 @@ const handleSubmit = async (e) => {
         setArtStyle("");
         setArtImage("");
         setPrice("");
+        setPricePer("");
         setDiscount("");
         setDiscountInterval("");
+        setActionMessage("Upload Commission")
         setMessageColor("green");
         fileInputRef.current.value = null;
     
@@ -129,8 +138,10 @@ const handleSubmit = async (e) => {
         setArtStyle("");
         setArtImage("");
         setPrice("");
+        setPricePer("");
         setDiscount("");
-        setDiscountInterval("");;
+        setDiscountInterval("");
+        setActionMessage("Upload Commission")
         setMessageColor("red");
         console.error(error);
     }
@@ -140,7 +151,7 @@ const handleSubmit = async (e) => {
 return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-            <div className="flex flex-col justify-center items-center"> 
+            <div className="flex flex-col justify-center items-center mb-5"> 
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Create Commission
@@ -162,6 +173,10 @@ return (
                     value={price} handleChange={setPrice} 
                     resetMessage={setMessage} 
                     placeholder="Price"/>
+                    <Input type="text" 
+                    value={pricePer} handleChange={setPricePer} 
+                    resetMessage={setMessage} 
+                    placeholder="Price Per"/>
                     <Input type="number" 
                     value={discount} handleChange={setDiscount} 
                     resetMessage={setMessage} 
@@ -190,7 +205,7 @@ return (
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
                     type="submit">
-                        Upload Commission
+                        {actionMessage}
                     </button>
                 </form>
             </div> 
@@ -207,6 +222,7 @@ function CommissionDelete() {
     const [selectedCommission, setSelectedCommission] = useState("");
     const [selectedCommissionID, setSelectedCommissionID] = useState("");
     const [deleteCommission, setDeleteCommission] = useState("");
+    const [actionMessage, setActionMessage] = useState("Delete Commission");
 
 
     useEffect(() => {
@@ -228,21 +244,24 @@ const handleCommissionClick = (id, name) => {
 }
 
 const handleDeleteCommissionClick = async () => {
+    setActionMessage("Processing");
     try {
         await axios.delete("http://localhost:4001/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
         setDeleteCommission("");
         setSelectedCommission("");
+        setActionMessage("Delete Commission");
     } catch (error) {
         console.error(error)
         setDeleteCommission("");
         setSelectedCommission("");
+        setActionMessage("Delete Commission");
     }
 }
 
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-            <div  className="flex flex-col justify-center items-center rounded-lg 
+            <div  className="flex flex-col justify-center items-center rounded-lg mb-10
                 bg-white px-10 py-4 shadow-xl
                 ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
@@ -287,7 +306,7 @@ const handleDeleteCommissionClick = async () => {
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
                 onClick={handleDeleteCommissionClick}>
-                    Delete Commission
+                    {actionMessage}
                 </button>
             </div>
     </div>
@@ -303,14 +322,17 @@ function CommissionEdit() {
     const [artStyle, setArtStyle] = useState("");
     const [artImage, setArtImage] = useState("");
     const [price, setPrice] = useState("");
+    const [pricePer, setPricePer] = useState("");
     const [discount, setDiscount] = useState("");
     const [discountInterval, setDiscountInterval] = useState("");
     const [newArtStyle, setNewArtStyle] = useState("");
     const [newPrice, setNewPrice] = useState("");
+    const [newPricePer, setNewPricePer] = useState("");
     const [newDiscount, setNewDiscount] = useState("");
     const [newDiscountInterval, setNewDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Edit Commission");
     const fileInputRef = useRef(null);
 
 
@@ -326,13 +348,15 @@ function CommissionEdit() {
         fetchCommission();
     }, [commissions]);
 
-    const handleClick = (artStyle, price, discount, discountInterval, id) => {
+    const handleClick = (artStyle, price, pricePer, discount, discountInterval, id) => {
         setArtStyle(artStyle);
         setPrice(price);
+        setPricePer(pricePer);
         setDiscount(discount);
         setDiscountInterval(discountInterval);
         setCommissionID(id);
         setMessage("");
+        
     }
 
     const handleFileChange = (e) => {
@@ -344,11 +368,13 @@ function CommissionEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setActionMessage("Pocessing...");
         const formData = new FormData();
         formData.append("id", commissionID);
         formData.append("artStyle", newArtStyle);
         formData.append("artImage", artImage);
         formData.append("price", newPrice);
+        formData.append("pricePer", newPricePer);
         formData.append("discount", newDiscount);   
         formData.append("discountInterval", newDiscountInterval);
 
@@ -362,18 +388,22 @@ function CommissionEdit() {
         setArtStyle("");
         setArtImage("");
         setPrice("");
+        setPricePer("");
         setDiscount("");
         setDiscountInterval("");
         setNewArtStyle("");
         setArtImage("");
         setNewPrice("");
+        setNewPricePer("");
         setNewDiscount("");
         setNewDiscountInterval("");
-        setMessageColor("green")
+        setMessageColor("green");
+        setActionMessage("Edit Commission");
         fileInputRef.current.value = null;
         } catch (error) {
         setMessage("Error updating commission");
         setMessageColor("red")
+        setActionMessage("Edit Commission");
         console.error(error);  
         }
     };
@@ -381,7 +411,7 @@ function CommissionEdit() {
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
         bg-white px-6">
-            <div className="flex flex-col justify-center items-center rounded-lg 
+            <div className="flex flex-col justify-center items-center rounded-lg mb-10
             bg-white px-6 shadow-xl
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
@@ -401,6 +431,7 @@ function CommissionEdit() {
                                     handleClick(
                                         commission.artStyle,
                                         commission.price,
+                                        commission.pricePer,
                                         commission.discount,
                                         commission.discountInterval, 
                                         commission._id)
@@ -440,6 +471,12 @@ function CommissionEdit() {
                         placeholder={price} 
                         handleChange={setNewPrice}
                         resetMessage={setMessage} />
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Price Per</p>
+                        <Input type="text" 
+                        value={newPricePer} 
+                        placeholder={pricePer} 
+                        handleChange={setNewPricePer}
+                        resetMessage={setMessage} />
                         <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount</p>
                         <Input type="number" 
                         value={newDiscount} 
@@ -471,7 +508,7 @@ function CommissionEdit() {
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5" 
                     type="submit">
-                        Update Commission 
+                        {actionMessage}
                     </button>
                 </form>
             </div>

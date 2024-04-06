@@ -13,18 +13,22 @@ function Manager() {
 
     function handleManga() {
         navigate("/manager/manga")
+        window.scrollTo(0, 0);
     };
 
     function handleCommission() {
         navigate("/manager/commission")
+        window.scrollTo(0, 0);
     };
 
     function handleSupport() {
         navigate("/manager/support")
+        window.scrollTo(0, 0);
     };
 
     function handleReview() {
         navigate("/manager/review")
+        window.scrollTo(0, 0);
     }
 
   return (
