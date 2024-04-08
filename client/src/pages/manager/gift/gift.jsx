@@ -372,7 +372,7 @@ return (
     </div>
 )};
 
-//////////////////////////////////////////////////////////////////////////DELETE COMMISSION//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////DELETE GIFT//////////////////////////////////////////////////////////////////////////
 
 
 function GiftDelete() {
@@ -640,55 +640,268 @@ const handleDeleteCryptoGiftClick = async () => {
     </div>
 )};
 
-//////////////////////////////////////////////////////////////////////////EDIT COMMISSION//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////EDIT GIFT//////////////////////////////////////////////////////////////////////////
 
 
 function GiftEdit() {
-    const [commissions, setCommissions] = useState([]);
-    const [commissionID, setCommissionID] = useState("");
-    const [artStyle, setArtStyle] = useState("");
-    const [artImage, setArtImage] = useState("");
-    const [price, setPrice] = useState("");
-    const [pricePer, setPricePer] = useState("");
-    const [discount, setDiscount] = useState("");
-    const [discountInterval, setDiscountInterval] = useState("");
-    const [newArtStyle, setNewArtStyle] = useState("");
-    const [newPrice, setNewPrice] = useState("");
-    const [newPricePer, setNewPricePer] = useState("");
-    const [newDiscount, setNewDiscount] = useState("");
-    const [newDiscountInterval, setNewDiscountInterval] = useState("");
+    const [isClickedPaypal, setIsClickedPaypal] = useState(false);
+    const [isClickedCrypto, setIsClickedCrypto] = useState(false);
+
+
+    function handleClick(gift) {
+        if (gift === "Paypal") { 
+            if (isClickedPaypal) {
+                setIsClickedPaypal(false);
+            } else if (!isClickedPaypal) {
+                setIsClickedPaypal(true);
+                setIsClickedCrypto(false);
+            }
+        }
+        else if (gift === "Crypto") {
+            if (isClickedCrypto) {
+                setIsClickedCrypto(false);
+            } else if (!isClickedCrypto) {
+                setIsClickedCrypto(true);
+                setIsClickedPaypal(false);
+            }
+        } 
+    }
+
+    return (
+        <section className="min-h-full flex flex-col items-center">
+            <div className="flex 
+            flex-col justify-center items-center  
+            max-container m-10 rounded-lg 
+            bg-white px-6 py-8 shadow-xl
+            ring-slate-900/5"
+            >   
+                <h2  className="text-3xl leading-[68px] 
+                lg:max-w-md font-montserrat  font-bold p-2 text-center">
+                    Choose Gift
+                </h2>
+                <button 
+                    className="text-white px-4 py-2 text-sm
+                    font-montserrat font-medium my-3 mx-5
+                    bg-purple-600 rounded-md hover:bg-purple-500 "
+                    onClick={ ()=> {
+                    handleClick("Paypal")
+                }}>
+                    Paypal
+                </button>    
+                <button
+                    className="text-white px-4 py-2 text-sm
+                    font-montserrat font-medium my-3 mx-5
+                    bg-purple-600 rounded-md hover:bg-purple-500 " 
+                    onClick={()=> {
+                    handleClick("Crypto")
+                }}>
+                    Crypto
+                </button>
+                {isClickedPaypal && 
+                    <>
+                        <PaypalGiftEdit /> 
+                    </> 
+                }
+                {isClickedCrypto && 
+                    <>
+                        <CryptoGiftEdit /> 
+                    </> 
+                }
+            </div>  
+        </section>
+
+    );
+};
+
+
+
+function PaypalGiftEdit() {
+    const isClickedPaypal = true;
+    const [paypalGifts, setPaypalGifts] = useState([]);
+    const [paypalGiftId, setPaypalGiftId] = useState("");
+    const [address, setAddress] = useState("");
+    const [username, setUsername] = useState("");
+    const [newAddress, setNewAddress] = useState("");
+    const [newUsername, setNewUsername] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Edit Commission");
+    const [actionMessage, setActionMessage] = useState("Update Paypal Gift");
+
+
+
+useEffect(() => {
+    const fetchPaypalGift = async () =>{
+        try {
+            const response = await axios.get("http://localhost:4001/manager/gift/read") 
+            const {paypalGift} = response.data
+            setPaypalGifts(paypalGift)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    fetchPaypalGift();
+}, [paypalGifts]);
+
+
+
+const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setActionMessage("Processing...")
+    const formData = new FormData();
+    formData.append("paypalGiftId", paypalGiftId);
+    formData.append("paypalAddress", newAddress);
+    formData.append("username", newUsername);
+    formData.append("isClickedPaypal", isClickedPaypal);
+
+
+
+    try {
+        await axios.put("http://localhost:4001/manager/gift/edit", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        setMessage("Paypal Gift updated successfully");
+        setAddress("");
+        setUsername("");
+        setNewAddress("");
+        setNewUsername("");
+        setActionMessage("Update Paypal Gift")
+        setPaypalGiftId("");
+        setMessageColor("green");
+    } catch (error) {
+        setMessage("Error updating Paypal Gift");
+        setAddress("");
+        setUsername("");
+        setPaypalGiftId("");
+        setActionMessage("Update Paypal Gift")
+        setMessageColor("red");
+        console.error(error);
+    }
+};
+
+
+const handleClick = (id, address, username,) => {
+    setPaypalGiftId(id);
+    setAddress(address);
+    setUsername(username);
+    setMessage("");  
+}
+
+
+return (
+    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    bg-white px-6">
+        <div className="flex flex-col justify-center items-center rounded-lg mb-10
+        bg-white px-6 shadow-xl
+        ring-slate-900/5"> 
+            <h2 className="text-3xl leading-[68px] 
+            lg:max-w-md font-palanquin font-bold p-2">
+                Edit Paypal Gift
+            </h2>
+            <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
+                bg-white px-6 py-3 shadow-xl
+                ring-slate-900/5'>
+                    {paypalGifts && paypalGifts.map((paypalGift)=> {
+                        return (
+                            <li key={paypalGift._id}>
+                                <p className="font-montserrat 
+                                text-slate-gray hover:text-black text-md 
+                                leading-8 my-2 cursor-pointer w-full"
+                                    onClick={()=> {
+                                    handleClick(
+                                        paypalGift._id,
+                                        paypalGift.address,
+                                        paypalGift.username
+                                    )
+                                }}>
+                                    {paypalGift.address}
+                                </p>
+                            </li>
+                        )
+                    })}
+                </ul>
+            {message && <p className="font-montserrat text-lg 
+            leading-8 my-2"
+            style={{ color:`${messageColor}`}}>
+                {message}
+            </p>}
+            <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+            bg-white px-6 py-4 shadow-xl
+            ring-slate-900/5"
+            onSubmit={handleSubmit}> 
+                <div className="flex flex-col justify-center items-center m-5 rounded-lg 
+                    bg-white px-6 py-4 shadow-xl
+                    ring-slate-900/5">
+                    <p className='mt-4 font-bold font-montserrat text-slate-gray'>Address</p>  
+                    <Input type="email" 
+                    value={newAddress} handleChange={setNewAddress} 
+                    resetMessage={setMessage} 
+                    placeholder={address} />
+                    <p className='mt-4 font-bold font-montserrat text-slate-gray'>Username</p>
+                    <Input type="text" 
+                    value={newUsername} handleChange={setNewUsername} 
+                    resetMessage={setMessage} 
+                    placeholder={username} />
+                </div>
+                
+                <button className="gap-2 px-7 py-4 my-2 border 
+                font-montserrat text-lg leading-none bg-black
+                rounded-full text-white border-black mb-5"
+                type="submit">
+                    {actionMessage}
+                </button>
+            </form>
+        </div> 
+    </div>
+)};
+
+
+
+function CryptoGiftEdit() {
+    const isClickedCrypto = true;
+    const [cryptoGifts, setCryptoGifts] = useState([]);
+    const [cryptoGiftId, setCryptoGiftId] = useState("");
+    const [qrCodeImage, setQrCodeImage] = useState("");
+    const [address, setAddress] = useState("");
+    const [cryptoName, setCryptoName] = useState("");
+    const [network, setNetwork] = useState("");
+    const [newAddress, setNewAddress] = useState("");
+    const [newCryptoName, setNewCryptoName] = useState("");
+    const [newNetwork, setNewNetwork] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Edit Crypto Gift");
     const fileInputRef = useRef(null);
 
 
     useEffect(() => {
-        const fetchCommission = async () =>{
+        const fetchCryptoGift = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/commission/read") 
-                setCommissions(response.data)
+                const response = await axios.get("http://localhost:4001/manager/gift/read") 
+                const {cryptoGift} = response.data;
+                setCryptoGifts(cryptoGift)
             } catch (error) {
                 console.error(error);
             }
         }
-        fetchCommission();
-    }, [commissions]);
+        fetchCryptoGift();
+    }, [cryptoGifts]);
 
-    const handleClick = (artStyle, price, pricePer, discount, discountInterval, id) => {
-        setArtStyle(artStyle);
-        setPrice(price);
-        setPricePer(pricePer);
-        setDiscount(discount);
-        setDiscountInterval(discountInterval);
-        setCommissionID(id);
+    const handleClick = (cryptoName, address, network, id) => {
+        setCryptoName(cryptoName);
+        setAddress(address);
+        setNetwork(network);
+        setCryptoGiftId(id);
         setMessage("");
         
     }
 
     const handleFileChange = (e) => {
         const files = e.target.files;
-        setArtImage(...files);
+        setQrCodeImage(...files);
         setMessage("");
     };
 
@@ -697,40 +910,34 @@ function GiftEdit() {
 
         setActionMessage("Pocessing...");
         const formData = new FormData();
-        formData.append("id", commissionID);
-        formData.append("artStyle", newArtStyle);
-        formData.append("artImage", artImage);
-        formData.append("price", newPrice);
-        formData.append("pricePer", newPricePer);
-        formData.append("discount", newDiscount);   
-        formData.append("discountInterval", newDiscountInterval);
+        formData.append("cryptoGiftId", cryptoGiftId);
+        formData.append("cryptoName", newCryptoName);
+        formData.append("cryptoAddress", newAddress);
+        formData.append("network", newNetwork);
+        formData.append("qrCodeImage", qrCodeImage);
+        formData.append("isClickedCrypto", isClickedCrypto);
 
         try {
-        await axios.put("http://localhost:4001/manager/commission/edit", formData, {
+        await axios.put("http://localhost:4001/manager/gift/edit", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Commission updated successfully");
-        setArtStyle("");
-        setArtImage("");
-        setPrice("");
-        setPricePer("");
-        setDiscount("");
-        setDiscountInterval("");
-        setNewArtStyle("");
-        setArtImage("");
-        setNewPrice("");
-        setNewPricePer("");
-        setNewDiscount("");
-        setNewDiscountInterval("");
+        setMessage("Crypto Gift updated successfully");
+        setCryptoName("");
+        setAddress("");
+        setNetwork("");
+        setQrCodeImage("");
+        setNewCryptoName("");
+        setNewAddress("");
+        setNewNetwork("");
         setMessageColor("green");
-        setActionMessage("Edit Commission");
+        setActionMessage("Edit Crypto Gift");
         fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating commission");
+        setMessage("Error updating crypto gift");
         setMessageColor("red")
-        setActionMessage("Edit Commission");
+        setActionMessage("Edit Crypto Gift");
         console.error(error);  
         }
     };
@@ -743,27 +950,25 @@ function GiftEdit() {
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
-                    Edit Commission
+                    Edit Crypto Gift
                 </h2>
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 py-3 shadow-xl
                 ring-slate-900/5'>
-                    {commissions.map((commission)=> {
+                    {cryptoGifts && cryptoGifts.map((cryptoGift)=> {
                         return (
-                            <li key={commission._id}>
+                            <li key={cryptoGift._id}>
                                 <p className="font-montserrat 
                                 text-slate-gray hover:text-black text-md 
                                 leading-8 my-2 cursor-pointer w-full"
                                     onClick={()=> {
                                     handleClick(
-                                        commission.artStyle,
-                                        commission.price,
-                                        commission.pricePer,
-                                        commission.discount,
-                                        commission.discountInterval, 
-                                        commission._id)
+                                        cryptoGift.cryptoName,
+                                        cryptoGift.address,
+                                        cryptoGift.network, 
+                                        cryptoGift._id)
                                 }}>
-                                    {commission.artStyle}
+                                    {cryptoGift.cryptoName}
                                 </p>
                             </li>
                         )
@@ -773,7 +978,7 @@ function GiftEdit() {
                 text-slate-gray text-xl 
                 leading-8 mt-6 text-center">
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
-                    {artStyle} 
+                    {cryptoName} 
                 </h3>
                 {message && <p className="font-montserrat text-lg 
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
@@ -786,41 +991,29 @@ function GiftEdit() {
                     <div className="flex flex-col justify-center items-center m-5 rounded-lg 
                     bg-white px-6 py-4 shadow-xl
                     ring-slate-900/5">
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Art Style</p>
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Crypto Name</p>
                         <Input type="text" 
-                        value={newArtStyle} 
-                        placeholder={artStyle} 
-                        handleChange={setNewArtStyle}
+                        value={newCryptoName} 
+                        placeholder={cryptoName} 
+                        handleChange={setNewCryptoName}
                         resetMessage={setMessage} />
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Price</p>
-                        <Input type="number" 
-                        value={newPrice} 
-                        placeholder={price} 
-                        handleChange={setNewPrice}
-                        resetMessage={setMessage} />
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Price Per</p>
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Address</p>
                         <Input type="text" 
-                        value={newPricePer} 
-                        placeholder={pricePer} 
-                        handleChange={setNewPricePer}
+                        value={newAddress} 
+                        placeholder={address} 
+                        handleChange={setNewAddress}
                         resetMessage={setMessage} />
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount</p>
-                        <Input type="number" 
-                        value={newDiscount} 
-                        placeholder={discount} 
-                        handleChange={setNewDiscount}
-                        resetMessage={setMessage} />
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount Interval</p>
-                        <Input type="number" 
-                        value={newDiscountInterval} 
-                        placeholder={discountInterval} 
-                        handleChange={setNewDiscountInterval}
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Network</p>
+                        <Input type="text" 
+                        value={newNetwork} 
+                        placeholder={network} 
+                        handleChange={setNewNetwork}
                         resetMessage={setMessage} />
                     </div>                 
                     <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                     bg-white px-6 py-4 shadow-xl
                     ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Art Image</p>
+                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select QR Code</p>
                         <input className='block w-full text-sm text-slate-500
                         file:mr-4 file:py-2 file:px-4
                         file:rounded-full file:border-0

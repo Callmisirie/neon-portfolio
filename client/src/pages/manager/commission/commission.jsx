@@ -355,7 +355,7 @@ function CommissionEdit() {
         setDiscount(discount);
         setDiscountInterval(discountInterval);
         setCommissionID(id);
-        setMessage("");
+        setMessage(""); 
         
     }
 

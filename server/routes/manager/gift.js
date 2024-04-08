@@ -125,42 +125,50 @@ router.delete("/delete", async (req, res) => {
 
 
 router.put("/edit", upload.single("qrCodeImage"), async (req, res) => { 
-    const { paypalGiftId, paypalAddress, username} = req.body;
-    const { cryptoGiftId, cryptoName, cryptoAddress, network} = req.body;
+    const { paypalGiftId, paypalAddress, 
+        username, cryptoGiftId, cryptoName, 
+        cryptoAddress, network,
+        isClickedPaypal, isClickedCrypto
+    } = req.body;
    
-    if (paypalGiftId || cryptoGiftId) {          
-        if (paypalAddress || username){
-            try {
-                if (paypalAddress) {
-                    await PaypalGiftModel.findOneAndUpdate({_id: paypalGiftId}, { address: paypalAddress}, { new: true });   
-                }   if (username) {
-                    await PaypalGiftModel.findOneAndUpdate({_id: paypalGiftId}, { username: username}, { new: true });   
-                }
-                    res.json({ message: "Paypal updated successfully"}); 
-            } catch (error) {
-                console.error("Error updating paypal", error);
-                res.status(500).json({ message: "Failed to update paypal" });
-            }   
-        }   
-
-        if (req.file || cryptoName || cryptoAddress || network){
-            try {
-                if (req.file) {
-                    await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, {qrCodeImage: req.file.originalname}, { new: true });
-                    await ImageModel.findOneAndUpdate({imageID: cryptoGiftId}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
-                }   if (cryptoName) {
-                    await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { cryptoName:  cryptoName}, { new: true });   
-                }   if (cryptoAddress) {
-                    await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { address: cryptoAddress}, { new: true });   
-                }   if (network) {
-                    await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { network: network}, { new: true });
-                    res.json({ message: "Crypto updated successfully"});
-                }     
-            }   catch (error) {
-                console.error("Error updating crypto", error);
-                res.status(500).json({ message: "Failed to update crypto" });
+    if (paypalGiftId || cryptoGiftId) {   
+        if(isClickedPaypal) {
+            if (paypalAddress || username){
+                try {
+                    if (paypalAddress) {
+                        await PaypalGiftModel.findOneAndUpdate({_id: paypalGiftId}, { address: paypalAddress}, { new: true });   
+                    }   if (username) {
+                        await PaypalGiftModel.findOneAndUpdate({_id: paypalGiftId}, { username: username}, { new: true });   
+                    }
+                        res.json({ message: "Paypal updated successfully"}); 
+                } catch (error) {
+                    console.error("Error updating paypal", error);
+                    res.status(500).json({ message: "Failed to update paypal" });
+                }   
             } 
-        }  
+        } 
+        if(isClickedCrypto) {
+            if (req.file || cryptoName || cryptoAddress || network){
+                try {
+                    if (req.file) {
+                        await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, {qrCodeImage: req.file.originalname}, { new: true });
+                        await ImageModel.findOneAndUpdate({imageID: cryptoGiftId}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
+                    }   if (cryptoName) {
+                        await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { cryptoName:  cryptoName}, { new: true });   
+                    }   if (cryptoAddress) {
+                        await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { address: cryptoAddress}, { new: true });   
+                    }   if (network) {
+                        await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { network: network}, { new: true });
+                    }     
+                    res.json({ message: "Crypto updated successfully"});
+                }   catch (error) {
+                    console.error("Error updating crypto", error);
+                    res.status(500).json({ message: "Failed to update crypto" });
+                } 
+            }  
+        } 
+    } else {
+        res.json({ message: "Gift not found"}); 
     }
 });
 
