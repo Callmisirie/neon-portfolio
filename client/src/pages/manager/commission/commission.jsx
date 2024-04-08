@@ -13,17 +13,17 @@ function CommissionManager() {
     const navigate = useNavigate();
 
     function handleCreate() {
-        navigate("/manager/commission/create/commission")
+        navigate("/manager/commission/create")
         window.scrollTo(0, 0);
     };
 
     function handleDelete() {
-        navigate("/manager/commission/delete/commission")
+        navigate("/manager/commission/delete")
         window.scrollTo(0, 0);
     };
 
     function handleEdit() {
-        navigate("/manager/commission/edit/commission")
+        navigate("/manager/commission/edit")
         window.scrollTo(0, 0);
     };
 

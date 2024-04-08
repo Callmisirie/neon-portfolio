@@ -10,6 +10,7 @@ import { chapterContentRouter } from './routes/chapterContent.js';
 import { managerMangaRouter } from './routes/manager/manga.js';
 import { ImageModel } from './models/Manga.js';
 import { commissionRouter } from './routes/manager/commission.js';
+import { giftRouter } from './routes/manager/gift.js';
 
 const app = express();
 const password = process.env.MONGO_DB;
@@ -26,6 +27,7 @@ app.use("/manga", mangaRouter);
 app.use("/chapterContent", chapterContentRouter);
 app.use("/manager/manga", managerMangaRouter);
 app.use("/manager/commission", commissionRouter);
+app.use("/manager/gift", giftRouter);
 
 
 

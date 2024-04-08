@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from "react-router-dom";
-import axios from 'axios';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -21,8 +19,8 @@ function Manager() {
         window.scrollTo(0, 0);
     };
 
-    function handleSupport() {
-        navigate("/manager/support")
+    function handleGift() {
+        navigate("/manager/gift")
         window.scrollTo(0, 0);
     };
 
@@ -59,8 +57,8 @@ function Manager() {
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
                     bg-purple-600 rounded-md hover:bg-purple-500"
-                    onClick={handleSupport}> 
-                        Support
+                    onClick={handleGift}> 
+                        Gift
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
