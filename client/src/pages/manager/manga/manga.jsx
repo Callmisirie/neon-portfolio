@@ -129,9 +129,9 @@ function MangaManager() {
 function MangaCreate() {
     const [mangas, setMangas] = useState([]);
     const [chapterNumber, setChapterNumber] = useState("");
-    const [title, setTitle] = useState("")
-    const [mangaID, setMangaID] = useState("")
-    const [mangaName, setMangaName] = useState("")
+    const [title, setTitle] = useState("");
+    const [mangaID, setMangaID] = useState("");
+    const [mangaName, setMangaName] = useState("");
     const [pages, setPages] = useState([]);
     const location = useLocation();
     const currentLocation = location.pathname;
@@ -141,6 +141,7 @@ function MangaCreate() {
     const [messageColor, setMessageColor] = useState("");
     const [actionMangaMessage, setActionMangaMessage] = useState("Upload Manga");
     const [actionChapterMessage, setActionChapterMessage] = useState("Upload Chapter");
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const fileInputRef = useRef(null);
 
@@ -176,30 +177,37 @@ const handleSubmit = async (e) => {
     e.preventDefault();
 
     setActionMangaMessage("Processing...");
+    setIsDisabled(true);
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coverImage", coverImage);
 
 
     try {
-        await axios.post("http://localhost:4001/manager/manga/create/manga", formData, {
+        const response = await axios.post("http://localhost:4001/manager/manga/create/manga", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Manga uploaded successfully");
+
+        const {message, color} = response.data;
+        setMessage(message);
         setName("");
         setCoverImage("");
-        setMessageColor("green");
-        setActionMangaMessage("Upload Manga")
+        setMessageColor(color);
+        setActionMangaMessage("Upload Manga");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
     
         
     } catch (error) {
         setMessage("Error uploading manga");
         setName("");
+        setCoverImage("");
         setMessageColor("red");
-        setActionMangaMessage("Upload Manga")
+        setActionMangaMessage("Upload Manga");
+        setIsDisabled(false);
+        fileInputRef.current.value = null;
         console.error(error);
     }
 };
@@ -208,6 +216,7 @@ const handleChapterSubmit = async (e) => {
     e.preventDefault();
 
     setActionChapterMessage("Processing...");
+    setIsDisabled(true);
     const formData = new FormData();
     formData.append("chapterNumber", chapterNumber);
     formData.append("title", title);
@@ -218,23 +227,33 @@ const handleChapterSubmit = async (e) => {
     });
 
     try {
-        await axios.post("http://localhost:4001/manager/manga/create/manga/chapter", formData, {headers: {
+        const response = await axios.post("http://localhost:4001/manager/manga/create/manga/chapter", formData, {headers: {
             "Content-Type": "multipart/form-data"
         }});
-        setMessage("Chapter uploaded successfully");
+
+        const {message, color} = response.data;
+        setMessage(message);
+        setMessageColor(color);
         setChapterNumber("");
         setTitle("");
         setPages([]);
         setMangaName("");
-        setMessageColor("green");
+        setMangaID("");
         setActionChapterMessage("Upload Chapter")
+        setIsDisabled(false);
         fileInputRef.current.value = null;
     } catch (error) {
         setMessage("Error uploading chapter");
         setMessageColor("red");
-        console.error(error);
+        setChapterNumber("");
+        setTitle("");
+        setPages([]);
         setMangaName("");
+        setMangaID("");
         setActionChapterMessage("Upload Chapter")
+        setIsDisabled(false);
+        fileInputRef.current.value = null;
+        console.error(error);
     }
 };
 
@@ -285,7 +304,8 @@ return (
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
-                    type="submit">
+                    type="submit"
+                    disabled={isDisabled}>
                         {actionMangaMessage}
                     </button>
                 </form>
@@ -368,7 +388,8 @@ return (
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
-                    type="submit">
+                    type="submit"
+                    disabled={isDisabled}>
                         {actionChapterMessage}
                     </button>
                 </form>
@@ -395,6 +416,10 @@ function MangaDelete() {
     const [deleteChapterTitle, setDeleteChapterTitle] = useState("");
     const [actionMangaMessage, setActionMangaMessage] = useState("Delete Manga");
     const [actionChapterMessage, setActionChapterMessage] = useState("Delete Chapter");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [isDisabled, setIsDisabled] = useState(false);
+
 
 
     //use useLocation hook to switch beween delete manga and delete chapter code.
@@ -420,40 +445,63 @@ const handleMangaClick = (id, name) => {
     setSelectedMangaName(name);
 }
 
-const handleChapterClick = (mangaID, chapterID, title) => {
-    setSelectedMangaID(mangaID);
+const handleChapterClick = (chapterID, title) => {
     setSelectedChapterID(chapterID);
     setSelectedChapterTitle(title);
 }
 
 
 const handleDeleteMangaClick = async () => {
+
     setActionMangaMessage("Processing...");
+    setIsDisabled(true);
+
     try {
-        await axios.delete("http://localhost:4001/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
+        const response = await axios.delete("http://localhost:4001/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
+        const {message, color} = response.data;
         setDeleteMangaName("");
         setSelectedMangaName("");
+        setSelectedMangaID("");
         setActionMangaMessage("Delete Manga");
+        setMessage(message);
+        setMessageColor(color);
+        setIsDisabled(false);
     } catch (error) {
         console.error(error)
         setDeleteMangaName("");
         setSelectedMangaName("");
+        setSelectedMangaID("");
         setActionMangaMessage("Delete Manga");
+        setMessage("Error deleting manga");
+        setMessageColor("red");
+        setIsDisabled(false);
     }
 }
 
 const handleDeleteChapterClick = async () => {
+
+    setIsDisabled(true);
     setActionChapterMessage("Processing...");
+
     try {
-        await axios.delete("http://localhost:4001/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
+        const response = await axios.delete("http://localhost:4001/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
+        const {message, color} = response.data;
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
+        setSelectedChapterID("");
         setActionChapterMessage("Delete Chapter");
+        setMessage(message);
+        setMessageColor(color);
+        setIsDisabled(false);
     } catch (error) {
         console.error(error)
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
+        setSelectedChapterID("");
         setActionChapterMessage("Delete Chapter");
+        setMessage("Error deleting manga");
+        setMessageColor("red");
+        setIsDisabled(false);
     }
     }
 
@@ -472,6 +520,11 @@ const handleClick = (mangaId) => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Manga
                 </h2>
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2"
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
@@ -503,13 +556,17 @@ const handleClick = (mangaId) => {
                 <input className="p-2.5 my-3
                 border border-slate-gray 
                 rounded-full text-center font-montserrat" 
-                onChange={(e)=> {setDeleteMangaName(e.target.value)}} 
+                onChange={(e)=> {
+                    setDeleteMangaName(e.target.value)
+                    setMessage("");
+                }} 
                 placeholder="Manga Name" 
                 value={deleteMangaName} />
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                onClick={handleDeleteMangaClick}>
+                onClick={handleDeleteMangaClick}
+                disabled={isDisabled}>
                     {actionMangaMessage}
                 </button>
             </div>
@@ -521,6 +578,11 @@ const handleClick = (mangaId) => {
             lg:max-w-md font-palanquin font-bold p-2 text-center">
                 Manga Chapter
             </h2>
+            {message && <p className="font-montserrat text-lg 
+            leading-8 my-2"
+            style={{ color:`${messageColor}`}}>
+                {message}
+            </p>}
             <ul className=''>
                 {mangas.map((manga)=> {
                     return (
@@ -531,6 +593,8 @@ const handleClick = (mangaId) => {
                             leading-8 my-2 cursor-pointer w-full"
                                 onClick={()=> {
                                     handleClick(manga._id)
+                                    setSelectedMangaID(manga._id);
+                                    setSelectedChapterTitle("");
                                 }}>
                                 {manga.name}
                             </p>
@@ -546,7 +610,7 @@ const handleClick = (mangaId) => {
                                                 text-slate-gray hover:text-black text-sm 
                                                 leading-8 my-2 cursor-pointer w-full"
                                                     onClick={()=> {
-                                                    handleChapterClick(manga._id, chapter._id, chapter.title)
+                                                    handleChapterClick(chapter._id, chapter.title)
                                                 }}>
                                                 Chapter {chapter.chapterNumber} - {chapter.title}
                                                 </p>
@@ -571,13 +635,15 @@ const handleClick = (mangaId) => {
             rounded-full text-center font-montserrat" 
                 onChange={(e)=> {
                     setDeleteChapterTitle(e.target.value)
+                    setMessage("")
                 }}     
                 placeholder="Chapter Title"
                 value={deleteChapterTitle}/>
             <button className="gap-2 px-7 py-4 my-2 border 
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black mb-5"
-                onClick={handleDeleteChapterClick}>
+            onClick={handleDeleteChapterClick}
+            disabled={isDisabled}>
                 {actionChapterMessage}
             </button>
         </div>
@@ -608,6 +674,7 @@ function MangaEdit() {
     const [messageColor, setMessageColor] = useState("");
     const [actionMangaMessage, setActionMangaMessage] = useState("Edit Manga");
     const [actionChapterMessage, setActionChapterMessage] = useState("Edit Chapter");
+    const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
 
@@ -664,6 +731,7 @@ function MangaEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsDisabled(true);
 
         setActionMangaMessage("Processing...");
         const formData = new FormData();
@@ -671,30 +739,39 @@ function MangaEdit() {
         formData.append("name", newMangaName);
         formData.append("coverImage", coverImage);
 
-
         try {
-        await axios.put("http://localhost:4001/manager/manga/edit/manga", formData, {
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
-        setMessage("Manga updated successfully");
-        setMangaName("");
-        setNewMangaName("");
-        setCoverImage("");
-        setMessageColor("green")
-        setActionMangaMessage("Edit Manga");
-        fileInputRef.current.value = null;
+            const response = await axios.put("http://localhost:4001/manager/manga/edit/manga", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            const {message, color} = response.data;
+
+            setMessage(message);
+            setMessageColor(color);
+            setMangaName("");
+            setNewMangaName("");
+            setCoverImage("");
+            setMangaID("");
+            setActionMangaMessage("Edit Manga");
+            setIsDisabled(false);
+            fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating manga");
-        setMessageColor("red")
-        setActionMangaMessage("Edit Manga");
-        console.error(error);  
+            setMessage("Error updating manga");
+            setMessageColor("red")
+            setMangaName("");
+            setNewMangaName("");
+            setCoverImage("");
+            setMangaID("");
+            setActionMangaMessage("Edit Manga");
+            setIsDisabled(false);
+            console.error(error);  
         }
     };
 
     const handleChapterSubmit = async (e) => {
         e.preventDefault();
+        setIsDisabled(true);
 
         setActionChapterMessage("Processing...");
         const formData = new FormData();
@@ -708,231 +785,245 @@ function MangaEdit() {
 
 
         try {
-        await axios.put("http://localhost:4001/manager/manga/edit/manga/chapter", formData, {
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
-        setMessage("Chapter updated successfully");
-        setChapterTitle("");
-        setNewChapterTitle("");
-        setChapterNumber("");
-        setNewChapterNumber("");
-        setPages([]);
-        setMessageColor("green")
-        setActionChapterMessage("Edit Chapter");
-        fileInputRef.current.value = null;
+            const response = await axios.put("http://localhost:4001/manager/manga/edit/manga/chapter", formData, {
+                headers: {
+                "Content-Type": "multipart/form-data"
+                }
+            });
+            const {message, color} = response.data;
+
+            setMessage(message);
+            setMessageColor(color);
+            setChapterTitle("");
+            setNewChapterTitle("");
+            setChapterNumber("");
+            setNewChapterNumber("");
+            setPages([]);
+            setChapterID("");
+            setActionChapterMessage("Edit Chapter");
+            setIsDisabled(false);
+            fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating chapter");
-        setMessageColor("red")
-        setActionChapterMessage("Edit Chapter");
-        console.error(error);
+            setMessage("Error updating chapter");
+            setMessageColor("red");
+            setChapterTitle("");
+            setNewChapterTitle("");
+            setChapterNumber("");
+            setNewChapterNumber("");
+            setPages([]);
+            setChapterID("");
+            setActionChapterMessage("Edit Chapter");
+            setIsDisabled(false);
+            fileInputRef.current.value = null;
+            console.error(error);
         }
     };
   
 
-  return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    return (
+        <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
         bg-white px-6">
-        {currentLocation === "/manager/manga/edit/manga" ? (
+            {currentLocation === "/manager/manga/edit/manga" ? (
+                <div className="flex flex-col justify-center items-center rounded-lg 
+                bg-white px-6 shadow-xl
+                ring-slate-900/5">
+                    <h2 className="text-3xl leading-[68px] 
+                    lg:max-w-md font-palanquin font-bold p-2">
+                        Manga
+                    </h2>
+                    <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
+                    bg-white px-6 py-3 shadow-xl
+                    ring-slate-900/5'>
+                        {mangas.map((manga)=> {
+                            return (
+                                <li key={manga._id}>
+                                    <p className="font-montserrat 
+                                    text-slate-gray hover:text-black text-md 
+                                    leading-8 my-2 cursor-pointer w-full"
+                                        onClick={()=> {
+                                        handleMangaClick(manga.name, manga._id)
+                                    }}>
+                                        {manga.name}
+                                    </p>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <h3 className="font-montserrat 
+                    text-slate-gray text-xl 
+                    leading-8 mt-6 text-center">
+                        <span className='font-montserrat font-bold'>UPDATE - </span>     
+                        {mangaName} 
+                    </h3>
+                    {message && <p className="font-montserrat text-lg 
+                    leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                        {message}
+                    </p>}
+                    <form  className="flex flex-col justify-center items-center mx-5 my-10 rounded-lg 
+                    bg-white px-6 py-4 shadow-xl
+                    ring-slate-900/5"
+                    onSubmit={handleSubmit}>
+                        <div className="flex flex-col justify-center items-center m-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5">
+                            <p className='mb-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
+                            <input className="p-2.5 mb-3
+                            border border-slate-gray 
+                            rounded-full text-center font-montserrat" 
+                            type="text" onChange={handleChange} 
+                            value={newMangaName} 
+                            placeholder={mangaName}/>
+                        </div>                 
+                        <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5">
+                            <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Cover Image</p>
+                            <input className='block w-full text-sm text-slate-500
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-violet-50 file:text-violet-700
+                            hover:file:bg-violet-100'
+                            ref={fileInputRef}
+                            type="file" 
+                            onChange={handleFileChange}/>
+                        </div>
+                        <button className="gap-2 px-7 py-4 my-2 border 
+                        font-montserrat text-lg leading-none bg-black
+                        rounded-full text-white border-black mb-5" 
+                        type="submit"
+                        disabled={isDisabled}>
+                            {actionMangaMessage} 
+                        </button>
+                    </form>
+                </div>
+            ) : (
             <div className="flex flex-col justify-center items-center rounded-lg 
             bg-white px-6 shadow-xl
             ring-slate-900/5">
-                <h2 className="text-3xl leading-[68px] 
-                lg:max-w-md font-palanquin font-bold p-2">
-                    Manga
+                <h2  className="text-3xl leading-[68px] 
+                lg:max-w-md font-palanquin font-bold p-2 text-center">
+                    Manga Chapter
                 </h2>
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
-                ring-slate-900/5'>
+                <ul  className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
+                    bg-white px-6 py-3 shadow-xl
+                    ring-slate-900/5'> 
                     {mangas.map((manga)=> {
                         return (
                             <li key={manga._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md 
+                                text-slate-gray hover:text-black text-md
                                 leading-8 my-2 cursor-pointer w-full"
-                                    onClick={()=> {
-                                    handleMangaClick(manga.name, manga._id)
-                                }}>
+                                onClick={()=> {handleMangaClick(manga.name, manga._id)}}>
                                     {manga.name}
                                 </p>
+                                <ul className="flex flex-col my-2 rounded-lg 
+                                bg-white px-6 shadow-xl
+                                ring-slate-900/5">
+                                    {clickedMangaId === manga._id && mangaContents
+                                        .filter((mangaContent) => mangaContent.mangaID === manga._id)
+                                        .map((mangaContent) =>
+                                            mangaContent.chapters.map((chapter) => (
+                                                <li key={chapter._id}>
+                                                    <p className="font-montserrat 
+                                                    text-slate-gray hover:text-black text-sm
+                                                    leading-8 my-2 cursor-pointer w-full"
+                                                    onClick={()=> {
+                                                        handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
+                                                    }}>
+                                                    Chapter {chapter.chapterNumber} - {chapter.title}
+                                                    </p>
+                                                </li>
+                                            ))
+                                        )
+                                    }
+                                </ul>   
                             </li>
                         )
                     })}
                 </ul>
-                <h3 className="font-montserrat 
-                text-slate-gray text-xl 
-                leading-8 mt-6 text-center">
-                    <span className='font-montserrat font-bold'>UPDATE - </span>     
-                    {mangaName} 
-                </h3>
-                {message && <p className="font-montserrat text-lg 
-                leading-8 my-2"  style={{ color:`${messageColor}`}}>
-                    {message}
-                </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 my-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
-                onSubmit={handleSubmit}>
-                    <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
-                        <input className="p-2.5 mb-3
-                        border border-slate-gray 
-                        rounded-full text-center font-montserrat" 
-                        type="text" onChange={handleChange} 
-                        value={newMangaName} 
-                        placeholder={mangaName}/>
-                    </div>                 
-                    <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Cover Image</p>
-                        <input className='block w-full text-sm text-slate-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-violet-50 file:text-violet-700
-                        hover:file:bg-violet-100'
-                        ref={fileInputRef}
-                        type="file" 
-                        onChange={handleFileChange}/>
-                    </div>
-                    <button className="gap-2 px-7 py-4 my-2 border 
-                    font-montserrat text-lg leading-none bg-black
-                    rounded-full text-white border-black mb-5" 
-                    type="submit">
-                        {actionMangaMessage} 
-                    </button>
-                </form>
-            </div>
-        ) : (
-        <div className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 shadow-xl
-        ring-slate-900/5">
-            <h2  className="text-3xl leading-[68px] 
-            lg:max-w-md font-palanquin font-bold p-2 text-center">
-                Manga Chapter
-            </h2>
-            <ul  className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
-                ring-slate-900/5'> 
-                {mangas.map((manga)=> {
-                    return (
-                        <li key={manga._id}>
-                            <p className="font-montserrat 
-                            text-slate-gray hover:text-black text-md
-                            leading-8 my-2 cursor-pointer w-full"
-                            onClick={()=> {handleMangaClick(manga.name, manga._id)}}>
-                                {manga.name}
-                            </p>
-                            <ul className="flex flex-col my-2 rounded-lg 
-                            bg-white px-6 shadow-xl
-                            ring-slate-900/5">
-                                {clickedMangaId === manga._id && mangaContents
-                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                    .map((mangaContent) =>
-                                        mangaContent.chapters.map((chapter) => (
-                                            <li key={chapter._id}>
-                                                <p className="font-montserrat 
-                                                text-slate-gray hover:text-black text-sm
-                                                leading-8 my-2 cursor-pointer w-full"
-                                                onClick={()=> {
-                                                    handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
-                                                }}>
-                                                Chapter {chapter.chapterNumber} - {chapter.title}
-                                                </p>
-                                            </li>
-                                        ))
-                                    )
-                                }
-                            </ul>   
-                        </li>
-                    )
-                })}
-            </ul>
-            <div className="flex flex-col justify-center items-center m-3">
                 <div className="flex flex-col justify-center items-center m-3">
-                    <p  className="font-montserrat 
-                    text-slate-gray text-xl 
-                    leading-8 my3 text-center">
-                    <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
-                    </p>
-                    <p className="font-montserrat 
-                    text-slate-gray text-lg 
-                    leading-8 my-3 text-center">
-                    <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
-                    <span className='font-montserrat font-bold'>" CHAPTER.</span>
-                    </p>
-                </div>
+                    <div className="flex flex-col justify-center items-center m-3">
+                        <p  className="font-montserrat 
+                        text-slate-gray text-xl 
+                        leading-8 my3 text-center">
+                        <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
+                        </p>
+                        <p className="font-montserrat 
+                        text-slate-gray text-lg 
+                        leading-8 my-3 text-center">
+                        <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
+                        <span className='font-montserrat font-bold'>" CHAPTER.</span>
+                        </p>
+                    </div>
 
-                
-                {message && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                style={{ color:`${messageColor}`}}>
-                    {message}
-                </p>}
-                <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
-                onSubmit={handleChapterSubmit}>
-                    <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                    
+                    {message && <p className="font-montserrat text-lg 
+                    leading-8 my-2"
+                    style={{ color:`${messageColor}`}}>
+                        {message}
+                    </p>}
+                    <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
                     bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                    <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
-                    <input className="p-2.5 mb-3
-                    border border-slate-gray 
-                    rounded-full text-center font-montserrat" 
-                    type="number" 
-                    value={newChapterNumber} onChange={(e) => {
-                        setNewChapterNumber(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder={chapterNumber}/>
-                    </label>
-                    <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Title</p> 
+                    ring-slate-900/5"
+                    onSubmit={handleChapterSubmit}>
+                        <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5">
+                        <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
                         <input className="p-2.5 mb-3
                         border border-slate-gray 
                         rounded-full text-center font-montserrat" 
-                        type="text" 
-                        value={newChapterTitle} onChange={(e) => {
-                            setNewChapterTitle(e.target.value)
+                        type="number" 
+                        value={newChapterNumber} onChange={(e) => {
+                            setNewChapterNumber(e.target.value)
                             setMessage("")
                         }} 
-                        placeholder={chapterTitle}/>
-                    </label>
-                    <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
-                        <p className='mb-4 font-bold font-montserrat text-slate-gray'> Select Pages</p> 
-                        <input  className='block w-full text-sm text-slate-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-violet-50 file:text-violet-700
-                        hover:file:bg-violet-100'
-                        ref={fileInputRef}
-                        type="file" 
-                        multiple onChange={handleFilesChange}
-                            
-                        />
-                    </label>
-                    <button className="gap-2 px-7 py-4 my-2 border 
-                    font-montserrat text-lg leading-none bg-black
-                    rounded-full text-white border-black mb-5"
-                    type="submit">
-                        {actionChapterMessage}
-                    </button>
-                </form>
+                        placeholder={chapterNumber}/>
+                        </label>
+                        <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5">
+                            <p className='mb-4 font-bold font-montserrat text-slate-gray'>Title</p> 
+                            <input className="p-2.5 mb-3
+                            border border-slate-gray 
+                            rounded-full text-center font-montserrat" 
+                            type="text" 
+                            value={newChapterTitle} onChange={(e) => {
+                                setNewChapterTitle(e.target.value)
+                                setMessage("")
+                            }} 
+                            placeholder={chapterTitle}/>
+                        </label>
+                        <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
+                        bg-white px-6 py-4 shadow-xl
+                        ring-slate-900/5">
+                            <p className='mb-4 font-bold font-montserrat text-slate-gray'> Select Pages</p> 
+                            <input  className='block w-full text-sm text-slate-500
+                            file:mr-4 file:py-2 file:px-4
+                            file:rounded-full file:border-0
+                            file:text-sm file:font-semibold
+                            file:bg-violet-50 file:text-violet-700
+                            hover:file:bg-violet-100'
+                            ref={fileInputRef}
+                            type="file" 
+                            multiple onChange={handleFilesChange}
+                                
+                            />
+                        </label>
+                        <button className="gap-2 px-7 py-4 my-2 border 
+                        font-montserrat text-lg leading-none bg-black
+                        rounded-full text-white border-black mb-5"
+                        type="submit"
+                        disabled={isDisabled}>
+                            {actionChapterMessage}
+                        </button>
+                    </form>
+                </div>
             </div>
+            )}
         </div>
-        )}
-    </div>
-)};
+    )};
 
 
 export default MangaManager;

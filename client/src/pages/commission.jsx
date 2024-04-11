@@ -65,11 +65,7 @@ const Commission = () => {
                         <div  className="flex flex-col justify-center items-center  p-2">
                           <h3 className="font-montserrat 
                           text-slate-gray text-lg 
-                          leading-8 my-2 cursor-pointer w-full text-center"
-                            onClick={()=>{
-                              handleClick(commission._id)
-                            }}
-                          >
+                          leading-8 my-2 w-full text-center">
                             {commission.artStyle}
                           </h3>
                           <img className="flex flex-col justify-center rounded-xl m-2 shadow-xl"

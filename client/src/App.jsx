@@ -4,6 +4,7 @@ import Home from "./pages/home.jsx"
 import Manga from "./pages/manga/manga.jsx";
 import Chapters from "./pages/manga/chapters.jsx";
 import Pages from "./pages/manga/pages.jsx";
+import Gift from './pages/gift.jsx';
 import Commission from './pages/commission.jsx';
 import Contact from "./pages/contact.jsx";
 import About from "./pages/about.jsx";
@@ -37,6 +38,7 @@ function App() {
               <Route path="/contact" element={<Contact />}/>
               <Route path="/about" element={<About />}/>
               <Route path="/manga" element={<Manga />}/>
+              <Route path="/gift" element={<Gift />}/>
               <Route path="/auth" element={<Auth />}/>
               <Route path="/manga/find/:mangaName" element={<Find />}/>
               {cookies.access_token && (

@@ -119,6 +119,10 @@ function Pages() {
         window.scrollTo(0, 0);
     }
     
+    function handleGift() {
+        navigate("/gift");
+        window.scrollTo(0, 0);
+    }
 
     return (
         <section className="min-h-full">
@@ -145,7 +149,7 @@ function Pages() {
                         </div>
                     </label>
                     
-                    <select className="p-1 m-3 border border-black font-montserrat text-sm" 
+                    <select className="p-1 m-3 border border-black font-montserrat text-sm cursor-pointer" 
                     onChange={handleChapterChange}>
                         {manga && manga.chapters && manga.chapters.map((chapter, index)=> {
                             return (
@@ -161,7 +165,7 @@ function Pages() {
                     </select>
 
                     {!toggleView && (
-                        <select className="p-1 m-3 border border-black font-montserrat text-sm"
+                        <select className="p-1 m-3 border border-black font-montserrat text-sm cursor-pointer"
                         onChange={handlePageChange}>
                             {chapter && chapter.pages && chapter.pages.map((page, index)=> {
                                 return (
@@ -181,7 +185,7 @@ function Pages() {
                     font-montserrat text-md leading-none bg-black
                     rounded-md text-white border-black mb-5"
                     onClick={handlePreviousChapter}>
-                        Previous
+                        Previous Chapter
                     </button>
                 <ul className="flex flex-col justify-center 
                 items-center rounded-lg bg-white p-6 shadow-xl mb-4
@@ -206,7 +210,8 @@ function Pages() {
                             <div className="sm:mx-5">
                                 {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
                                     parseInt(selectedPage, 10) === (index + 1) && (
-                                        <div key={index} onClick={() => {
+                                        <div className="cursor-pointer"
+                                        key={index} onClick={() => {
                                             handleNextPageClick(chapter.pages.length, manga.chapters.length)
                                         }}>
                                             <li>
@@ -221,12 +226,22 @@ function Pages() {
                         </>
                     )}        
                 </ul> 
-                <button className="px-4 py-2 my-2 border 
-                font-montserrat text-md leading-none bg-black
-                rounded-md text-white border-black mb-5"
-                onClick={handleNextChapter}>
-                    Next
-                </button>
+                <div className="flex flex-col justify-center items-center">
+                    <button className="px-4 py-2 my-2 border 
+                    font-montserrat text-md leading-none bg-black
+                    rounded-md text-white border-black mb-5"
+                    onClick={handleNextChapter}>
+                        Next Chapter
+                    </button>
+                    <button className="px-4 py-2 my-2 border 
+                    font-montserrat text-md leading-none bg-purple-600
+                    rounded-md text-white border-purple-600 mb-5 
+                    hover:bg-purple-500 w-full"
+                    onClick={handleGift}>
+                        Gift
+                    </button>
+                </div>
+              
             </div>
         </section>
 

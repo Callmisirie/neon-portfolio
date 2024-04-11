@@ -30,6 +30,7 @@ function Chapters() {
 
     function handleClick(id) {
         navigate(`${location.pathname}/${id}`);
+        window.scrollTo(0, 0);
     }
 
     return (
@@ -65,7 +66,8 @@ function Chapters() {
                                             <h3 className="font-montserrat 
                                             text-slate-gray hover:text-black text-md my-2
                                             leading-8 cursor-pointer hover:font-semibold w-full text-left"
-                                            onClick={() => {handleClick(chapter._id)}}>
+                                            onClick={() => {handleClick(chapter._id)}}
+                                            key={chapter._id}>
                                                 Chapter {chapter.chapterNumber} - {chapter.title}
                                             </h3>
                                             
