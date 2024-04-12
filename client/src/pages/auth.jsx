@@ -33,10 +33,8 @@ function Auth() {
                 flex-col justify-center items-center  
                 max-container m-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
-                ring-slate-900/5"
-                >
-                    <button 
-                        className="text-white px-4 py-2 text-sm
+                ring-slate-900/5">
+                    <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
                         bg-purple-600 rounded-md hover:bg-purple-500 "
                         onClick={ ()=> {
@@ -44,10 +42,9 @@ function Auth() {
                     }}>
                         Register
                     </button>    
-                    <button
-                        className="text-white px-4 py-2 text-sm
-                        font-montserrat font-medium my-3 mx-5
-                        bg-purple-400 rounded-md hover:bg-purple-300 " 
+                    <button className="text-white px-4 py-2 text-sm
+                    font-montserrat font-medium my-3 mx-5
+                    bg-purple-400 rounded-md hover:bg-purple-300 " 
                         onClick={()=> {
                         handleClick("Login")
                     }}>
@@ -74,6 +71,10 @@ export function Register() {
         username: "",
         password: ""
     });
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Register");
 
     function handleOnChange(event){
         const {value, name} = event.target;
@@ -84,69 +85,76 @@ export function Register() {
                 [name]: value
             })
         )
+        setMessage("");
     };
 
     const handleRegisterSubmit = async (event) => {
         event.preventDefault();
+        setActionMessage("Processing");
+        setIsDisabled(true);
+
         SetRegisterInfo({
             username: "",
             password: ""
         });
+
         try {
-                 await axios.post(
-                "http://localhost:4001/auth/register",
-                registerInfo
-            );
+            const response = await axios.post("http://localhost:4001/auth/register", registerInfo);
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setIsDisabled(false);
+            setActionMessage("Register");
+
         } catch (error) {
+            setMessage("Error registering admin user");
+            setMessageColor("red");
+            setIsDisabled(false);
+            setActionMessage("Register");
             console.error(error)
         }
 
     };
 
     return (
-        <form 
-            className="flex flex-col justify-center items-center rounded-lg 
-            bg-white px-6 py-6 shadow-xl
-            ring-slate-900/5"
-            onSubmit={handleRegisterSubmit}
-        >
+        <form className="flex flex-col justify-center items-center rounded-lg 
+        bg-white px-6 py-6 shadow-xl
+        ring-slate-900/5"
+        onSubmit={handleRegisterSubmit}>
             <h2 className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-2 font-bold"
-            >
+            text-slate-gray text-lg 
+            leading-8 my-2 font-bold">
                 Register
             </h2>
-            <input 
-                className="w-full flex
-                items-center p-2.5 my-2
-                border border-slate-gray 
-                rounded-full text-center font-montserrat"
-                onChange={handleOnChange}
-                name="username"
-                value={registerInfo.username}
-                placeholder="Username"
-                type="text"
-                autoComplete="off"
-            />
-            <input 
-                className="w-full flex 
-                items-center p-2.5 my-2
-                border border-slate-gray 
-                rounded-full text-center font-montserrat"
-                onChange={handleOnChange}
-                name="password"
-                value={registerInfo.password}
-                placeholder="Password" 
-                type="password" 
-            />
-            <button 
-                className="px-7 py-4 my-2 border 
-                font-montserrat text-lg leading-none bg-black
-                rounded-full text-white border-black"
-            
-                type="submit"
-            >
-                Register
+            {message && <p className="font-montserrat text-lg 
+            leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                {message}
+            </p>}
+            <input className="w-full flex
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="username"
+            value={registerInfo.username}
+            placeholder="Username"
+            type="text"
+            autoComplete="off"/>
+            <input className="w-full flex 
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="password"
+            value={registerInfo.password}
+            placeholder="Password" 
+            type="password"/>
+            <button className="px-7 py-4 my-2 border 
+            font-montserrat text-lg leading-none bg-black
+            rounded-full text-white border-black"
+            type="submit"
+            disabled={isDisabled}>
+                {actionMessage}
             </button>
         </form>
     )
@@ -158,9 +166,12 @@ export function Login() {
         username: "",
         password: ""
     });
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Login");
 
     const [ , setCookies] = useCookies(["access_token"]);
-
     const navigate = useNavigate();
 
     function handleOnChange(event){
@@ -172,10 +183,13 @@ export function Login() {
                 [name]: value
             })
         );
+        setMessage("");
     };
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault()
+        setIsDisabled(true);
+        setActionMessage("Processing...");
         
         SetLoginInfo({
             username: "",
@@ -183,61 +197,65 @@ export function Login() {
         });
 
         try {
-            const response = await axios.post(
-                "http://localhost:4001/auth/login",
-                loginInfo
-            );
+            const response = await axios.post("http://localhost:4001/auth/login", loginInfo);
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setActionMessage("Login");
+            setIsDisabled(false);
             setCookies("access_token",  response.data.token);
             window.localStorage.setItem("adminUserID", response.data.adminUserID);
-            navigate("/manager")
+            if (response.data.token) {
+                navigate("/manager")
+            }
         } catch (error) {
+            setMessage("Error logging in admin user");
+            setMessageColor("red");
+            setActionMessage("Login");
+            setIsDisabled(false);
             console.error(error)
         }
     };
 
     return (
-        <form 
-            className="flex flex-col justify-center items-center rounded-lg 
-            bg-white px-6 py-6 shadow-xl
-            ring-slate-900/5"
-            onSubmit={handleLoginSubmit}
-        >
+        <form className="flex flex-col justify-center items-center rounded-lg 
+        bg-white px-6 py-6 shadow-xl
+        ring-slate-900/5"
+        onSubmit={handleLoginSubmit}>
             <h2 className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-2 font-bold"
-            >
+            text-slate-gray text-lg 
+            leading-8 my-2 font-bold">
                 Login
             </h2>
-            <input 
-                className="w-full flex 
-                items-center p-2.5 my-2
-                border border-slate-gray 
-                rounded-full text-center font-montserrat"
-                onChange={handleOnChange}
-                name="username"
-                value={loginInfo.username}
-                placeholder="Username"
-                type="text"
-                autoComplete="off"
-            />
-            <input 
-                className="w-full flex 
-                items-center p-2.5 my-2
-                border border-slate-gray 
-                rounded-full text-center font-montserrat"
-                onChange={handleOnChange}
-                name="password"
-                value={loginInfo.password}
-                placeholder="Password" 
-                type="password" 
-            />
-            <button
-                className="px-7 py-4 my-2 border 
-                font-montserrat text-lg leading-none bg-black
-                rounded-full text-white border-black" 
-                type="submit"
-            >
-                Login
+            {message && <p className="font-montserrat text-lg 
+            leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                {message}
+            </p>}
+            <input className="w-full flex 
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="username"
+            value={loginInfo.username}
+            placeholder="Username"
+            type="text"
+            autoComplete="off"/>
+            <input className="w-full flex 
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="password"
+            value={loginInfo.password}
+            placeholder="Password" 
+            type="password"/>
+            <button className="px-7 py-4 my-2 border 
+            font-montserrat text-lg leading-none bg-black
+            rounded-full text-white border-black" 
+            type="submit"
+            disabled={isDisabled}>
+                {actionMessage}
             </button>
         </form>
     )

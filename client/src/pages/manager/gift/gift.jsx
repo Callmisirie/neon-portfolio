@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Input';
@@ -143,14 +142,14 @@ function GiftCreate() {
 
 function PaypalGiftCreate() {
     const isClickedPaypal = true;
+    const [isDisabled, setIsDisabled] = useState(false);
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [address, setAddress] = useState("");
     const [username, setUsername] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Upload Paypal Gift");
-
-
+   
 
 useEffect(() => {
     const fetchPaypalGift = async () =>{
@@ -170,6 +169,7 @@ useEffect(() => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsDisabled(true);
 
     setActionMessage("Processing...")
     const formData = new FormData();
@@ -180,22 +180,26 @@ const handleSubmit = async (e) => {
 
 
     try {
-        await axios.post("http://localhost:4001/manager/gift/create", formData, {
+        const response = await axios.post("http://localhost:4001/manager/gift/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Paypal Gift uploaded successfully");
+        const {message, color} = response.data;
+
+        setMessage(message);
+        setMessageColor(color);
         setAddress("");
         setUsername("");
         setActionMessage("Upload Paypal Gift")
-        setMessageColor("green");
+        setIsDisabled(false);
     } catch (error) {
         setMessage("Error uploading Paypal Gift");
+        setMessageColor("red")
         setAddress("");
         setUsername("");
-        setActionMessage("Upload Paypal Gift")
-        setMessageColor("red");
+        setActionMessage("Upload Paypal Gift");
+        setIsDisabled(false);
         console.error(error);
     }
 };
@@ -229,7 +233,8 @@ return (
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                type="submit">
+                type="submit"
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </form>
@@ -241,6 +246,7 @@ return (
 
 function CryptoGiftCreate() {
     const isClickedCrypto = true;
+    const [isDisabled, setIsDisabled] = useState(false);
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoName, setCryptoName] = useState("");
     const [address, setAddress] = useState("");
@@ -276,6 +282,7 @@ const handleFileChange = (e) => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsDisabled(true);
 
     setActionMessage("Processing...")
     const formData = new FormData();
@@ -287,29 +294,32 @@ const handleSubmit = async (e) => {
 
 
     try {
-        await axios.post("http://localhost:4001/manager/gift/create", formData, {
+        const response = await axios.post("http://localhost:4001/manager/gift/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Crypto Gift uploaded successfully");
+        const {message, color} = response.data;
+
+        setMessage(message);
+        setMessageColor(color);
         setCryptoName("");
         setAddress("");
         setNetwork("");
         setQrCodeImage("");
         setActionMessage("Upload Crypto Gift");
-        setMessageColor("green");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
     
-        
     } catch (error) {
         setMessage("Error uploading Crypto Gift");
+        setMessageColor("red");
         setCryptoName("");
         setAddress("");
         setNetwork("");
         setQrCodeImage("");
         setActionMessage("Upload Crypto Gift");
-        setMessageColor("red");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
     }
@@ -364,7 +374,8 @@ return (
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                type="submit">
+                type="submit"
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </form>
@@ -448,9 +459,12 @@ function GiftDelete() {
 
 function PaypalGiftDelete() {
     const [paypalGifts, setPaypalGifts] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
     const [selectedPaypalGift, setSelectedPaypalGift] = useState("");
     const [selectedPaypalGiftID, setSelectedPaypalGiftID] = useState("");
     const [deletePaypalGift, setDeletePaypalGift] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Delete Paypal Gift");
 
 
@@ -475,18 +489,29 @@ const handlePaypalGiftClick = (id, address) => {
 
 const handleDeletePaypalGiftClick = async () => {
     setActionMessage("Processing");
+    setIsDisabled(true);
+
     try {
-        await axios.delete("http://localhost:4001/manager/gift/delete", { data: {paypalGiftId: selectedPaypalGiftID, paypalAddress: deletePaypalGift} });
+        const response = await axios.delete("http://localhost:4001/manager/gift/delete", { data: {paypalGiftId: selectedPaypalGiftID, paypalAddress: deletePaypalGift} });
+        const {message, color} = response.data;
+        
+
+        setMessage(message);
+        setMessageColor(color);
         setDeletePaypalGift("");
         setSelectedPaypalGift("");
         setSelectedPaypalGiftID("");
         setActionMessage("Delete Paypal Gift");
+        setIsDisabled(false);
     } catch (error) {
-        console.error(error)
+        setMessage("Error deleting Paypal Gift");
+        setMessageColor("red");
         setDeletePaypalGift("");
         setSelectedPaypalGift("");
         setSelectedPaypalGiftID("");
         setActionMessage("Delete Paypal Gift");
+        setIsDisabled(false);
+        console.error(error)
     }
 }
 
@@ -500,6 +525,11 @@ const handleDeletePaypalGiftClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Paypal Gift
                 </h2>
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2"
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
@@ -535,7 +565,8 @@ const handleDeletePaypalGiftClick = async () => {
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                onClick={handleDeletePaypalGiftClick}>
+                onClick={handleDeletePaypalGiftClick}
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </div>
@@ -546,9 +577,12 @@ const handleDeletePaypalGiftClick = async () => {
 
 function CryptoGiftDelete() {
     const [cryptoGifts, setCryptoGifts] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
     const [selectedCryptoGift, setSelectedCryptoGift] = useState("");
     const [selectedCryptoGiftID, setSelectedCryptoGiftID] = useState("");
     const [deleteCryptoGift, setDeleteCryptoGift] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("")
     const [actionMessage, setActionMessage] = useState("Delete Crypto Gift");
 
 
@@ -573,18 +607,28 @@ const handleCryptoGiftClick = (id, address) => {
 
 const handleDeleteCryptoGiftClick = async () => {
     setActionMessage("Processing");
+    setIsDisabled(true);
+
     try {
-        await axios.delete("http://localhost:4001/manager/gift/delete", { data: {cryptoGiftId: selectedCryptoGiftID, cryptoName: deleteCryptoGift} });
+        const response = await axios.delete("http://localhost:4001/manager/gift/delete", { data: {cryptoGiftId: selectedCryptoGiftID, cryptoName: deleteCryptoGift} });
+        const {message, color} = response.data;
+        
+        setMessage(message);
+        setMessageColor(color);
         setDeleteCryptoGift("");
         setSelectedCryptoGift("");
         setSelectedCryptoGiftID("");
         setActionMessage("Delete Crypto Gift");
+        setIsDisabled(false);
     } catch (error) {
-        console.error(error)
+        setMessage("Error deleting Paypal Gift");
+        setMessageColor("red");
         setDeleteCryptoGift("");
         setSelectedCryptoGift("");
         setSelectedCryptoGiftID("");
         setActionMessage("Delete Crypto Gift");
+        setIsDisabled(false);
+        console.error(error)
     }
 }
 
@@ -598,6 +642,11 @@ const handleDeleteCryptoGiftClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Crypto Gift
                 </h2>
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2"
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
@@ -633,7 +682,8 @@ const handleDeleteCryptoGiftClick = async () => {
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                onClick={handleDeleteCryptoGiftClick}>
+                onClick={handleDeleteCryptoGiftClick}
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </div>
@@ -717,6 +767,7 @@ function GiftEdit() {
 
 function PaypalGiftEdit() {
     const isClickedPaypal = true;
+    const [isDisabled, setIsDisabled] = useState(false);
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [paypalGiftId, setPaypalGiftId] = useState("");
     const [address, setAddress] = useState("");
@@ -747,6 +798,7 @@ useEffect(() => {
 
 const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsDisabled(true);
 
     setActionMessage("Processing...")
     const formData = new FormData();
@@ -758,26 +810,32 @@ const handleSubmit = async (e) => {
 
 
     try {
-        await axios.put("http://localhost:4001/manager/gift/edit", formData, {
+        const response = await axios.put("http://localhost:4001/manager/gift/edit", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Paypal Gift updated successfully");
+        const {message, color} = response.data;
+
+        setMessage(message);
+        setMessageColor(color);
+        setAddress("");
+        setUsername("");
+        setNewAddress("");
+        setNewUsername("");   
+        setPaypalGiftId("");
+        setActionMessage("Update Paypal Gift")
+        setIsDisabled(false);
+    } catch (error) {
+        setMessage("Error updating Paypal Gift");
+        setMessageColor("red");
         setAddress("");
         setUsername("");
         setNewAddress("");
         setNewUsername("");
-        setActionMessage("Update Paypal Gift")
-        setPaypalGiftId("");
-        setMessageColor("green");
-    } catch (error) {
-        setMessage("Error updating Paypal Gift");
-        setAddress("");
-        setUsername("");
         setPaypalGiftId("");
         setActionMessage("Update Paypal Gift")
-        setMessageColor("red");
+        setIsDisabled(false);
         console.error(error);
     }
 };
@@ -850,7 +908,8 @@ return (
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                type="submit">
+                type="submit"
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </form>
@@ -862,12 +921,13 @@ return (
 
 function CryptoGiftEdit() {
     const isClickedCrypto = true;
+    const [isDisabled, setIsDisabled] = useState(false);
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoGiftId, setCryptoGiftId] = useState("");
-    const [qrCodeImage, setQrCodeImage] = useState("");
-    const [address, setAddress] = useState("");
     const [cryptoName, setCryptoName] = useState("");
+    const [address, setAddress] = useState("");
     const [network, setNetwork] = useState("");
+    const [qrCodeImage, setQrCodeImage] = useState("");
     const [newAddress, setNewAddress] = useState("");
     const [newCryptoName, setNewCryptoName] = useState("");
     const [newNetwork, setNewNetwork] = useState("");
@@ -907,6 +967,7 @@ function CryptoGiftEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsDisabled(true);
 
         setActionMessage("Pocessing...");
         const formData = new FormData();
@@ -918,12 +979,15 @@ function CryptoGiftEdit() {
         formData.append("isClickedCrypto", isClickedCrypto);
 
         try {
-        await axios.put("http://localhost:4001/manager/gift/edit", formData, {
+        const response = await axios.put("http://localhost:4001/manager/gift/edit", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Crypto Gift updated successfully");
+        const {message, color} = response.data;
+
+        setMessage(message);
+        setMessageColor(color);
         setCryptoName("");
         setAddress("");
         setNetwork("");
@@ -931,13 +995,24 @@ function CryptoGiftEdit() {
         setNewCryptoName("");
         setNewAddress("");
         setNewNetwork("");
-        setMessageColor("green");
+        setCryptoGiftId("");
         setActionMessage("Edit Crypto Gift");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
         } catch (error) {
         setMessage("Error updating crypto gift");
-        setMessageColor("red")
+        setMessageColor("red");
+        setCryptoName("");
+        setAddress("");
+        setNetwork("");
+        setQrCodeImage("");
+        setNewCryptoName("");
+        setNewAddress("");
+        setNewNetwork("");
+        setCryptoGiftId("");
         setActionMessage("Edit Crypto Gift");
+        setIsDisabled(false);
+        fileInputRef.current.value = null;
         console.error(error);  
         }
     };
@@ -1027,7 +1102,8 @@ function CryptoGiftEdit() {
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5" 
-                    type="submit">
+                    type="submit"
+                    disabled={isDisabled}>
                         {actionMessage}
                     </button>
                 </form>

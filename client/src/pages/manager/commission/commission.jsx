@@ -78,6 +78,7 @@ function CommissionCreate() {
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Upload Commission");
+    const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
 
@@ -106,6 +107,7 @@ const handleSubmit = async (e) => {
     e.preventDefault();
 
     setActionMessage("Processing...")
+    setIsDisabled(true);
     const formData = new FormData();
     formData.append("artStyle", artStyle);
     formData.append("artImage", artImage);
@@ -116,12 +118,15 @@ const handleSubmit = async (e) => {
 
 
     try {
-        await axios.post("http://localhost:4001/manager/commission/create", formData, {
+        const response = await axios.post("http://localhost:4001/manager/commission/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Commission uploaded successfully");
+
+        const {message, color} = response.data;
+        setMessage(message);
+        setMessageColor(color);
         setArtStyle("");
         setArtImage("");
         setPrice("");
@@ -129,12 +134,13 @@ const handleSubmit = async (e) => {
         setDiscount("");
         setDiscountInterval("");
         setActionMessage("Upload Commission")
-        setMessageColor("green");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
     
         
     } catch (error) {
         setMessage("Error uploading commission");
+        setMessageColor("red");
         setArtStyle("");
         setArtImage("");
         setPrice("");
@@ -142,8 +148,9 @@ const handleSubmit = async (e) => {
         setDiscount("");
         setDiscountInterval("");
         setActionMessage("Upload Commission")
-        setMessageColor("red");
+        setIsDisabled(false);
         console.error(error);
+        fileInputRef.current.value = null;
     }
 };
 
@@ -180,7 +187,7 @@ return (
                     <Input type="number" 
                     value={discount} handleChange={setDiscount} 
                     resetMessage={setMessage} 
-                    placeholder="Discount"/>
+                    placeholder="% Discount"/>
                     <Input type="number" 
                     value={discountInterval} handleChange={setDiscountInterval} 
                     resetMessage={setMessage} 
@@ -204,7 +211,8 @@ return (
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5"
-                    type="submit">
+                    type="submit"
+                    disabled={isDisabled}>
                         {actionMessage}
                     </button>
                 </form>
@@ -222,7 +230,10 @@ function CommissionDelete() {
     const [selectedCommission, setSelectedCommission] = useState("");
     const [selectedCommissionID, setSelectedCommissionID] = useState("");
     const [deleteCommission, setDeleteCommission] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Delete Commission");
+    const [isDisabled, setIsDisabled] = useState(false);
 
 
     useEffect(() => {
@@ -241,20 +252,33 @@ function CommissionDelete() {
 const handleCommissionClick = (id, name) => {
     setSelectedCommissionID(id);
     setSelectedCommission(name);
+    setMessage("");
 }
 
 const handleDeleteCommissionClick = async () => {
     setActionMessage("Processing");
+    setIsDisabled(true);
+
     try {
-        await axios.delete("http://localhost:4001/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
+        const response = await axios.delete("http://localhost:4001/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
+        
+        const {message, color} = response.data;
+        setMessage(message);
+        setMessageColor(color)
         setDeleteCommission("");
         setSelectedCommission("");
+        setSelectedCommissionID("");
         setActionMessage("Delete Commission");
+        setIsDisabled(false);
     } catch (error) {
-        console.error(error)
+        setMessage("Error deleting commission");
+        setMessageColor("red");
         setDeleteCommission("");
         setSelectedCommission("");
+        setSelectedCommissionID("");
         setActionMessage("Delete Commission");
+        setIsDisabled(false);
+        console.error(error)
     }
 }
 
@@ -268,6 +292,11 @@ const handleDeleteCommissionClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Commission
                 </h2>
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2"
+                style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
                 <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
@@ -299,13 +328,17 @@ const handleDeleteCommissionClick = async () => {
                 <input className="p-2.5 my-3
                 border border-slate-gray 
                 rounded-full text-center font-montserrat" 
-                onChange={(e)=> {setDeleteCommission(e.target.value)}} 
+                onChange={(e)=> {
+                    setDeleteCommission(e.target.value)
+                    setMessage("");
+                    }} 
                 placeholder="Art Style" 
                 value={deleteCommission} />
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
                 rounded-full text-white border-black mb-5"
-                onClick={handleDeleteCommissionClick}>
+                onClick={handleDeleteCommissionClick}
+                disabled={isDisabled}>
                     {actionMessage}
                 </button>
             </div>
@@ -333,6 +366,7 @@ function CommissionEdit() {
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Edit Commission");
+    const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
 
@@ -369,6 +403,7 @@ function CommissionEdit() {
         e.preventDefault();
 
         setActionMessage("Pocessing...");
+        setIsDisabled(true);
         const formData = new FormData();
         formData.append("id", commissionID);
         formData.append("artStyle", newArtStyle);
@@ -379,12 +414,15 @@ function CommissionEdit() {
         formData.append("discountInterval", newDiscountInterval);
 
         try {
-        await axios.put("http://localhost:4001/manager/commission/edit", formData, {
+        const response = await axios.put("http://localhost:4001/manager/commission/edit", formData, {
             headers: {
             "Content-Type": "multipart/form-data"
             }
         });
-        setMessage("Commission updated successfully");
+
+        const {message, color} = response.data;
+        setMessage(message);
+        setMessageColor(color);
         setArtStyle("");
         setArtImage("");
         setPrice("");
@@ -392,18 +430,32 @@ function CommissionEdit() {
         setDiscount("");
         setDiscountInterval("");
         setNewArtStyle("");
-        setArtImage("");
         setNewPrice("");
         setNewPricePer("");
         setNewDiscount("");
         setNewDiscountInterval("");
-        setMessageColor("green");
+        setCommissionID("");
         setActionMessage("Edit Commission");
+        setIsDisabled(false);
         fileInputRef.current.value = null;
         } catch (error) {
         setMessage("Error updating commission");
         setMessageColor("red")
+        setArtStyle("");
+        setArtImage("");
+        setPrice("");
+        setPricePer("");
+        setDiscount("");
+        setDiscountInterval("");
+        setNewArtStyle("");
+        setNewPrice("");
+        setNewPricePer("");
+        setNewDiscount("");
+        setNewDiscountInterval("");
+        setCommissionID("");
         setActionMessage("Edit Commission");
+        setIsDisabled(false);
+        fileInputRef.current.value = null;
         console.error(error);  
         }
     };
@@ -477,7 +529,7 @@ function CommissionEdit() {
                         placeholder={pricePer} 
                         handleChange={setNewPricePer}
                         resetMessage={setMessage} />
-                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>Discount</p>
+                        <p className='mt-4 font-bold font-montserrat text-slate-gray'>% Discount</p>
                         <Input type="number" 
                         value={newDiscount} 
                         placeholder={discount} 
@@ -507,7 +559,8 @@ function CommissionEdit() {
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5" 
-                    type="submit">
+                    type="submit"
+                    disabled={isDisabled}>
                         {actionMessage}
                     </button>
                 </form>

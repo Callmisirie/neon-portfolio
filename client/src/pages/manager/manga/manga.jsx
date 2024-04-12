@@ -142,7 +142,6 @@ function MangaCreate() {
     const [actionMangaMessage, setActionMangaMessage] = useState("Upload Manga");
     const [actionChapterMessage, setActionChapterMessage] = useState("Upload Chapter");
     const [isDisabled, setIsDisabled] = useState(false);
-
     const fileInputRef = useRef(null);
 
 

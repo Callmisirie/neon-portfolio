@@ -19,12 +19,21 @@ router.post("/register", async (req, res)=> {
         if(!userAdmin){
             const admin = new AdminModel({username, password : hash });
             admin.save();
-            res.json({message: "Saved"});
+            res.json({
+                message: "User successfully Register",
+                color: "green"
+            });
         } else if(userAdmin){
-            res.json({message: "User already exist login"});
+            res.json({
+                message: "User already exist login",
+                color: "red"
+            });
         } 
     } else {
-        res.json({message: "Maximum Number of Admin"});
+        res.json({
+            message: "Maximum Number of Admin",
+            color: "red"
+        });
     }
 });
 
@@ -35,13 +44,23 @@ router.post("/login", async (req, res)=> {
     if (userAdmin){
         if(bcrypt.compareSync(password, userAdmin.password)) {
            const token = jwt.sign({id : userAdmin._id}, secret);
-            res.json({token, adminUserID : userAdmin._id});
+            res.json({
+                token, adminUserID : userAdmin._id, 
+                message: "Paypal Gift uploaded successfully",
+                color: "green"
+            });
         } else {
-            return res.json({message: "Incorrect password"});
+            res.json({
+                message: "Incorrect password",
+                color: "red"
+            });
         }
     } 
     if (!userAdmin) {
-        return res.json({message: "User not found"});
+        res.json({
+            message: "User not found",
+            color: "red"
+        });
     }
 });
 

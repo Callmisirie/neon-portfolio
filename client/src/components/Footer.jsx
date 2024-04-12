@@ -1,8 +1,25 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { copyrightSign } from "../assets/icons";
 import { footerLogowhite } from "../assets/images";
 import { footerLinks, socialMedia } from "../constants";
 
 const Footer = () => {
+  const [commissions, setCommissions] = useState([]);
+  const [commissionID, setCommissionID] = useState(null)
+
+  useEffect(() => {
+      const fetchCommission = async () =>{
+          try {
+              const response = await axios.get("http://localhost:4001/manager/commission/read") 
+              setCommissions(response.data)
+          } catch (error) {
+             console.error(error);
+          }
+      }
+      fetchCommission();
+  }, [commissions]);
+
   return (
     <section className="bg-black padding-x padding-t pb-8">
       <footer className="max-container">

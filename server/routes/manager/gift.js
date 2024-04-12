@@ -24,7 +24,8 @@ router.post("/create", upload.single("qrCodeImage"), async (req, res)=> {
     const cryptoGift = await CryptoGiftModel.find();
     const {isClickedPaypal , isClickedCrypto} = req.body;
   
-    if (paypalGift || cryptoGift) {
+
+    try {
         if(isClickedPaypal) {
             if( paypalGift.length < 2){
                 console.log("pal: "+isClickedPaypal);
@@ -35,16 +36,22 @@ router.post("/create", upload.single("qrCodeImage"), async (req, res)=> {
     
                 const paypalGift = new PaypalGiftModel( paypalGiftDetails);
                 const paypalGiftResponse = await paypalGift.save();
-    
-                res.json(paypalGiftResponse);
+
+                res.json({
+                    message: "Paypal Gift uploaded successfully",
+                    color: "green"
+                });
             } else {
-                res.json({message: "Max Paypal Gift"});
+                res.json({
+                    message: "Max Paypal Gift",
+                    color: "red"
+                });
             }
         }
         
         if(isClickedCrypto) {
             if(cryptoGift.length < 5){
-                console.log("cry: "+isClickedCrypto);
+                console.log("cry: " + isClickedCrypto);
                 const cryptoGiftDetails = {
                     cryptoName: req.body.cryptoName, 
                     address: req.body.address,
@@ -63,13 +70,27 @@ router.post("/create", upload.single("qrCodeImage"), async (req, res)=> {
                 const image = new ImageModel(imageDetails);
                 const imageResponse =  await image.save();
     
-                res.json(cryptoGiftResponse);
+                res.json({
+                    message: "Crypto Gift uploaded successfully",
+                    color: "green"
+                });
         
             } else {
-                res.json({message: "Max Crypto Gift"});
+                res.json({
+                    message: "Max Crypto Gift",
+                    color: "red"
+                });
             }
-        } 
-    }  
+        }
+    } catch (error) {
+        console.error(error)
+        res.json({
+            message: "Error uploading gift",
+            color: "red"
+        });
+    }
+ 
+
 });
 
 
@@ -89,18 +110,31 @@ router.delete("/delete", async (req, res) => {
         if (paypalGift && paypalAddress === paypalGift.address) {
             try {
                 const paypalGift = await PaypalGiftModel.findOneAndDelete({_id: paypalGiftId});
-                console.log("Deleted commission:", paypalGift);
+                console.log("Deleted gift:", paypalGift);
 
-  
                 if (paypalGift) {
-                    res.json({message: "Paypal deleted"});
+                    res.json({ 
+                        message: "Paypal deleted", 
+                        color: "green"
+                    });
                 } else {
-                    res.status(404).json({message: "Paypal not found"});
+                    res.json({
+                        message: "Paypal not found",
+                        color: "red"
+                    });
                 }
             } catch (error) {
-                console.error("Error deleting commission:", error);
-                res.status(500).json({message: "Failed to delete commission"});
+                console.error("Error deleting paypal gift:", error);
+                res.json({ 
+                    message: "Internal server error, Failed to delete paypal gift", 
+                    color: "red"
+                });
             }
+        } else if (paypalGift && !paypalAddress === paypalGift.address) {
+            res.json({
+                message: "Failed to delete paypal gift, paypal address does not match",
+                color: "red"
+            });
         }
         if (cryptoGift && cryptoName === cryptoGift.cryptoName) {
             try {
@@ -111,15 +145,34 @@ router.delete("/delete", async (req, res) => {
                 console.log("Deleted crypto image:", images.deletedCount);
   
                 if (cryptoGift) {
-                    res.json({message: "Crypto deleted"});
+                    res.json({ 
+                        message: "Crypto deleted", 
+                        color: "green"
+                    });
                 } else {
-                    res.status(404).json({message: "Crypto not found"});
+                    res.json({
+                        message: "Crypto not found",
+                        color: "red"
+                    });
                 }
             } catch (error) {
                 console.error("Error deleting gift", error);
-                res.status(500).json({message: "Failed to delete gift"});
+                res.json({ 
+                    message: "Internal server error, Failed to delete gift", 
+                    color: "red"
+                });
             }
+        } else if (cryptoGift && !cryptoName === cryptoGift.cryptoName) {
+            res.json({
+                message: "Failed to delete crypto gift, crypto name does not match",
+                color: "red"
+            });
         }
+    }  else if (!isClickedPaypal && !isClickedCrypto) {
+        res.json({
+            message: "Error deleting gift, gift not selected",
+            color: "red"
+        });
     }
 });
 
@@ -140,12 +193,24 @@ router.put("/edit", upload.single("qrCodeImage"), async (req, res) => {
                     }   if (username) {
                         await PaypalGiftModel.findOneAndUpdate({_id: paypalGiftId}, { username: username}, { new: true });   
                     }
-                        res.json({ message: "Paypal updated successfully"}); 
+                        res.json({
+                            message: "Paypal updated successfully",
+                            color: "green"
+                        });
                 } catch (error) {
                     console.error("Error updating paypal", error);
-                    res.status(500).json({ message: "Failed to update paypal" });
+                    res.json({
+                        message: "Failed to update paypal",
+                        color: "red"
+                    });
+                    
                 }   
-            } 
+            } else if (!paypalAddress && !username) {
+                res.json({
+                    message: "Failed to edit paypal gift, missing fields",
+                    color: "red"
+                });
+            }
         } 
         if(isClickedCrypto) {
             if (req.file || cryptoName || cryptoAddress || network){
@@ -160,15 +225,29 @@ router.put("/edit", upload.single("qrCodeImage"), async (req, res) => {
                     }   if (network) {
                         await CryptoGiftModel.findOneAndUpdate({_id: cryptoGiftId}, { network: network}, { new: true });
                     }     
-                    res.json({ message: "Crypto updated successfully"});
+                    res.json({
+                        message: "Crypto updated successfully",
+                        color: "green"
+                    });
                 }   catch (error) {
                     console.error("Error updating crypto", error);
-                    res.status(500).json({ message: "Failed to update crypto" });
+                    res.json({
+                        message: "Failed to update crypto",
+                        color: "red"
+                    });
                 } 
-            }  
+            }  else if (!req.file && !cryptoName && !cryptoAddress && !network) {
+                res.json({
+                    message: "Failed to edit crypto gift, missing fields",
+                    color: "red"
+                });
+            }
         } 
-    } else {
-        res.json({ message: "Gift not found"}); 
+    }  else if (!paypalGiftId && !cryptoGiftId) {
+        res.json({
+            message: "Error editing gift, gift not selected",
+            color: "red"
+        });
     }
 });
 
