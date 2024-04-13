@@ -10,10 +10,10 @@ const mangaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // about: {
-    //     type: String,
-    //     required: true
-    // }
+    about: {
+        type: String,
+        required: true
+    }
 });
 
 const MangaModel = mongoose.model("Manga", mangaSchema);

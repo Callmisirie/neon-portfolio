@@ -15,6 +15,7 @@ router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
     try {
         const mangaDetails = {
             name: req.body.name, 
+            about: req.body.about, 
             coverImage: req.file.originalname, 
         };
 
@@ -238,13 +239,13 @@ router.delete("/delete/manga/chapter", async (req, res) => {
 
 
 router.put("/edit/manga", upload.single("coverImage"), async (req, res) => { 
-    const { mangaID, name } = req.body;
+    const { mangaID, name, about } = req.body;
 
     if (mangaID) {
         const manga = await MangaModel.findOne({_id: mangaID});
         let message = {};
         try {            
-            if (req.file || name){
+            if (req.file || name || about){
                 if (req.file) {
                     await MangaModel.findOneAndUpdate({_id: mangaID}, {coverImage: req.file.originalname}, { new: true });
                     await ImageModel.findOneAndUpdate({imageID: mangaID}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
@@ -254,7 +255,7 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
                     }
                 }   
                 if (name) {
-                        await MangaModel.findOneAndUpdate({_id: mangaID}, { name: name}, { new: true });
+                        await MangaModel.findOneAndUpdate({_id: mangaID}, {name}, { new: true });
                         const chapterContent = await ChapterContentModel.findOne({mangaID});
 
                         if (chapterContent) {
@@ -264,7 +265,15 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
                             message: "Manga updated successfully",
                             color: "green"
                         }
-                }                   
+                }    
+                if (about) {
+                    await MangaModel.findOneAndUpdate({_id: mangaID}, {about}, { new: true });
+                    
+                    message = {
+                        message: "Manga updated successfully",
+                        color: "green"
+                    }
+            }                 
                 res.json(message);
             } else if (!req.file && !name) {
                 res.json({

@@ -132,6 +132,7 @@ function MangaCreate() {
     const [title, setTitle] = useState("");
     const [mangaID, setMangaID] = useState("");
     const [mangaName, setMangaName] = useState("");
+    const [about, setAbout] = useState("");
     const [pages, setPages] = useState([]);
     const location = useLocation();
     const currentLocation = location.pathname;
@@ -180,6 +181,7 @@ const handleSubmit = async (e) => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("coverImage", coverImage);
+    formData.append("about", about);
 
 
     try {
@@ -193,6 +195,7 @@ const handleSubmit = async (e) => {
         setMessage(message);
         setName("");
         setCoverImage("");
+        setAbout("");
         setMessageColor(color);
         setActionMangaMessage("Upload Manga");
         setIsDisabled(false);
@@ -203,6 +206,7 @@ const handleSubmit = async (e) => {
         setMessage("Error uploading manga");
         setName("");
         setCoverImage("");
+        setAbout("");
         setMessageColor("red");
         setActionMangaMessage("Upload Manga");
         setIsDisabled(false);
@@ -283,7 +287,17 @@ return (
                         setName(e.target.value)
                         setMessage("")
                     }} 
-                    placeholder='Manga Name'/>   
+                    placeholder='Manga Name'/>  
+                    <textarea className="gap-5 p-2.5 my-2
+                    border border-slate-gray text-sm
+                    rounded-md font-montserrat"
+                    type="text" 
+                    value={about} 
+                    onChange={(e) => {
+                        setAbout(e.target.value)
+                        setMessage("")
+                    }} 
+                    placeholder="About"/>  
                     <div className='flex flex-col items-center'>
                         <label className="flex flex-col items-center font-montserrat 
                         text-slate-gray text-lg 
@@ -662,6 +676,8 @@ function MangaEdit() {
     const [clickedMangaId, setClickedMangaId] = useState(null);
     const [mangaName, setMangaName] = useState("");
     const [newMangaName, setNewMangaName] = useState("");
+    const [about, setAbout] = useState("");
+    const [newAbout, setNewAbout] = useState("");
     const [message, setMessage] = useState("");
     const [chapterID, setChapterID] = useState("");
     const [pages, setPages] = useState([]);
@@ -695,8 +711,9 @@ function MangaEdit() {
         fetchManga();
     }, [mangas]);
 
-    const handleMangaClick = (name, id) => {
+    const handleMangaClick = (name, about, id) => {
         setMangaName(name);
+        setAbout(about);
         setMangaID(id);
         setClickedMangaId(id === clickedMangaId ? null : id);
         setMessage("");
@@ -736,6 +753,7 @@ function MangaEdit() {
         const formData = new FormData();
         formData.append("mangaID", mangaID);
         formData.append("name", newMangaName);
+        formData.append("about", newAbout);
         formData.append("coverImage", coverImage);
 
         try {
@@ -750,6 +768,8 @@ function MangaEdit() {
             setMessageColor(color);
             setMangaName("");
             setNewMangaName("");
+            setAbout("");
+            setNewAbout("");
             setCoverImage("");
             setMangaID("");
             setActionMangaMessage("Edit Manga");
@@ -760,6 +780,8 @@ function MangaEdit() {
             setMessageColor("red")
             setMangaName("");
             setNewMangaName("");
+            setAbout("");
+            setNewAbout("");
             setCoverImage("");
             setMangaID("");
             setActionMangaMessage("Edit Manga");
@@ -840,7 +862,7 @@ function MangaEdit() {
                                     text-slate-gray hover:text-black text-md 
                                     leading-8 my-2 cursor-pointer w-full"
                                         onClick={()=> {
-                                        handleMangaClick(manga.name, manga._id)
+                                        handleMangaClick(manga.name, manga.about, manga._id)
                                     }}>
                                         {manga.name}
                                     </p>
@@ -872,6 +894,16 @@ function MangaEdit() {
                             type="text" onChange={handleChange} 
                             value={newMangaName} 
                             placeholder={mangaName}/>
+                             <textarea className="gap-5 p-2.5 my-2
+                            border border-slate-gray text-sm
+                            rounded-md font-montserrat"
+                            type="text" 
+                            value={newAbout} 
+                            onChange={(e) => {
+                                setNewAbout(e.target.value)
+                                setMessage("")
+                            }} 
+                            placeholder={about}/> 
                         </div>                 
                         <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                         bg-white px-6 py-4 shadow-xl

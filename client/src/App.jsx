@@ -13,9 +13,11 @@ import Manager from './pages/manager/manager.jsx';
 import MangaManager from "./pages/manager/manga/manga.jsx";
 import CommissionManager from './pages/manager/commission/commission.jsx';
 import GiftManager from './pages/manager/gift/gift.jsx';
+import ReviewManager from './pages/manager/review/review.jsx';
 import { MangaCreate, MangaDelete, MangaEdit } from './pages/manager/manga/manga.jsx';
 import { CommissionCreate, CommissionDelete, CommissionEdit } from './pages/manager/commission/commission.jsx';
 import { GiftCreate, GiftDelete, GiftEdit } from './pages/manager/gift/gift.jsx';
+import { ReviewCreate, ReviewDelete, ReviewEdit } from './pages/manager/review/review.jsx';
 import Auth from "./pages/auth.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from './components/Footer.jsx';
@@ -62,6 +64,11 @@ function App() {
                   <Route path="/manager/gift/create" element={<GiftCreate />}/>
                   <Route path="/manager/gift/delete" element={<GiftDelete />}/>
                   <Route path="/manager/gift/edit" element={<GiftEdit />}/>
+
+                  <Route path="/manager/review" element={<ReviewManager />}/>
+                  <Route path="/manager/review/create" element={<ReviewCreate />}/>
+                  <Route path="/manager/review/delete" element={<ReviewDelete />}/>
+                  <Route path="/manager/review/edit" element={<ReviewEdit />}/>
                 </>
               )}
               <Route path="/manga/:chapters" element={<Chapters />}/>
