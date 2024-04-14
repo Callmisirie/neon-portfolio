@@ -29,7 +29,7 @@ function SearchBar() {
                     src={search} 
                     alt="search icon"/>
                 </button>
-                <input className="p-1
+                <input className="p-1 text-sm
                 rounded-xl input font-montserrat w-fit"
                     name="search" type="search" 
                     placeholder="Manga search" 

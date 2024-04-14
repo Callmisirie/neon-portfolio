@@ -29,28 +29,28 @@ function Navbar() {
                             />
                         </a>
                         
-                        <ul className="flex-1 flex justify-center items-center gap-8 max-lg:hidden">
+                        <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
                             <li> <SearchBar /> </li>
-                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/"> Home </Link></li>
-                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/manga"> Manga </Link></li>
-                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/commission"> Commission </Link></li>
-                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/about"> About </Link></li>
-                            <li className="font-montserrat leading-normal text-lg text-slate-gray"><Link to="/contact"> Contact </Link></li>
+                            <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/"> Home </Link></li>
+                            <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/manga"> Manga </Link></li>
+                            <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/commission"> Commission </Link></li>
+                            <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/about"> About </Link></li>
+                            <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/contact"> Contact </Link></li>
                             {cookies.access_token ? (
-                                <>
-                                    <li className="font-montserrat leading-normal text-lg text-black"><Link to="/auth"> Auth </Link></li>
-                                    <li className="font-montserrat leading-normal text-lg text-black"><Link to="/manager"> Manager </Link></li> 
-                                    <li className="font-montserrat leading-normal text-lg text-black">
+                                <div className="flex justify-center gap-16 items-center ml-10 px-5">
+                                    <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black"><Link to="/auth"> Auth </Link></li>
+                                    <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black"><Link to="/manager"> Manager </Link></li> 
+                                    <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black">
                                         <button
-                                            className="gap-2 px-7 py-4 border 
-                                            font-montserrat text-lg leading-none bg-black
+                                            className="gap-2 px-6 py-4 border 
+                                            font-montserrat text-sm leading-none bg-black
                                             rounded-full text-white border-black"
                                             onClick={Logout}
                                         > 
                                             Logout 
                                         </button>
                                     </li> 
-                                </>         
+                                </div>         
                             ): null}
                         </ul>
                         <div className="hidden max-lg:block">

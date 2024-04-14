@@ -26,7 +26,6 @@ function Manga() {
    
     return (
       <section className="min-h-full">
-          
           <div className=" flex flex-wrap justify-center items-center mx-20 rounded-lg 
           bg-white px-6">
             <div className="flex flex-col justify-center items-center rounded-lg 
@@ -36,31 +35,33 @@ function Manga() {
               lg:max-w-md font-palanquin font-bold p-2 text-center mb-5">
                 Manga List
               </h3>
-              <ul className="">
-                {mangas.map(manga => (
-                  <li  className="flex flex-col justify-center items-center rounded-lg 
-                  bg-white p-3 mx-10 mb-6 shadow-xl
-                  ring-slate-900/5"
-                    key={manga._id}>
-                    <div  className="flex flex-col justify-center items-center m-5 p-5">
-                      <h3 className="font-montserrat 
-                      text-slate-gray hover:text-black text-lg 
-                      leading-8 my-2 cursor-pointer w-full text-center hover:font-semibold"
-                        onClick={()=>{
-                          handleClick(manga._id)
-                        }}
-                      >
-                        {manga.name}
-                      </h3>
-                      <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
-                        src={`http://localhost:4001/display/${manga._id}`} 
-                        alt={`Manga ${manga.coverImage}`} 
-                        style={{ width: "160px" }}
-                       />
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              {mangas && 
+                <ul className="">
+                  {mangas.map(manga => (
+                    <li  className="flex flex-col justify-center items-center rounded-lg 
+                    bg-white p-3 mx-10 mb-6 shadow-xl
+                    ring-slate-900/5"
+                      key={manga._id}>
+                      <div  className="flex flex-col justify-center items-center m-5 p-5">
+                        <h3 className="font-montserrat 
+                        text-slate-gray hover:text-black text-md 
+                        leading-8 my-2 cursor-pointers max-w-xs text-center hover:font-semibold"
+                          onClick={()=>{
+                            handleClick(manga._id)
+                          }}
+                        >
+                          {manga.name}
+                        </h3>
+                        <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
+                          src={`http://localhost:4001/display/${manga._id}`} 
+                          alt={`Manga ${manga.coverImage}`} 
+                          style={{ width: "160px" }}
+                          />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              }
             </div>           
           </div>
         </section>

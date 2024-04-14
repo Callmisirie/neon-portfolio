@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/Input';
+import TextArea from '../../../components/TextArea';
 
 
 
@@ -10,11 +11,6 @@ import Input from '../../../components/Input';
 
 function ReviewManager() {
     const navigate = useNavigate();
-
-    function handleCreate() {
-        navigate("/manager/review/create")
-        window.scrollTo(0, 0);
-    };
 
     function handleDelete() {
         navigate("/manager/review/delete")
@@ -38,12 +34,6 @@ function ReviewManager() {
                 <div className="flex flex-col justify-center items-center m-10 rounded-lg 
                 bg-white px-10 py-8 shadow-xl
                 ring-slate-900/5">
-                    <button className="text-white px-4 py-2 text-sm
-                    font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-600 rounded-md hover:bg-purple-500"
-                    onClick={handleCreate}> 
-                        Create
-                    </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
                     bg-purple-500 rounded-md hover:bg-purple-400 "
@@ -149,25 +139,18 @@ return (
                     value={email}
                     handleChange={setEmail}
                     resetMessage={setMessage}
-                    placeholder="Email"
-                    />
+                    placeholder="Email"/>
                     <Input
                     type="text"
                     value={name}
                     handleChange={setName}
                     resetMessage={setMessage}
-                    placeholder="Name"
-                    />
-                    <textarea className="gap-5 p-2.5 my-2
-                    border border-slate-gray text-sm w-full
-                    rounded-md text-center font-montserrat"
-                    type="text" 
-                    value={feedback} 
-                    onChange={(e) => {
-                        setFeedback(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder="Feedback"/> 
+                    placeholder="Name"/>
+                    <TextArea type="text"
+                    value={feedback}
+                    resetMessage={setMessage}
+                    setValue={setFeedback}
+                    placeholder="Feedback"/>                 
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black mb-5 w-full"

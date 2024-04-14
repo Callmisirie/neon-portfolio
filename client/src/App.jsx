@@ -66,11 +66,11 @@ function App() {
                   <Route path="/manager/gift/edit" element={<GiftEdit />}/>
 
                   <Route path="/manager/review" element={<ReviewManager />}/>
-                  <Route path="/manager/review/create" element={<ReviewCreate />}/>
                   <Route path="/manager/review/delete" element={<ReviewDelete />}/>
                   <Route path="/manager/review/edit" element={<ReviewEdit />}/>
                 </>
               )}
+              <Route path="/review/create" element={<ReviewCreate />}/>
               <Route path="/manga/:chapters" element={<Chapters />}/>
               <Route path="/manga/:chapters/:pages" element={<Pages />}/>
             </Routes>    

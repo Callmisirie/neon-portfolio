@@ -106,7 +106,7 @@ const PaypalGift = () => {
                     Paypal Gift
                 </h2>
                 <ul  className='flex flex-col mx-5 mb-5 mt-2.5'> 
-                    {paypalGifts.map((paypalGift)=> {
+                    {paypalGifts && paypalGifts.map((paypalGift)=> {
                         return (
                             <li key={paypalGift._id}>
                                 <p className="font-montserrat 

@@ -13,38 +13,41 @@ router.get("/read", async (req, res)=> {
 })
 
 router.post("/create", async (req, res) => {
-    console.log({
-        email: req.body.email, 
-        name: req.body.name,
-        feedback: req.body.feedback
-    });
-    try {
-        const reviewDetails = {
-            email: req.body.email, 
-            name: req.body.name,
-            feedback: req.body.feedback
-        };
-        const review = new ReviewModel(reviewDetails);
-        const reviewResponse = await review.save();
+    const {email, name, feedback} = req.body;
 
+    console.log({email, name, feedback});
 
-        const newsletter = await NewsletterModel.findOne({email: req.body.email});
-        if (!newsletter) {
-            const newsletter = new NewsletterModel({email: req.body.email});
-            const newsletterResponse = await newsletter.save();
+    if (email && name && feedback) {
+        try {
+            const reviewDetails = { email, name, feedback};
+            const review = new ReviewModel(reviewDetails);
+            const reviewResponse = await review.save();
+    
+    
+            const newsletter = await NewsletterModel.findOne({email});
+            if (!newsletter) {
+                const newsletter = new NewsletterModel({email});
+                const newsletterResponse = await newsletter.save();
+            }
+    
+            res.json({
+                message: "Review uploaded successfully",
+                color: "green"
+            }); 
+        } catch (error) {
+            console.error(error)
+            res.json({
+                message: "Error uploading review", 
+                color: "red"
+            });
         }
-
+    } else {
         res.json({
-            message: "Review uploaded successfully",
-            color: "green"
-        }); 
-    } catch (error) {
-        console.error(error)
-        res.json({
-            message: "Error uploading review", 
+            message: "Failed to upload review, missing fields", 
             color: "red"
         });
     }
+  
   
 });
 

@@ -234,9 +234,9 @@ function Pages() {
                         Next Chapter
                     </button>
                     <button className="px-4 py-2 my-2 border 
-                    font-montserrat text-md leading-none bg-purple-600
-                    rounded-md text-white border-purple-600 mb-5 
-                    hover:bg-purple-500 w-full"
+                    font-montserrat text-md leading-none bg-green-600
+                    rounded-md text-white border-green-600 mb-5 
+                    hover:bg-green-500 w-full"
                     onClick={handleGift}>
                         Gift
                     </button>

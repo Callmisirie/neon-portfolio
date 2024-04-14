@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import TextArea from '../../../components/TextArea';
 
 
 
@@ -278,26 +279,25 @@ return (
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
                 onSubmit={handleSubmit}>
-                    <input className="gap-5 p-2.5 my-2
-                    border border-slate-gray 
-                    rounded-full text-center font-montserrat"
-                    type="text" 
-                    value={name} 
-                    onChange={(e) => {
-                        setName(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder='Manga Name'/>  
-                    <textarea className="gap-5 p-2.5 my-2
-                    border border-slate-gray text-sm
-                    rounded-md font-montserrat"
-                    type="text" 
-                    value={about} 
-                    onChange={(e) => {
-                        setAbout(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder="About"/>  
+                    <div className="flex flex-col justify-center 
+                    items-center mx-5 mb-5
+                    bg-white px-6 py-4">
+                        <input className="gap-5 p-2.5 my-2
+                        border border-slate-gray 
+                        rounded-full text-center font-montserrat"
+                        type="text" 
+                        value={name} 
+                        onChange={(e) => {
+                            setName(e.target.value)
+                            setMessage("")
+                        }} 
+                        placeholder='Manga Name'/>  
+                        <TextArea type="text"
+                        value={about}
+                        resetMessage={setMessage}
+                        setValue={setAbout}
+                        placeholder="About"/> 
+                    </div>
                     <div className='flex flex-col items-center'>
                         <label className="flex flex-col items-center font-montserrat 
                         text-slate-gray text-lg 
@@ -894,16 +894,11 @@ function MangaEdit() {
                             type="text" onChange={handleChange} 
                             value={newMangaName} 
                             placeholder={mangaName}/>
-                             <textarea className="gap-5 p-2.5 my-2
-                            border border-slate-gray text-sm
-                            rounded-md font-montserrat"
-                            type="text" 
-                            value={newAbout} 
-                            onChange={(e) => {
-                                setNewAbout(e.target.value)
-                                setMessage("")
-                            }} 
-                            placeholder={about}/> 
+                            <TextArea type="text"
+                            value={newAbout}
+                            resetMessage={setMessage}
+                            setValue={setNewAbout}
+                            placeholder={about}/>
                         </div>                 
                         <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                         bg-white px-6 py-4 shadow-xl

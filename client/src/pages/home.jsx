@@ -1,23 +1,65 @@
-import {useState} from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom";
-import Button from "../components/Button";
-import { arrowRight } from "../assets/icons";
-import {bigShoe1} from "../assets/images"
+import {useState, useEffect, useMemo} from "react"
+import {useNavigate} from "react-router-dom";
+import {arrowRight} from "../assets/icons";
 
+import axios from "axios"
+import ReviewCard from "../components/ReviewCard.jsx";
+import Button from "../components/Button";
+
+import {bigShoe1} from "../assets/images"
 import {shoes, statistics} from "../constants"
 import ShoeCard from "../components/ShoeCard.jsx";
 
-function Home() {
-    const [email, setEmail] = useState("");
-    const navigate = useNavigate();
 
+
+function Home() {
+    const [reviews, setReviews] = useState([]);
+    const [email, setEmail] = useState("");
+    const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
+    const navigate = useNavigate();
     const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
+
+
+    useEffect(() => {
+        const fetchReview = async () =>{
+            try {
+                const response = await axios.get("http://localhost:4001/manager/review/read") 
+                setReviews(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchReview();
+    }, []);
+
+
+    useEffect(() => {
+        let indices = [];
+        if (reviews.length > 0) {
+            if (reviews.length > 3) {
+                while (indices.length < 3) {
+                    const randomNumber = Math.floor(Math.random() * reviews.length);
+                    if (!indices.includes(randomNumber)) {
+                        indices.push(randomNumber);
+                    }
+                }
+            } else {
+                indices = Array.from(Array(reviews.length).keys());
+            }
+        }
+        setSelectedReviewIndices(indices);
+    }, [reviews]);
 
     function handleClick() {
         navigate("/commission");
         window.scrollTo(0, 0);
     }
+
+    function handleCreate() {
+        navigate("/review/create")
+        window.scrollTo(0, 0);
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,67 +71,56 @@ function Home() {
             console.error(error)
         }
     }
-            
-           
+        
 
     return (
         <div className="min-h-full">
             <section className="xl:padding-l wide:padding-r padding-b">
                 <section className="w-full flex 
-                    xl:flex-row flex-col justify-center 
-                    min-h-screen gap-10 max-container"
-                >
+                xl:flex-row flex-col justify-center 
+                min-h-screen gap-10 max-container">
                     <div className="relative 
-                        xl:w-2/5 flex flex-col 
-                        justify-center items-start 
-                        w-full max-xl:padding-x pt-28"
-                    > 
+                    xl:w-2/5 flex flex-col 
+                    justify-center items-start 
+                    w-full max-xl:padding-x pt-28"> 
                             <p className="text-xl 
-                                font-montserrat 
-                                text-purple-600"
-                            >
+                            font-montserrat 
+                            text-purple-600">
                                 The pressure applied.
                             </p>
                             <h1 className="mt-10 
-                                font-palanquin text-8xl 
-                                max-sm:text-[72px] 
-                                font-bold"
-                            >
+                            font-palanquin text-8xl 
+                            max-sm:text-[72px] 
+                            font-bold">
                                 <span className="xl:bg-white 
-                                    xl:whitespace-nowrap 
-                                    relative z-10 pr-10"
-                                >
+                                xl:whitespace-nowrap 
+                                relative z-10 pr-10">
                                     Stories Untold,
                                 </span> 
                                 <br />
                                 <span className="text-purple-600 
-                                    inline-block mt-3"
-                                >
+                                inline-block mt-3">
                                     Gods
                                 </span> Unfold
                             </h1>  
                             <p className="font-montserrat 
-                                text-slate-gray text-lg 
-                                leading-8 mt-6 mb-14"
-                            >
+                            text-slate-gray text-lg 
+                            leading-8 mt-6 mb-14">
                                 A man who lives fully is prepared to die at anytime.
                             </p>
                             <Button label="Preview price" 
-                                iconURL={arrowRight}
-                                handleClick={handleClick}
-                            />
+                            iconURL={arrowRight}
+                            handleClick={handleClick}/>
                             <div className="flex 
-                                justify-starts items-start 
-                                flex-wrap w-full mt-30 gap-16"
-                            >
+                            justify-starts items-start 
+                            flex-wrap w-full mt-30 gap-16">
                             </div>
                     </div>
                     <div className="relative 
-                        flex-1 flex justify-center 
-                        items-center xl:min-h-screen 
-                        max-xl:py-40 bg-primary
-                        bg-hero bg-cover bg-center"
-                    >
+                    flex-1 flex justify-center 
+                    items-center xl:min-h-screen 
+                    max-xl:py-40 bg-primary
+                    bg-hero bg-cover bg-center">
                         {/* <img 
                             src={bigShoeImg}
                             alt="Shoe Image"
@@ -99,81 +130,101 @@ function Home() {
                                 relative z-10"
                         /> */}
                         <div className="flex sm:gap-6 
-                            gap-4 absolute -bottom-[5%]
-                            sm:left-[10%] max-sm:px-6 cursor-pointer"
-                        >
-                            {shoes.map((shoe)=> 
+                        gap-4 absolute -bottom-[5%]
+                        sm:left-[10%] max-sm:px-6 cursor-pointer">
+                            {/* {shoes.map((shoe)=> 
                                 <div key={shoe}>    
-                                    {/* <ShoeCard 
+                                    <ShoeCard 
                                         imgURL={shoe}
                                         changeBigShoeImage={(shoe)=> setBigShoeImg(shoe)}
                                         bigShoeImg={bigShoeImg}
-                                    /> */}
+                                    />
                                 </div>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 </section>
             </section>
             <section className="padding">
                 <div className="flex flex-col justify-center items-center">
-                    <h1 className="my-5     
-                    font-palanquin text-8xl 
-                    max-sm:text-[72px] 
-                    font-bold flex justify-center">
-                        Sample
-                    </h1>
-                    <div className="flex flex-col justify-center items-center my-2 rounded-xl bg-white p-6 shadow-xl mb-5
-                        ring-slate-900/5">
+                    <div className="flex flex-col 
+                    justify-center items-center my-2 rounded-xl 
+                    bg-white p-6 shadow-xl mb-5 ring-slate-900/5">
                         <button >
-                            <video className="rounded-lg" src="/Afro%20Samurai.mp4" width={500} controls muted loop>
+                            <video className="rounded-lg" src="/videos/Afro%20Samurai%20-%20E2%20(14).mp4" width={500} controls muted loop>
                             </video>
                         </button>
                         
                     </div>
-                   
-                    
                 </div>
-         
+            </section>
+            <section className="bg-pale-blue padding">
+                <section className="max-container">
+                    <h3 className="text-4xl leading-[68px] 
+                    text-center font-palanquin font-bold">
+                        What Our <span className="text-purple-600"> Customers </span> Say?
+                    </h3>
+                    <p className="info-text m-auto 
+                    mt-4 text-center max-w-lg ">
+                        Hear genuine stories from our 
+                        satisfied customers about their
+                        exceptional experiences with us.
+                    </p>
+                    <div className="mt-24 flex flex-1 
+                    justify-evenly items-center 
+                    max-lg:flex-col gap-14">
+                        {selectedReviewIndices && selectedReviewIndices.map((index) => {
+                            const review = reviews[index];
+                            return (
+                                <ReviewCard 
+                                    key={review.email}
+                                    customerName={review.name}
+                                    feedback={review.feedback}
+                                />
+                            );
+                        })}
+                    </div>
+                    <div className="flex justify-center mt-10">
+                      <button className="text-white px-4 py-2 text-sm
+                      font-montserrat font-medium my-3 mx-1
+                      bg-purple-600 rounded-full hover:bg-purple-500"
+                      onClick={handleCreate}> 
+                          Post Review
+                      </button>
+                    </div>
+                </section>    
             </section>
             <section className="padding-x sm:py-32 py-16 w-full">
                 <section className="max-container
-                    flex justify-between items-center 
-                    max-lg:flex-col gap-10"
-                >
+                flex justify-between items-center 
+                max-lg:flex-col gap-10">
                     <h3 className="text-4xl leading-[68px] 
-                        lg:max-w-md font-palanquin font-bold"
-                    >Sign Up for
+                    lg:max-w-md font-palanquin font-bold">
+                        Sign Up for
                         <span className="text-purple-600"> Updates
                         </span> & Newsletter
 
                     </h3>
-                    
                     <form    
                         onSubmit={handleSubmit}
                         className="lg:max-w-[40%] 
-                            w-full flex items-center 
-                            max-sm:flex-col gap-5 p-2.5
-                            sm:border sm:border-slate-gray 
-                            rounded-full"
-                        >
-                            <input  
-                                className="input"
-                                onChange={(e)=> setEmail(e.target.value)} 
-                                type="email" 
-                                placeholder="Email"
-                                value={email}
-                                name="email"
-                            />
+                        w-full flex items-center 
+                        max-sm:flex-col gap-5 p-2.5
+                        sm:border sm:border-slate-gray 
+                        rounded-full">
+                            <input className="input"
+                            onChange={(e)=> setEmail(e.target.value)} 
+                            type="email" 
+                            placeholder="Email"
+                            value={email}
+                            name="email"/>
                             <div className="flex 
-                                max-sm:justify-end items-center
-                                max-sm:w-full"
-                            >
+                            max-sm:justify-end items-center
+                            max-sm:w-full">
                                 <Button label="Sign Up" fullwidth/>
                             </div>
                     </form>
-                </section>
-               
+                </section>  
             </section>
         </div>  
     );

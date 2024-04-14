@@ -1,22 +1,47 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import ReviewCard from "../components/ReviewCard.jsx";
 import NumberOfOrders from "../components/NumberOfOrders";
 
 const Commission = () => {
     const [commissions, setCommissions] = useState([]);
-    const [commissionID, setCommissionID] = useState(null)
+    const [reviews, setReviews] = useState([]);
+    const [commissionID, setCommissionID] = useState(null);
+    const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
+    const navigate = useNavigate();
   
     useEffect(() => {
         const fetchCommission = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/commission/read") 
-                setCommissions(response.data)
+                const commissionResponse = await axios.get("http://localhost:4001/manager/commission/read") 
+                setCommissions(commissionResponse.data)
+
+                const reviewResponse = await axios.get("http://localhost:4001/manager/review/read") 
+                setReviews(reviewResponse.data)
             } catch (error) {
                console.error(error);
             }
         }
         fetchCommission();
-    }, [commissions]);
+    }, []);
+
+    useEffect(() => {
+      let indices = [];
+      if (reviews.length > 0) {
+          if (reviews.length > 3) {
+              while (indices.length < 3) {
+                  const randomNumber = Math.floor(Math.random() * reviews.length);
+                  if (!indices.includes(randomNumber)) {
+                      indices.push(randomNumber);
+                  }
+              }
+          } else {
+              indices = Array.from(Array(reviews.length).keys());
+          }
+      }
+      setSelectedReviewIndices(indices);
+  }, [reviews]);
 
     
 
@@ -24,12 +49,17 @@ const Commission = () => {
       setCommissionID(id === commissionID ? null : id)
     }
 
+    function handleCreate() {
+      navigate("/review/create")
+      window.scrollTo(0, 0);
+    };
+
 
     return (
         <section className="min-h-full">
             <div className=" flex flex-wrap justify-center items-center mx-20 rounded-lg 
             bg-white px-6">
-              <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg 
+              <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg my-20 
                 bg-white px-6 shadow-xl py-5
                 ring-slate-900/5">
                 <div  className="flex flex-col justify-center items-center
@@ -46,6 +76,7 @@ const Commission = () => {
                       text-slate-gray hover:text-black 
                       text-md hover:font-semibold px-2
                       leading-8 my-2 cursor-pointer w-full"
+                      key={commission._id}
                       onClick={()=> {
                         handleChooseArtStyle(commission._id)
                       }}>
@@ -81,6 +112,42 @@ const Commission = () => {
                 </ul>
               </div>           
             </div>
+            <section className="bg-pale-blue padding">
+                <section className="max-container">
+                    <h3 className="text-4xl leading-[68px] 
+                    text-center font-palanquin font-bold">
+                        What Our <span className="text-purple-600"> Customers </span> Say?
+                    </h3>
+                    <p className="info-text m-auto 
+                    mt-4 text-center max-w-lg ">
+                        Hear genuine stories from our 
+                        satisfied customers about their
+                        exceptional experiences with us.
+                    </p>
+                    <div className="mt-24 flex flex-1 
+                    justify-evenly items-center 
+                    max-lg:flex-col gap-14">
+                        {selectedReviewIndices && selectedReviewIndices.map((index) => {
+                            const review = reviews[index];
+                            return (
+                                <ReviewCard 
+                                    key={review.email}
+                                    customerName={review.name}
+                                    feedback={review.feedback}
+                                />
+                            );
+                        })}
+                    </div> 
+                    <div className="flex justify-center mt-10">
+                      <button className="text-white px-4 py-2 text-sm
+                      font-montserrat font-medium my-3 mx-1
+                      bg-purple-600 rounded-full hover:bg-purple-500"
+                      onClick={handleCreate}> 
+                          Post Review
+                      </button>
+                    </div>
+                </section>    
+            </section>
           </section>
       );
 }
