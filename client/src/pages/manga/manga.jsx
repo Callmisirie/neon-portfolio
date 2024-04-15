@@ -26,7 +26,7 @@ function Manga() {
    
     return (
       <section className="min-h-full">
-          <div className=" flex flex-wrap justify-center items-center mx-20 rounded-lg 
+          <div className=" flex flex-wrap justify-center items-center rounded-lg 
           bg-white px-6">
             <div className="flex flex-col justify-center items-center rounded-lg 
             bg-white p-6 shadow-xl mb-10
@@ -44,8 +44,9 @@ function Manga() {
                       key={manga._id}>
                       <div  className="flex flex-col justify-center items-center m-5 p-5">
                         <h3 className="font-montserrat 
-                        text-slate-gray hover:text-black text-md 
-                        leading-8 my-2 cursor-pointers max-w-xs text-center hover:font-semibold"
+                        text-slate-gray font-semibold 
+                        hover:text-black text-md leading-8 my-2 
+                        cursor-pointer max-w-xs text-center hover:font-bold"
                           onClick={()=>{
                             handleClick(manga._id)
                           }}

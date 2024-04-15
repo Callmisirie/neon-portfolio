@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import TextArea from '../../../components/TextArea';
+import Input from '../../../components/Input';
 
 
 
@@ -133,6 +134,7 @@ function MangaCreate() {
     const [title, setTitle] = useState("");
     const [mangaID, setMangaID] = useState("");
     const [mangaName, setMangaName] = useState("");
+    const [author, setAuthor] = useState("");
     const [about, setAbout] = useState("");
     const [pages, setPages] = useState([]);
     const location = useLocation();
@@ -181,6 +183,7 @@ const handleSubmit = async (e) => {
     setIsDisabled(true);
     const formData = new FormData();
     formData.append("name", name);
+    formData.append("author", author);
     formData.append("coverImage", coverImage);
     formData.append("about", about);
 
@@ -195,6 +198,7 @@ const handleSubmit = async (e) => {
         const {message, color} = response.data;
         setMessage(message);
         setName("");
+        setAuthor("");
         setCoverImage("");
         setAbout("");
         setMessageColor(color);
@@ -206,6 +210,7 @@ const handleSubmit = async (e) => {
     } catch (error) {
         setMessage("Error uploading manga");
         setName("");
+        setAuthor("");
         setCoverImage("");
         setAbout("");
         setMessageColor("red");
@@ -282,16 +287,16 @@ return (
                     <div className="flex flex-col justify-center 
                     items-center mx-5 mb-5
                     bg-white px-6 py-4">
-                        <input className="gap-5 p-2.5 my-2
-                        border border-slate-gray 
-                        rounded-full text-center font-montserrat"
-                        type="text" 
-                        value={name} 
-                        onChange={(e) => {
-                            setName(e.target.value)
-                            setMessage("")
-                        }} 
-                        placeholder='Manga Name'/>  
+                        <Input type="text"
+                        value={name}
+                        handleChange={setName}
+                        resetMessage={setMessage}
+                        placeholder="Manga Name" /> 
+                        <Input type="text"
+                        value={about}
+                        handleChange={setAbout}
+                        resetMessage={setMessage}
+                        placeholder="Author" /> 
                         <TextArea type="text"
                         value={about}
                         resetMessage={setMessage}
@@ -676,6 +681,8 @@ function MangaEdit() {
     const [clickedMangaId, setClickedMangaId] = useState(null);
     const [mangaName, setMangaName] = useState("");
     const [newMangaName, setNewMangaName] = useState("");
+    const [author, setAuthor] = useState("");
+    const [newAuthor, setNewAuthor] = useState("");
     const [about, setAbout] = useState("");
     const [newAbout, setNewAbout] = useState("");
     const [message, setMessage] = useState("");
@@ -711,8 +718,9 @@ function MangaEdit() {
         fetchManga();
     }, [mangas]);
 
-    const handleMangaClick = (name, about, id) => {
+    const handleMangaClick = (name, author, about, id) => {
         setMangaName(name);
+        setAuthor(author);
         setAbout(about);
         setMangaID(id);
         setClickedMangaId(id === clickedMangaId ? null : id);
@@ -724,11 +732,6 @@ function MangaEdit() {
         setChapterTitle(title);
         setChapterNumber(num);
         setChapterID(id);
-        setMessage("");
-    }
-
-    const handleChange = (e) => {
-        setNewMangaName(e.target.value);
         setMessage("");
     }
   
@@ -753,6 +756,7 @@ function MangaEdit() {
         const formData = new FormData();
         formData.append("mangaID", mangaID);
         formData.append("name", newMangaName);
+        formData.append("author", newAuthor);
         formData.append("about", newAbout);
         formData.append("coverImage", coverImage);
 
@@ -768,6 +772,8 @@ function MangaEdit() {
             setMessageColor(color);
             setMangaName("");
             setNewMangaName("");
+            setAuthor("");
+            setNewAuthor("");
             setAbout("");
             setNewAbout("");
             setCoverImage("");
@@ -780,6 +786,8 @@ function MangaEdit() {
             setMessageColor("red")
             setMangaName("");
             setNewMangaName("");
+            setAuthor("");
+            setNewAuthor("");
             setAbout("");
             setNewAbout("");
             setCoverImage("");
@@ -862,7 +870,7 @@ function MangaEdit() {
                                     text-slate-gray hover:text-black text-md 
                                     leading-8 my-2 cursor-pointer w-full"
                                         onClick={()=> {
-                                        handleMangaClick(manga.name, manga.about, manga._id)
+                                        handleMangaClick(manga.name, manga.author, manga.about, manga._id)
                                     }}>
                                         {manga.name}
                                     </p>
@@ -888,12 +896,16 @@ function MangaEdit() {
                         bg-white px-6 py-4 shadow-xl
                         ring-slate-900/5">
                             <p className='mb-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
-                            <input className="p-2.5 mb-3
-                            border border-slate-gray 
-                            rounded-full text-center font-montserrat" 
-                            type="text" onChange={handleChange} 
-                            value={newMangaName} 
+                            <Input type="text"
+                            value={newMangaName}
+                            handleChange={setNewMangaName}
+                            resetMessage={setMessage}
                             placeholder={mangaName}/>
+                            <Input type="text"
+                            value={newAuthor}
+                            handleChange={setNewAuthor}
+                            resetMessage={setMessage}
+                            placeholder={author}/>
                             <TextArea type="text"
                             value={newAbout}
                             resetMessage={setMessage}

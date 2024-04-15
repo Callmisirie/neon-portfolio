@@ -54,10 +54,15 @@ const Commission = () => {
       window.scrollTo(0, 0);
     };
 
+    function handlePayment() {
+      navigate("/payment");
+      window.scrollTo(0, 0);
+  }
+
 
     return (
         <section className="min-h-full">
-            <div className=" flex flex-wrap justify-center items-center mx-20 rounded-lg 
+            <div className=" flex flex-wrap justify-center items-center rounded-lg 
             bg-white px-6">
               <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg my-20 
                 bg-white px-6 shadow-xl py-5
@@ -68,9 +73,9 @@ const Commission = () => {
                   lg:max-w-md font-palanquin font-bold p-2 mb-10 text-center">
                     Choose Art Style
                   </h3>
-                  <div className="flex flex-col justify-center items-center rounded-lg 
-                  bg-white px-6 shadow-xl py-2 my-10
-                  ring-slate-900/5">
+                  <div className="flex flex-col 
+                  justify-center items-center
+                  bg-white px-6 py-2 my-5">
                     {commissions.map(commission => (
                       <p className="font-montserrat 
                       text-slate-gray hover:text-black 
@@ -85,31 +90,41 @@ const Commission = () => {
                     ))}
                   </div>
                 </div>
-               
-                <ul className="flex flex-col justify-center items-center">
-                  {commissions.map(commission => (
-                    commission._id === commissionID && (
-                      <li  className="flex justify-center items-center rounded-lg 
-                      bg-white p-2 m-5 shadow-xl
-                      ring-slate-900/5"
-                      key={commission._id}>
-                        <div  className="flex flex-col justify-center items-center  p-2">
-                          <h3 className="font-montserrat 
-                          text-slate-gray text-lg 
-                          leading-8 my-2 w-full text-center">
-                            {commission.artStyle}
-                          </h3>
-                          <img className="flex flex-col justify-center rounded-xl m-2 shadow-xl"
-                            src={`http://localhost:4001/display/${commission._id}`} 
-                            alt={`Manga ${commission.artImage}`} 
-                            style={{ width: "120px" }}
-                          />
-                          <NumberOfOrders commission={commission}/>
-                        </div>
-                      </li>
-                    )
-                  ))}
-                </ul>
+                {commissions && commissionID && (
+                  <div className="flex flex-col justify-center items-center">
+                    <ul className="flex flex-col justify-center items-center">
+                      {commissions.map(commission => (
+                        commission._id === commissionID && (
+                          <li  className="flex justify-center items-center rounded-lg 
+                          bg-white p-2 m-5 shadow-xl
+                          ring-slate-900/5"
+                          key={commission._id}>
+                            <div  className="flex flex-col justify-center items-center  p-2">
+                              <h3 className="font-montserrat 
+                              text-slate-gray text-lg 
+                              leading-8 my-2 w-full text-center">
+                                {commission.artStyle}
+                              </h3>
+                              <img className="flex flex-col justify-center rounded-xl m-2 shadow-xl"
+                                src={`http://localhost:4001/display/${commission._id}`} 
+                                alt={`Manga ${commission.artImage}`} 
+                                style={{ width: "120px" }}
+                              />
+                              <NumberOfOrders commission={commission}/>
+                            </div>
+                          </li>
+                        )
+                      ))}
+                    </ul>
+                    <button className="px-4 py-2 my-2 border 
+                    font-montserrat text-md leading-none bg-green-600
+                    rounded-md text-white border-green-600 mb-5 
+                    hover:bg-green-500 hover:border-green-500"
+                    onClick={handlePayment}>
+                        Purchase
+                    </button>
+                  </div>
+                )}
               </div>           
             </div>
             <section className="bg-pale-blue padding">

@@ -59,6 +59,7 @@ function ReviewManager() {
 function ReviewCreate() {
     const [reviews, setReviews] = useState([]);
     const [email, setEmail] = useState("");
+    const [secretKey, setSecretKey] = useState("");
     const [name, setName] = useState("");
     const [feedback, setFeedback] = useState("");
     const [message, setMessage] = useState("");
@@ -84,7 +85,7 @@ useEffect(() => {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({email, name , feedback});
+    console.log({email, name , feedback, secretKey});
 
     setActionMessage("Processing...")
     setIsDisabled(true);
@@ -92,11 +93,12 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.post("http://localhost:4001/manager/review/create", {email, name,feedback});
+        const response = await axios.post("http://localhost:4001/manager/review/create", {email, name, feedback, secretKey});
 
         const {message, color} = response.data;
         setMessage(message);
         setMessageColor(color);
+        setSecretKey("");
         setEmail("");
         setName("");
         setFeedback("");
@@ -107,6 +109,7 @@ const handleSubmit = async (e) => {
     } catch (error) {
         setMessage("Error uploading review");
         setMessageColor("red");
+        setSecretKey("");
         setEmail("");
         setName("");
         setFeedback("");
@@ -133,7 +136,13 @@ return (
                 <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
-                onSubmit={handleSubmit}>   
+                onSubmit={handleSubmit}> 
+                    <Input
+                    type="text"
+                    value={secretKey}
+                    handleChange={setSecretKey}
+                    resetMessage={setMessage}
+                    placeholder="Secret Key"/>  
                     <Input
                     type="email"
                     value={email}

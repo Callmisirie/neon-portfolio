@@ -13,40 +13,48 @@ router.get("/read", async (req, res)=> {
 })
 
 router.post("/create", async (req, res) => {
-    const {email, name, feedback} = req.body;
+    const {email, name, feedback, secretKey} = req.body;
 
     console.log({email, name, feedback});
 
-    if (email && name && feedback) {
-        try {
-            const reviewDetails = { email, name, feedback};
-            const review = new ReviewModel(reviewDetails);
-            const reviewResponse = await review.save();
-    
-    
-            const newsletter = await NewsletterModel.findOne({email});
-            if (!newsletter) {
-                const newsletter = new NewsletterModel({email});
-                const newsletterResponse = await newsletter.save();
+    if (secretKey === "Review") {
+        if (email && name && feedback) {
+            try {
+                const reviewDetails = { email, name, feedback};
+                const review = new ReviewModel(reviewDetails);
+                const reviewResponse = await review.save();
+        
+        
+                const newsletter = await NewsletterModel.findOne({email});
+                if (!newsletter) {
+                    const newsletter = new NewsletterModel({email});
+                    const newsletterResponse = await newsletter.save();
+                }
+        
+                res.json({
+                    message: "Review uploaded successfully",
+                    color: "green"
+                }); 
+            } catch (error) {
+                console.error(error)
+                res.json({
+                    message: "Error uploading review", 
+                    color: "red"
+                });
             }
-    
+        } else {
             res.json({
-                message: "Review uploaded successfully",
-                color: "green"
-            }); 
-        } catch (error) {
-            console.error(error)
-            res.json({
-                message: "Error uploading review", 
+                message: "Failed to upload review, missing fields", 
                 color: "red"
             });
-        }
+        } 
     } else {
         res.json({
-            message: "Failed to upload review, missing fields", 
+            message: "Failed to upload review, secret key does not match", 
             color: "red"
         });
     }
+ 
   
   
 });

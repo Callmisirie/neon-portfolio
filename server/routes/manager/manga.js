@@ -15,6 +15,7 @@ router.post("/create/manga", upload.single("coverImage"), async (req, res)=> {
     try {
         const mangaDetails = {
             name: req.body.name, 
+            author: req.body.author,
             about: req.body.about, 
             coverImage: req.file.originalname, 
         };
@@ -63,7 +64,7 @@ router.post("/create/manga/chapter", upload.array("pages"), async (req, res)=> {
         
         const mangaContent = await ChapterContentModel.findOne({mangaID});
 
-        if (!mangaContent){     
+        if (!mangaContent) {     
             try {
                 const chapterContent = new ChapterContentModel(chapterDetails);
                 const chapterResponse =  await chapterContent.save();
@@ -239,13 +240,13 @@ router.delete("/delete/manga/chapter", async (req, res) => {
 
 
 router.put("/edit/manga", upload.single("coverImage"), async (req, res) => { 
-    const { mangaID, name, about } = req.body;
+    const { mangaID, name, author, about } = req.body;
 
     if (mangaID) {
         const manga = await MangaModel.findOne({_id: mangaID});
         let message = {};
         try {            
-            if (req.file || name || about){
+            if (req.file || name || author || about){
                 if (req.file) {
                     await MangaModel.findOneAndUpdate({_id: mangaID}, {coverImage: req.file.originalname}, { new: true });
                     await ImageModel.findOneAndUpdate({imageID: mangaID}, {name: req.file.originalname, imageData: req.file.buffer}, { new: true });
@@ -265,7 +266,15 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
                             message: "Manga updated successfully",
                             color: "green"
                         }
-                }    
+                }
+                if (author) {
+                    await MangaModel.findOneAndUpdate({_id: mangaID}, {author}, { new: true });
+                    
+                    message = {
+                        message: "Manga updated successfully",
+                        color: "green"
+                    }
+            }        
                 if (about) {
                     await MangaModel.findOneAndUpdate({_id: mangaID}, {about}, { new: true });
                     
@@ -275,7 +284,7 @@ router.put("/edit/manga", upload.single("coverImage"), async (req, res) => {
                     }
             }                 
                 res.json(message);
-            } else if (!req.file && !name) {
+            } else if (!req.file && !name && !author && !about) {
                 res.json({
                     message: "Failed to edit manga, missing fields",
                     color: "red"

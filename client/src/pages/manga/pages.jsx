@@ -181,7 +181,7 @@ function Pages() {
                         </select>
                     )}
                 </div>
-                    <button className="px-4 py-2 my-2 border 
+                    <button className="px-4 py-2 my-5 border 
                     font-montserrat text-md leading-none bg-black
                     rounded-md text-white border-black mb-5"
                     onClick={handlePreviousChapter}>
@@ -193,8 +193,7 @@ function Pages() {
                     {chapter && (
                         <>
                             <h3 className="font-montserrat 
-                            text-black text-xl 
-                            leading-8 my-2 cursor-pointer 
+                            text-black text-xl leading-8 my-6 
                             w-full text-center font-bold">
                                 {chapter.title}
                             </h3>
@@ -236,7 +235,7 @@ function Pages() {
                     <button className="px-4 py-2 my-2 border 
                     font-montserrat text-md leading-none bg-green-600
                     rounded-md text-white border-green-600 mb-5 
-                    hover:bg-green-500 w-full"
+                    hover:bg-green-500 hover:border-green-500 w-full"
                     onClick={handleGift}>
                         Gift
                     </button>
