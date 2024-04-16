@@ -49,7 +49,7 @@ function Chapters() {
                         </h3>
                         <p  className="font-montserrat 
                         text-slate-gray max-w-sm text-center
-                        leading-8 mx-2 text-sm">
+                        mx-2 text-sm">
                             {manga.about}
                         </p>
                         <div className="flex flex-col justify-center 

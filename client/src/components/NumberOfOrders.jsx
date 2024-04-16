@@ -43,8 +43,8 @@ const NumberOfOrders = ({commission}) => {
         <div  className="flex justify-center items-center">
             <button onClick={handleDecreaseClick}>-</button> 
             <input className="text-center font-montserrat
-            text-black text-sm border border-slate-gray
-            leading-8 m-2"
+            text-black text-sm border-slate-gray
+            leading-8 m-2 border-none pl-5"
             type="number" 
             value={numberOfOrders}
             onChange={handleChange}/>

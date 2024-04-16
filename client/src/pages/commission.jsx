@@ -10,6 +10,12 @@ const Commission = () => {
     const [commissionID, setCommissionID] = useState(null);
     const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
     const navigate = useNavigate();
+    const [isChecked, setIsChecked] = useState(false);
+
+    const toggle = () => {
+      setIsChecked(!isChecked);
+    }
+
   
     useEffect(() => {
         const fetchCommission = async () =>{
@@ -47,6 +53,7 @@ const Commission = () => {
 
     function handleChooseArtStyle(id) {
       setCommissionID(id === commissionID ? null : id)
+      setIsChecked(false);
     }
 
     function handleCreate() {
@@ -70,17 +77,17 @@ const Commission = () => {
                 <div  className="flex flex-col justify-center items-center
                 bg-white mx-2 px-6 py-5 my-5">
                   <h3 className="text-4xl leading-[68px] 
-                  lg:max-w-md font-palanquin font-bold p-2 mb-10 text-center">
+                  lg:max-w-md font-palanquin font-bold p-2 my-5 text-center">
                     Choose Art Style
                   </h3>
                   <div className="flex flex-col 
-                  justify-center items-center
-                  bg-white px-6 py-2 my-5">
+                  justify-center items-start
+                  bg-white p-4 my-5 w-full">
                     {commissions.map(commission => (
                       <p className="font-montserrat 
                       text-slate-gray hover:text-black 
-                      text-md hover:font-semibold px-2
-                      leading-8 my-2 cursor-pointer w-full"
+                      text-md hover:font-semibold
+                      leading-8 my-2 cursor-pointer"
                       key={commission._id}
                       onClick={()=> {
                         handleChooseArtStyle(commission._id)
@@ -99,7 +106,7 @@ const Commission = () => {
                           bg-white p-2 m-5 shadow-xl
                           ring-slate-900/5"
                           key={commission._id}>
-                            <div  className="flex flex-col justify-center items-center  p-2">
+                            <div  className="flex flex-col justify-center items-center p-2">
                               <h3 className="font-montserrat 
                               text-slate-gray text-lg 
                               leading-8 my-2 w-full text-center">
@@ -116,11 +123,44 @@ const Commission = () => {
                         )
                       ))}
                     </ul>
-                    <button className="px-4 py-2 my-2 border 
-                    font-montserrat text-md leading-none bg-green-600
-                    rounded-md text-white border-green-600 mb-5 
-                    hover:bg-green-500 hover:border-green-500"
-                    onClick={handlePayment}>
+                    <p  className="font-montserrat 
+                    text-purple-600 text-start
+                    text-sm font-bold">
+                        <a href="/cantact">
+                          Contact
+                        </a> <span className="font-montserrat 
+                    text-slate-gray text-start font-normal
+                    text-xs">NEON.</span>
+                    </p>
+                    <div className="flex justify-center items-center m-2 p-2">                      
+                      <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
+                          <div className="flex items-center">
+                              <input
+                                  id="toggle"
+                                  type="checkbox"
+                                  className="sr-only"
+                                  checked={isChecked}
+                                  onChange={toggle}
+                              />
+                              <div className="w-12 h-4 border  rounded-full"></div>
+                              <div className={`dot absolute w-6 h-6 ${isChecked ? 
+                              'bg-green-600' : 'bg-slate-gray'} rounded-full shadow 
+                              ${isChecked ? 'translate-x-full' : ''} transition`}></div>
+                          </div>
+                      </label>
+                      <p  className="font-montserrat 
+                      text-slate-gray max-w-xs text-start
+                      text-sm">
+                          I hereby acknowledge that i have contacted 
+                          NEON for commission details before making purchase.
+                      </p>
+                    </div>
+                    <button className={`px-4 py-2 my-2 border rounded-md text-white
+                    font-montserrat text-md leading-none mb-5 bg-green-600 border-green-600 
+                    hover:bg-green-500 hover:border-green-500
+                    ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
+                    onClick={handlePayment}
+                    disabled={!isChecked}>
                         Purchase
                     </button>
                   </div>
