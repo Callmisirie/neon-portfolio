@@ -728,6 +728,14 @@ function MangaEdit() {
         setChapterTitle("");
     }
 
+    const handleMangaContentClick = (name, id) => {
+        setMangaName(name);
+        setMangaID(id);
+        setClickedMangaId(id === clickedMangaId ? null : id);
+        setMessage("");
+        setChapterTitle("");
+    }
+
     const handleChapterClick = (title, num, id) => {
         setChapterTitle(title);
         setChapterNumber(num);
@@ -952,7 +960,7 @@ function MangaEdit() {
                                 <p className="font-montserrat 
                                 text-slate-gray hover:text-black text-md
                                 leading-8 my-2 cursor-pointer w-full"
-                                onClick={()=> {handleMangaClick(manga.name, manga._id)}}>
+                                onClick={()=> {handleMangaContentClick(manga.name, manga._id)}}>
                                     {manga.name}
                                 </p>
                                 <ul className="flex flex-col my-2 rounded-lg 

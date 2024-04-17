@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
+let details = {
+    price: null,
+    commissionDetails: null,
+    number: null
+};
+
 const NumberOfOrders = ({commission}) => {
+    details.commissionDetails = commission;
+    
     const [numberOfOrders, setNumberOfOrders] = useState(parseInt(1, 10));
     const [priceOfOrders, setPriceOfOrders] = useState(parseInt(commission.price, 10));
 
@@ -25,7 +33,6 @@ const NumberOfOrders = ({commission}) => {
         currentPrice(e.target.value)
         setNumberOfOrders((parseInt(e.target.value, 10)))
     }
-    
 
     function currentPrice(num) {
         if (num) {
@@ -34,7 +41,9 @@ const NumberOfOrders = ({commission}) => {
             const priceOfInterval = (parseInt(commission.price, 10) * numberOfinterval)
             const priceOfIntervalAfterDiscount = priceOfInterval - ((priceOfInterval * parseInt(commission.discount, 10)) / 100)
             const currentPrice = (parseInt(commission.price, 10) * remainderAfterInterval) + priceOfIntervalAfterDiscount
-            setPriceOfOrders(currentPrice)   
+            setPriceOfOrders(currentPrice) 
+            details.price = currentPrice
+            details.number = num
         }
     }
 
@@ -66,4 +75,10 @@ const NumberOfOrders = ({commission}) => {
   )
 }
 
+const transactionDetails = () => {
+    console.log(details);
+}
+
 export default NumberOfOrders;
+
+export {transactionDetails}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from "../components/ReviewCard.jsx";
-import NumberOfOrders from "../components/NumberOfOrders";
+import NumberOfOrders, { transactionDetails } from "../components/NumberOfOrders";
 
 const Commission = () => {
     const [commissions, setCommissions] = useState([]);
@@ -11,6 +11,7 @@ const Commission = () => {
     const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
+    const [isTransaction, setIsTransaction] = useState(false);
 
     const toggle = () => {
       setIsChecked(!isChecked);
@@ -159,7 +160,10 @@ const Commission = () => {
                     font-montserrat text-md leading-none mb-5 bg-green-600 border-green-600 
                     hover:bg-green-500 hover:border-green-500
                     ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
-                    onClick={handlePayment}
+                    onClick={() => {
+                      handlePayment()
+                      transactionDetails()
+                    }}
                     disabled={!isChecked}>
                         Purchase
                     </button>
@@ -186,7 +190,7 @@ const Commission = () => {
                             const review = reviews[index];
                             return (
                                 <ReviewCard 
-                                    key={review.email}
+                                    key={review._id}
                                     customerName={review.name}
                                     feedback={review.feedback}
                                 />
@@ -197,7 +201,9 @@ const Commission = () => {
                       <button className="text-white px-4 py-2 text-sm
                       font-montserrat font-medium my-3 mx-1
                       bg-purple-600 rounded-full hover:bg-purple-500"
-                      onClick={handleCreate}> 
+                      onClick={() => {
+                        handleCreate()
+                      }}> 
                           Post Review
                       </button>
                     </div>
