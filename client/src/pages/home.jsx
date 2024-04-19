@@ -177,7 +177,7 @@ function Home() {
                             const review = reviews[index];
                             return (
                                 <ReviewCard 
-                                    key={review.email}
+                                    key={review._id}
                                     customerName={review.name}
                                     feedback={review.feedback}
                                 />

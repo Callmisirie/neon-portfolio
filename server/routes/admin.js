@@ -46,7 +46,7 @@ router.post("/login", async (req, res)=> {
            const token = jwt.sign({id : userAdmin._id}, secret);
             res.json({
                 token, adminUserID : userAdmin._id, 
-                message: "Paypal Gift uploaded successfully",
+                message: "Successfully logged in",
                 color: "green"
             });
         } else {

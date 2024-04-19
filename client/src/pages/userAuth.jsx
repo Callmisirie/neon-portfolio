@@ -3,7 +3,7 @@ import axios from "axios";
 import {useCookies} from "react-cookie"; 
 import { useNavigate } from "react-router-dom"; 
 
-function Auth() {
+function UserAuth() {
     const [isClickedRegister, setIsClickedRegister] = useState(false);
     const [isClickedLogin, setIsClickedLogin] = useState(false);
 
@@ -36,7 +36,7 @@ function Auth() {
                 ring-slate-900/5">
                     <h2  className="text-3xl leading-[68px] 
                     lg:max-w-md font-palanquin font-bold p-2 text-center">
-                        ADMIN AUTH
+                        USER AUTH
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
@@ -72,7 +72,9 @@ function Auth() {
 
 export function Register() {
     const [registerInfo, SetRegisterInfo] = useState({
-        username: "",
+        firstName: "",
+        lastName: "",
+        email: "",
         password: ""
     });
     const [isDisabled, setIsDisabled] = useState(false);
@@ -98,12 +100,14 @@ export function Register() {
         setIsDisabled(true);
 
         SetRegisterInfo({
-            username: "",
+            firstName: "",
+            lastName: "",
+            email: "",
             password: ""
         });
 
         try {
-            const response = await axios.post("http://localhost:4001/auth/register", registerInfo);
+            const response = await axios.post("http://localhost:4001/auth/user/register", registerInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
@@ -111,7 +115,7 @@ export function Register() {
             setActionMessage("Register");
 
         } catch (error) {
-            setMessage("Error registering admin user");
+            setMessage("Error registering user");
             setMessageColor("red");
             setIsDisabled(false);
             setActionMessage("Register");
@@ -139,10 +143,30 @@ export function Register() {
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
-            name="username"
-            value={registerInfo.username}
-            placeholder="Username"
+            name="firstName"
+            value={registerInfo.firstName}
+            placeholder="First Name"
             type="text"
+            autoComplete="off"/>
+            <input className="w-full flex
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="lastName"
+            value={registerInfo.lastName}
+            placeholder="Last Name"
+            type="text"
+            autoComplete="off"/>
+            <input className="w-full flex
+            items-center p-2.5 my-2
+            border border-slate-gray 
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="email"
+            value={registerInfo.email}
+            placeholder="Email"
+            type="email"
             autoComplete="off"/>
             <input className="w-full flex 
             items-center p-2.5 my-2
@@ -167,7 +191,7 @@ export function Register() {
 
 export function Login() {
     const [loginInfo, SetLoginInfo] = useState({
-        username: "",
+        email: "",
         password: ""
     });
     const [isDisabled, setIsDisabled] = useState(false);
@@ -175,7 +199,7 @@ export function Login() {
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Login");
 
-    const [ , setCookies] = useCookies(["access_token"]);
+    const [ , setCookies] = useCookies(["userAccess_token"]);
     const navigate = useNavigate();
 
     function handleOnChange(event){
@@ -196,24 +220,30 @@ export function Login() {
         setActionMessage("Processing...");
         
         SetLoginInfo({
-            username: "",
+            email: "",
             password: ""
         });
 
         try {
-            const response = await axios.post("http://localhost:4001/auth/login", loginInfo);
+            const response = await axios.post("http://localhost:4001/auth/user/login", loginInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
             setActionMessage("Login");
             setIsDisabled(false);
-            setCookies("access_token",  response.data.token);
-            window.localStorage.setItem("adminUserID", response.data.adminUserID);
+            if (response.data.token === undefined) {
+                setCookies("userAccess_token",  null);
+            }else {
+                setCookies("userAccess_token",  response.data.token);
+            }
+            
+            window.localStorage.setItem("userAccess_token", response.data.token);
+            window.localStorage.setItem("userID", response.data.userID);
             if (response.data.token) {
-                navigate("/manager")
+                navigate("/")
             }
         } catch (error) {
-            setMessage("Error logging in admin user");
+            setMessage("Error logging in user");
             setMessageColor("red");
             setActionMessage("Login");
             setIsDisabled(false);
@@ -240,10 +270,10 @@ export function Login() {
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
-            name="username"
-            value={loginInfo.username}
-            placeholder="Username"
-            type="text"
+            name="email"
+            value={loginInfo.email}
+            placeholder="Email"
+            type="email"
             autoComplete="off"/>
             <input className="w-full flex 
             items-center p-2.5 my-2
@@ -266,4 +296,4 @@ export function Login() {
 };
 
 
-export default Auth;
+export default UserAuth;

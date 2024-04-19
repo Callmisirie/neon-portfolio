@@ -19,7 +19,8 @@ import { MangaCreate, MangaDelete, MangaEdit } from './pages/manager/manga/manga
 import { CommissionCreate, CommissionDelete, CommissionEdit } from './pages/manager/commission/commission.jsx';
 import { GiftCreate, GiftDelete, GiftEdit } from './pages/manager/gift/gift.jsx';
 import { ReviewCreate, ReviewDelete, ReviewEdit } from './pages/manager/review/review.jsx';
-import Auth from "./pages/auth.jsx";
+import AdminAuth from "./pages/adminAuth.jsx";
+import UserAuth from './pages/userAuth.jsx';
 import Navbar from "./components/Navbar.jsx";
 import Footer from './components/Footer.jsx';
 import { useCookies } from "react-cookie";
@@ -28,7 +29,6 @@ import { useCookies } from "react-cookie";
 
 function App() {
   const [cookies, ] = useCookies(["access_token"]);
-
 
   return (
     <main className='relative'>
@@ -43,9 +43,11 @@ function App() {
               <Route path="/manga" element={<Manga />}/>
               <Route path="/gift" element={<Gift />}/>
               <Route path="/payment" element={<Payment />}/>
-              <Route path="/auth" element={<Auth />}/>
+              <Route path="/auth/admin" element={<AdminAuth />}/>
+              <Route path="/auth/user" element={<UserAuth />}/>
+
               <Route path="/manga/find/:mangaName" element={<Find />}/>
-              {cookies.access_token && (
+              {cookies.access_token &&  (
                 <>
                   <Route path="/manager" element={<Manager />}/>
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from "../components/ReviewCard.jsx";
-import NumberOfOrders, { transactionDetails } from "../components/NumberOfOrders";
+import NumberOfOrders, { handleTransactionDetails } from "../components/NumberOfOrders";
 
 const Commission = () => {
     const [commissions, setCommissions] = useState([]);
@@ -11,7 +11,6 @@ const Commission = () => {
     const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
     const navigate = useNavigate();
     const [isChecked, setIsChecked] = useState(false);
-    const [isTransaction, setIsTransaction] = useState(false);
 
     const toggle = () => {
       setIsChecked(!isChecked);
@@ -162,7 +161,7 @@ const Commission = () => {
                     ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
                     onClick={() => {
                       handlePayment()
-                      transactionDetails()
+                      handleTransactionDetails()
                     }}
                     disabled={!isChecked}>
                         Purchase

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-let details = {
+let transactionDetails = {
     price: null,
     commissionDetails: null,
     number: null
 };
 
 const NumberOfOrders = ({commission}) => {
-    details.commissionDetails = commission;
+    transactionDetails.commissionDetails = commission;
     
     const [numberOfOrders, setNumberOfOrders] = useState(parseInt(1, 10));
     const [priceOfOrders, setPriceOfOrders] = useState(parseInt(commission.price, 10));
@@ -42,8 +42,8 @@ const NumberOfOrders = ({commission}) => {
             const priceOfIntervalAfterDiscount = priceOfInterval - ((priceOfInterval * parseInt(commission.discount, 10)) / 100)
             const currentPrice = (parseInt(commission.price, 10) * remainderAfterInterval) + priceOfIntervalAfterDiscount
             setPriceOfOrders(currentPrice) 
-            details.price = currentPrice
-            details.number = num
+            transactionDetails.price = currentPrice
+            transactionDetails.number = num
         }
     }
 
@@ -75,10 +75,12 @@ const NumberOfOrders = ({commission}) => {
   )
 }
 
-const transactionDetails = () => {
-    console.log(details);
+const handleTransactionDetails = () => {
+    console.log(transactionDetails);
+    window.localStorage.removeItem("transactionDetails")
+    window.localStorage.setItem("transactionDetails", JSON.stringify(transactionDetails))
 }
 
 export default NumberOfOrders;
 
-export {transactionDetails}
+export {handleTransactionDetails}

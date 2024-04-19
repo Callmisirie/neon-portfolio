@@ -5,6 +5,7 @@ import cors from "cors";
 
 import { newsletterRouter } from './routes/newsletter.js';
 import { adminRouter } from "./routes/admin.js";
+import { userRouter } from './routes/user.js';
 import { mangaRouter } from "./routes/manga.js";
 import { chapterContentRouter } from './routes/chapterContent.js';
 import { managerMangaRouter } from './routes/manager/manga.js';
@@ -23,7 +24,8 @@ app.use('/uploads', express.static('uploads'));
 mongoose.connect("mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/mangacontent?retryWrites=true&w=majority");
 
 app.use("/newsletter", newsletterRouter);
-app.use("/auth", adminRouter);
+app.use("/auth/admin", adminRouter);
+app.use("/auth/user", userRouter);
 app.use("/manga", mangaRouter);
 app.use("/chapterContent", chapterContentRouter);
 app.use("/manager/manga", managerMangaRouter);
