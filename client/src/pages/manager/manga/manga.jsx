@@ -952,8 +952,8 @@ function MangaEdit() {
                     Manga Chapter
                 </h2>
                 <ul  className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                    bg-white px-6 py-3 shadow-xl
-                    ring-slate-900/5'> 
+                bg-white px-6 py-3 shadow-xl
+                ring-slate-900/5'> 
                     {mangas.map((manga)=> {
                         return (
                             <li key={manga._id}>

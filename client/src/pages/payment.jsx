@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Payment() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
     const [isClickedCrypto, setIsClickedCrypto] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [isChecked, setIsChecked] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [transactionHistories, setTransactionHistories] = useState([]);
+    const navigate = useNavigate();
 
+    const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
+    const userID = window.localStorage.getItem("userID");
 
     function handleClick(gift) {
         if (gift === "Paypal") { 
@@ -13,6 +22,9 @@ function Payment() {
             } else if (!isClickedPaypal) {
                 setIsClickedPaypal(true);
                 setIsClickedCrypto(false);
+                setPaymentMethod("Paypal");
+                setIsChecked(false);
+                setMessage("");
             }
         }
         else if (gift === "Crypto") {
@@ -21,50 +33,177 @@ function Payment() {
             } else if (!isClickedCrypto) {
                 setIsClickedCrypto(true);
                 setIsClickedPaypal(false);
+                setPaymentMethod("Crypto")
+                setIsChecked(false);
+                setMessage("");
             }
         } 
     }
 
+    const handlePayment = async () => {
+        const transactionInfo = {
+            paymentMethod,
+            artStyle: transactionDetails.commissionDetails.artStyle,
+            price: transactionDetails.price,
+            quantity: transactionDetails.number,
+            discount: transactionDetails.commissionDetails.discount,
+            discountInterval: transactionDetails.commissionDetails.discountInterval,
+            pricePer: transactionDetails.commissionDetails.pricePer,
+            userID
+        }
+        try {
+            const response = await axios.post("http://localhost:4001/transactionHistory/create", transactionInfo)
+            const {message, color} = response.data; 
+            setMessage(message);
+            setMessageColor(color);
+            setIsChecked(false);
+            // navigate("/commission");
+            // window.scrollTo(0, 0);
+        } catch (error) {
+            setMessage("Error saving transaction");
+            setMessageColor("red");
+            setIsChecked(false);
+            console.error(error)
+        }
+       
+    }
+
+    const toggle = () => {
+        setIsChecked(!isChecked);
+        setMessage("");
+    }
+
     return (
         <section className="min-h-full flex flex-col items-center">
-            <div className="flex 
-            flex-col justify-center items-center  
+            <div className="flex flex-col sm:flex-row
+            justify-center items-center flex-wrap
             max-container m-10 rounded-lg 
             bg-white px-6 py-8 shadow-xl
-            ring-slate-900/5">  
-                <h2  className="text-3xl leading-[68px] 
-                lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                        Choose Payment
-                </h2> 
-                <button 
-                    className="text-white px-4 py-2 text-sm
-                    font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 "
-                    onClick={ ()=> {
-                    handleClick("Paypal")
-                }}>
-                    Paypal
-                </button>    
-                <button
-                    className="text-white px-4 py-2 text-sm
-                    font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 " 
-                    onClick={()=> {
-                    handleClick("Crypto")
-                }}>
-                    Crypto
-                </button>
-                {isClickedPaypal && 
-                    <>
-                        <PaypalGift /> 
-                    </> 
-                }
-                {isClickedCrypto && 
-                    <>
-                        <CryptoGift /> 
-                    </> 
-                }
-            </div>  
+            ring-slate-900/5">
+                <div className="flex 
+                flex-col justify-center items-center  
+                max-container m-10 rounded-lg 
+                bg-white px-6 py-8 shadow-xl
+                ring-slate-900/5">  
+                    <h2  className="text-3xl leading-[68px] 
+                    lg:max-w-md font-montserrat  font-bold p-2 text-center">
+                            Choose Payment
+                    </h2> 
+                    <button 
+                        className="text-white px-4 py-2 text-sm
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md hover:bg-purple-500 "
+                        onClick={ ()=> {
+                        handleClick("Paypal")
+                    }}>
+                        Paypal
+                    </button>    
+                    <button
+                        className="text-white px-4 py-2 text-sm
+                        font-montserrat font-medium my-3 mx-5
+                        bg-purple-600 rounded-md hover:bg-purple-500 " 
+                        onClick={()=> {
+                        handleClick("Crypto")
+                    }}>
+                        Crypto
+                    </button>
+                    {isClickedPaypal && 
+                        <>
+                            <PaypalGift /> 
+                        </> 
+                    }
+                    {isClickedCrypto && 
+                        <>
+                            <CryptoGift /> 
+                        </> 
+                    }
+                </div> 
+                    {isClickedPaypal || isClickedCrypto ? (
+                        <div className="flex gap-5
+                        flex-col justify-center
+                        max-container m-10 rounded-lg 
+                        bg-white px-6 py-8 shadow-xl
+                        ring-slate-900/5">
+                            <h3 className="font-montserrat 
+                              text-black font-semibold text-lg 
+                               w-full text-center">
+                                Transaction Details 
+                            </h3>
+                            <p className="font-montserrat font-semibold
+                            text-slate-gray max-w-xs text-start
+                            text-sm">
+                                Art Style - <span className="font-montserrat 
+                                text-slate-gray text-start font-normal
+                                text-sm">{transactionDetails.commissionDetails.artStyle}</span>
+                            </p>
+                            <p className="font-montserrat font-semibold
+                            text-slate-gray max-w-xs text-start
+                            text-sm">
+                                Quantity - <span className="font-montserrat 
+                                text-slate-gray text-start font-normal
+                                text-sm">{transactionDetails.number}</span>
+                            </p>
+                            <p className="font-montserrat font-semibold
+                            text-slate-gray max-w-xs text-start
+                            text-sm">
+                                Price - <span className="font-montserrat 
+                                text-green-600 text-start font-normal
+                                text-sm">${transactionDetails.price}</span>
+                            </p>
+                            <p className="font-montserrat font-semibold
+                            text-slate-gray max-w-xs text-start
+                            text-sm">
+                                Discount - <span className="font-montserrat 
+                                text-slate-gray text-start font-normal
+                                text-sm">{`${transactionDetails.commissionDetails.discount}%
+                                per ${transactionDetails.commissionDetails.discountInterval} 
+                                ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
+                            </p>
+                            
+                            <div className="flex flex-col justify-center items-center mt-5 p-2">
+                                <div className="flex justify-center items-center m-2 p-2">                      
+                                    <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
+                                        <div className="flex items-center">
+                                            <input
+                                                id="toggle"
+                                                type="checkbox"
+                                                className="sr-only"
+                                                checked={isChecked}
+                                                onChange={toggle}
+                                            />
+                                            <div className="w-12 h-4 border  rounded-full"></div>
+                                            <div className={`dot absolute w-6 h-6 ${isChecked ? 
+                                            'bg-green-600' : 'bg-slate-gray'} rounded-full shadow 
+                                            ${isChecked ? 'translate-x-full' : ''} transition`}></div>
+                                        </div>
+                                    </label>
+                                    <p  className="font-montserrat 
+                                    text-slate-gray max-w-xs text-start
+                                    text-sm">
+                                        I hereby acknowledge that payment 
+                                        has been made for this purchase.
+                                    </p>
+                                </div>
+                                <button className={`px-4 py-2 my-2 border rounded-full text-white w-fit
+                                font-montserrat text-xs leading-none bg-green-600 border-green-600 
+                                hover:bg-green-500 hover:border-green-500
+                                ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
+                                onClick={() => {
+                                handlePayment()
+                                }}
+                                disabled={!isChecked}>
+                                    Confirm Payment
+                                </button>
+                                {message && <p className="font-montserrat text-lg
+                                leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                                    {message}
+                                </p>}
+                            </div>
+                            
+                           
+                        </div> 
+                    ): null}
+            </div>
         </section>
 
     );
@@ -97,9 +236,9 @@ const PaypalGift = () => {
 
     return (
         <section className="min-h-full">
-            <div className="flex flex-col justify-center items-center rounded-lg 
-            bg-white px-6 shadow-xl
-            ring-slate-900/5">
+            <div className="flex flex-col 
+            justify-center items-center 
+            bg-white p-5">
                 {paypalGifts && (
                     <>
                         <h2  className="text-3xl 
@@ -168,11 +307,11 @@ const CryptoGift = () => {
 
     return (
         <section className="min-h-full">
-            <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg 
-            bg-white px-6 shadow-xl py-5
-            ring-slate-900/5">
-                <div  className="flex flex-col justify-center items-center
-                bg-white mx-2 px-6 py-5 my-5">
+            <div  className="flex sm:flex-row 
+            flex-col justify-center items-center 
+            p-5">
+                <div  className="flex flex-col 
+                justify-center items-center">
                     <h2  className="text-3xl
                     lg:max-w-md font-palanquin 
                     font-bold p-2 text-center">
@@ -186,20 +325,22 @@ const CryptoGift = () => {
                         leading-8 my-2 cursor-pointer"
                         onClick={()=> {
                         handleChooseCryptoGift(cryptoGift._id)
-                        }}>
+                        }}
+                        key={cryptoGift._id}>
                         {cryptoGift.cryptoName}
                         </p>
                     ))}
                     </div>
                 </div>
-                <ul className="flex flex-col justify-center items-center">
+                <ul className="flex flex-col 
+                justify-center items-center">
                     {cryptoGifts && cryptoGifts.map(cryptoGift => (
                     cryptoGift._id === cryptoGiftId && (
-                        <li  className="flex justify-center items-center rounded-lg 
-                        bg-white p-2 m-5 shadow-xl
-                        ring-slate-900/5"
+                        <li  className="flex justify-center items-center 
+                        p-2 m-5"
                         key={cryptoGift._id}>
-                            <div  className="flex flex-col justify-center items-center  p-2">
+                            <div  className="flex flex-col 
+                            justify-center items-center p-2">
                                 <h3 className="font-montserrat 
                                 text-slate-gray text-lg 
                                 leading-8 my-2 text-center">
@@ -214,7 +355,8 @@ const CryptoGift = () => {
                                     {cryptoGift.network}
                                 </span>
                                 </p>
-                                <img className="flex flex-col justify-center rounded-xl m-2 shadow-xl"
+                                <img className="flex flex-col 
+                                justify-center rounded-xl m-2 shadow-xl"
                                 src={`http://localhost:4001/display/${cryptoGift._id}`} 
                                 alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                 style={{ width: "222px" }}

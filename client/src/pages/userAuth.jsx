@@ -236,7 +236,6 @@ export function Login() {
             }else {
                 setCookies("userAccess_token",  response.data.token);
             }
-            
             window.localStorage.setItem("userAccess_token", response.data.token);
             window.localStorage.setItem("userID", response.data.userID);
             if (response.data.token) {

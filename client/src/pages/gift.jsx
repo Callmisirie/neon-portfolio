@@ -98,9 +98,9 @@ const PaypalGift = () => {
 
     return (
         <section className="min-h-full">
-            <div className="flex flex-col justify-center items-center rounded-lg 
-            bg-white px-6 shadow-xl
-            ring-slate-900/5">
+            <div className="flex flex-col 
+            justify-center items-center  
+            bg-white p-5">
                 {paypalGifts && (
                     <>
                         <h2  className="text-3xl 
@@ -169,11 +169,10 @@ const CryptoGift = () => {
 
     return (
         <section className="min-h-full">
-            <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg 
-            bg-white px-6 shadow-xl py-5
-            ring-slate-900/5">
-                <div  className="flex flex-col justify-center items-center
-                bg-white mx-2 px-6 py-5 my-5">
+            <div  className="flex sm:flex-row 
+            flex-col justify-center items-center p-5">
+                <div  className="flex flex-col 
+                justify-center items-center">
                     <h2  className="text-3xl
                     lg:max-w-md font-palanquin 
                     font-bold p-2 text-center">
@@ -193,14 +192,15 @@ const CryptoGift = () => {
                     ))}
                     </div>
                 </div>
-                <ul className="flex flex-col justify-center items-center">
+                <ul className="flex flex-col 
+                justify-center items-center">
                     {cryptoGifts && cryptoGifts.map(cryptoGift => (
                     cryptoGift._id === cryptoGiftId && (
                         <li  className="flex justify-center 
-                        items-center rounded-lg bg-white p-2 m-5 shadow-xl
-                        ring-slate-900/5"
+                        items-center p-2 m-5"
                         key={cryptoGift._id}>
-                            <div  className="flex flex-col justify-center items-center  p-2">
+                            <div  className="flex flex-col 
+                            justify-center items-center p-2">
                                 <h3 className="font-montserrat 
                                 text-slate-gray text-lg 
                                 leading-8 my-2 text-center">

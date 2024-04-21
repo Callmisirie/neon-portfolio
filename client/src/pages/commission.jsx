@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCookies } from 'react-cookie';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import ReviewCard from "../components/ReviewCard.jsx";
@@ -9,8 +10,13 @@ const Commission = () => {
     const [reviews, setReviews] = useState([]);
     const [commissionID, setCommissionID] = useState(null);
     const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
+    const [transactionHistories, setTransactionHistories] = useState([]);
     const navigate = useNavigate();
+    const [clickedTransactionHistoryId, setClickedTransactionHistoryId] = useState(null);
     const [isChecked, setIsChecked] = useState(false);
+    const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
+
+    const userID = window.localStorage.getItem("userID");
 
     const toggle = () => {
       setIsChecked(!isChecked);
@@ -25,12 +31,18 @@ const Commission = () => {
 
                 const reviewResponse = await axios.get("http://localhost:4001/manager/review/read") 
                 setReviews(reviewResponse.data)
+
+                const transactionHistoryResponse = await axios.get("http://localhost:4001/transactionHistory/read", {
+                  params: { userID }
+                });
+ 
+                setTransactionHistories(transactionHistoryResponse.data)
             } catch (error) {
                console.error(error);
             }
         }
         fetchCommission();
-    }, []);
+    }, [commissions]);
 
     useEffect(() => {
       let indices = [];
@@ -51,20 +63,25 @@ const Commission = () => {
 
     
 
-    function handleChooseArtStyle(id) {
-      setCommissionID(id === commissionID ? null : id)
-      setIsChecked(false);
-    }
-
-    function handleCreate() {
-      navigate("/review/create")
-      window.scrollTo(0, 0);
-    };
-
-    function handlePayment() {
-      navigate("/payment");
-      window.scrollTo(0, 0);
+  function handleChooseArtStyle(id) {
+    setCommissionID(id === commissionID ? null : id)
+    setIsChecked(false);
   }
+
+  function handleCreate() {
+    navigate("/review/create")
+    window.scrollTo(0, 0);
+  };
+
+  function handlePayment() {
+    navigate("/payment");
+    window.scrollTo(0, 0);
+  }
+
+  const handleTransactionHistoryClick = (id) => {
+    setClickedTransactionHistoryId(id === clickedTransactionHistoryId ? null : id);
+  
+}
 
 
     return (
@@ -170,7 +187,77 @@ const Commission = () => {
                 )}
               </div>           
             </div>
-            <section className="bg-pale-blue padding">
+            {userID && (
+              <section className="flex justify-center padding">
+                <section className="max-container rounded-lg bg-white
+                px-10 shadow-xl ring-slate-900/5">
+                  <div className="flex flex-col">
+                    <h3 className="font-montserrat 
+                    text-black font-bold text-3xl 
+                    leading-8 w-full text-center">
+                      Transaction History
+                    </h3>
+                    <ul  className='flex flex-col mx-5 
+                    my-5 px-6 py-3 '> 
+                      {transactionHistories.map((transactionHistory)=> {
+                        return (
+                          <li key={transactionHistory._id}>
+                              <div className="mb-5">
+                                  <p className="font-montserrat 
+                                  text-black text-md leading-8 
+                                  my-2 font-semibold cursor-pointer"
+                                  onClick={()=> {handleTransactionHistoryClick(transactionHistory._id)}}>
+                                    Transaction ID - <span className="text-xs">{transactionHistory._id}</span> 
+                                  </p>
+                                  <p className="font-montserrat 
+                                  text-slate-gray leading-8
+                                  text-sm w-full">
+                                    Art Style - {transactionHistory.artStyle} 
+                                    
+                                  </p>
+                                  <p className="font-montserrat 
+                                  text-slate-gray leading-8
+                                  text-sm w-full">
+                                    Quantity - {transactionHistory.quantity}
+                                  </p>
+                                  <p className="font-montserrat 
+                                  text-slate-gray
+                                  text-sm leading-8 w-full">
+                                    Price - <span className="text-green-600">${transactionHistory.price}</span>
+                                  </p>
+                              </div>       
+                              <ul className="flex flex-col 
+                              mb-5 rounded-lg bg-white
+                              shadow-xl ring-slate-900/5">
+                                {clickedTransactionHistoryId === transactionHistory._id && 
+                                  <li key={transactionHistory._id}>
+                                    <p className="font-montserrat 
+                                    text-slate-gray
+                                    text-sm leading-8 w-full">
+                                      Date - {transactionHistory.date}
+                                    </p>
+                                    <p className="font-montserrat 
+                                    text-slate-gray
+                                    text-sm leading-8 w-full">
+                                      Discount - <span className="font-montserrat 
+                                      text-slate-gray text-start font-normal
+                                      text-sm">applies {`${transactionHistory.discount}%
+                                      to every ${transactionHistory.discountInterval} 
+                                      ${transactionHistory.pricePer}${transactionHistory.quantity > (1) ? "s" : ""}`}</span>   
+                                    </p>
+                                  </li>
+                                      
+                                }
+                              </ul>   
+                          </li>
+                        )
+                      })}
+                    </ul>                    
+                  </div>              
+                </section>
+              </section>              
+            )}
+            {/* <section className="bg-pale-blue padding">
                 <section className="max-container">
                     <h3 className="text-4xl leading-[68px] 
                     text-center font-palanquin font-bold">
@@ -207,7 +294,7 @@ const Commission = () => {
                       </button>
                     </div>
                 </section>    
-            </section>
+            </section> */}
           </section>
       );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 let transactionDetails = {
     price: null,
@@ -34,6 +34,8 @@ const NumberOfOrders = ({commission}) => {
         setNumberOfOrders((parseInt(e.target.value, 10)))
     }
 
+
+
     function currentPrice(num) {
         if (num) {
             const remainderAfterInterval = (parseInt(num, 10) % parseInt(commission.discountInterval, 10))
@@ -47,6 +49,21 @@ const NumberOfOrders = ({commission}) => {
         }
     }
 
+    useEffect(() => {
+        const fetchTransactionDetails = async () =>{
+            if (numberOfOrders === 1) {
+                try {
+                    currentPrice((parseInt(1, 10)))  
+                    setNumberOfOrders((parseInt(1, 10)))  
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }
+        fetchTransactionDetails();
+    }, []);
+    
+
   return (
     <div className="flex flex-col justify-center items-center">
         <div  className="flex justify-center items-center">
@@ -57,7 +74,7 @@ const NumberOfOrders = ({commission}) => {
             type="number" 
             value={numberOfOrders}
             onChange={handleChange}/>
-            <button onClick={handleIncreaseClick}>+</button>
+            <button onClick={handleIncreaseClick}>+</button> 
         </div>
         <div className="flex flex-col justify-center items-center">
             <p className="font-montserrat text-green-600 text-center
@@ -67,20 +84,16 @@ const NumberOfOrders = ({commission}) => {
             <p className="font-montserrat text-slate-gray text-center font-semibold
             text-sm leading-4 my-2 w-full">
                 {commission.pricePer}
-            </p>
-            
+            </p>  
         </div>
     </div>
-
   )
 }
 
 const handleTransactionDetails = () => {
-    console.log(transactionDetails);
     window.localStorage.removeItem("transactionDetails")
     window.localStorage.setItem("transactionDetails", JSON.stringify(transactionDetails))
 }
 
 export default NumberOfOrders;
-
 export {handleTransactionDetails}
