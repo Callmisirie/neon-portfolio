@@ -36,7 +36,7 @@ router.post("/create", async (req, res) => {
 
     const user = await UserModel.findOne({_id : userID});
 
-    if(user._id) {
+    if(user && user._id) {
         if (paymentMethod && artStyle && price && quantity && discount && discountInterval && pricePer) {
                 try {
                     function formatDate(date) {

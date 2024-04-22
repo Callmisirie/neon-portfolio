@@ -50,7 +50,7 @@ const Commission = () => {
         }
     }
     setSelectedTransactionHistoriesIndices(indices);
-}, [transactionHistories]);
+}, [selectedTransactionHistoriesIndices]);
 
   function handleChooseArtStyle(id) {
     setCommissionID(id === commissionID ? null : id)
@@ -193,7 +193,7 @@ const Commission = () => {
                             my-2 font-semibold 
                             cursor-pointer"
                             onClick={()=> {handleTransactionHistoryClick(transactionHistory._id)}}>
-                              Transaction ID - <span className="text-sm">{transactionHistory._id}</span> 
+                              Transaction ID: <span className="text-sm">{transactionHistory._id}</span> 
                             </p> 
                             <div className="px-3">
                               <p className="font-montserrat 
@@ -234,8 +234,8 @@ const Commission = () => {
                                   Discount - <span className="font-montserrat 
                                   text-slate-gray text-start font-normal
                                   text-sm">applies {`${transactionHistory.discount}%
-                                  to every ${transactionHistory.discountInterval} 
-                                  ${transactionHistory.pricePer}${transactionHistory.quantity > (1) ? "s" : ""}`}</span>   
+                                  to every ${transactionHistory.discountInterval}
+                                  ${transactionHistory.pricePer}s`}</span>   
                                 </p>
                               </li>                                 
                             }

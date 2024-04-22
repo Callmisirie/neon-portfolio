@@ -7,6 +7,7 @@ import Pages from "./pages/manga/pages.jsx";
 import Gift from './pages/gift.jsx';
 import Payment from './pages/payment.jsx';
 import Commission from './pages/commission.jsx';
+import TransactionHistory from './pages/transactionHistory.jsx';
 import Contact from "./pages/contact.jsx";
 import About from "./pages/about.jsx";
 import Find from "./pages/find.jsx";
@@ -38,6 +39,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />}/>
               <Route path="/commission" element={<Commission />}/>
+              <Route path="/commission/transactionHistory" element={<TransactionHistory />}/>
               <Route path="/contact" element={<Contact />}/>
               <Route path="/about" element={<About />}/>
               <Route path="/manga" element={<Manga />}/>
@@ -45,6 +47,8 @@ function App() {
               <Route path="/payment" element={<Payment />}/>
               <Route path="/auth/admin" element={<AdminAuth />}/>
               <Route path="/auth/user" element={<UserAuth />}/>
+
+
 
               <Route path="/manga/find/:mangaName" element={<Find />}/>
               {cookies.access_token &&  (
