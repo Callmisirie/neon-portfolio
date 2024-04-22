@@ -17,7 +17,7 @@ const TextArea = ({type, value, resetMessage, setValue, placeholder}) => {
         placeholder={placeholder}/>
          <p className="font-montserrat text-xs
         leading-8">
-            Max char - {value.length}/100
+            Max char - 100/{value.length}
         </p>
     </div>
    

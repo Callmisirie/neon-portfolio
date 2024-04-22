@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from "react"
+import {useState, useEffect} from "react"
 import {useNavigate} from "react-router-dom";
 import {arrowRight} from "../assets/icons";
 
@@ -9,56 +9,22 @@ import Button from "../components/Button";
 import {bigShoe1} from "../assets/images"
 import {shoes, statistics} from "../constants"
 import ShoeCard from "../components/ShoeCard.jsx";
+import ReviewSection from "../components/ReviewSection.jsx";
 
 
 
 function Home() {
-    const [reviews, setReviews] = useState([]);
     const [email, setEmail] = useState("");
-    const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
     const navigate = useNavigate();
     const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
 
 
-    useEffect(() => {
-        const fetchReview = async () =>{
-            try {
-                const response = await axios.get("http://localhost:4001/manager/review/read") 
-                setReviews(response.data)
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchReview();
-    }, []);
-
-
-    useEffect(() => {
-        let indices = [];
-        if (reviews.length > 0) {
-            if (reviews.length > 3) {
-                while (indices.length < 3) {
-                    const randomNumber = Math.floor(Math.random() * reviews.length);
-                    if (!indices.includes(randomNumber)) {
-                        indices.push(randomNumber);
-                    }
-                }
-            } else {
-                indices = Array.from(Array(reviews.length).keys());
-            }
-        }
-        setSelectedReviewIndices(indices);
-    }, [reviews]);
 
     function handleClick() {
         navigate("/commission");
         window.scrollTo(0, 0);
     }
 
-    function handleCreate() {
-        navigate("/review/create")
-        window.scrollTo(0, 0);
-    };
 
 
     const handleSubmit = async (e) => {
@@ -158,42 +124,7 @@ function Home() {
                     </div>
                 </div>
             </section>
-            <section className="bg-pale-blue padding">
-                <section className="max-container">
-                    <h3 className="text-4xl leading-[68px] 
-                    text-center font-palanquin font-bold">
-                        What Our <span className="text-purple-600"> Customers </span> Say?
-                    </h3>
-                    <p className="info-text m-auto 
-                    mt-4 text-center max-w-lg ">
-                        Hear genuine stories from our 
-                        satisfied customers about their
-                        exceptional experiences with us.
-                    </p>
-                    <div className="mt-24 flex flex-1 
-                    justify-evenly items-center 
-                    max-lg:flex-col gap-14">
-                        {selectedReviewIndices && selectedReviewIndices.map((index) => {
-                            const review = reviews[index];
-                            return (
-                                <ReviewCard 
-                                    key={review._id}
-                                    customerName={review.name}
-                                    feedback={review.feedback}
-                                />
-                            );
-                        })}
-                    </div>
-                    <div className="flex justify-center mt-10">
-                      <button className="text-white px-4 py-2 text-sm
-                      font-montserrat font-medium my-3 mx-1
-                      bg-purple-600 rounded-full hover:bg-purple-500"
-                      onClick={handleCreate}> 
-                          Post Review
-                      </button>
-                    </div>
-                </section>    
-            </section>
+           <ReviewSection />
             <section className="padding-x sm:py-32 py-16 w-full">
                 <section className="max-container
                 flex justify-between items-center 

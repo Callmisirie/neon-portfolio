@@ -440,17 +440,13 @@ function ReviewEdit() {
                     placeholder={name} 
                     handleChange={setNewName}
                     resetMessage={setMessage} />
-                    <p className='mt-4 font-bold font-montserrat text-slate-gray'>Feedback</p>
-                    <textarea className="gap-5 p-2.5 my-2
-                    border border-slate-gray text-sm w-full
-                    rounded-md text-center font-montserrat"
-                    type="text" 
-                    value={newFeedback} 
-                    onChange={(e) => {
-                        setNewFeedback(e.target.value)
-                        setMessage("")
-                    }} 
-                    placeholder={feedback}/> 
+                    <p className='mt-4 font-bold font-montserrat text-slate-gray'>Feedback</p> 
+                    <TextArea type="text"
+                    value={newFeedback}
+                    setValue={setNewFeedback}
+                    resetMessage={setMessage}
+                    placeholder={feedback}
+                    />
                 </div>           
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black

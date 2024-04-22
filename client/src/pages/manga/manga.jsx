@@ -17,7 +17,7 @@ function Manga() {
             }
         }
         fetchCoverImage();
-    }, []);
+    }, [mangas]);
 
     function handleClick(id) {
       navigate("/manga/" + id);
