@@ -18,7 +18,7 @@ const Footer = () => {
           }
       }
       fetchCommission();
-  }, [commissions]);
+  }, []);
 
   return (
     <section className="bg-black padding-x padding-t pb-8">

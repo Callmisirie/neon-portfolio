@@ -22,7 +22,7 @@ function Navbar() {
 
     return (   
         <header className="padding-x absoloute py-8 z-10 w-full">
-            <nav className=" flex justify-between items-center max-container">     
+            <nav className="flex justify-between items-center max-container">     
                 <a href="/">
                     <img className=""
                     src={headerLogoPurple}

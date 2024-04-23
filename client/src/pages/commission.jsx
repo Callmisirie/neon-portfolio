@@ -13,12 +13,15 @@ const Commission = () => {
   const navigate = useNavigate();
   const [clickedTransactionHistoryId, setClickedTransactionHistoryId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageColor, setMessageColor] = useState("");
   const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
 
   const userID = window.localStorage.getItem("userID");
 
   const toggle = () => {
     setIsChecked(!isChecked);
+    setMessage("");
   }
 
   
@@ -28,44 +31,59 @@ const Commission = () => {
         const commissionResponse = await axios.get("http://localhost:4001/manager/commission/read") 
         setCommissions(commissionResponse.data)
 
-        const transactionHistoryResponse = await axios.get("http://localhost:4001/transactionHistory/read", {
-          params: { userID }
-        });
-
-        setTransactionHistories(transactionHistoryResponse.data)
+       
       } catch (error) {
         console.error(error);
       }
     }
     fetchCommission();
-  }, [commissions]);
+  }, []);
 
   useEffect(() => {
-    let indices = [];
-    if (transactionHistories.length > 0) {
-        if (transactionHistories.length > 3) {
-          indices = Array.from(Array(transactionHistories.length).keys()).slice((transactionHistories.length - 3),transactionHistories.length);          
-        } else {
-          indices = Array.from(Array(transactionHistories.length).keys());
+    const fetchTransactionHistory = async () =>{
+      try {
+        const transactionHistoryResponse = await axios.get("http://localhost:4001/transactionHistory/read", {
+          params: { userID }
+        });
+
+        setTransactionHistories(transactionHistoryResponse.data)
+        let indices = [];
+        if (transactionHistories.length > 0) {
+            if (transactionHistories.length > 3) {
+              indices = Array.from(Array(transactionHistories.length).keys()).slice((transactionHistories.length - 3),transactionHistories.length);          
+            } else {
+              indices = Array.from(Array(transactionHistories.length).keys());
+            }
         }
+        setSelectedTransactionHistoriesIndices(indices);
+      } catch (error) {
+        console.error(error);
+      }
     }
-    setSelectedTransactionHistoriesIndices(indices);
-}, [selectedTransactionHistoriesIndices]);
+    fetchTransactionHistory();
+}, [transactionHistories]);
 
   function handleChooseArtStyle(id) {
-    setCommissionID(id === commissionID ? null : id)
+    setCommissionID(id === commissionID ? null : id);
     setIsChecked(false);
+    setMessage("");
   }
 
   function handlePayment() {
-    navigate("/payment");
-    window.scrollTo(0, 0);
+
+    if (!userID) {
+      setMessage("Log in before making purchase.");
+      setMessageColor("red")
+    } else if (userID) {
+      handleTransactionDetails()
+      navigate("/payment");
+      window.scrollTo(0, 0);
+    }
   }
 
   const handleTransactionHistoryClick = (id) => {
     setClickedTransactionHistoryId(id === clickedTransactionHistoryId ? null : id);
-  
-}
+  }
 
 
   return (
@@ -162,11 +180,14 @@ const Commission = () => {
                 ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
                 onClick={() => {
                   handlePayment()
-                  handleTransactionDetails()
                 }}
                 disabled={!isChecked}>
                     Purchase
                 </button>
+                {message && <p className="font-montserrat text-sm 
+                leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                  {message}
+                </p>}
               </div>
             )}
           </div>           
@@ -177,7 +198,7 @@ const Commission = () => {
             px-10 shadow-xl ring-slate-900/5">
               <div className="flex flex-col justify-center items-center">
                 <h3 className="font-montserrat 
-                text-black font-bold text-3xl 
+                text-black font-bold text-3xl
                 leading-8 w-full text-center">
                   Transaction History
                 </h3>

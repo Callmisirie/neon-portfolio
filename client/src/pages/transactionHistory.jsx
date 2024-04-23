@@ -38,7 +38,7 @@ const TransactionHistory = () => {
                 px-10 shadow-xl ring-slate-900/5">
                     <div className="flex flex-col justify-center items-center">
                         <h3 className="font-montserrat 
-                        text-black font-bold text-3xl 
+                        text-black font-bold text-3xl
                         leading-8 w-full text-center">
                         Transaction History
                         </h3>
@@ -51,7 +51,7 @@ const TransactionHistory = () => {
                                 <div className="">
                                     <p className="font-montserrat w-full
                                     text-black text-md leading-8 
-                                    my-2 font-semibold 
+                                    my-2 font-semibold
                                     cursor-pointer"
                                     onClick={()=> {handleTransactionHistoryClick(transactionHistory._id)}}>
                                     Transaction ID: <span className="text-sm">{transactionHistory._id}</span> 
