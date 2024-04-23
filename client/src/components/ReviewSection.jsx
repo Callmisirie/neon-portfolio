@@ -40,7 +40,7 @@ const ReviewSection = () => {
             }
         }
         setSelectedReviewIndices(indices);
-    }, []);
+    }, [reviews]);
 
 
     return (
