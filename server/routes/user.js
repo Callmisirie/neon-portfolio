@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import _ from "lodash"
 
 import UserModel from "../models/User.js";
 
@@ -12,10 +13,10 @@ const secret = process.env.SECRET_KEY;
 router.post("/register", async (req, res)=> {
     const {firstName, lastName, email, password} = req.body;
     const hash = bcrypt.hashSync(password, saltRounds);
-    const user = await UserModel.findOne({email});
+    const user = await UserModel.findOne({email : _.toLower(email)});
 
     if(!user){
-        const user = new UserModel({firstName, lastName, email, password : hash });
+        const user = new UserModel({firstName, lastName, email : _.toLower(email), password : hash });
         user.save();
         res.json({
             message: "User successfully Register",
@@ -32,7 +33,7 @@ router.post("/register", async (req, res)=> {
 
 router.post("/login", async (req, res)=> {
     const {email, password} = req.body;
-    const user = await UserModel.findOne({email});
+    const user = await UserModel.findOne({email : _.toLower(email)});
 
     if (user){
         if(bcrypt.compareSync(password, user.password)) {

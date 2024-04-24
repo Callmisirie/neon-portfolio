@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie"; 
 import { useNavigate } from "react-router-dom"; 
+import { hideView, showView } from "../assets/icons";
 
 function AdminAuth() {
     const [isClickedRegister, setIsClickedRegister] = useState(false);
@@ -71,6 +72,7 @@ function AdminAuth() {
 };
 
 export function Register() {
+    const [showPassword, setShowPassword] = useState(false);
     const [registerInfo, SetRegisterInfo] = useState({
         username: "",
         password: ""
@@ -90,6 +92,10 @@ export function Register() {
             })
         )
         setMessage("");
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleRegisterSubmit = async (event) => {
@@ -144,15 +150,25 @@ export function Register() {
             placeholder="Username"
             type="text"
             autoComplete="off"/>
-            <input className="w-full flex 
+            <div className="w-full flex 
             items-center p-2.5 my-2
             border border-slate-gray 
-            rounded-full text-center font-montserrat"
-            onChange={handleOnChange}
-            name="password"
-            value={registerInfo.password}
-            placeholder="Password" 
-            type="password"/>
+            rounded-full text-center font-montserrat">
+                <div className="mr-1 ml-2 
+                rounded-full w-5 h-5"/>
+                <input className="appearance-none 
+                outline-none text-center"
+                onChange={handleOnChange}
+                name="password"
+                value={registerInfo.password}
+                placeholder="Password" 
+                type={showPassword ? 'text' : 'password'}
+                minLength="8"/>
+                <img className="ml-1 mr-2 
+                rounded-full w-5 h-5 cursor-pointer"
+                onClick={togglePasswordVisibility}
+                src={showPassword ? showView : hideView}/>
+            </div>
             <button className="px-7 py-4 my-2 border 
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black"
@@ -166,6 +182,7 @@ export function Register() {
 
 
 export function Login() {
+    const [showPassword, setShowPassword] = useState(false);
     const [loginInfo, SetLoginInfo] = useState({
         username: "",
         password: ""
@@ -188,6 +205,10 @@ export function Login() {
             })
         );
         setMessage("");
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
     };
 
     const handleLoginSubmit = async (event) => {
@@ -250,15 +271,26 @@ export function Login() {
             placeholder="Username"
             type="text"
             autoComplete="off"/>
-            <input className="w-full flex 
+            <div className="w-full flex 
             items-center p-2.5 my-2
             border border-slate-gray 
-            rounded-full text-center font-montserrat"
-            onChange={handleOnChange}
-            name="password"
-            value={loginInfo.password}
-            placeholder="Password" 
-            type="password"/>
+            rounded-full text-center font-montserrat">
+                <div className="mr-1 ml-2 
+                rounded-full w-5 h-5"/>
+                <input className="appearance-none 
+                outline-none text-center"
+                onChange={handleOnChange}
+                name="password"
+                value={loginInfo.password}
+                placeholder="Password" 
+                type={showPassword ? 'text' : 'password'}
+                minLength="8"/>
+                <img className="ml-1 mr-2 
+                rounded-full w-5 h-5 cursor-pointer"
+                onClick={togglePasswordVisibility}
+                src={showPassword ? showView : hideView}/>
+            </div>
+
             <button className="px-7 py-4 my-2 border 
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black" 

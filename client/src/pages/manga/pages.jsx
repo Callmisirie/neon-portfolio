@@ -88,7 +88,7 @@ function Pages() {
         const value = (parseInt(selectedChapter, 10) + 1);
         manga.chapters.map((chapter, index) => {
             if (value === (index + 1)) {
-                setSelectedPage("loading");
+                setSelectedPage(1);
                 navigate("/manga/" + manga.mangaID + "/" + chapter._id);
             }
         });

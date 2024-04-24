@@ -15,6 +15,25 @@ function Payment() {
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
     const userID = window.localStorage.getItem("userID");
 
+    
+    const [paypalGifts, setPaypalGifts] = useState([]);
+    const [cryptoGifts, setCryptoGifts] = useState([]);
+    
+    useEffect(() => {
+        const fetchGift = async () =>{
+            try {
+                const response = await axios.get("http://localhost:4001/manager/gift/read") 
+                const {paypalGift, cryptoGift} = response.data;
+            
+                setPaypalGifts(paypalGift)
+                setCryptoGifts(cryptoGift)
+            } catch (error) {
+               console.error(error);
+            }
+        }
+        fetchGift();
+    }, [paypalGifts, cryptoGifts]);
+
     function handleClick(gift) {
         if (gift === "Paypal") { 
             if (isClickedPaypal) {
@@ -89,24 +108,29 @@ function Payment() {
                     lg:max-w-md font-montserrat  font-bold p-2 text-center">
                             Choose Payment
                     </h2> 
-                    <button 
-                        className="text-white px-4 py-2 text-sm
-                        font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md hover:bg-purple-500 "
-                        onClick={ ()=> {
-                        handleClick("Paypal")
-                    }}>
-                        Paypal
-                    </button>    
-                    <button
-                        className="text-white px-4 py-2 text-sm
-                        font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md hover:bg-purple-500 " 
-                        onClick={()=> {
-                        handleClick("Crypto")
-                    }}>
-                        Crypto
-                    </button>
+                    {paypalGifts.length ? (
+                        <button 
+                            className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium my-3 mx-5
+                            bg-purple-600 rounded-md hover:bg-purple-500 "
+                            onClick={ ()=> {
+                            handleClick("Paypal")
+                        }}>
+                            Paypal
+                        </button>                        
+                    ) : null}
+                    {cryptoGifts.length ? (
+                        <button
+                            className="text-white px-4 py-2 text-sm
+                            font-montserrat font-medium my-3 mx-5
+                            bg-purple-600 rounded-md hover:bg-purple-500 " 
+                            onClick={()=> {
+                            handleClick("Crypto")
+                        }}>
+                            Crypto
+                        </button>                    
+                    ) : null}
+
                     {isClickedPaypal && 
                         <>
                             <PaypalGift /> 

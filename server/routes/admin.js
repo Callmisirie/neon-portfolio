@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import _ from "lodash"
 
 import AdminModel from "../models/Admin.js";
 
@@ -12,12 +13,12 @@ const secret = process.env.SECRET_KEY;
 router.post("/register", async (req, res)=> {
     const {username, password} = req.body;
     const hash = bcrypt.hashSync(password, saltRounds);
-    const userAdmin = await AdminModel.findOne({username});
+    const userAdmin = await AdminModel.findOne({username : _.toLower(username)});
     const userAdminNumber = await AdminModel.find();
 
     if(userAdminNumber.length < 3){
         if(!userAdmin){
-            const admin = new AdminModel({username, password : hash });
+            const admin = new AdminModel({username : _.toLower(username), password : hash });
             admin.save();
             res.json({
                 message: "User successfully Register",
@@ -39,7 +40,7 @@ router.post("/register", async (req, res)=> {
 
 router.post("/login", async (req, res)=> {
     const {username, password} = req.body;
-    const userAdmin = await AdminModel.findOne({username});
+    const userAdmin = await AdminModel.findOne({username: _.toLower(username)});
 
     if (userAdmin){
         if(bcrypt.compareSync(password, userAdmin.password)) {

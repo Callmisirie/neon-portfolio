@@ -144,8 +144,8 @@ const Commission = () => {
                 </ul>
                 <p  className="font-montserrat 
                 text-purple-600 text-start
-                text-sm font-bold">
-                    <a href="/cantact">
+                text-sm font-semibold hover:font-bold">
+                    <a href="/contact">
                       Contact
                     </a> <span className="font-montserrat 
                 text-slate-gray text-start font-normal

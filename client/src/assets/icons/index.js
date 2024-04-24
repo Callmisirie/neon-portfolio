@@ -11,6 +11,8 @@ import star from './star.svg'
 import truckFast from './truck-fast.svg'
 import twitter from './twitter.svg'
 import search from './search.svg'
+import hideView from './hide-view.svg'
+import showView from './show-view.svg'
 
 export {
     arrowRight,
@@ -25,5 +27,7 @@ export {
     star,
     truckFast,
     twitter,
-    search
+    search,
+    hideView,
+    showView
 }
