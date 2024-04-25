@@ -13,6 +13,7 @@ import twitter from './twitter.svg'
 import search from './search.svg'
 import hideView from './hide-view.svg'
 import showView from './show-view.svg'
+import clipboardCopy from './clipboard-copy.svg'
 
 export {
     arrowRight,
@@ -29,5 +30,6 @@ export {
     twitter,
     search,
     hideView,
-    showView
+    showView,
+    clipboardCopy
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { clipboardCopy } from '../assets/icons';
 
 function Payment() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
@@ -328,6 +329,17 @@ const CryptoGift = () => {
       setCryptoGiftId(id === cryptoGiftId ? null : id)
     }
 
+    
+    function handleCopyClipboard(address) {
+        navigator.clipboard.writeText(address)
+            .then(() => {
+                console.log('Address copied to clipboard');
+            })
+            .catch((error) => {
+                console.error('Failed to copy address: ', error);
+            });
+    }
+
 
     return (
         <section className="min-h-full">
@@ -385,11 +397,18 @@ const CryptoGift = () => {
                                 alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                 style={{ width: "222px" }}
                                 />
-                                <p className="font-montserrat 
-                                text-slate-gray text-md 
-                                leading-8 my-2 text-center">
-                                    {cryptoGift.address}
-                                </p>
+                                <div className='flex items-center p-2 w-full'>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-md 
+                                    leading-8 my-2 text-center">
+                                        {cryptoGift.address}
+                                    </p>  
+                                    <img className="mx-2 
+                                    rounded-full w-4 h-4 
+                                    hover:h-8 cursor-pointer"
+                                    onClick={() => handleCopyClipboard(cryptoGift.address)}
+                                    src={clipboardCopy}/>                               
+                                </div>
                             </div>
                         </li>
                     )))}

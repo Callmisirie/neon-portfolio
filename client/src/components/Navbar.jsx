@@ -31,7 +31,7 @@ function Navbar() {
                     height={20}/>
                 </a>
                 
-                <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden">
+                <ul className="flex-1 flex justify-center items-center gap-10 max-lg:hidden mx-10">
                     <li> <SearchBar /> </li>
                     <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/"> Home </Link></li>
                     <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/manga"> Manga </Link></li>
