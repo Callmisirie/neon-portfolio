@@ -16,10 +16,12 @@ import MangaManager from "./pages/manager/manga/manga.jsx";
 import CommissionManager from './pages/manager/commission/commission.jsx';
 import GiftManager from './pages/manager/gift/gift.jsx';
 import ReviewManager from './pages/manager/review/review.jsx';
+import TransactionsManager from './pages/manager/transactions/transactions.jsx';
 import { MangaCreate, MangaDelete, MangaEdit } from './pages/manager/manga/manga.jsx';
 import { CommissionCreate, CommissionDelete, CommissionEdit } from './pages/manager/commission/commission.jsx';
 import { GiftCreate, GiftDelete, GiftEdit } from './pages/manager/gift/gift.jsx';
 import { ReviewCreate, ReviewDelete, ReviewEdit } from './pages/manager/review/review.jsx';
+import { TransactionsStatus, TransactionsDelete } from './pages/manager/transactions/transactions.jsx';
 import AdminAuth from "./pages/adminAuth.jsx";
 import UserAuth from './pages/userAuth.jsx';
 import Navbar from "./components/Navbar.jsx";
@@ -76,6 +78,10 @@ function App() {
                   <Route path="/manager/review" element={<ReviewManager />}/>
                   <Route path="/manager/review/delete" element={<ReviewDelete />}/>
                   <Route path="/manager/review/edit" element={<ReviewEdit />}/>
+
+                  <Route path="/manager/transactions" element={<TransactionsManager />}/>
+                  <Route path="/manager/transactions/status" element={<TransactionsStatus />}/>
+                  <Route path="/manager/transactions/delete" element={<TransactionsDelete />}/>
                 </>
               )}
               <Route path="/review/create" element={<ReviewCreate />}/>

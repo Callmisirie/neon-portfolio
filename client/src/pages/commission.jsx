@@ -235,7 +235,7 @@ const Commission = () => {
                               </div>
                           </div>       
                           <ul className="flex flex-col 
-                          mb-5 rounded-lg bg-white
+                          mb-5 rounded-lg bg-white px-3
                           shadow-xl ring-slate-900/5">
                             {clickedTransactionHistoryId === transactionHistory._id && 
                               <li key={transactionHistory._id}>
@@ -244,6 +244,18 @@ const Commission = () => {
                                 text-sm leading-8 w-full">
                                   Payment Method - {transactionHistory.paymentMethod}   
                                 </p>  
+                                {transactionHistory.cryptoName && (
+                                  <p className="font-montserrat 
+                                  text-slate-gray
+                                  text-sm leading-8 w-full">
+                                    Crypto - {transactionHistory.cryptoName}   
+                                  </p>                                  
+                                )}
+                                <p className="font-montserrat 
+                                text-slate-gray
+                                text-sm leading-8 w-full">
+                                  Status - {transactionHistory.paymentStatus}   
+                                </p>
                                 <p className="font-montserrat 
                                 text-slate-gray
                                 text-sm leading-8 w-full">

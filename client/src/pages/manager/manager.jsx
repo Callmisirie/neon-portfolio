@@ -29,6 +29,11 @@ function Manager() {
         window.scrollTo(0, 0);
     }
 
+    function handleTransactions() {
+        navigate("/manager/transactions")
+        window.scrollTo(0, 0);
+    }
+
   return (
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
@@ -65,6 +70,12 @@ function Manager() {
                     bg-purple-600 rounded-md hover:bg-purple-500"
                     onClick={handleReview}> 
                         Review
+                    </button>
+                    <button className="text-white px-4 py-2 text-sm
+                    font-montserrat font-medium my-3 mx-1 w-full
+                    bg-purple-600 rounded-md hover:bg-purple-500"
+                    onClick={handleTransactions}> 
+                        Transactions
                     </button>
                 </div>
             </div>

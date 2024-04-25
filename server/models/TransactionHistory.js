@@ -6,6 +6,13 @@ const transactionHistorySchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    cryptoName: {
+        type: String
+    },
+    paymentStatus: {
+        type: String,
+        required: true
+    },
     artStyle: {
         type: String,
         required: true,

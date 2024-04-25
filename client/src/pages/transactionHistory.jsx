@@ -84,6 +84,18 @@ const TransactionHistory = () => {
                                         text-sm leading-8 w-full">
                                         Payment Method - {transactionHistory.paymentMethod}   
                                         </p>  
+                                        {transactionHistory.cryptoName && (
+                                            <p className="font-montserrat 
+                                            text-slate-gray
+                                            text-sm leading-8 w-full">
+                                                Crypto - {transactionHistory.cryptoName}   
+                                            </p>                                  
+                                        )}
+                                        <p className="font-montserrat 
+                                        text-slate-gray
+                                        text-sm leading-8 w-full">
+                                        Status - {transactionHistory.paymentStatus}   
+                                        </p>
                                         <p className="font-montserrat 
                                         text-slate-gray
                                         text-sm leading-8 w-full">

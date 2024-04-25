@@ -20,15 +20,21 @@ router.get("/read", async(req, res) => {
 })
 
 router.post("/create", async (req, res) => {
+    const {paymentMethod, cryptoName} = req.body
+    let name;
+
+    if (paymentMethod === "Crypto") {
+        name = cryptoName
+    }
+
     const {
-        paymentMethod, artStyle,
-        price, quantity, 
+        artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID
     } = req.body;
 
     console.log({
-        paymentMethod, artStyle,
+        paymentMethod, cryptoName, artStyle,
         price, quantity, 
         discount, discountInterval,
         pricePer, userID
@@ -51,7 +57,8 @@ router.post("/create", async (req, res) => {
         
                 
                     const transactionHistory = new TransactionHistoryModel({
-                        paymentMethod, artStyle, 
+                        paymentMethod, paymentStatus: "Pending", 
+                        cryptoName: name, artStyle, 
                         price, quantity, 
                         discount, discountInterval, 
                         pricePer, userID: user._id,

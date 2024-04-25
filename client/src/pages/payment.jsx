@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { clipboardCopy } from '../assets/icons';
 
+
+let cryptoName;
+
 function Payment() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
     const [isClickedCrypto, setIsClickedCrypto] = useState(false);
@@ -11,6 +14,7 @@ function Payment() {
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [transactionHistories, setTransactionHistories] = useState([]);
+    const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const navigate = useNavigate();
 
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
@@ -35,6 +39,11 @@ function Payment() {
         fetchGift();
     }, [paypalGifts, cryptoGifts]);
 
+    if (resetMessage) {
+        setMessage("");
+        setResetMessage(false);
+    }
+
     function handleClick(gift) {
         if (gift === "Paypal") { 
             if (isClickedPaypal) {
@@ -43,6 +52,7 @@ function Payment() {
                 setIsClickedPaypal(true);
                 setIsClickedCrypto(false);
                 setPaymentMethod("Paypal");
+                cryptoName = ""
                 setIsChecked(false);
                 setMessage("");
             }
@@ -61,8 +71,14 @@ function Payment() {
     }
 
     const handlePayment = async () => {
+
+       if (paymentMethod === "Crypto" && !cryptoName) {
+            setMessage("Select a crypto currency before comfirming purchase");
+            setMessageColor("red");
+            return;
+       }
         const transactionInfo = {
-            paymentMethod,
+            paymentMethod, cryptoName,
             artStyle: transactionDetails.commissionDetails.artStyle,
             price: transactionDetails.price,
             quantity: transactionDetails.number,
@@ -139,7 +155,7 @@ function Payment() {
                     }
                     {isClickedCrypto && 
                         <>
-                            <CryptoGift /> 
+                            <CryptoGift setResetMessage={setResetMessage} /> 
                         </> 
                     }
                 </div> 
@@ -184,6 +200,22 @@ function Payment() {
                                 per ${transactionDetails.commissionDetails.discountInterval} 
                                 ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
                             </p>
+                            <p className="font-montserrat font-semibold
+                            text-slate-gray max-w-xs text-start
+                            text-sm">
+                                Payment Method - <span className="font-montserrat 
+                                text-slate-gray text-start font-normal
+                                text-sm">{paymentMethod}</span>
+                            </p>
+                            {cryptoName && (
+                                <p className="font-montserrat font-semibold
+                                text-slate-gray max-w-xs text-start
+                                text-sm">
+                                    Crypto - <span className="font-montserrat 
+                                    text-slate-gray text-start font-normal
+                                    text-sm">{cryptoName}</span>
+                                </p>                                
+                            )}
                             
                             <div className="flex flex-col justify-center items-center mt-5 p-2">
                                 <div className="flex justify-center items-center m-2 p-2">                      
@@ -219,8 +251,8 @@ function Payment() {
                                 disabled={!isChecked}>
                                     Confirm Payment
                                 </button>
-                                {message && <p className="font-montserrat text-lg
-                                leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                                {message && <p className="font-montserrat max-w-xs text-center
+                                text-sm my-2"  style={{ color:`${messageColor}`}}>
                                     {message}
                                 </p>}
                             </div>
@@ -306,7 +338,7 @@ const PaypalGift = () => {
 }
 
 
-const CryptoGift = () => {
+const CryptoGift = ({ setResetMessage }) => {
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoGiftId, setCryptoGiftId] = useState(null)
   
@@ -327,6 +359,7 @@ const CryptoGift = () => {
 
     function handleChooseCryptoGift(id) {
       setCryptoGiftId(id === cryptoGiftId ? null : id)
+      setResetMessage(true); // Set resetMessage to true
     }
 
     
@@ -361,9 +394,10 @@ const CryptoGift = () => {
                         leading-8 my-2 cursor-pointer"
                         onClick={()=> {
                         handleChooseCryptoGift(cryptoGift._id)
+                        cryptoName = cryptoGift.cryptoName
                         }}
                         key={cryptoGift._id}>
-                        {cryptoGift.cryptoName}
+                            {cryptoGift.cryptoName}
                         </p>
                     ))}
                     </div>
