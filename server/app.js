@@ -33,7 +33,7 @@ app.use("/manager/manga", managerMangaRouter);
 app.use("/manager/commission", commissionRouter);
 app.use("/manager/gift", giftRouter);
 app.use("/manager/review", reviewRouter);
-app.use("/transactionHistory", transactionHistoryRouter);
+app.use("/manager/transactionHistory", transactionHistoryRouter);
 
 
 

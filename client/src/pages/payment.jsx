@@ -88,7 +88,7 @@ function Payment() {
             userID
         }
         try {
-            const response = await axios.post("http://localhost:4001/transactionHistory/create", transactionInfo)
+            const response = await axios.post("http://localhost:4001/manager/transactionHistory/create", transactionInfo)
             const {message, color} = response.data; 
             setMessage(message);
             setMessageColor(color);

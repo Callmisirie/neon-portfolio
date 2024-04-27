@@ -14,11 +14,11 @@ const TransactionHistory = () => {
         const fetchTransactionHistories = async () =>{
         try {
     
-            const transactionHistoryResponse = await axios.get("http://localhost:4001/transactionHistory/read", {
+            const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read", {
                 params: { userID }
             });
     
-            setTransactionHistories(transactionHistoryResponse.data)
+            setTransactionHistories(transactionHistoryResponse.data.userTransactionHistory)
         } catch (error) {
             console.error(error);
         }
@@ -44,71 +44,71 @@ const TransactionHistory = () => {
                         </h3>
                         <ul className='flex flex-col-reverse mx-5 
                         mt-5 py-3 '> 
-                        {transactionHistories.map((transactionHistory)=> {
+                        {transactionHistories && transactionHistories.transactionDetails ? transactionHistories.transactionDetails.map((transactionDetail)=> {
                             return (
                        
-                                <li key={transactionHistory._id}>
+                                <li key={transactionDetail._id}>
                                 <div className="">
                                     <p className="font-montserrat w-full
                                     text-black text-md leading-8 
                                     my-2 font-semibold
                                     cursor-pointer"
-                                    onClick={()=> {handleTransactionHistoryClick(transactionHistory._id)}}>
-                                    Transaction ID: <span className="text-sm">{transactionHistory._id}</span> 
+                                    onClick={()=> {handleTransactionHistoryClick(transactionDetail._id)}}>
+                                    Transaction ID: <span className="text-sm">{transactionDetail._id}</span> 
                                     </p> 
                                     <div className="px-3">
                                     <p className="font-montserrat 
                                     text-slate-gray leading-8
                                     text-sm w-full">
-                                        Art Style - {transactionHistory.artStyle} 
+                                        Art Style - {transactionDetail.artStyle} 
                                     </p>
                                     <p className="font-montserrat 
                                     text-slate-gray leading-8
                                     text-sm w-full">
-                                        Quantity - {transactionHistory.quantity}
+                                        Quantity - {transactionDetail.quantity}
                                     </p>
                                     <p className="font-montserrat 
                                     text-slate-gray
                                     text-sm leading-8 w-full">
-                                        Price - <span className="text-green-600">${transactionHistory.price}</span>
-                                    </p>                                 
+                                        Price - <span className="text-green-600">${transactionDetail.price}</span>
+                                    </p>     
+                                    <p className="font-montserrat 
+                                    text-slate-gray leading-8
+                                    text-sm w-full">
+                                        Date - {transactionDetail.date}
+                                    </p>                              
                                     </div>
                                 </div>       
                                 <ul className="flex flex-col 
                                 mb-5 rounded-lg bg-white
                                 shadow-xl ring-slate-900/5">
-                                    {clickedTransactionHistoryId === transactionHistory._id && 
-                                    <li key={transactionHistory._id}>
+                                    {clickedTransactionHistoryId === transactionDetail._id && 
+                                    <li key={transactionDetail._id}>
                                         <p className="font-montserrat 
                                         text-slate-gray
                                         text-sm leading-8 w-full">
-                                        Payment Method - {transactionHistory.paymentMethod}   
+                                        Payment Method - {transactionDetail.paymentMethod}   
                                         </p>  
-                                        {transactionHistory.cryptoName && (
+                                        {transactionDetail.cryptoName && (
                                             <p className="font-montserrat 
                                             text-slate-gray
                                             text-sm leading-8 w-full">
-                                                Crypto - {transactionHistory.cryptoName}   
+                                                Crypto - {transactionDetail.cryptoName}   
                                             </p>                                  
                                         )}
                                         <p className="font-montserrat 
                                         text-slate-gray
                                         text-sm leading-8 w-full">
-                                        Status - {transactionHistory.paymentStatus}   
-                                        </p>
-                                        <p className="font-montserrat 
-                                        text-slate-gray
-                                        text-sm leading-8 w-full">
-                                        Date - {transactionHistory.date}
+                                        Status - {transactionDetail.paymentStatus}   
                                         </p>
                                         <p className="font-montserrat 
                                         text-slate-gray
                                         text-sm leading-8 w-full">
                                         Discount - <span className="font-montserrat 
                                         text-slate-gray text-start font-normal
-                                        text-sm">applies {`${transactionHistory.discount}%
-                                        to every ${transactionHistory.discountInterval}
-                                        ${transactionHistory.pricePer}s`}</span>   
+                                        text-sm">applies {`${transactionDetail.discount}%
+                                        to every ${transactionDetail.discountInterval}
+                                        ${transactionDetail.pricePer}s`}</span>   
                                         </p>
                                     </li>                                 
                                     }
@@ -116,7 +116,7 @@ const TransactionHistory = () => {
                                 </li>
                           
                             )
-                        })}
+                        }) : null}
                         </ul>
                         <div className="mb-5">
                         <p  className="font-montserrat 

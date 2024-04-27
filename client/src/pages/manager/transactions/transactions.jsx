@@ -53,291 +53,390 @@ function TransactionsManager() {
 };
 
 
-//////////////////////////////////////////////////////////////////////////EDIT COMMISSION//////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////TRANSACTION STATUS//////////////////////////////////////////////////////////////////////////
 
 
 function TransactionsStatus() {
-  const [reviews, setReviews] = useState([]);
-  const [reviewID, setReviewID] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [feedback, setFeedback] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newName, setNewName] = useState("");
-  const [newFeedback, setNewFeedback] = useState("");
+  const [transactionHistories, setTransactionHistories] = useState([]);
+  const [clickedUserId, setClickedUserId] = useState(null);
+  const [clickedTransactionHistoryID, setClickedTransactionHistoryID] = useState("");
+  const [selectedTransactionHistoryID, setSelectedTransactionHistoryID] = useState("");
+  const [checkboxValue, setCheckboxValue] = useState("");
+  const [selectedCheckbox, setSelectedCheckbox] = useState(null); // New state to keep track of the selected checkbox ID
+  const [transactionHistoryID, setTransactionHistoryID] = useState("");
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
-  const [actionMessage, setActionMessage] = useState("Edit Review");
+  const [actionMessage, setActionMessage] = useState("Update Status");
   const [isDisabled, setIsDisabled] = useState(false);
 
 
   useEffect(() => {
-      const fetchReview = async () =>{
+    const fetchTransactionHistories = async () =>{
+        try {
+            const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
+            setTransactionHistories(transactionHistoryResponse.data.transactionHistory)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    fetchTransactionHistories();
+    }, [transactionHistories]);
+
+
+    const handleClick = (id) => {
+        setClickedUserId(id === clickedUserId ? null : id);
+        setClickedTransactionHistoryID("");
+        setSelectedCheckbox("");
+        setMessage("");
+    }
+
+    const handleTransactionDetailsClick = (id) => {
+        setClickedTransactionHistoryID(id === clickedTransactionHistoryID ? null : id);
+        setSelectedCheckbox("");
+        setMessage("");
+    }
+
+    function handleCheckboxClick(value) {
+        setCheckboxValue(value)
+        console.log(value);
+    }
+
+    const handleCheckboxChange = (id) => {
+        setSelectedCheckbox(id === selectedCheckbox ? "" : id);
+        handleCheckboxClick(id === selectedCheckbox ? "" : id);
+    }
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setActionMessage("Pocessing...");
+        setIsDisabled(true);
+
+        console.log({userID: clickedUserId, transactionHistoryID, 
+            transactionDetailID: clickedTransactionHistoryID, 
+            checkboxValue
+        });
+
+        if (!selectedCheckbox) {
+            setMessage("New status was not selected");
+            setMessageColor("red")
+            return
+        }
+
+        try {
+            const response = await axios.put("http://localhost:4001/manager/transactionHistory/status", {
+                userID : clickedUserId,
+                transactionHistoryID: transactionHistoryID,
+                transactionDetailID: clickedTransactionHistoryID,
+                checkboxValue
+            });
+
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setTransactionHistoryID("");
+            setClickedTransactionHistoryID("");
+            setActionMessage("Update Status");
+            setIsDisabled(false);
+        } catch (error) {
+            setMessage("Error updating status");
+            setMessageColor("red")
+            setTransactionHistoryID("");
+            setClickedTransactionHistoryID("");
+            setActionMessage("Update Status");
+            setIsDisabled(false);
+            console.error(error);  
+        }
+    };
+
+return (
+    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    bg-white px-6">
+        <div className="flex flex-col justify-center items-center rounded-lg mb-10
+        bg-white px-6 shadow-xl
+        ring-slate-900/5">
+            <h2 className="text-3xl leading-[68px] 
+            lg:max-w-md font-palanquin font-bold p-2">
+                Transaction Status
+            </h2>
+            <ul className='flex flex-col mx-5 w-full
+                my-5 px-20 py-2 justify-center items-center'>
+                {transactionHistories.map((userTransactionHistories)=> {
+                    return (
+                        <li className='w-full'
+                        key={userTransactionHistories._id}>
+                            <p className="font-montserrat
+                            text-black text-md leading-8 text-center
+                            my-2 font-semibold cursor-pointer"
+                            onClick={()=> {
+                            handleClick(userTransactionHistories.userID)
+                            }}>
+                                User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
+                            </p>
+                            <ul  className="flex flex-col mt-5 px-10
+                            bg-white shadow-xl justify-center items-center
+                            ring-slate-900/5">
+                                {clickedUserId === userTransactionHistories.userID 
+                                ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
+                                    <li className='w-full' key={transactionDetail._id}>
+                                        <p className="font-montserrat 
+                                        text-center text-slate-gray
+                                        text-sm leading-8 cursor-pointer"
+                                            onClick={()=> {
+                                            handleTransactionDetailsClick(transactionDetail._id)
+                                        }}>
+                                            Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
+                                        </p>
+                                        <ul className="flex flex-col 
+                                        mb-5 rounded-lg bg-white px-10
+                                         shadow-xl ring-slate-900/5">
+                                        {clickedTransactionHistoryID === transactionDetail._id && 
+                                            <>
+                                                <p className="font-montserrat 
+                                                text-start text-slate-gray
+                                                text-xs my-2">
+                                                    Status - <span>{transactionDetail.paymentStatus}</span>    
+                                                </p>    
+                                                <div className='flex items-center gap-2'>
+                                                    <input type='checkbox'
+                                                    name='Pending'
+                                                    checked={selectedCheckbox === "Pending"}
+                                                    onChange={()=> {
+                                                        handleCheckboxChange("Pending")
+                                                    }}></input> 
+                                                    <p className="font-montserrat 
+                                                    text-start text-slate-gray
+                                                    text-xs my-2">Pending</p>
+                                                    </div>
+                                                <div className='flex items-center gap-2'>
+                                                    <input type='checkbox'
+                                                    name="Approved"
+                                                    checked={selectedCheckbox === "Approved"}
+                                                    onChange={()=> {
+                                                        handleCheckboxChange("Approved")
+                                                    }}
+                                                    /> 
+                                                    <p className="font-montserrat 
+                                                    text-start text-slate-gray
+                                                    text-xs my-2">Approved</p>
+                                                </div>
+                                                <div className='flex items-center gap-2'>
+                                                    <input type='checkbox'
+                                                        name="Cancelled"
+                                                        checked={selectedCheckbox === "Cancelled"}
+                                                        onChange={()=> {
+                                                            handleCheckboxChange("Cancelled")
+                                                    }}
+                                                    /> 
+                                                    <p className="font-montserrat 
+                                                    text-start text-slate-gray
+                                                    text-xs my-2">Cancelled</p>
+                                                </div>
+                                                                                          
+                                            </>
+                                
+                                        }
+                                        </ul>   
+                                    </li>
+                                ) : null}
+                            </ul>                            
+                        </li>
+                    )
+                })}
+            </ul>
+            {message && <p className="font-montserrat text-lg 
+            leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                {message}
+            </p>}
+            <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+            bg-white px-6 py-4 shadow-xl
+            ring-slate-900/5"
+            onSubmit={handleSubmit}>
+                <div className="flex 
+                flex-col justify-center 
+                items-center m-5 px-6 py-4 ">
+                    <p  className="font-montserrat 
+                    text-slate-gray text-sm 
+                    my-6 text-center">
+                        <span className='font-bold'>Write "</span>
+                        {clickedTransactionHistoryID}
+                        <span className='font-bold'>" to update status.</span>
+                    </p>
+                    <Input type="text" 
+                    value={transactionHistoryID}
+                    placeholder="Transaction ID" 
+                      handleChange={setTransactionHistoryID}
+                    resetMessage={setMessage} />
+                </div>           
+                <button className="gap-2 px-7 py-4 my-2 border 
+                font-montserrat text-lg leading-none bg-black
+                rounded-full text-white border-black mb-5" 
+                type="submit"
+                disabled={isDisabled}>
+                    {actionMessage}
+                </button>
+            </form>
+        </div>
+    </div>
+)};
+
+
+//////////////////////////////////////////////////////////////////////////DELETE TRANSACTION//////////////////////////////////////////////////////////////////////////
+
+
+function TransactionsDelete() {
+    const [transactionHistories, setTransactionHistories] = useState([]);
+    const [clickedUserId, setClickedUserId] = useState(null);
+    const [clickedTransactionHistoryID, setClickedTransactionHistoryID] = useState("");
+    const [transactionHistoryID, setTransactionHistoryID] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const [actionMessage, setActionMessage] = useState("Delete Transaction");
+    const [isDisabled, setIsDisabled] = useState(false);
+  
+  
+    useEffect(() => {
+      const fetchTransactionHistories = async () =>{
           try {
-              const response = await axios.get("http://localhost:4001/manager/review/read") 
-              setReviews(response.data)
+              const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
+              setTransactionHistories(transactionHistoryResponse.data.transactionHistory)
           } catch (error) {
               console.error(error);
           }
       }
-      fetchReview();
-  }, [reviews]);
-
-  const handleClick = (email, name, feedback, id) => {
-      setEmail(email);
-      setName(name);
-      setFeedback(feedback);
-      setReviewID(id);
-      setMessage("");;
-      
-  }
-
-  const handleSubmit = async (e) => {
-      e.preventDefault();
-
-      setActionMessage("Pocessing...");
-      setIsDisabled(true);
-
-      try {
-      const response = await axios.put("http://localhost:4001/manager/review/edit", {
-          id: reviewID,
-          email:  newEmail,
-          name: newName,
-          feedback: newFeedback
-      });
-
-      const {message, color} = response.data;
-      setMessage(message);
-      setMessageColor(color);
-      setEmail("");;
-      setName("");
-      setFeedback("");
-      setNewEmail("");
-      setNewName("");
-      setNewFeedback("");
-      setReviewID("");
-      setActionMessage("Edit Review");
-      setIsDisabled(false);
-      } catch (error) {
-      setMessage("Error updating review");
-      setMessageColor("red")
-      setEmail("");;
-      setName("");
-      setFeedback("");
-      setNewEmail("");
-      setNewName("");
-      setNewFeedback("");
-      setReviewID("");
-      setActionMessage("Edit Review");
-      setIsDisabled(false);
-      console.error(error);  
+      fetchTransactionHistories();
+      }, [transactionHistories]);
+  
+  
+      const handleClick = (id) => {
+          setClickedUserId(id === clickedUserId ? null : id);
+          setClickedTransactionHistoryID("");
+          setMessage("");
       }
-  };
+  
+      const handleTransactionDetailsClick = (id) => {
+          setClickedTransactionHistoryID(id === clickedTransactionHistoryID ? null : id);
+          setMessage("");
+      }
+    
+      const handleSubmit = async (e) => {
+          e.preventDefault();
+  
+          setActionMessage("Pocessing...");
+          setIsDisabled(true);
+  
+          console.log({userID: clickedUserId, transactionHistoryID, 
+              transactionDetailID: clickedTransactionHistoryID, 
+          });
+  
 
-return (
-  <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-  bg-white px-6">
-      <div className="flex flex-col justify-center items-center rounded-lg mb-10
-      bg-white px-6 shadow-xl
-      ring-slate-900/5">
-          <h2 className="text-3xl leading-[68px] 
-          lg:max-w-md font-palanquin font-bold p-2">
-              Edit Review
-          </h2>
-          <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-          bg-white px-6 py-3 shadow-xl
-          ring-slate-900/5'>
-              {reviews.map((review)=> {
-                  return (
-                      <li key={review._id}>
-                          <p className="font-montserrat 
-                          text-slate-gray hover:text-black text-md 
-                          leading-8 my-2 cursor-pointer w-full"
-                              onClick={()=> {
-                              handleClick(
-                                  review.email,
-                                  review.name,
-                                  review.feedback,
-                                  review._id)
-                          }}>
-                              {review.name}
-                          </p>
-                      </li>
-                  )
-              })}
-          </ul>
-          <h3 className="font-montserrat 
-          text-slate-gray text-xl 
-          leading-8 mt-6 text-center">
-              <span className='font-montserrat font-bold'>UPDATE - </span>     
-              {email} 
-          </h3>
-          {message && <p className="font-montserrat text-lg 
-          leading-8 my-2"  style={{ color:`${messageColor}`}}>
-              {message}
-          </p>}
-          <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-          bg-white px-6 py-4 shadow-xl
-          ring-slate-900/5"
-          onSubmit={handleSubmit}>
-              <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-              bg-white px-6 py-4 shadow-xl
-              ring-slate-900/5">
-                  <p className='mt-4 font-bold font-montserrat text-slate-gray'>Email</p>
-                  <Input type="email" 
-                  value={newEmail} 
-                  placeholder={email} 
-                  handleChange={setNewEmail}
-                  resetMessage={setMessage} />
-                  <p className='mt-4 font-bold font-montserrat text-slate-gray'>Name</p>
-                  <Input type="text" 
-                  value={newName} 
-                  placeholder={name} 
-                  handleChange={setNewName}
-                  resetMessage={setMessage} />
-                  <p className='mt-4 font-bold font-montserrat text-slate-gray'>Feedback</p> 
-                  <TextArea type="text"
-                  value={newFeedback}
-                  setValue={setNewFeedback}
-                  resetMessage={setMessage}
-                  placeholder={feedback}
-                  />
-              </div>           
-              <button className="gap-2 px-7 py-4 my-2 border 
-              font-montserrat text-lg leading-none bg-black
-              rounded-full text-white border-black mb-5" 
-              type="submit"
-              disabled={isDisabled}>
-                  {actionMessage}
-              </button>
-          </form>
-      </div>
-  </div>
-)};
-
-
-//////////////////////////////////////////////////////////////////////////DELETE REVIEW//////////////////////////////////////////////////////////////////////////
-
-
-function TransactionsDelete() {
-    const [reviews, setReviews] = useState([]);
-    const [selectedReview, setSelectedReview] = useState("");
-    const [selectedReviewID, setSelectedReviewID] = useState("");
-    const [deleteReview, setDeleteReview] = useState("");
-    const [message, setMessage] = useState("");
-    const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Delete Review");
-    const [isDisabled, setIsDisabled] = useState(false);
-
-
-    useEffect(() => {
-        const fetchReview = async () =>{
-            try {
-                const response = await axios.get("http://localhost:4001/manager/review/read") 
-                setReviews(response.data)
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        fetchReview();
-    }, [reviews]);
-
-const handleReviewClick = (id, email) => {
-    setSelectedReviewID(id);
-    setSelectedReview(email);
-    setMessage("");
-}
-
-const handleDeleteReviewClick = async () => {
-    setActionMessage("Processing");
-    setIsDisabled(true);
-
-    try {
-        const response = await axios.delete("http://localhost:4001/manager/review/delete", { data: {id: selectedReviewID, email: deleteReview} });
-        
-        const {message, color} = response.data;
-        setMessage(message);
-        setMessageColor(color)
-        setDeleteReview("");
-        setSelectedReview("");
-        setSelectedReviewID("");
-        setActionMessage("Delete Review");
-        setIsDisabled(false);
-    } catch (error) {
-        setMessage("Error deleting commission");
-        setMessageColor("red");
-        setDeleteReview("");
-        setSelectedReview("");
-        setSelectedReviewID("");
-        setActionMessage("Delete Review");
-        setIsDisabled(false);
-        console.error(error)
-    }
-}
-
+          try {
+              const response = await axios.delete("http://localhost:4001/manager/transactionHistory/delete", {data: {
+                  userID : clickedUserId,
+                  transactionHistoryID: transactionHistoryID,
+                  transactionDetailID: clickedTransactionHistoryID,
+              }});
+  
+              const {message, color} = response.data;
+              setMessage(message);
+              setMessageColor(color);
+              setTransactionHistoryID("");
+              setClickedTransactionHistoryID("");
+              setActionMessage("Delete Transaction");
+              setIsDisabled(false);
+          } catch (error) {
+              setMessage("Error deleting transaction");
+              setMessageColor("red")
+              setTransactionHistoryID("");
+              setClickedTransactionHistoryID("");
+              setActionMessage("Delete Transaction");
+              setIsDisabled(false);
+              console.error(error);  
+          }
+      };
+  
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-    bg-white px-6">
-            <div  className="flex flex-col justify-center items-center rounded-lg mb-10
-                bg-white px-10 py-4 shadow-xl
-                ring-slate-900/5">
-                <h2 className="text-3xl leading-[68px] 
-                lg:max-w-md font-palanquin font-bold p-2">
-                    Delete Review
-                </h2>
-                {message && <p className="font-montserrat text-lg 
-                leading-8 my-2"
-                style={{ color:`${messageColor}`}}>
-                    {message}
-                </p>}
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 pb-6 shadow-xl
-                ring-slate-900/5'>
-                    {reviews.map((review)=> {
-                        return (
-                            <>
-                                <li 
-                                onClick={()=> {
-                                    handleReviewClick(review._id, review.email )
-                                }}
-                                key={review._id}>
-                                    <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
-                                    leading-8 my-2 cursor-pointer w-full">
-                                        {review.name}
-                                    </p>
-                                </li>
-                            </>
-                        )
-                    })}
-                </ul>
-                <p  className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-6 text-center">
-                    <span className='font-bold font-montserrat'>Write "</span>
-                    {selectedReview}
-                    <span className='font-bold font-montserrat'>" to delete Review.</span>
-                </p>
-                <input className="p-2.5 my-3
-                border border-slate-gray 
-                rounded-full text-center font-montserrat" 
-                onChange={(e)=> {
-                    setDeleteReview(e.target.value)
-                    setMessage("");
-                    }} 
-                placeholder="Email" 
-                value={deleteReview} />
-                <button className="gap-2 px-7 py-4 my-2 border 
-                font-montserrat text-lg leading-none bg-black
-                rounded-full text-white border-black mb-5"
-                onClick={handleDeleteReviewClick}
-                disabled={isDisabled}>
-                    {actionMessage}
-                </button>
-            </div>
-    </div>
-)};
+      <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+      bg-white px-6">
+          <div className="flex flex-col justify-center items-center rounded-lg mb-10
+          bg-white px-6 shadow-xl
+          ring-slate-900/5">
+              <h2 className="text-3xl leading-[68px] 
+              lg:max-w-md font-palanquin font-bold p-2">
+                    Delete Transaction
+              </h2>
+              <ul className='flex flex-col mx-5 w-full
+                  my-5 px-20 py-2 justify-center items-center'>
+                  {transactionHistories.map((userTransactionHistories)=> {
+                      return (
+                          <li className='w-full'
+                          key={userTransactionHistories._id}>
+                              <p className="font-montserrat
+                              text-black text-md leading-8 text-center
+                              my-2 font-semibold cursor-pointer"
+                              onClick={()=> {
+                              handleClick(userTransactionHistories.userID)
+                              }}>
+                                  User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
+                              </p>
+                              <ul  className="flex flex-col px-10
+                              bg-white shadow-xl justify-center items-center
+                              ring-slate-900/5">
+                                  {clickedUserId === userTransactionHistories.userID 
+                                  ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
+                                      <li className='w-full mb-5' key={transactionDetail._id}>
+                                          <p className="font-montserrat 
+                                          text-center text-slate-gray
+                                          text-sm leading-8 cursor-pointer"
+                                              onClick={()=> {
+                                              handleTransactionDetailsClick(transactionDetail._id)
+                                          }}>
+                                              Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
+                                          </p>  
+                                      </li>
+                                  ) : null}
+                              </ul>                            
+                          </li>
+                      )
+                  })}
+              </ul>
+              {message && <p className="font-montserrat text-lg 
+              leading-8 my-2" style={{ color:`${messageColor}`}}>
+                  {message}
+              </p>}
+              <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+              bg-white px-6 py-4 shadow-xl
+              ring-slate-900/5"
+              onSubmit={handleSubmit}>
+                  <div className="flex 
+                  flex-col justify-center 
+                  items-center m-5 px-6 py-4 ">
+                      <p  className="font-montserrat 
+                      text-slate-gray text-sm 
+                      my-6 text-center">
+                          <span className='font-bold'>Write "</span>
+                          {clickedTransactionHistoryID}
+                          <span className='font-bold'>" to delete transaction.</span>
+                      </p>
+                      <Input type="text" 
+                      value={transactionHistoryID}
+                      placeholder="Transaction ID" 
+                        handleChange={setTransactionHistoryID}
+                      resetMessage={setMessage} />
+                  </div>           
+                  <button className="gap-2 px-7 py-4 my-2 border 
+                  font-montserrat text-lg leading-none bg-black
+                  rounded-full text-white border-black mb-5" 
+                  type="submit"
+                  disabled={isDisabled}>
+                      {actionMessage}
+                  </button>
+              </form>
+          </div>
+      </div>
+  )};
 
 
 

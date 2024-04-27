@@ -6,65 +6,68 @@ const router = express.Router();
 
 router.get("/read", async(req, res) => {
     const {userID} = req.query;
-    if (userID) {
-        try {
-            const user = await UserModel.findOne({_id : userID});
-            const transactionHistory = await TransactionHistoryModel.find({userID: user._id});
-            res.json(transactionHistory); 
-            
-        } catch (error) {
-            console.error(error)
-            res.json("Error saving transaction");
+    let userTransactionHistory;
+    
+    try {
+        const user = await UserModel.findOne({_id : userID});
+        const transactionHistory = await TransactionHistoryModel.find({});
+        if (userID) {
+            const response = await TransactionHistoryModel.findOne({userID: user._id});
+            userTransactionHistory = response
         }
+        res.json({transactionHistory, userTransactionHistory}); 
+        
+    } catch (error) {
+        console.error(error)
+        res.json("Error reading transaction");
     }
+   
 })
 
-router.post("/create", async (req, res) => {
-    const {paymentMethod, cryptoName} = req.body
+router.post("/create", async (req, res) => {    
+    const {
+        paymentMethod, cryptoName,
+        artStyle, price, quantity, 
+        discount, discountInterval,
+        pricePer, userID
+    } = req.body;
     let name;
 
     if (paymentMethod === "Crypto") {
         name = cryptoName
     }
 
-    const {
-        artStyle, price, quantity, 
-        discount, discountInterval,
-        pricePer, userID
-    } = req.body;
-
-    console.log({
-        paymentMethod, cryptoName, artStyle,
-        price, quantity, 
-        discount, discountInterval,
-        pricePer, userID
-    });
-
     const user = await UserModel.findOne({_id : userID});
+    const userTransactionHistory = await TransactionHistoryModel.findOne({userID: user._id});
 
     if(user && user._id) {
         if (paymentMethod && artStyle && price && quantity && discount && discountInterval && pricePer) {
-                try {
-                    function formatDate(date) {
-                        const year = date.getFullYear();
-                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                        const day = date.getDate().toString().padStart(2, '0');
-                        return `${year}/${month}/${day}`;
-                    }
-                    
-                    const date = new Date();
-                    const formattedDate = formatDate(date);            
-        
-                
-                    const transactionHistory = new TransactionHistoryModel({
-                        paymentMethod, paymentStatus: "Pending", 
-                        cryptoName: name, artStyle, 
-                        price, quantity, 
-                        discount, discountInterval, 
-                        pricePer, userID: user._id,
-                        date: formattedDate
-                    })
 
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${year}/${month}/${day}`;
+            }
+            
+            const date = new Date();
+            const formattedDate = formatDate(date);   
+
+            const transactionDetails = {
+                paymentMethod, paymentStatus: "Pending", 
+                cryptoName: name, artStyle, 
+                price, quantity, 
+                discount, discountInterval, 
+                pricePer,
+                date: formattedDate 
+            }
+
+            if(!userTransactionHistory) {
+                try {
+                    const transactionHistory = new TransactionHistoryModel({
+                        userID: user._id,
+                        transactionDetails
+                    });
                     transactionHistory.save(); 
 
                     res.json({
@@ -72,18 +75,36 @@ router.post("/create", async (req, res) => {
                         color: "green"
                     });            
                 } catch (error) {
-                    console.error(error)
+                    console.error(error);
                     res.json({
                         message: "Error saving transaction",
                         color: "red"
                     });
                 }
-            } else {
-                res.json({
-                    message: "Missing fields",
-                    color: "red"
-                });    
-            }        
+            } else if (userTransactionHistory) {
+                try {
+                    const userTransactionHistory = await TransactionHistoryModel.findOne({userID: user._id});
+                    userTransactionHistory.transactionDetails.push(transactionDetails);
+                    await userTransactionHistory.save(); 
+
+                    res.json({
+                        message: "Transaction saved successfully",
+                        color: "green"
+                    });
+                } catch (error) {
+                    console.error(error);
+                    res.json({
+                        message: "Error saving transaction",
+                        color: "red"
+                    });
+                }    
+            }
+        } else {
+            res.json({
+                message: "Missing fields",
+                color: "red"
+            });    
+        }        
     } else {
         res.json({
             message: "User not logged in",
@@ -93,5 +114,93 @@ router.post("/create", async (req, res) => {
   
 });
 
+router.put("/status", async (req, res)=> {
+    const {userID, transactionHistoryID, transactionDetailID, checkboxValue} = req.body;
+    const user = await UserModel.findOne({_id : userID}); 
+
+    if(user) {
+        const userTransactionHistory = await TransactionHistoryModel.findOne({userID});
+        console.log({userTransactionHistory: userTransactionHistory});
+
+        if (transactionHistoryID === transactionDetailID && userTransactionHistory && userID && transactionHistoryID && transactionDetailID && checkboxValue) {     
+            try {
+                const transactionDetailIndex = userTransactionHistory.transactionDetails.findIndex(transactionDetail => transactionDetail._id.toString() === transactionDetailID);
+
+                console.log({transactionDetailIndex: transactionDetailIndex});
+
+                userTransactionHistory.transactionDetails[transactionDetailIndex].paymentStatus = checkboxValue;
+
+                await userTransactionHistory.save()
+
+                res.json({
+                    message: "Transaction status updated successfully",
+                    color: "green"
+                });            
+            } catch (error) {
+                console.error(error);
+                res.json({
+                    message: "Failed to update Transaction Stautus, Internal server error",
+                    color: "red"
+                });
+            }
+        } else {
+            res.json({
+                message: "Failed to update Transaction Stautus",
+                color: "red"
+            });
+        }        
+    } else {
+        res.json({
+            message: "Transaction User does not exist",
+            color: "red"
+        });
+    }
+});
+
+router.delete("/delete", async (req, res) =>{
+    const {userID, transactionHistoryID, transactionDetailID} = req.body;
+    const user = await UserModel.findOne({_id : userID}); 
+
+    console.log({userID, transactionHistoryID, transactionDetailID});
+
+    if(user) {
+        const userTransactionHistory = await TransactionHistoryModel.findOne({userID});
+        console.log({userTransactionHistory: userTransactionHistory});
+
+        if ( transactionHistoryID === transactionDetailID && userTransactionHistory && userID && transactionHistoryID && transactionDetailID) {     
+            try {
+                const transactionDetailIndex = userTransactionHistory.transactionDetails.findIndex(transactionDetail => transactionDetail._id.toString() === transactionDetailID);
+
+
+                console.log({transactionDetailIndex: transactionDetailIndex});
+
+                userTransactionHistory.transactionDetails.splice(transactionDetailIndex, 1);
+                await userTransactionHistory.save()
+
+                res.json({
+                    message: "Transaction deleted successfully",
+                    color: "green"
+                });            
+            } catch (error) {
+                console.error(error);
+                res.json({
+                    message: "Failed to delete Transaction, Internal server error",
+                    color: "red"
+                });
+            }
+        } else {
+            res.json({
+                message: "Failed to delete Transaction",
+                color: "red"
+            });
+        }        
+    } else {
+        res.json({
+            message: "Transaction User does not exist",
+            color: "red"
+        });
+    }
+
+});
 
 export {router as transactionHistoryRouter};
