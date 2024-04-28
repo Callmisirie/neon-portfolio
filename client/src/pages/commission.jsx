@@ -7,16 +7,16 @@ import ReviewSection from "../components/ReviewSection.jsx";
 
 const Commission = () => {
   const [commissions, setCommissions] = useState([]);
+  const [cryptoGifts, setCryptoGifts] = useState([]);
   const [commissionID, setCommissionID] = useState(null);
   const [transactionHistories, setTransactionHistories] = useState([]);
   const [selectedTransactionHistoriesIndices, setSelectedTransactionHistoriesIndices] = useState([]);
-  const navigate = useNavigate();
   const [clickedTransactionHistoryId, setClickedTransactionHistoryId] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
   const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
-
+  const navigate = useNavigate();
   const userID = window.localStorage.getItem("userID");
 
   const toggle = () => {
@@ -31,13 +31,14 @@ const Commission = () => {
         const commissionResponse = await axios.get("http://localhost:4001/manager/commission/read") 
         setCommissions(commissionResponse.data)
 
-       
+        const cryptoGiftResponse = await axios.get("http://localhost:4001/manager/gift/read") 
+        setCryptoGifts(cryptoGiftResponse.data.cryptoGift)
       } catch (error) {
         console.error(error);
       }
     }
     fetchCommission();
-  }, []);
+  }, [cryptoGifts]);
 
   useEffect(() => {
     const fetchTransactionHistory = async () =>{
@@ -74,15 +75,36 @@ const Commission = () => {
     setMessage("");
   }
 
-  function handlePayment() {
+  const handlePayment = async () => {
 
+    let cryptoSymbols = [];
+    let cryptoSymbolDetails;
+  
+
+    if (cryptoGifts.length) {
+      cryptoGifts.map(cryptoGift => cryptoSymbols.push(cryptoGift.cryptoName))
+    }
+    
     if (!userID) {
       setMessage("Log in before making purchase.");
       setMessageColor("red")
     } else if (userID) {
-      handleTransactionDetails()
-      navigate("/payment");
-      window.scrollTo(0, 0);
+      try {
+        const transactionHistoryResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
+          params: { cryptoSymbols }
+        });
+
+        cryptoSymbolDetails = transactionHistoryResponse.data;
+       
+        window.localStorage.removeItem("cryptoSymbolDetails")
+        window.localStorage.setItem("cryptoSymbolDetails", JSON.stringify(cryptoSymbolDetails))
+        handleTransactionDetails()
+        navigate("/payment");
+        window.scrollTo(0, 0);
+      } catch (error) {
+        
+      }
+
     }
   }
 

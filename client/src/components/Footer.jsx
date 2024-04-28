@@ -81,7 +81,7 @@ const Footer = () => {
                         cursor-pointer"
                         key={link.name}
                     >
-                        <a>{link.name}</a>
+                        <a href={link.link}>{link.name}</a>
                       </li>
                     ))}
                   </ul>
@@ -95,7 +95,7 @@ const Footer = () => {
           >
             <div className="flex flex-1 
               justify-start items-center gap-2
-              font-montserrat cursor-pointer"
+              font-montserrat"
             >
               <img 
                 src={copyrightSign}
@@ -106,7 +106,7 @@ const Footer = () => {
               />
               <p>Copyright. All right reserved.</p>
             </div>
-            <p className="font-montserrat cursor-pointer">
+            <p className="font-montserrat">
               Term & Conditions  
             </p>
           </div>

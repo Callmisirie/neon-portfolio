@@ -26,6 +26,10 @@ const transactionHistorySchema = new mongoose.Schema({
             type: Number,
             required: true,
         },
+        priceInCrypto: {
+            type: Number,
+            required: true,
+        },
         quantity: {
             type: Number,
             required: true,

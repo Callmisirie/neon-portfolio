@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import axios from "axios";
 
 import { newsletterRouter } from './routes/newsletter.js';
 import { adminRouter } from "./routes/admin.js";
@@ -17,6 +18,7 @@ import { transactionHistoryRouter } from './routes/transactionHistory.js';
 
 const app = express();
 const password = process.env.MONGO_DB;
+const CM_API_KEY = process.env.CM_API_KEY
 
 app.use(express.json());
 app.use(cors());
@@ -35,10 +37,38 @@ app.use("/manager/gift", giftRouter);
 app.use("/manager/review", reviewRouter);
 app.use("/manager/transactionHistory", transactionHistoryRouter);
 
+app.get("/cryptocurrency/latest", async (req, res) => {
+    const {cryptoSymbols} = req.query;
+
+    try {
+        const response = await axios.get("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest", {
+            headers: {
+                'X-CMC_PRO_API_KEY': CM_API_KEY
+            }
+        });
+
+        let symbolDetails = response.data.data;
+
+        if(cryptoSymbols) {
+            symbolDetails = symbolDetails.filter(symbol => cryptoSymbols.includes(symbol.symbol));
+        }
+
+        const selectedSymbols = symbolDetails.map(symbolDetail => ({
+            symbol: symbolDetail.symbol,
+            price:  Number(symbolDetail.quote.USD.price.toFixed(2))
+        }));
+        
+        res.json(selectedSymbols);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch cryptocurrency data" });
+    }
+});
 
 
 app.get("/display/:imageID", async (req, res) => {
     const imageID = req.params.imageID;
+
     if (!mongoose.Types.ObjectId.isValid(imageID)) {
         return res.status(400).json({ message: "Invalid mangaID" });
     }

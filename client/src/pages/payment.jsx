@@ -4,7 +4,6 @@ import axios from 'axios';
 import { clipboardCopy } from '../assets/icons';
 
 
-let cryptoName;
 
 function Payment() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
@@ -15,9 +14,12 @@ function Payment() {
     const [messageColor, setMessageColor] = useState("");
     const [transactionHistories, setTransactionHistories] = useState([]);
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
+    const [cryptoName, setCryptoName] = useState("");
     const navigate = useNavigate();
 
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
+    const cryptoSymbolDetails = JSON.parse(window.localStorage.getItem("cryptoSymbolDetails"));
+
     const userID = window.localStorage.getItem("userID");
 
     
@@ -37,7 +39,7 @@ function Payment() {
             }
         }
         fetchGift();
-    }, [paypalGifts, cryptoGifts]);
+    }, []);
 
     if (resetMessage) {
         setMessage("");
@@ -52,7 +54,7 @@ function Payment() {
                 setIsClickedPaypal(true);
                 setIsClickedCrypto(false);
                 setPaymentMethod("Paypal");
-                cryptoName = ""
+                setCryptoName("");
                 setIsChecked(false);
                 setMessage("");
             }
@@ -155,7 +157,10 @@ function Payment() {
                     }
                     {isClickedCrypto && 
                         <>
-                            <CryptoGift setResetMessage={setResetMessage} /> 
+                            <CryptoGift 
+                            setResetMessage={setResetMessage}
+                            cryptoName={cryptoName} 
+                            setCryptoName={setCryptoName} /> 
                         </> 
                     }
                 </div> 
@@ -190,7 +195,21 @@ function Payment() {
                                 Price - <span className="font-montserrat 
                                 text-green-600 text-start font-normal
                                 text-sm">${transactionDetails.price}</span>
+                               
                             </p>
+                            {cryptoName && (cryptoSymbolDetails && cryptoSymbolDetails.map((cryptoSymbolDetail)=> {
+                                return (cryptoName === cryptoSymbolDetail.symbol ? (
+                                    <p className="font-montserrat font-semibold
+                                    text-slate-gray max-w-xs text-start
+                                    text-sm"
+                                    key={cryptoSymbolDetail.symbol}>
+                                        Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
+                                        text-slate-gray text-start font-normal
+                                        text-sm">{transactionDetails.price / cryptoSymbolDetail.price}</span>   
+                                    
+                                    </p>                                               
+                                    ) : null)
+                            }))}
                             <p className="font-montserrat font-semibold
                             text-slate-gray max-w-xs text-start
                             text-sm">
@@ -282,7 +301,7 @@ const PaypalGift = () => {
             }
         }
         fetchPaypalGift();
-    }, [paypalGifts]);
+    }, []);
 
     
 
@@ -338,7 +357,7 @@ const PaypalGift = () => {
 }
 
 
-const CryptoGift = ({ setResetMessage }) => {
+const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoGiftId, setCryptoGiftId] = useState(null)
   
@@ -353,13 +372,13 @@ const CryptoGift = ({ setResetMessage }) => {
             }
         }
         fetchCryptoGift();
-    }, [cryptoGifts]);
+    }, []);
 
     
 
     function handleChooseCryptoGift(id) {
-      setCryptoGiftId(id === cryptoGiftId ? null : id)
-      setResetMessage(true); // Set resetMessage to true
+        setCryptoGiftId(id === cryptoGiftId ? null : id)
+        setResetMessage(true);
     }
 
     
@@ -394,7 +413,7 @@ const CryptoGift = ({ setResetMessage }) => {
                         leading-8 my-2 cursor-pointer"
                         onClick={()=> {
                         handleChooseCryptoGift(cryptoGift._id)
-                        cryptoName = cryptoGift.cryptoName
+                        setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
                         }}
                         key={cryptoGift._id}>
                             {cryptoGift.cryptoName}

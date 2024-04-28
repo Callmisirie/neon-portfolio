@@ -70,42 +70,29 @@ export const services = [
     },
 ];
 
-export const reviews = [
-    {
-        imgURL: customer1,
-        customerName: 'Morich Brown',
-        rating: 4.5,
-        feedback: "The attention to detail and the quality of the product exceeded my expectations. Highly recommended!"
-    },
-    {
-        imgURL: customer2,
-        customerName: 'Lota Mongeskar',
-        rating: 4.5,
-        feedback: "The product not only met but exceeded my expectations. I'll definitely be a returning customer!"
-    }
-];
+
 
 
 export const footerLinks = [
     {
         title: "Products",
         links: [
-            { name: "Character Design", link: "/" },
-            { name: "Manga", link: "/" },
+            { name: "Character Design", link: "/commission" },
+            { name: "Manga", link: "/commission" },
             { name: "Web Comic", link: "/" },
         ],
     },
     {
         title: "Help",
         links: [
-            { name: "About us", link: "/" },
-            { name: "Contact", link: "/" },
+            { name: "About us", link: "/about" },
+            { name: "Contact", link: "/contact" },
         ],
     },
     {
         title: "Get in touch",
         links: [
-            { name: "neonworld@gmail.com", link: "mailto:customer@nike.com" },
+            { name: "neonworld@gmail.com", link: "mailto:neonworld@gmail.com" },
         ],
     },
 ];

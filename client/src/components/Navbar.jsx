@@ -3,7 +3,8 @@ import {headerLogoPurple} from "../assets/images"
 
 import { Link } from "react-router-dom"; 
 import { useCookies } from 'react-cookie';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 import SearchBar from "../components/SearchBar.jsx";
 
@@ -11,6 +12,11 @@ function Navbar() {
     const [cookies, setCookies] = useCookies(["access_token"]);
     const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
     const Navigate = useNavigate();
+    const location = useLocation();
+
+    const currentLocation = location.pathname;
+
+    console.log(currentLocation);
 
     function Logout() {
         setCookies("access_token", "");
@@ -33,7 +39,9 @@ function Navbar() {
                 
                 <ul className="flex-1 flex justify-center items-center gap-10 max-lg:hidden mx-10">
                     <li> <SearchBar /> </li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/"> Home </Link></li>
+                    <li className={`font-montserrat leading-normal text-sm hover:text-black text-slate-gray ${location.pathname === "/" ? "text-bold text-lg" : ""}`}>
+                        <Link to="/"> Home </Link>
+                    </li>
                     <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/manga"> Manga </Link></li>
                     <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/commission"> Commission </Link></li>
                     <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/about"> About </Link></li>
