@@ -17,12 +17,12 @@ function Payment() {
     const [cryptoName, setCryptoName] = useState("");
     const navigate = useNavigate();
 
+    let priceInCrypto;
+
+    const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
     const cryptoSymbolDetails = JSON.parse(window.localStorage.getItem("cryptoSymbolDetails"));
-
     const userID = window.localStorage.getItem("userID");
-
-    
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [cryptoGifts, setCryptoGifts] = useState([]);
     
@@ -111,6 +111,22 @@ function Payment() {
         setMessage("");
     }
 
+    function handleCopyClipboard(address) {
+        setCopyTooltip("Copied!");
+        
+        navigator.clipboard.writeText(address)
+            .then(() => {
+                console.log('Address copied to clipboard');
+                setTimeout(() => {
+                    setCopyTooltip("Copy");
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error('Failed to copy address: ', error);
+            });
+    }
+
+
     return (
         <section className="min-h-full flex flex-col items-center">
             <div className="flex flex-col sm:flex-row
@@ -198,16 +214,42 @@ function Payment() {
                                
                             </p>
                             {cryptoName && (cryptoSymbolDetails && cryptoSymbolDetails.map((cryptoSymbolDetail)=> {
+
+                                priceInCrypto = transactionDetails.price / cryptoSymbolDetail.price
+                                const decimalCount = (priceInCrypto.toString().split('.')[1] || '').length;
+
+                                if (decimalCount < 6) {
+                                    priceInCrypto = priceInCrypto.toFixed(2)
+                                } else {
+                                    priceInCrypto = priceInCrypto.toFixed(6)
+                                }
+
+
                                 return (cryptoName === cryptoSymbolDetail.symbol ? (
-                                    <p className="font-montserrat font-semibold
-                                    text-slate-gray max-w-xs text-start
-                                    text-sm"
+                                    <div className='flex items-center'
                                     key={cryptoSymbolDetail.symbol}>
-                                        Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
-                                        text-slate-gray text-start font-normal
-                                        text-sm">{transactionDetails.price / cryptoSymbolDetail.price}</span>   
-                                    
-                                    </p>                                               
+                                        <p className="font-montserrat font-semibold
+                                        text-slate-gray max-w-xs text-start
+                                        text-sm">
+                                            Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
+                                            text-slate-gray text-start font-normal
+                                            text-sm">{priceInCrypto}</span>       
+                                        </p>
+                                        <div className='flex
+                                        justify-center items-center 
+                                        cursor-pointer ml-10'
+                                        onClick={() => handleCopyClipboard(priceInCrypto)}>
+                                            <img className="mx-2 
+                                            rounded-full w-4 h-4"
+                                            src={clipboardCopy}/> 
+                                            <p className="font-montserrat 
+                                            text-slate-gray text-sm
+                                             text-center">
+                                                {copyTooltip}
+                                            </p>                                                                    
+                                        </div>                                         
+                                    </div>
+                                                
                                     ) : null)
                             }))}
                             <p className="font-montserrat font-semibold
@@ -245,7 +287,9 @@ function Payment() {
                                                 type="checkbox"
                                                 className="sr-only"
                                                 checked={isChecked}
-                                                onChange={toggle}
+                                                onChange={() => {
+                                                  toggle() 
+                                                }}
                                             />
                                             <div className="w-12 h-4 border  rounded-full"></div>
                                             <div className={`dot absolute w-6 h-6 ${isChecked ? 
@@ -274,9 +318,7 @@ function Payment() {
                                 text-sm my-2"  style={{ color:`${messageColor}`}}>
                                     {message}
                                 </p>}
-                            </div>
-                            
-                           
+                            </div>     
                         </div> 
                     ): null}
             </div>
@@ -326,7 +368,7 @@ const PaypalGift = () => {
                             {paypalGifts.map((paypalGift)=> {
                                 return (
                                     <li key={paypalGift._id}>
-                                        <p className="font-montserrat 
+                                        <p className="font-montserrat text-center
                                         text-slate-gray hover:text-black text-md
                                         leading-8 my-2 cursor-pointer w-full"
                                         onClick={()=> {handleChoosePaypalGift(paypalGift._id)}}>
@@ -360,7 +402,8 @@ const PaypalGift = () => {
 const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoGiftId, setCryptoGiftId] = useState(null)
-  
+    const [copyTooltip, setCopyTooltip] = useState("Copy");
+    
     useEffect(() => {
         const fetchCryptoGift = async () =>{
             try {
@@ -374,28 +417,29 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
         fetchCryptoGift();
     }, []);
 
-    
-
     function handleChooseCryptoGift(id) {
         setCryptoGiftId(id === cryptoGiftId ? null : id)
         setResetMessage(true);
     }
-
     
     function handleCopyClipboard(address) {
+        setCopyTooltip("Copied!");
+        
         navigator.clipboard.writeText(address)
             .then(() => {
                 console.log('Address copied to clipboard');
+                setTimeout(() => {
+                    setCopyTooltip("Copy");
+                }, 2000);
             })
             .catch((error) => {
                 console.error('Failed to copy address: ', error);
             });
     }
 
-
     return (
         <section className="min-h-full">
-            <div  className="flex sm:flex-row 
+            <div  className="flex sm:flex-row gap-2
             flex-col justify-center items-center 
             p-5">
                 <div  className="flex flex-col 
@@ -456,11 +500,20 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
                                     leading-8 my-2 text-center">
                                         {cryptoGift.address}
                                     </p>  
-                                    <img className="mx-2 
-                                    rounded-full w-4 h-4 
-                                    hover:h-8 cursor-pointer"
-                                    onClick={() => handleCopyClipboard(cryptoGift.address)}
-                                    src={clipboardCopy}/>                               
+                                    <div className='flex 
+                                    justify-center items-center 
+                                    cursor-pointer m-1'
+                                    onClick={() => handleCopyClipboard(cryptoGift.address)}>
+                                        <img className="mx-2 
+                                        rounded-full w-4 h-4 
+                                        hover:h-8"
+                                        src={clipboardCopy}/> 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-sm 
+                                        leading-8 text-center">
+                                            {copyTooltip}
+                                        </p>                                                                    
+                                    </div>                           
                                 </div>
                             </div>
                         </li>

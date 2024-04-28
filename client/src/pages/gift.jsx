@@ -139,7 +139,7 @@ const PaypalGift = () => {
                             {paypalGifts.map((paypalGift)=> {
                                 return (
                                     <li key={paypalGift._id}>
-                                        <p className="font-montserrat 
+                                        <p className="font-montserrat text-center
                                         text-slate-gray hover:text-black text-md
                                         leading-8 my-2 cursor-pointer w-full"
                                         onClick={()=> {handleChoosePaypalGift(paypalGift._id)}}>
@@ -187,16 +187,19 @@ const CryptoGift = () => {
         fetchCryptoGift();
     }, [cryptoGifts]);
 
-    
-
     function handleChooseCryptoGift(id) {
       setCryptoGiftId(id === cryptoGiftId ? null : id)
     }
 
     function handleCopyClipboard(address) {
+        setCopyTooltip("Copied!");
+        
         navigator.clipboard.writeText(address)
             .then(() => {
                 console.log('Address copied to clipboard');
+                setTimeout(() => {
+                    setCopyTooltip("Copy");
+                }, 2000);
             })
             .catch((error) => {
                 console.error('Failed to copy address: ', error);
@@ -263,11 +266,20 @@ const CryptoGift = () => {
                                     leading-8 my-2 text-center">
                                         {cryptoGift.address}
                                     </p>  
-                                    <img className="mx-2 
-                                    rounded-full w-4 h-4 
-                                    hover:h-8 cursor-pointer"
-                                    onClick={() => handleCopyClipboard(cryptoGift.address)}
-                                    src={clipboardCopy}/>                               
+                                    <div className='flex 
+                                    justify-center items-center 
+                                    cursor-pointer m-1'
+                                    onClick={() => handleCopyClipboard(cryptoGift.address)}>
+                                        <img className="mx-2 
+                                        rounded-full w-4 h-4 
+                                        hover:h-8"
+                                        src={clipboardCopy}/> 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-sm 
+                                        leading-8 text-center">
+                                            {copyTooltip}
+                                        </p>                                                                    
+                                    </div>                             
                                 </div>
 
                             </div>

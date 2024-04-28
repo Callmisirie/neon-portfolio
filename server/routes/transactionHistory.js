@@ -26,12 +26,17 @@ router.get("/read", async(req, res) => {
 
 router.post("/create", async (req, res) => {    
     const {
-        paymentMethod, cryptoName,
+        paymentMethod, cryptoName, priceIncrypto,
         artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID
     } = req.body;
     let name;
+
+    console.log({paymentMethod, cryptoName, priceIncrypto,
+        artStyle, price, quantity, 
+        discount, discountInterval,
+        pricePer, userID});
 
     if (paymentMethod === "Crypto") {
         name = cryptoName

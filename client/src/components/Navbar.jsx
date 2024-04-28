@@ -16,8 +16,6 @@ function Navbar() {
 
     const currentLocation = location.pathname;
 
-    console.log(currentLocation);
-
     function Logout() {
         setCookies("access_token", "");
         setUserCookies( "userAccess_token", "");
