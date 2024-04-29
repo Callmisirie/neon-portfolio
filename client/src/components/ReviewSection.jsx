@@ -44,7 +44,7 @@ const ReviewSection = () => {
 
 
     return (
-        <section className="bg-pale-blue padding">
+        <section className="bg-purple-100 padding">
             <section className="max-container">
                 <h3 className="text-4xl leading-[68px] 
                 text-center font-palanquin font-bold">

@@ -15,6 +15,9 @@ function Payment() {
     const [transactionHistories, setTransactionHistories] = useState([]);
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const [cryptoName, setCryptoName] = useState("");
+
+    const [seconds, setSeconds] = useState(0);
+    const [minutes, setMinutes] = useState(30);
     
     const navigate = useNavigate();
 
@@ -32,19 +35,44 @@ function Payment() {
             try {
                 const response = await axios.get("http://localhost:4001/manager/gift/read") 
                 const {paypalGift, cryptoGift} = response.data;
-            
-                setPaypalGifts(paypalGift)
-                setCryptoGifts(cryptoGift)
+    
+                setPaypalGifts(paypalGift);
+                setCryptoGifts(cryptoGift);
             } catch (error) {
-               console.error(error);
+                console.error(error);
             }
         }
+    
         fetchGift();
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(interval); // Stop the interval when both minutes and seconds reach 0
+                    navigate("/commission")
+                } else {
+                    setMinutes(minutes - 1);
+                    setSeconds(59);
+                }
+            } else {
+                setSeconds(seconds - 1);
+            }
+        }, 1000);
+    
+        return () => clearInterval(interval); // Clean up the interval when the component unmounts
+    }, [seconds, minutes]);
+    
+    
 
     if (resetMessage) {
         setMessage("");
         setResetMessage(false);
+    }
+
+    function pad(number) {
+        return number < 10 ? '0' + number : number;
     }
 
     function handleClick(gift) {
@@ -72,6 +100,8 @@ function Payment() {
             }
         } 
     }
+
+
 
     const handlePayment = async () => {
 
@@ -183,6 +213,11 @@ function Payment() {
                             setPriceInCrypto={setPriceInCrypto} /> 
                         </> 
                     }
+                    <p className={`font-montserrat leading-8
+                        text-md font-semibold 
+                        text-center w-full ${minutes < 9 ? `text-red-500` : `text-black`}`}>
+                        {pad(minutes)}:{pad(seconds)}
+                    </p>
                 </div> 
                     {isClickedPaypal || isClickedCrypto ? (
                         <div className="flex gap-5
@@ -454,21 +489,14 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                         handleChooseCryptoGift(cryptoGift._id)
                         setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
                         const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
-                        
                         selectedCrypto.map((crypto)=> {                            
                             const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
-                            let count;
-
                             if (decimalCount < 6) {
                                setPriceInCrypto((price / crypto.price).toFixed(2))
                             } else {
                                 setPriceInCrypto((price / crypto.price).toFixed(6))
-                            }
-
-                             
+                            }     
                         })
-                            
-                        
                         }}
                         key={cryptoGift._id}>
                             {cryptoGift.cryptoName}

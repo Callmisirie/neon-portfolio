@@ -41,7 +41,7 @@ function Home() {
 
     return (
         <div className="min-h-full">
-            <section className="xl:padding-l wide:padding-r padding-b">
+            <section className="xl:padding-l wide:padding-r">
                 <section className="w-full flex 
                 xl:flex-row flex-col justify-center 
                 min-h-screen gap-10 max-container">
@@ -82,11 +82,11 @@ function Home() {
                             flex-wrap w-full mt-30 gap-16">
                             </div>
                     </div>
-                    <div className="relative 
-                    flex-1 flex justify-center 
-                    items-center xl:min-h-screen 
-                    max-xl:py-40 bg-primary
-                    bg-hero bg-cover bg-center">
+                    <div className="relative
+                    border-2 border-slate-gray flex-1 flex 
+                    justify-center items-center 
+                    xl:min-h-screen max-xl:py-40 
+                    bg-cover bg-center">
                         {/* <img 
                             src={bigShoeImg}
                             alt="Shoe Image"
@@ -95,19 +95,6 @@ function Home() {
                             className="object-contain 
                                 relative z-10"
                         /> */}
-                        <div className="flex sm:gap-6 
-                        gap-4 absolute -bottom-[5%]
-                        sm:left-[10%] max-sm:px-6 cursor-pointer">
-                            {/* {shoes.map((shoe)=> 
-                                <div key={shoe}>    
-                                    <ShoeCard 
-                                        imgURL={shoe}
-                                        changeBigShoeImage={(shoe)=> setBigShoeImg(shoe)}
-                                        bigShoeImg={bigShoeImg}
-                                    />
-                                </div>
-                            )} */}
-                        </div>
                     </div>
                 </section>
             </section>
