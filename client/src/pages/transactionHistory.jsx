@@ -90,11 +90,18 @@ const TransactionHistory = () => {
                                         Payment Method - {transactionDetail.paymentMethod}   
                                         </p>  
                                         {transactionDetail.cryptoName && (
-                                            <p className="font-montserrat 
-                                            text-slate-gray
-                                            text-sm leading-8 w-full">
+                                            <>
+                                                <p className="font-montserrat 
+                                                text-slate-gray
+                                                text-sm leading-8 w-full">
                                                 Crypto - {transactionDetail.cryptoName}   
-                                            </p>                                  
+                                                </p>     
+                                                <p className="font-montserrat 
+                                                text-slate-gray
+                                                text-sm leading-8 w-full">
+                                                Price In {transactionDetail.cryptoName} - {transactionDetail.priceInCrypto}   
+                                                </p>                                 
+                                            </>                                    
                                         )}
                                         <p className="font-montserrat 
                                         text-slate-gray

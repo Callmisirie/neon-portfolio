@@ -25,21 +25,26 @@ router.get("/read", async(req, res) => {
 })
 
 router.post("/create", async (req, res) => {    
-    const {
-        paymentMethod, cryptoName, priceIncrypto,
+    let {
+        paymentMethod, cryptoName, priceInCrypto,
         artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID
     } = req.body;
-    let name;
 
-    console.log({paymentMethod, cryptoName, priceIncrypto,
+    let name;
+    let cryptoInPrice;
+
+   
+    console.log({
+        paymentMethod, cryptoName, priceInCrypto,
         artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID});
 
     if (paymentMethod === "Crypto") {
         name = cryptoName
+        cryptoInPrice = Number(priceInCrypto)
     }
 
     const user = await UserModel.findOne({_id : userID});
@@ -61,9 +66,9 @@ router.post("/create", async (req, res) => {
             const transactionDetails = {
                 paymentMethod, paymentStatus: "Pending", 
                 cryptoName: name, artStyle, 
-                price, quantity, 
-                discount, discountInterval, 
-                pricePer,
+                price, priceInCrypto: cryptoInPrice, 
+                quantity, discount, 
+                discountInterval, pricePer,
                 date: formattedDate 
             }
 
@@ -71,7 +76,7 @@ router.post("/create", async (req, res) => {
                 try {
                     const transactionHistory = new TransactionHistoryModel({
                         userID: user._id,
-                        transactionDetails
+                        transactionDetails: [transactionDetails]
                     });
                     transactionHistory.save(); 
 

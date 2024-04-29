@@ -15,9 +15,10 @@ function Payment() {
     const [transactionHistories, setTransactionHistories] = useState([]);
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const [cryptoName, setCryptoName] = useState("");
+    
     const navigate = useNavigate();
 
-    let priceInCrypto;
+    const [priceInCrypto, setPriceInCrypto] = useState(null);
 
     const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
@@ -80,7 +81,7 @@ function Payment() {
             return;
        }
         const transactionInfo = {
-            paymentMethod, cryptoName,
+            paymentMethod, cryptoName, priceInCrypto,
             artStyle: transactionDetails.commissionDetails.artStyle,
             price: transactionDetails.price,
             quantity: transactionDetails.number,
@@ -176,7 +177,10 @@ function Payment() {
                             <CryptoGift 
                             setResetMessage={setResetMessage}
                             cryptoName={cryptoName} 
-                            setCryptoName={setCryptoName} /> 
+                            setCryptoName={setCryptoName}
+                            cryptoSymbolDetails={cryptoSymbolDetails}
+                            price={transactionDetails.price}
+                            setPriceInCrypto={setPriceInCrypto} /> 
                         </> 
                     }
                 </div> 
@@ -214,15 +218,6 @@ function Payment() {
                                
                             </p>
                             {cryptoName && (cryptoSymbolDetails && cryptoSymbolDetails.map((cryptoSymbolDetail)=> {
-
-                                priceInCrypto = transactionDetails.price / cryptoSymbolDetail.price
-                                const decimalCount = (priceInCrypto.toString().split('.')[1] || '').length;
-
-                                if (decimalCount < 6) {
-                                    priceInCrypto = priceInCrypto.toFixed(2)
-                                } else {
-                                    priceInCrypto = priceInCrypto.toFixed(6)
-                                }
 
 
                                 return (cryptoName === cryptoSymbolDetail.symbol ? (
@@ -399,7 +394,7 @@ const PaypalGift = () => {
 }
 
 
-const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
+const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDetails, price, setPriceInCrypto }) => {
     const [cryptoGifts, setCryptoGifts] = useState([]);
     const [cryptoGiftId, setCryptoGiftId] = useState(null)
     const [copyTooltip, setCopyTooltip] = useState("Copy");
@@ -458,6 +453,22 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName }) => {
                         onClick={()=> {
                         handleChooseCryptoGift(cryptoGift._id)
                         setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
+                        const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
+                        
+                        selectedCrypto.map((crypto)=> {                            
+                            const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
+                            let count;
+
+                            if (decimalCount < 6) {
+                               setPriceInCrypto((price / crypto.price).toFixed(2))
+                            } else {
+                                setPriceInCrypto((price / crypto.price).toFixed(6))
+                            }
+
+                             
+                        })
+                            
+                        
                         }}
                         key={cryptoGift._id}>
                             {cryptoGift.cryptoName}

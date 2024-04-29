@@ -175,7 +175,7 @@ return (
                             }}>
                                 User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
                             </p>
-                            <ul  className="flex flex-col mt-5 px-10
+                            <ul  className="flex flex-col-reverse mt-5 px-10
                             bg-white shadow-xl justify-center items-center
                             ring-slate-900/5">
                                 {clickedUserId === userTransactionHistories.userID 
@@ -381,7 +381,7 @@ function TransactionsDelete() {
                               }}>
                                   User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
                               </p>
-                              <ul  className="flex flex-col px-10
+                              <ul  className="flex flex-col-reverse px-10
                               bg-white shadow-xl justify-center items-center
                               ring-slate-900/5">
                                   {clickedUserId === userTransactionHistories.userID 
