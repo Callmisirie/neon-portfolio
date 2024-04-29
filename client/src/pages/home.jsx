@@ -82,8 +82,8 @@ function Home() {
                             flex-wrap w-full mt-30 gap-16">
                             </div>
                     </div>
-                    <div className="relative
-                    border-2 border-slate-gray flex-1 flex 
+                    <div className="relative rounded-3xl
+                    border-2 border-purple-600 flex-1 flex 
                     justify-center items-center 
                     xl:min-h-screen max-xl:py-40 
                     bg-cover bg-center">

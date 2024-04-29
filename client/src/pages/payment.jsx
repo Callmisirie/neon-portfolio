@@ -15,14 +15,10 @@ function Payment() {
     const [transactionHistories, setTransactionHistories] = useState([]);
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const [cryptoName, setCryptoName] = useState("");
-
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(30);
-    
     const navigate = useNavigate();
-
     const [priceInCrypto, setPriceInCrypto] = useState(null);
-
     const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
     const cryptoSymbolDetails = JSON.parse(window.localStorage.getItem("cryptoSymbolDetails"));

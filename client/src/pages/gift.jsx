@@ -5,7 +5,6 @@ import { clipboardCopy } from '../assets/icons';
 function Gift() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
     const [isClickedCrypto, setIsClickedCrypto] = useState(false);
-
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [cryptoGifts, setCryptoGifts] = useState([]);
     
@@ -172,7 +171,8 @@ const PaypalGift = () => {
 
 const CryptoGift = () => {
     const [cryptoGifts, setCryptoGifts] = useState([]);
-    const [cryptoGiftId, setCryptoGiftId] = useState(null)
+    const [cryptoGiftId, setCryptoGiftId] = useState(null);
+    const [copyTooltip, setCopyTooltip] = useState("Copy");
   
     useEffect(() => {
         const fetchCryptoGift = async () =>{

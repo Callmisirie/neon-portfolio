@@ -73,23 +73,23 @@ const NumberOfOrders = ({commission}) => {
   return (
     <div className="flex flex-col justify-center items-center">
         <div  className="flex justify-center items-center">
-            <div className="flex m-1
+            <div className="flex m-1 hover:bg-green-500
             justify-center items-center cursor-pointer
-            w-6 h-6 rounded-md bg-green-400">
-                <button className="font-bold text-lg"
-                onClick={handleDecreaseClick}>-</button>                 
+            w-6 h-6 rounded-md bg-green-400"
+            onClick={handleDecreaseClick}>
+                <button className="font-bold text-lg">-</button>                 
             </div>
             <input className="text-center font-montserrat
             text-black text-sm border-slate-gray
             leading-8 m-2 outline-none border-none"
-            inputmode="numeric" 
+            inputMode="numeric" 
             value={numberOfOrders}
             onChange={handleChange}/>
-            <div className="flex m-1
+            <div className="flex m-1 hover:bg-green-500
             justify-center items-center cursor-pointer
-            w-6 h-6 rounded-md bg-green-400">
-                <button className="font-bold text-lg"
-                onClick={handleIncreaseClick}>+</button>                
+            w-6 h-6 rounded-md bg-green-400"
+            onClick={handleIncreaseClick}>
+                <button className="font-bold text-lg">+</button>                
             </div>
  
         </div>
