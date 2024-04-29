@@ -30,8 +30,14 @@ const NumberOfOrders = ({commission}) => {
     }
 
     function handleChange(e) {
-        currentPrice(e.target.value)
-        setNumberOfOrders((parseInt(e.target.value, 10)))
+        if (!e.target.value) {
+            currentPrice(1)
+            setNumberOfOrders((parseInt(1, 10)))        
+        } else {
+            currentPrice(e.target.value)
+            setNumberOfOrders((parseInt(e.target.value, 10)))            
+        }
+
     }
 
 
@@ -67,14 +73,25 @@ const NumberOfOrders = ({commission}) => {
   return (
     <div className="flex flex-col justify-center items-center">
         <div  className="flex justify-center items-center">
-            <button onClick={handleDecreaseClick}>-</button> 
+            <div className="flex m-1
+            justify-center items-center cursor-pointer
+            w-6 h-6 rounded-md bg-green-400">
+                <button className="font-bold text-lg"
+                onClick={handleDecreaseClick}>-</button>                 
+            </div>
             <input className="text-center font-montserrat
             text-black text-sm border-slate-gray
-            leading-8 m-2 border-none pl-5"
-            type="number" 
+            leading-8 m-2 outline-none border-none"
+            inputmode="numeric" 
             value={numberOfOrders}
             onChange={handleChange}/>
-            <button onClick={handleIncreaseClick}>+</button> 
+            <div className="flex m-1
+            justify-center items-center cursor-pointer
+            w-6 h-6 rounded-md bg-green-400">
+                <button className="font-bold text-lg"
+                onClick={handleIncreaseClick}>+</button>                
+            </div>
+ 
         </div>
         <div className="flex flex-col justify-center items-center">
             <p className="font-montserrat text-green-600 text-center
