@@ -64,6 +64,7 @@ function TransactionsStatus() {
   const [checkboxValue, setCheckboxValue] = useState("");
   const [selectedCheckbox, setSelectedCheckbox] = useState(null); // New state to keep track of the selected checkbox ID
   const [transactionHistoryID, setTransactionHistoryID] = useState("");
+  const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
   const [actionMessage, setActionMessage] = useState("Update Status");
@@ -74,7 +75,10 @@ function TransactionsStatus() {
     const fetchTransactionHistories = async () =>{
         try {
             const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
-            setTransactionHistories(transactionHistoryResponse.data.transactionHistory)
+            const {transactionHistory, users} = transactionHistoryResponse.data;
+
+            setTransactionHistories(transactionHistory)
+            setUsers(users)
         } catch (error) {
             console.error(error);
         }
@@ -175,6 +179,14 @@ return (
                             }}>
                                 User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
                             </p>
+                            {users && users.map((user)=> {
+                                return (user._id === userTransactionHistories.userID && (
+                                    <p className="font-montserrat
+                                    my-2 text-black text-xs text-center">
+                                        Name - {user.firstName} {user.lastName}
+                                    </p>
+                                ))
+                            })}
                             <ul  className="flex flex-col-reverse mt-5 px-10
                             bg-white shadow-xl justify-center items-center
                             ring-slate-900/5">
@@ -291,6 +303,7 @@ function TransactionsDelete() {
     const [clickedUserId, setClickedUserId] = useState(null);
     const [clickedTransactionHistoryID, setClickedTransactionHistoryID] = useState("");
     const [transactionHistoryID, setTransactionHistoryID] = useState("");
+    const [users, setUsers] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Delete Transaction");
@@ -298,145 +311,156 @@ function TransactionsDelete() {
   
   
     useEffect(() => {
-      const fetchTransactionHistories = async () =>{
-          try {
-              const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
-              setTransactionHistories(transactionHistoryResponse.data.transactionHistory)
-          } catch (error) {
-              console.error(error);
-          }
-      }
-      fetchTransactionHistories();
-      }, [transactionHistories]);
-  
-  
-      const handleClick = (id) => {
-          setClickedUserId(id === clickedUserId ? null : id);
-          setClickedTransactionHistoryID("");
-          setMessage("");
-      }
-  
-      const handleTransactionDetailsClick = (id) => {
-          setClickedTransactionHistoryID(id === clickedTransactionHistoryID ? null : id);
-          setMessage("");
-      }
-    
-      const handleSubmit = async (e) => {
-          e.preventDefault();
-  
-          setActionMessage("Pocessing...");
-          setIsDisabled(true);
-  
-          console.log({userID: clickedUserId, transactionHistoryID, 
-              transactionDetailID: clickedTransactionHistoryID, 
-          });
+        const fetchTransactionHistories = async () =>{
+            try {
+                const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
+                const {transactionHistory, users} = transactionHistoryResponse.data;
+
+                setTransactionHistories(transactionHistory)
+                setUsers(users)
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchTransactionHistories();
+    }, [transactionHistories]);
   
 
-          try {
-              const response = await axios.delete("http://localhost:4001/manager/transactionHistory/delete", {data: {
-                  userID : clickedUserId,
-                  transactionHistoryID: transactionHistoryID,
-                  transactionDetailID: clickedTransactionHistoryID,
-              }});
+    const handleClick = (id) => {
+        setClickedUserId(id === clickedUserId ? null : id);
+        setClickedTransactionHistoryID("");
+        setMessage("");
+    }
+
+    const handleTransactionDetailsClick = (id) => {
+        setClickedTransactionHistoryID(id === clickedTransactionHistoryID ? null : id);
+        setMessage("");
+    }
+    
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        setActionMessage("Pocessing...");
+        setIsDisabled(true);
+
+        console.log({userID: clickedUserId, transactionHistoryID, 
+            transactionDetailID: clickedTransactionHistoryID, 
+        });
   
-              const {message, color} = response.data;
-              setMessage(message);
-              setMessageColor(color);
-              setTransactionHistoryID("");
-              setClickedTransactionHistoryID("");
-              setActionMessage("Delete Transaction");
-              setIsDisabled(false);
-          } catch (error) {
-              setMessage("Error deleting transaction");
-              setMessageColor("red")
-              setTransactionHistoryID("");
-              setClickedTransactionHistoryID("");
-              setActionMessage("Delete Transaction");
-              setIsDisabled(false);
-              console.error(error);  
-          }
+
+        try {
+            const response = await axios.delete("http://localhost:4001/manager/transactionHistory/delete", {data: {
+                userID : clickedUserId,
+                transactionHistoryID: transactionHistoryID,
+                transactionDetailID: clickedTransactionHistoryID,
+            }});
+
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setTransactionHistoryID("");
+            setClickedTransactionHistoryID("");
+            setActionMessage("Delete Transaction");
+            setIsDisabled(false);
+        } catch (error) {
+            setMessage("Error deleting transaction");
+            setMessageColor("red")
+            setTransactionHistoryID("");
+            setClickedTransactionHistoryID("");
+            setActionMessage("Delete Transaction");
+            setIsDisabled(false);
+            console.error(error);  
+        }
       };
   
-  return (
-      <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-      bg-white px-6">
-          <div className="flex flex-col justify-center items-center rounded-lg mb-10
-          bg-white px-6 shadow-xl
-          ring-slate-900/5">
-              <h2 className="text-3xl leading-[68px] 
-              lg:max-w-md font-palanquin font-bold p-2">
+    return (
+        <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+        bg-white px-6">
+            <div className="flex flex-col justify-center items-center rounded-lg mb-10
+            bg-white px-6 shadow-xl
+            ring-slate-900/5">
+                <h2 className="text-3xl leading-[68px] 
+                lg:max-w-md font-palanquin font-bold p-2">
                     Delete Transaction
-              </h2>
-              <ul className='flex flex-col mx-5 w-full
-                  my-5 px-20 py-2 justify-center items-center'>
-                  {transactionHistories.map((userTransactionHistories)=> {
-                      return (
-                          <li className='w-full'
-                          key={userTransactionHistories._id}>
-                              <p className="font-montserrat
-                              text-black text-md leading-8 text-center
-                              my-2 font-semibold cursor-pointer"
-                              onClick={()=> {
-                              handleClick(userTransactionHistories.userID)
-                              }}>
-                                  User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
-                              </p>
-                              <ul  className="flex flex-col-reverse px-10
-                              bg-white shadow-xl justify-center items-center
-                              ring-slate-900/5">
-                                  {clickedUserId === userTransactionHistories.userID 
-                                  ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
-                                      <li className='w-full mb-5' key={transactionDetail._id}>
-                                          <p className="font-montserrat 
-                                          text-center text-slate-gray
-                                          text-sm leading-8 cursor-pointer"
-                                              onClick={()=> {
-                                              handleTransactionDetailsClick(transactionDetail._id)
-                                          }}>
-                                              Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
-                                          </p>  
-                                      </li>
-                                  ) : null}
-                              </ul>                            
-                          </li>
-                      )
-                  })}
-              </ul>
-              {message && <p className="font-montserrat text-lg 
-              leading-8 my-2" style={{ color:`${messageColor}`}}>
-                  {message}
-              </p>}
-              <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-              bg-white px-6 py-4 shadow-xl
-              ring-slate-900/5"
-              onSubmit={handleSubmit}>
-                  <div className="flex 
-                  flex-col justify-center 
-                  items-center m-5 px-6 py-4 ">
-                      <p  className="font-montserrat 
-                      text-slate-gray text-sm 
-                      my-6 text-center">
-                          <span className='font-bold'>Write "</span>
-                          {clickedTransactionHistoryID}
-                          <span className='font-bold'>" to delete transaction.</span>
-                      </p>
-                      <Input type="text" 
-                      value={transactionHistoryID}
-                      placeholder="Transaction ID" 
+                </h2>
+                <ul className='flex flex-col mx-5 w-full
+                    my-5 px-20 py-2 justify-center items-center'>
+                    {transactionHistories.map((userTransactionHistories)=> {
+                        return (
+                            <li className='w-full'
+                            key={userTransactionHistories._id}>
+                            <p className="font-montserrat
+                            text-black text-md leading-8 text-center
+                            my-2 font-semibold cursor-pointer"
+                            onClick={()=> {
+                            handleClick(userTransactionHistories.userID)
+                            }}>
+                                User ID: <span className="text-sm"> {userTransactionHistories.userID}</span> 
+                            </p>
+                            {users && users.map((user)=> {
+                                return (user._id === userTransactionHistories.userID && (
+                                    <p className="font-montserrat
+                                    my-2 text-black text-xs text-center">
+                                        Name - {user.firstName} {user.lastName}
+                                    </p>
+                                ))
+                            })}                              
+                                <ul  className="flex flex-col-reverse mt-5 px-10
+                                bg-white shadow-xl justify-center items-center
+                                ring-slate-900/5">
+                                    {clickedUserId === userTransactionHistories.userID 
+                                    ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
+                                        <li className='w-full mb-5' key={transactionDetail._id}>
+                                            <p className="font-montserrat 
+                                            text-center text-slate-gray
+                                            text-sm leading-8 cursor-pointer"
+                                                onClick={()=> {
+                                                handleTransactionDetailsClick(transactionDetail._id)
+                                            }}>
+                                                Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
+                                            </p>  
+                                        </li>
+                                    ) : null}
+                                </ul>                            
+                            </li>
+                        )
+                    })}
+                </ul>
+                {message && <p className="font-montserrat text-lg 
+                leading-8 my-2" style={{ color:`${messageColor}`}}>
+                    {message}
+                </p>}
+                <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
+                bg-white px-6 py-4 shadow-xl
+                ring-slate-900/5"
+                onSubmit={handleSubmit}>
+                    <div className="flex 
+                    flex-col justify-center 
+                    items-center m-5 px-6 py-4 ">
+                        <p  className="font-montserrat 
+                        text-slate-gray text-sm 
+                        my-6 text-center">
+                            <span className='font-bold'>Write "</span>
+                            {clickedTransactionHistoryID}
+                            <span className='font-bold'>" to delete transaction.</span>
+                        </p>
+                        <Input type="text" 
+                        value={transactionHistoryID}
+                        placeholder="Transaction ID" 
                         handleChange={setTransactionHistoryID}
-                      resetMessage={setMessage} />
-                  </div>           
-                  <button className="gap-2 px-7 py-4 my-2 border 
-                  font-montserrat text-lg leading-none bg-black
-                  rounded-full text-white border-black mb-5" 
-                  type="submit"
-                  disabled={isDisabled}>
-                      {actionMessage}
-                  </button>
-              </form>
-          </div>
-      </div>
-  )};
+                        resetMessage={setMessage} />
+                    </div>           
+                    <button className="gap-2 px-7 py-4 my-2 border 
+                    font-montserrat text-lg leading-none bg-black
+                    rounded-full text-white border-black mb-5" 
+                    type="submit"
+                    disabled={isDisabled}>
+                        {actionMessage}
+                    </button>
+                </form>
+            </div>
+        </div>
+    )};
 
 
 

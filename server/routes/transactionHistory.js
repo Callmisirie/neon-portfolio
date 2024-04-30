@@ -10,12 +10,14 @@ router.get("/read", async(req, res) => {
     
     try {
         const user = await UserModel.findOne({_id : userID});
+        const users = await UserModel.find({});
+
         const transactionHistory = await TransactionHistoryModel.find({});
         if (userID) {
             const response = await TransactionHistoryModel.findOne({userID: user._id});
             userTransactionHistory = response
         }
-        res.json({transactionHistory, userTransactionHistory}); 
+        res.json({transactionHistory, userTransactionHistory, users}); 
         
     } catch (error) {
         console.error(error)

@@ -21,7 +21,7 @@ function Payment() {
     const [priceInCrypto, setPriceInCrypto] = useState(null);
     const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
-    const cryptoSymbolDetails = JSON.parse(window.localStorage.getItem("cryptoSymbolDetails"));
+    const [cryptoSymbolDetails, setCryptoSymbolDetails] = useState(JSON.parse(window.localStorage.getItem("cryptoSymbolDetails")));;
     const userID = window.localStorage.getItem("userID");
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [cryptoGifts, setCryptoGifts] = useState([]);
@@ -44,8 +44,6 @@ function Payment() {
 
     useEffect(() => {
         let cryptoSymbols = [];
-        let cryptoSymbolDetails;
-      
     
         if (cryptoGifts.length) {
           cryptoGifts.map(cryptoGift => cryptoSymbols.push(cryptoGift.cryptoName))
@@ -59,10 +57,8 @@ function Payment() {
                         const transactionHistoryResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
                             params: { cryptoSymbols }
                         });
-                        cryptoSymbolDetails = transactionHistoryResponse.data;
-
-                        window.localStorage.removeItem("cryptoSymbolDetails")
-                        window.localStorage.setItem("cryptoSymbolDetails", JSON.stringify(cryptoSymbolDetails))                 
+                        const cryptoSymbolDetails = transactionHistoryResponse.data;  
+                        setCryptoSymbolDetails(cryptoSymbolDetails)                 
                     } catch (error) {
                         console.error(error)
                     }
