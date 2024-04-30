@@ -30,7 +30,7 @@ function Navbar() {
     return (   
         <header className={`padding-x 
         border-b bg-white-400 top-0 py-2 
-        z-50 w-full ${location.pathname.slice(0, 6) === "/manga" ? "" : "sticky"}`}>
+        z-50 w-full ${location.pathname.slice(0, pathLength) === "/manga" ? "" : "sticky"}`}>
             <nav className="flex justify-between items-center max-container">     
                 <a href="/">
                     <img className=""
