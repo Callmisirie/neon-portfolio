@@ -16,7 +16,7 @@ function Payment() {
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const [cryptoName, setCryptoName] = useState("");
     const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(30);
+    const [minutes, setMinutes] = useState(10);
     const navigate = useNavigate();
     const [priceInCrypto, setPriceInCrypto] = useState(null);
     const [copyTooltip, setCopyTooltip] = useState("Copy");
@@ -43,11 +43,29 @@ function Payment() {
     }, []);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        let cryptoSymbols = [];
+        let cryptoSymbolDetails;
+      
+    
+        if (cryptoGifts.length) {
+          cryptoGifts.map(cryptoGift => cryptoSymbols.push(cryptoGift.cryptoName))
+        }
+        
+        const interval = setInterval( async () => {
             if (seconds === 0) {
                 if (minutes === 0) {
-                    clearInterval(interval); // Stop the interval when both minutes and seconds reach 0
-                    navigate("/commission")
+                    setMinutes(10)
+                    try {
+                        const transactionHistoryResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
+                            params: { cryptoSymbols }
+                        });
+                        cryptoSymbolDetails = transactionHistoryResponse.data;
+
+                        window.localStorage.removeItem("cryptoSymbolDetails")
+                        window.localStorage.setItem("cryptoSymbolDetails", JSON.stringify(cryptoSymbolDetails))                 
+                    } catch (error) {
+                        console.error(error)
+                    }
                 } else {
                     setMinutes(minutes - 1);
                     setSeconds(59);
@@ -209,11 +227,7 @@ function Payment() {
                             setPriceInCrypto={setPriceInCrypto} /> 
                         </> 
                     }
-                    <p className={`font-montserrat leading-8
-                        text-md font-semibold 
-                        text-center w-full ${minutes < 9 ? `text-red-500` : `text-black`}`}>
-                        {pad(minutes)}:{pad(seconds)}
-                    </p>
+                    
                 </div> 
                     {isClickedPaypal || isClickedCrypto ? (
                         <div className="flex gap-5
@@ -273,7 +287,8 @@ function Payment() {
                                              text-center">
                                                 {copyTooltip}
                                             </p>                                                                    
-                                        </div>                                         
+                                        </div> 
+                                       
                                     </div>
                                                 
                                     ) : null)
@@ -344,7 +359,23 @@ function Payment() {
                                 text-sm my-2"  style={{ color:`${messageColor}`}}>
                                     {message}
                                 </p>}
-                            </div>     
+                            </div> 
+                            {cryptoName && (
+                                <div className='flex flex-col justify-center items-center'>
+                                    <p className='font-montserrat leading-8
+                                    text-sm font-semibold text-black
+                                    text-center w-full'>
+                                        Crypto price reqoute
+                                    </p>
+                                    <p className={`font-montserrat leading-8
+                                    text-md font-semibold 
+                                    text-center w-full ${minutes < 4 ? `text-red-500` : `text-black`}`}>
+                                            {pad(minutes)}:{pad(seconds)}
+                                    </p>
+                                 
+                                </div>                                  
+                            )}
+   
                         </div> 
                     ): null}
             </div>

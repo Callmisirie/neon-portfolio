@@ -41,7 +41,7 @@ function Home() {
 
     return (
         <div className="min-h-full">
-            <section className="xl:padding-l wide:padding-r">
+            <section className="xl:padding-l wide:padding-r padding-b">
                 <section className="w-full flex 
                 xl:flex-row flex-col justify-center 
                 min-h-screen gap-10 max-container">
