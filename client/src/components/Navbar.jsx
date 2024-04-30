@@ -22,15 +22,17 @@ function Navbar() {
         Navigate("/");
     };
 
-    const path = "/manga"
-
-    const pathLength = path.length
-
+    const mangaPath = "/manga"
+    const commissionPath = "/commission"
+    const contactPath = "/contact"
+    const aboutPath = "/about"
+    const managerPath = "/manager"
+    const authUserPath = "/auth/user"
 
     return (   
         <header className={`padding-x 
         border-b bg-white-400 top-0 py-2 
-        z-50 w-full ${location.pathname.slice(0, pathLength) === "/manga" ? "" : "sticky"}`}>
+        z-50 w-full ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "" : "sticky"}`}>
             <nav className="flex justify-between items-center max-container">     
                 <a href="/">
                     <img className=""
@@ -40,18 +42,55 @@ function Navbar() {
                     height={20}/>
                 </a>
                 
-                <ul className="flex-1 flex justify-center items-center gap-10 max-lg:hidden mx-10">
-                    <li> <SearchBar /> </li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/"> Home </Link></li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/manga"> Manga </Link></li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/commission"> Commission </Link></li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/about"> About </Link></li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-black text-slate-gray"><Link to="/contact"> Contact </Link></li>
-                    <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black"><Link to="/auth/user"> Sign in / Register </Link></li>
+                <ul className="flex-1 flex justify-center items-center gap-4 max-lg:hidden mx-10">
+                    <li> 
+                        <SearchBar /> 
+                    </li>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-black text-slate-gray
+                        ${location.pathname === "/" ? "font-semibold" : " "}`}><Link to="/"> 
+                            Home </Link>
+                        </li>                        
+                    </div>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-black text-slate-gray
+                        ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "font-semibold" : " "}`}><Link to="/manga"> 
+                            Manga </Link>
+                        </li>                       
+                    </div>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-black text-slate-gray
+                        ${location.pathname.slice(0, commissionPath.length) === "/commission" ? "font-semibold" : " "}`}><Link to="/commission">
+                            Commission </Link>
+                        </li>                
+                    </div>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-black text-slate-gray
+                        ${location.pathname.slice(0, aboutPath.length) === "/about" ? "font-semibold" : " "}`}><Link to="/about">
+                            About </Link>
+                        </li>                    
+                    </div>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-black text-slate-gray
+                        ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}><Link to="/contact">
+                            Contact </Link>
+                        </li>                   
+                    </div>
+                    <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-slate-gray text-black
+                        ${location.pathname.slice(0, authUserPath.length) === "/auth/user" ? "font-semibold" : " "}`}><Link to="/auth/user"> 
+                            Sign in / Register </Link>
+                        </li>                  
+                    </div>
                     {cookies.access_token || userCookies.userAccess_token ?  (
                         <div className="flex justify-center gap-16 items-center ml-10 px-5">
                             {cookies.access_token ? (
-                                <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black"><Link to="/manager"> Manager </Link></li> 
+                                <div className="w-full">
+                                    <li className={`font-montserrat leading-normal text-center text-sm hover:text-slate-gray text-black
+                                    ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}><Link to="/manager"> 
+                                        Manager </Link>
+                                    </li>                  
+                                </div>                               
                             ) : null}
                             <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black">
                                 <button
