@@ -4,7 +4,7 @@ import {headerLogoPurple} from "../assets/images"
 import { Link } from "react-router-dom"; 
 import { useCookies } from 'react-cookie';
 import { useNavigate, useLocation } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 
 import SearchBar from "../components/SearchBar.jsx";
 
@@ -13,6 +13,23 @@ function Navbar() {
     const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
     const Navigate = useNavigate();
     const location = useLocation();
+
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
+    
+            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    
+            setPrevScrollPos(currentScrollPos);
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [prevScrollPos]);
+    
 
     function Logout() {
         setCookies("access_token", "");
@@ -31,8 +48,8 @@ function Navbar() {
 
     return (   
         <header className={`padding-x 
-        border-b bg-white-400 top-0 py-2 
-        z-50 w-full ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "" : "sticky"}`}>
+        border-b bg-white top-0 py-2 
+        z-50 w-full ${visible ? "sticky" : ""}`}>
             <nav className="flex justify-between items-center max-container">     
                 <a href="/">
                     <img className=""

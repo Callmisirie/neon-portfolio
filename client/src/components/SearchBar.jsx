@@ -23,7 +23,7 @@ function SearchBar() {
         <div className="">
             <form className="flex justify-center items-center p-1 my-2
                 border rounded-md border-slate-gray hover:border-black" >
-                <button className="flex justify-center mx-1 w-10"
+                <button className="flex justify-center mx-1 w-5"
                 onClick={handleClick} type="submit" value="">
                     <img className="m-1 rounded-full w-5 h-5"
                     src={search} 
