@@ -22,8 +22,15 @@ function Navbar() {
         Navigate("/");
     };
 
+    const path = "/manga"
+
+    const pathLength = path.length
+
+
     return (   
-        <header className="padding-x absoloute py-8 z-10 w-full">
+        <header className={`padding-x 
+        border-b bg-white-400 top-0 py-2 
+        z-50 w-full ${location.pathname.slice(0, 6) === "/manga" ? "" : "sticky"}`}>
             <nav className="flex justify-between items-center max-container">     
                 <a href="/">
                     <img className=""

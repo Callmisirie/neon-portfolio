@@ -27,6 +27,7 @@ import UserAuth from './pages/userAuth.jsx';
 import Navbar from "./components/Navbar.jsx";
 import Footer from './components/Footer.jsx';
 import { useCookies } from "react-cookie";
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 
 
@@ -37,7 +38,8 @@ function App() {
     <main className='relative'>
       <Router> 
           <div className='min-h-screen'>
-            <Navbar/>      
+            <Navbar/> 
+            <ScrollToTop />     
             <Routes>
               <Route path="/" element={<Home />}/>
               <Route path="/commission" element={<Commission />}/>
