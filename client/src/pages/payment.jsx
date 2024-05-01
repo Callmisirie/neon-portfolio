@@ -359,13 +359,13 @@ function Payment() {
                             {cryptoName && (
                                 <div className='flex flex-col justify-center items-center'>
                                     <p className='font-montserrat leading-8
-                                    text-sm font-semibold text-black
-                                    text-center w-full'>
+                                    text-xs font-semibold text-slate-gray
+                                    text-center'>
                                         Crypto price reqoute
                                     </p>
                                     <p className={`font-montserrat leading-8
                                     text-md font-semibold 
-                                    text-center w-full ${minutes < 4 ? `text-red-500` : `text-black`}`}>
+                                    text-center ${minutes < 4 ? `text-red-500` : `text-black`}`}>
                                             {pad(minutes)}:{pad(seconds)}
                                     </p>
                                  

@@ -15,6 +15,7 @@ import { commissionRouter } from './routes/manager/commission.js';
 import { giftRouter } from './routes/manager/gift.js';
 import { reviewRouter } from './routes/manager/review.js';
 import { transactionHistoryRouter } from './routes/transactionHistory.js';
+import { passwordResetRouter } from './routes/passwordReset.js';
 
 const app = express();
 const password = process.env.MONGO_DB;
@@ -36,6 +37,7 @@ app.use("/manager/commission", commissionRouter);
 app.use("/manager/gift", giftRouter);
 app.use("/manager/review", reviewRouter);
 app.use("/manager/transactionHistory", transactionHistoryRouter);
+app.use("/passwordReset", passwordResetRouter);
 
 app.get("/cryptocurrency/latest", async (req, res) => {
     const {cryptoSymbols} = req.query;
