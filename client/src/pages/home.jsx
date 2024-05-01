@@ -52,7 +52,7 @@ function Home() {
                             <p className="text-xl 
                             font-montserrat 
                             text-purple-600">
-                                The pressure applied.
+                                Create your world.
                             </p>
                             <h1 className="mt-10 
                             font-palanquin text-8xl 

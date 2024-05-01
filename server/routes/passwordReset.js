@@ -22,7 +22,7 @@ router.post("/generateOTP", async (req, res)=> {
 
             const response = await OTP.save();
             res.json({
-               message: "Password reset OTP generated",
+               message: "Check your email for code",
                color: "green"
             });   
 
@@ -32,7 +32,7 @@ router.post("/generateOTP", async (req, res)=> {
 
             const response = await OTP.save();
             res.json({
-               message: "Password reset OTP generated",
+               message: "Check your email for code",
                color: "green"
             }); 
          }           
@@ -52,19 +52,24 @@ router.post("/generateOTP", async (req, res)=> {
 });
 
 router.post("/comfirmOTP", async (req, res)=> {
-   const {id, OTP} = req.body;
+   const {id, code} = req.body;
+   const OTP = code;
+
+   console.log({id, code});
    const user = await UserModel.findOne({email: _.toLower(id)})
 
    if (user) {  
       try {
          const userOTP = await OTPModel.findOne({id: user.email})
-         if (OTP === userOTP.OTP) {
+         if (Number(OTP) === userOTP.OTP) {
             res.json({
+               isMatch: true,
                message: "Correct OTP",
                color: "green"
             });   
          } else {
             res.json({
+               isMatch: false,
                message: "Incorrect OTP",
                color: "red"
             });
@@ -72,41 +77,48 @@ router.post("/comfirmOTP", async (req, res)=> {
       } catch (error) {
          console.error(error);
          res.json({
+            isMatch: false,
             message: "Internal error checking OTP ",
             color: "red"
          });
       } 
    } else if (!user) {
       res.json({
+         isMatch: false,
          message: "User does not exist",
          color: "red"
       });
    }
 });
 
-router.post("/passwordChange", async (req, res)=> {
-   const {id, OTP, newPassword} = req.body;
+router.post("/changePassword", async (req, res)=> {
+   console.log(req.body);
+   const {id, code, newPassword} = req.body;
+   const OTP = code;
    const user = await UserModel.findOne({email: _.toLower(id)})
 
    if (user) {  
       try {
          const userOTP = await OTPModel.findOne({id: user.email})
          if (newPassword) {
-            if (OTP === userOTP.OTP) {
+            if (Number(OTP) === userOTP.OTP) {
                const hash = bcrypt.hashSync(newPassword, saltRounds);
                await UserModel.findOneAndUpdate({email: user.email}, {password: hash}, {new: true})
                res.json({
+                  isMatch: true,
                   message: "Successfully changed password",
                   color: "green"
                });   
             } else {
                res.json({
+                  isMatch: false,
                   message: "Failed to change password",
                   color: "red"
                });
             }            
          } else {
             res.json({
+               isMatch: false,
                message: "Password field empty",
                color: "red"
             });
@@ -114,12 +126,14 @@ router.post("/passwordChange", async (req, res)=> {
       } catch (error) {
          console.error(error);
          res.json({
+            isMatch: false,
             message: "Internal error changing password ",
             color: "red"
          });
       } 
    } else if (!user) {
       res.json({
+         isMatch: false,
          message: "User does not exist",
          color: "red"
       });

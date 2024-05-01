@@ -151,7 +151,7 @@ export function Register() {
             type="text"
             autoComplete="off"/>
             <div className="w-full flex 
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat">
                 <div className="mr-1 ml-2 
@@ -272,7 +272,7 @@ export function Login() {
             type="text"
             autoComplete="off"/>
             <div className="w-full flex 
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat">
                 <div className="mr-1 ml-2 

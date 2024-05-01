@@ -21,7 +21,7 @@ function Payment() {
     const [priceInCrypto, setPriceInCrypto] = useState(null);
     const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
-    const [cryptoSymbolDetails, setCryptoSymbolDetails] = useState(JSON.parse(window.localStorage.getItem("cryptoSymbolDetails")));;
+    const [cryptoSymbolDetails, setCryptoSymbolDetails] = useState(JSON.parse(window.localStorage.getItem("cryptoSymbolDetails")));
     const userID = window.localStorage.getItem("userID");
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [cryptoGifts, setCryptoGifts] = useState([]);

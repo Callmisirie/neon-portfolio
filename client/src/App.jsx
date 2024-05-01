@@ -28,6 +28,8 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from './components/Footer.jsx';
 import { useCookies } from "react-cookie";
 import ScrollToTop from './components/ScrollToTop.jsx';
+import GenerateOTP from './pages/passwordReset.js/generateOTP.jsx';
+import ChangePassword from './pages/passwordReset.js/changePassword.jsx';
 
 
 
@@ -51,9 +53,8 @@ function App() {
               <Route path="/payment" element={<Payment />}/>
               <Route path="/auth/admin" element={<AdminAuth />}/>
               <Route path="/auth/user" element={<UserAuth />}/>
-
-
-
+              <Route path="/passwordReset/generateOTP" element={<GenerateOTP />}/>
+              <Route path="/passwordReset/changePassword" element={<ChangePassword />}/>
               <Route path="/manga/find/:mangaName" element={<Find />}/>
               {cookies.access_token &&  (
                 <>

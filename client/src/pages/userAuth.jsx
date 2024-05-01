@@ -176,7 +176,7 @@ export function Register() {
             type="email"
             autoComplete="off"/>
             <div className="w-full flex 
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat">
                 <div className="mr-1 ml-2 
@@ -235,6 +235,10 @@ export function Login() {
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+
+    function handleForgotPasswordClick() {
+        navigate("/passwordReset/generateOTP")
+    }
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault()
@@ -297,7 +301,7 @@ export function Login() {
             type="email"
             autoComplete="off"/>
             <div className="w-full flex 
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat">
                 <div className="mr-1 ml-2 
@@ -316,6 +320,12 @@ export function Login() {
                 onClick={togglePasswordVisibility}
                 src={showPassword ? showView : hideView}/>
             </div>
+            <p className='font-montserrat leading-8
+            text-xs font-semibold text-red-600
+            text-center cursor-pointer mb-3'
+            onClick={handleForgotPasswordClick}>
+                Forgot password?
+            </p>
             <button className="px-7 py-4 my-2 border 
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black" 
