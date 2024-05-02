@@ -155,7 +155,7 @@ return (
                     placeholder="Feedback"/>                 
                     <button className="gap-2 px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
-                    rounded-full text-white border-black mb-5 w-full"
+                    rounded-full text-white border-black mb-5"
                     type="submit"
                     disabled={isDisabled}>
                         {actionMessage}
@@ -271,7 +271,7 @@ const handleDeleteReviewClick = async () => {
                     <span className='font-bold font-montserrat'>" to delete Review.</span>
                 </p>
                 <input className="p-2.5 my-3
-                border border-slate-gray 
+                border border-slate-gray max-w-fit
                 rounded-full text-center font-montserrat" 
                 onChange={(e)=> {
                     setDeleteReview(e.target.value)

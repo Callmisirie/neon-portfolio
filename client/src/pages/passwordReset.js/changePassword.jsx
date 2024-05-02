@@ -8,12 +8,12 @@ const ChangePassword = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [changePasswordInfo, setChangePasswordInfo] = useState({
         newPassword: "",
-        comfirmPassword: ""
+        confirmPassword: ""
     });
     const [isDisabled, setIsDisabled] = useState(false);
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Comfirm");
+    const [actionMessage, setActionMessage] = useState("Confirm");
     const [generateOTPInfo, setGenerateOTPInfo] = useState(JSON.parse(window.localStorage.getItem("generateOTPInfo")));
 
     const navigate = useNavigate();
@@ -42,18 +42,18 @@ const ChangePassword = () => {
 
         console.log(changePasswordInfo);
 
-        if (changePasswordInfo.newPassword === changePasswordInfo.comfirmPassword){
+        if (changePasswordInfo.newPassword === changePasswordInfo.confirmPassword){
             try {
                 const response = await axios.post("http://localhost:4001/passwordReset/changePassword", {...generateOTPInfo, ...changePasswordInfo});
                 const {message, color, isMatch} = response.data;
                 setMessage(message);
                 setMessageColor(color);
-                setActionMessage("Comfirm");
+                setActionMessage("Confirm");
                 setIsDisabled(false);
                 if(isMatch) {
                     setChangePasswordInfo({
                         newPassword: "",
-                        comfirmPassword: ""
+                        confirmPassword: ""
                     });
                     setTimeout(() => {
                         navigate("/auth/user")
@@ -64,14 +64,14 @@ const ChangePassword = () => {
             } catch (error) {
                 setMessage("Error changing password");
                 setMessageColor("red");
-                setActionMessage("Comfirm");
+                setActionMessage("Confirm");
                 setIsDisabled(false);
                 console.error(error)
             }            
         } else {
             setMessage("Error password does not match");
             setMessageColor("red");
-            setActionMessage("Comfirm");
+            setActionMessage("Confirm");
             setIsDisabled(false);
         }
         
@@ -98,46 +98,34 @@ const ChangePassword = () => {
                     my-2"  style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
-                    <div className="w-full flex 
+                    <input className="w-full flex
                     items-center p-2.5 my-2 max-w-fit
                     border border-slate-gray 
-                    rounded-full text-center font-montserrat">
-                        <div className="mr-1 ml-2 
-                        rounded-full w-5 h-5"/>
-                        <input className="appearance-none 
-                        outline-none text-center"
-                        onChange={handleOnChange}
-                        name="newPassword"
-                        value={changePasswordInfo.newPassword}
-                        placeholder="New Password" 
-                        type={showPassword ? 'text' : 'password'}
-                        minLength="8"
-                        />
-                        <img className="ml-1 mr-2 
-                        rounded-full w-5 h-5 cursor-pointer"
-                        onClick={togglePasswordVisibility}
-                        src={showPassword ? showView : hideView}/>
-                    </div>
-                    <div className="w-full flex 
+                    rounded-full text-center font-montserrat"
+                    onChange={handleOnChange}
+                    name="newPassword"
+                    value={changePasswordInfo.newPassword}
+                    placeholder="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    minLength="8"
+                    />
+                    <input className="w-full flex
                     items-center p-2.5 my-2 max-w-fit
                     border border-slate-gray 
-                    rounded-full text-center font-montserrat">
-                        <div className="mr-1 ml-2 
-                        rounded-full w-5 h-5"/>
-                        <input className="appearance-none 
-                        outline-none text-center"
-                        onChange={handleOnChange}
-                        name="comfirmPassword"
-                        value={changePasswordInfo.comfirmPassword}
-                        placeholder="Cormfirm Password" 
-                        type={showPassword ? 'text' : 'password'}
-                        minLength="8"
-                        />
-                        <img className="ml-1 mr-2 
-                        rounded-full w-5 h-5 cursor-pointer"
-                        onClick={togglePasswordVisibility}
-                        src={showPassword ? showView : hideView}/>
-                    </div>
+                    rounded-full text-center font-montserrat"
+                    onChange={handleOnChange}
+                    name="confirmPassword"
+                    value={changePasswordInfo.confirmPassword}
+                    placeholder="Confirm"
+                    type={showPassword ? 'text' : 'password'}
+                    minLength="8"
+                    />
+                    <p className="font-montserrat font-semibold
+                    text-slate-gray text-start mt-2 mb-5
+                    text-sm cursor-pointer"
+                    onClick={togglePasswordVisibility}>
+                    {!showPassword ? "Show Password" : "Hide Password"}
+                    </p>
                     <button className="px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
                     rounded-full text-white border-black" 

@@ -99,7 +99,7 @@ function GenerateOTP() {
                         {message}
                     </p>}
                     <input className="w-full flex 
-                    items-center p-2.5 my-2
+                    items-center p-2.5 my-2 max-w-fit
                     border border-slate-gray 
                     rounded-full text-center font-montserrat"
                     onChange={handleOnChange}
@@ -114,25 +114,23 @@ function GenerateOTP() {
                     onClick={handleGenerateOTP}>
                         Get code
                     </p>
-                    <div className="w-full flex 
-                    items-center p-2.5 my-2
+                    <input className="w-full flex 
+                    items-center p-2.5 my-2 max-w-fit
                     border border-slate-gray 
-                    rounded-full text-center font-montserrat">
-                        <input className="appearance-none 
-                        outline-none text-center"
-                        onChange={handleOnChange}
-                        name="code"
-                        value={generateOTPInfo.code}
-                        placeholder="Code" 
-                        inputMode="numeric"
-                        minLength="4"
-                        />
-                    </div>
-                    <button className="px-7 py-4 my-2 border 
+                    rounded-full text-center font-montserrat"
+                    onChange={handleOnChange}
+                    name="code"
+                    value={generateOTPInfo.code}
+                    placeholder="Code" 
+                    inputMode="numeric"
+                    minLength="4"
+                    autoComplete="off"/>
+                    <button className={`px-7 py-4 my-2 border 
                     font-montserrat text-lg leading-none bg-black
-                    rounded-full text-white border-black" 
+                    rounded-full text-white border-black bg-tr
+                    ${generateOTPInfo.code.length < 4 ? `cursor-not-allowed` : ``}`} 
                     type="submit"
-                    disabled={isDisabled}>
+                    disabled={generateOTPInfo.code.length < 4 ? true : isDisabled}>
                         {actionMessage}
                     </button>
                 </form>

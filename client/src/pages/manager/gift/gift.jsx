@@ -557,7 +557,7 @@ const handleDeletePaypalGiftClick = async () => {
                     <span className='font-bold font-montserrat'>" to delete Paypal Gift.</span>
                 </p>
                 <input className="p-2.5 my-3
-                border border-slate-gray 
+                border border-slate-gray max-w-fit
                 rounded-full text-center font-montserrat" 
                 onChange={(e)=> {setDeletePaypalGift(e.target.value)}} 
                 placeholder="Address" 
@@ -674,7 +674,7 @@ const handleDeleteCryptoGiftClick = async () => {
                     <span className='font-bold font-montserrat'>" to delete Crypto Gift.</span>
                 </p>
                 <input className="p-2.5 my-3
-                border border-slate-gray 
+                border border-slate-gray max-w-fit
                 rounded-full text-center font-montserrat" 
                 onChange={(e)=> {setDeleteCryptoGift(e.target.value)}} 
                 placeholder="Crypto Name" 

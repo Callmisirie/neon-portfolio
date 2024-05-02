@@ -369,7 +369,7 @@ return (
                 ring-slate-900/5"
                 onSubmit={handleChapterSubmit}>
                     <input className="p-2.5 my-3
-                    border border-slate-gray 
+                    border border-slate-gray max-w-fit
                     rounded-full text-center font-montserrat"
                     type="number" 
                     value={chapterNumber} 
@@ -380,7 +380,7 @@ return (
                     placeholder='Chapter Number'
                     />
                     <input className="p-2.5 my-3
-                    border border-slate-gray 
+                    border border-slate-gray max-w-fit
                     rounded-full text-center font-montserrat" 
                     type="text" 
                     value={title} 
@@ -572,7 +572,7 @@ const handleClick = (mangaId) => {
                     <span className='font-bold font-montserrat'>" to delete Manga.</span>
                 </p>
                 <input className="p-2.5 my-3
-                border border-slate-gray 
+                border border-slate-gray max-w-fit
                 rounded-full text-center font-montserrat" 
                 onChange={(e)=> {
                     setDeleteMangaName(e.target.value)
@@ -649,7 +649,7 @@ const handleClick = (mangaId) => {
                 <span className='font-bold font-montserrat'>" to delete Chapter.</span>
             </p>
             <input className="p-2.5 my-3
-            border border-slate-gray 
+            border border-slate-gray max-w-fit
             rounded-full text-center font-montserrat" 
                 onChange={(e)=> {
                     setDeleteChapterTitle(e.target.value)
@@ -1018,7 +1018,7 @@ function MangaEdit() {
                         ring-slate-900/5">
                         <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
                         <input className="p-2.5 mb-3
-                        border border-slate-gray 
+                        border border-slate-gray max-w-fit
                         rounded-full text-center font-montserrat" 
                         type="number" 
                         value={newChapterNumber} onChange={(e) => {
@@ -1032,7 +1032,7 @@ function MangaEdit() {
                         ring-slate-900/5">
                             <p className='mb-4 font-bold font-montserrat text-slate-gray'>Title</p> 
                             <input className="p-2.5 mb-3
-                            border border-slate-gray 
+                            border border-slate-gray max-w-fit
                             rounded-full text-center font-montserrat" 
                             type="text" 
                             value={newChapterTitle} onChange={(e) => {

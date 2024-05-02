@@ -73,6 +73,7 @@ function UserAuth() {
 
 export function Register() {
     const [showPassword, setShowPassword] = useState(false);
+
     const [registerInfo, SetRegisterInfo] = useState({
         firstName: "",
         lastName: "",
@@ -146,7 +147,7 @@ export function Register() {
                 {message}
             </p>}
             <input className="w-full flex
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
@@ -156,7 +157,7 @@ export function Register() {
             type="text"
             autoComplete="off"/>
             <input className="w-full flex
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
@@ -166,7 +167,7 @@ export function Register() {
             type="text"
             autoComplete="off"/>
             <input className="w-full flex
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
@@ -175,25 +176,22 @@ export function Register() {
             placeholder="Email"
             type="email"
             autoComplete="off"/>
-            <div className="w-full flex 
+            <input className="w-full flex
             items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
-            rounded-full text-center font-montserrat">
-                <div className="mr-1 ml-2 
-                rounded-full w-5 h-5"/>
-                <input className="appearance-none 
-                outline-none text-center"
-                onChange={handleOnChange}
-                name="password"
-                value={registerInfo.password}
-                placeholder="Password"
-                type={showPassword ? 'text' : 'password'}
-                minLength="8"/>
-                <img className="ml-1 mr-2 
-                rounded-full w-5 h-5 cursor-pointer"
-                onClick={togglePasswordVisibility}
-                src={showPassword ? showView : hideView}/>
-            </div>   
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="password"
+            value={registerInfo.password}
+            placeholder="Password"
+            type={showPassword ? 'text' : 'password'}
+            minLength="8"/>
+            <p className="font-montserrat font-semibold
+            text-slate-gray text-start mt-2 mb-5
+            text-sm cursor-pointer"
+            onClick={togglePasswordVisibility}>
+            {!showPassword ? "Show Password" : "Hide Password"}
+            </p>
             <button className="px-7 py-4 my-2 border 
             font-montserrat text-lg leading-none bg-black
             rounded-full text-white border-black"
@@ -291,7 +289,7 @@ export function Login() {
                 {message}
             </p>}
             <input className="w-full flex 
-            items-center p-2.5 my-2
+            items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
             rounded-full text-center font-montserrat"
             onChange={handleOnChange}
@@ -300,26 +298,23 @@ export function Login() {
             placeholder="Email"
             type="email"
             autoComplete="off"/>
-            <div className="w-full flex 
+            <input className="w-full flex
             items-center p-2.5 my-2 max-w-fit
             border border-slate-gray 
-            rounded-full text-center font-montserrat">
-                <div className="mr-1 ml-2 
-                rounded-full w-5 h-5"/>
-                <input className="appearance-none 
-                outline-none text-center"
-                onChange={handleOnChange}
-                name="password"
-                value={loginInfo.password}
-                placeholder="Password" 
-                type={showPassword ? 'text' : 'password'}
-                minLength="8"
-                />
-                <img className="ml-1 mr-2 
-                rounded-full w-5 h-5 cursor-pointer"
-                onClick={togglePasswordVisibility}
-                src={showPassword ? showView : hideView}/>
-            </div>
+            rounded-full text-center font-montserrat"
+            onChange={handleOnChange}
+            name="password"
+            value={loginInfo.password}
+            placeholder="Password"
+            type={showPassword ? 'text' : 'password'}
+            minLength="8"
+            />
+            <p className="font-montserrat font-semibold
+            text-slate-gray text-start mt-2 mb-5
+            text-sm cursor-pointer"
+            onClick={togglePasswordVisibility}>
+            {!showPassword ? "Show Password" : "Hide Password"}
+            </p>
             <p className='font-montserrat leading-8
             text-xs font-semibold text-red-600
             text-center cursor-pointer mb-3'
