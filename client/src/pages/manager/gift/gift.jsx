@@ -213,7 +213,7 @@ return (
             lg:max-w-md font-palanquin font-bold p-2">
                 Create Paypal Gift
             </h2>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"
             style={{ color:`${messageColor}`}}>
                 {message}
@@ -334,7 +334,7 @@ return (
             lg:max-w-md font-palanquin font-bold p-2">
                 Create Crypto Gift
             </h2>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"
             style={{ color:`${messageColor}`}}>
                 {message}
@@ -525,7 +525,7 @@ const handleDeletePaypalGiftClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Paypal Gift
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -642,7 +642,7 @@ const handleDeleteCryptoGiftClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Crypto Gift
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -881,7 +881,7 @@ return (
                         )
                     })}
                 </ul>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"
             style={{ color:`${messageColor}`}}>
                 {message}
@@ -1055,7 +1055,7 @@ function CryptoGiftEdit() {
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
                     {cryptoName} 
                 </h3>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}

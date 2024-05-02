@@ -162,7 +162,7 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2">
                     Create Commission
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -291,7 +291,7 @@ const handleDeleteCommissionClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Commission
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -499,7 +499,7 @@ function CommissionEdit() {
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
                     {artStyle} 
                 </h3>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}

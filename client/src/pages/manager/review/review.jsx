@@ -237,7 +237,7 @@ const handleDeleteReviewClick = async () => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Review
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -410,7 +410,7 @@ function ReviewEdit() {
                 <span className='font-montserrat font-bold'>UPDATE - </span>     
                 {email} 
             </h3>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}

@@ -141,7 +141,7 @@ export function Register() {
             leading-8 my-2 font-bold">
                 Register
             </h2>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
@@ -286,7 +286,7 @@ export function Login() {
             leading-8 my-2 font-bold">
                 Login
             </h2>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}

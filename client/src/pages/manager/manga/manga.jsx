@@ -275,7 +275,7 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2">
                     Manga
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -336,7 +336,7 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
                     Manga Chapter
                 </h2>
-                {message && <p  className="font-montserrat text-lg 
+                {message && <p  className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -538,7 +538,7 @@ const handleClick = (mangaId) => {
                 lg:max-w-md font-palanquin font-bold p-2">
                     Manga
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -596,7 +596,7 @@ const handleClick = (mangaId) => {
             lg:max-w-md font-palanquin font-bold p-2 text-center">
                 Manga Chapter
             </h2>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"
             style={{ color:`${messageColor}`}}>
                 {message}
@@ -892,7 +892,7 @@ function MangaEdit() {
                         <span className='font-montserrat font-bold'>UPDATE - </span>     
                         {mangaName} 
                     </h3>
-                    {message && <p className="font-montserrat text-lg 
+                    {message && <p className="font-montserrat text-sm 
                     leading-8 my-2"  style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
@@ -1004,7 +1004,7 @@ function MangaEdit() {
                     </div>
 
                     
-                    {message && <p className="font-montserrat text-lg 
+                    {message && <p className="font-montserrat text-sm 
                     leading-8 my-2"
                     style={{ color:`${messageColor}`}}>
                         {message}

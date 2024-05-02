@@ -1,8 +1,24 @@
+import 'dotenv/config'
 import express from "express";
 import TransactionHistoryModel from "../models/TransactionHistory.js";
 import UserModel from "../models/User.js";
+import nodemailer from "nodemailer";
 
 const router = express.Router();
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // Use false for TLS
+    auth: {
+       user: process.env.EMAIL_USER,
+       pass: process.env.EMAIL_PASS
+    },
+    tls: {
+       rejectUnauthorized: false // Add this line to disable certificate validation
+    }
+ });
 
 router.get("/read", async(req, res) => {
     const {userID} = req.query;
@@ -111,6 +127,18 @@ router.post("/create", async (req, res) => {
                     });
                 }    
             }
+
+            const info = transporter.sendMail({
+                from: {
+                   name: "Neon World",
+                   address:  process.env.EMAIL_USER
+                }, // sender address
+                to: user.email, // list of receivers
+                subject: "Commission Order", // Subject line
+                text: "Congratulation on making this order, payment comfirmation is processing.",
+             });
+             
+
         } else {
             res.json({
                 message: "Missing fields",
@@ -142,7 +170,18 @@ router.put("/status", async (req, res)=> {
 
                 userTransactionHistory.transactionDetails[transactionDetailIndex].paymentStatus = checkboxValue;
 
-                await userTransactionHistory.save()
+                await userTransactionHistory.save();
+
+                const info = transporter.sendMail({
+                    from: {
+                       name: "Neon World",
+                       address:  process.env.EMAIL_USER
+                    }, // sender address
+                    to: user.email, // list of receivers
+                    subject: "Order Payment", // Subject line
+                    text: `Your order status is - ${checkboxValue}`,
+                    html: `<b>Your order status is - </b> ${checkboxValue}`,
+                 });
 
                 res.json({
                     message: "Transaction status updated successfully",

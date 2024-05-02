@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import {useCookies} from "react-cookie"; 
-import { Navigate, useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; 
 import { hideView, showView } from "../../assets/icons";
 
 const ChangePassword = () => {
@@ -51,15 +51,15 @@ const ChangePassword = () => {
                 setActionMessage("Comfirm");
                 setIsDisabled(false);
                 if(isMatch) {
+                    setChangePasswordInfo({
+                        newPassword: "",
+                        comfirmPassword: ""
+                    });
                     setTimeout(() => {
                         navigate("/auth/user")
                     }, 5000);
                     window.localStorage.removeItem("generateOTPInfo")
                     setGenerateOTPInfo(JSON.parse(window.localStorage.getItem("generateOTPInfo")))
-                    setGenerateOTPInfo({
-                        newPassword: "",
-                        comfirmPassword: ""
-                    })
                 }
             } catch (error) {
                 setMessage("Error changing password");

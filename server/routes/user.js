@@ -2,13 +2,28 @@ import 'dotenv/config'
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import _ from "lodash"
+import _ from "lodash";
+import nodemailer from "nodemailer";
 
 import UserModel from "../models/User.js";
 
 const router = express.Router();
 const saltRounds = 10;
 const secret = process.env.SECRET_KEY;
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // Use false for TLS
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false // Add this line to disable certificate validation
+    }
+});
 
 router.post("/register", async (req, res)=> {
     const {firstName, lastName, email, password} = req.body;
@@ -17,7 +32,20 @@ router.post("/register", async (req, res)=> {
 
     if(!user){
         const user = new UserModel({firstName, lastName, email : _.toLower(email), password : hash });
-        user.save();
+        const userResponse = await user.save();
+
+        console.log(userResponse);
+
+        const info = transporter.sendMail({
+            from: {
+               name: "Neon World",
+               address:  process.env.EMAIL_USER
+            }, // sender address
+            to: userResponse.email, // list of receivers
+            subject: "User Registration", // Subject line
+            text: "You have successfully registered to Neon World."
+         });
+
         res.json({
             message: "User successfully Register",
             color: "green"

@@ -258,7 +258,7 @@ return (
                     )
                 })}
             </ul>
-            {message && <p className="font-montserrat text-lg 
+            {message && <p className="font-montserrat text-sm 
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
@@ -426,7 +426,7 @@ function TransactionsDelete() {
                         )
                     })}
                 </ul>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2" style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}

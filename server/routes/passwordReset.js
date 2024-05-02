@@ -15,21 +15,20 @@ const transporter = nodemailer.createTransport({
    port: 587,
    secure: false, // Use false for TLS
    auth: {
-     user: process.env.EMAIL_USER,
-     pass: process.env.EMAIL_PASS
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
    },
    tls: {
-     rejectUnauthorized: false // Add this line to disable certificate validation
+      rejectUnauthorized: false // Add this line to disable certificate validation
    }
- });
- 
+});
 
 router.post("/generateOTP", async (req, res)=> {
    const {id} = req.body;
    const user = await UserModel.findOne({email: _.toLower(id)})
-   console.log(user.email);
-
+   
    if (user) {
+      console.log(user.email);
       try {
          const userOTP = await OTPModel.findOne({id: user.email})
          if (userOTP) {
@@ -41,7 +40,7 @@ router.post("/generateOTP", async (req, res)=> {
 
             const info = transporter.sendMail({
                from: {
-                  name: "Rakyon",
+                  name: "Neon World",
                   address:  process.env.EMAIL_USER
                }, // sender address
                to: user.email, // list of receivers
@@ -133,6 +132,17 @@ router.post("/changePassword", async (req, res)=> {
             if (Number(OTP) === userOTP.OTP) {
                const hash = bcrypt.hashSync(newPassword, saltRounds);
                await UserModel.findOneAndUpdate({email: user.email}, {password: hash}, {new: true})
+
+               const info = transporter.sendMail({
+                  from: {
+                     name: "Neon World",
+                     address:  process.env.EMAIL_USER
+                  }, // sender address
+                  to: user.email, // list of receivers
+                  subject: "Password Change", // Subject line
+                  text: "Your password was successfully changed"
+               });
+
                res.json({
                   isMatch: true,
                   message: "Successfully changed password",
