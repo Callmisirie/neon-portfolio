@@ -28,12 +28,15 @@ function GenerateOTP() {
         setMessage("");
     };
 
-    const handleGeneratePassword = async () => {
+    const handleGenerateOTP = async () => {
         try {
             const response = await axios.post("http://localhost:4001/passwordReset/generateOTP", generateOTPInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
+            setTimeout(() => {
+                setMessage("");  
+            }, 5000);
         } catch (error) {
             setMessage("Error generating OTP");
             setMessageColor("red");
@@ -41,7 +44,7 @@ function GenerateOTP() {
         }
     }
 
-    const handleGenerateOTPSubmit = async (event) => {
+    const handleGenerateOTPInfoSubmit = async (event) => {
         event.preventDefault()
         setIsDisabled(true);
         setActionMessage("Processing...");
@@ -90,9 +93,9 @@ function GenerateOTP() {
                 <form className="flex flex-col justify-center items-center rounded-lg 
                 bg-white px-6 py-6 shadow-xl
                 ring-slate-900/5"
-                onSubmit={handleGenerateOTPSubmit}>
-                    {message && <p className="font-montserrat text-lg 
-                    leading-8 my-2"  style={{ color:`${messageColor}`}}>
+                onSubmit={handleGenerateOTPInfoSubmit}>
+                    {message && <p className="font-montserrat text-sm 
+                    leading-8 my-2" style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
                     <input className="w-full flex 
@@ -108,7 +111,7 @@ function GenerateOTP() {
                     <p className='font-montserrat leading-8
                     text-sm font-semibold text-purple-600
                     text-center cursor-pointer mb-3'
-                    onClick={handleGeneratePassword}>
+                    onClick={handleGenerateOTP}>
                         Get code
                     </p>
                     <div className="w-full flex 

@@ -1,7 +1,6 @@
 import express from "express";
 import { ReviewModel } from "../../models/review.js";
-import NewsletterModel from "../../models/Newsletter.js";
-
+import UserModel from "../../models/User.js";
 
 const router = express.Router();
  
@@ -13,23 +12,17 @@ router.get("/read", async (req, res)=> {
 })
 
 router.post("/create", async (req, res) => {
-    const {email, name, feedback, secretKey} = req.body;
+    const {userID, name,  feedback} = req.body;
 
-    console.log({email, name, feedback});
+    console.log({userID, name, feedback});
 
-    if (secretKey === "Review") {
-        if (email && name && feedback) {
+    const user = await UserModel.findOne({_id : userID});
+
+        if (user && name && feedback) {
             try {
-                const reviewDetails = { email, name, feedback};
+                const reviewDetails = { email: user.email, name, feedback};
                 const review = new ReviewModel(reviewDetails);
                 const reviewResponse = await review.save();
-        
-        
-                const newsletter = await NewsletterModel.findOne({email});
-                if (!newsletter) {
-                    const newsletter = new NewsletterModel({email});
-                    const newsletterResponse = await newsletter.save();
-                }
         
                 res.json({
                     message: "Review uploaded successfully",
@@ -47,16 +40,7 @@ router.post("/create", async (req, res) => {
                 message: "Failed to upload review, missing fields", 
                 color: "red"
             });
-        } 
-    } else {
-        res.json({
-            message: "Failed to upload review, secret key does not match", 
-            color: "red"
-        });
-    }
- 
-  
-  
+        }   
 });
 
 

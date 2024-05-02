@@ -7,10 +7,22 @@ const ReviewSection = () => {
     const navigate = useNavigate();
     const [reviews, setReviews] = useState([]);
     const [selectedReviewIndices, setSelectedReviewIndices] = useState([]);
+    const [message, setMessage] = useState("");
+    const [messageColor, setMessageColor] = useState("");
+    const userID = window.localStorage.getItem("userID");
     
     function handleCreate() {
-        navigate("/review/create")
-        window.scrollTo(0, 0);
+        if (!userID) {
+            setMessage("Log in for this feature");
+            setMessageColor("red")
+            setTimeout(() => {
+                setMessage("");  
+            }, 5000);
+        } else {
+            navigate("/review/create")
+            window.scrollTo(0, 0);            
+        }
+
     };
 
     useEffect(() => {
@@ -70,13 +82,18 @@ const ReviewSection = () => {
                         );
                     })}
                 </div>
-                <div className="flex justify-center mt-10">
+                <div className="flex flex-col items-center justify-center mt-10">
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1
                     bg-purple-600 rounded-full hover:bg-purple-500"
                     onClick={handleCreate}> 
                         Post Review
                     </button>
+                    {message && <p className="font-montserrat text-sm
+                    leading-8 font-semibold my-2"
+                    style={{ color:`${messageColor}`}}>
+                        {message}
+                    </p>}
                 </div>
             </section>    
         </section>

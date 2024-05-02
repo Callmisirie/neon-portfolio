@@ -58,14 +58,13 @@ function ReviewManager() {
 
 function ReviewCreate() {
     const [reviews, setReviews] = useState([]);
-    const [email, setEmail] = useState("");
-    const [secretKey, setSecretKey] = useState("");
     const [name, setName] = useState("");
     const [feedback, setFeedback] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [actionMessage, setActionMessage] = useState("Upload Review");
     const [isDisabled, setIsDisabled] = useState(false);
+    const userID = window.localStorage.getItem("userID");
 
 
 useEffect(() => {
@@ -85,38 +84,44 @@ useEffect(() => {
 const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({email, name , feedback, secretKey});
+    console.log({name , feedback});
 
     setActionMessage("Processing...")
     setIsDisabled(true);
     
 
-
-    try {
-        const response = await axios.post("http://localhost:4001/manager/review/create", {email, name, feedback, secretKey});
-
-        const {message, color} = response.data;
-        setMessage(message);
-        setMessageColor(color);
-        setSecretKey("");
-        setEmail("");
-        setName("");
-        setFeedback("");
+    if (!userID) {
+        setMessage("Log in before making a review");
+        setMessageColor("red")
         setActionMessage("Upload Review")
-        setIsDisabled(false);
-    
+        setTimeout(() => {
+            setMessage("");  
+        }, 5000);
+        setIsDisabled(false); 
+    } else if (userID) {
+        try {
+            const response = await axios.post("http://localhost:4001/manager/review/create", {userID, name, feedback});
+
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setName("");
+            setFeedback("");
+            setActionMessage("Upload Review")
+            setIsDisabled(false);
         
-    } catch (error) {
-        setMessage("Error uploading review");
-        setMessageColor("red");
-        setSecretKey("");
-        setEmail("");
-        setName("");
-        setFeedback("");
-        setActionMessage("Upload Review")
-        setIsDisabled(false);
-        console.error(error);
+            
+        } catch (error) {
+            setMessage("Error uploading review");
+            setMessageColor("red");
+            setName("");
+            setFeedback("");
+            setActionMessage("Upload Review")
+            setIsDisabled(false);
+            console.error(error);
+        }        
     }
+
 };
 
 
@@ -128,7 +133,7 @@ return (
                 lg:max-w-md font-palanquin font-bold p-2">
                     Create Review
                 </h2>
-                {message && <p className="font-montserrat text-lg 
+                {message && <p className="font-montserrat text-sm 
                 leading-8 my-2"
                 style={{ color:`${messageColor}`}}>
                     {message}
@@ -137,18 +142,6 @@ return (
                 bg-white px-6 py-4 shadow-xl
                 ring-slate-900/5"
                 onSubmit={handleSubmit}> 
-                    <Input
-                    type="text"
-                    value={secretKey}
-                    handleChange={setSecretKey}
-                    resetMessage={setMessage}
-                    placeholder="Secret Key"/>  
-                    <Input
-                    type="email"
-                    value={email}
-                    handleChange={setEmail}
-                    resetMessage={setMessage}
-                    placeholder="Email"/>
                     <Input
                     type="text"
                     value={name}

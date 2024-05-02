@@ -72,10 +72,6 @@ function Home() {
                             <Button label="Preview price" 
                             iconURL={arrowRight}
                             handleClick={handleClick}/>
-                            <div className="flex 
-                            justify-starts items-start 
-                            flex-wrap w-full mt-30 gap-16">
-                            </div>
                     </div>
                     <div className="relative
                     flex-1 flex rounded-3xl 

@@ -4,13 +4,30 @@ import { OTPModel } from "../models/OTP.js";
 import UserModel from "../models/User.js";
 import bcrypt from "bcrypt";
 import _ from "lodash"
+import nodemailer from "nodemailer";
 
 const router = express.Router();
 const saltRounds = 10;
 
+const transporter = nodemailer.createTransport({
+   service: "gmail",
+   host: "smtp.gmail.com",
+   port: 587,
+   secure: false, // Use false for TLS
+   auth: {
+     user: process.env.EMAIL_USER,
+     pass: process.env.EMAIL_PASS
+   },
+   tls: {
+     rejectUnauthorized: false // Add this line to disable certificate validation
+   }
+ });
+ 
+
 router.post("/generateOTP", async (req, res)=> {
    const {id} = req.body;
    const user = await UserModel.findOne({email: _.toLower(id)})
+   console.log(user.email);
 
    if (user) {
       try {
@@ -21,10 +38,22 @@ router.post("/generateOTP", async (req, res)=> {
             const OTP = new OTPModel({id : _.toLower(id), OTP: randomOTP});
 
             const response = await OTP.save();
+
+            const info = transporter.sendMail({
+               from: {
+                  name: "Rakyon",
+                  address:  process.env.EMAIL_USER
+               }, // sender address
+               to: user.email, // list of receivers
+               subject: "Your OTP", // Subject line
+               text: `Your OTP is: ${randomOTP}`,
+               html: `<b>Your OTP is:</b> ${randomOTP}`,
+            });
+
             res.json({
                message: "Check your email for code",
                color: "green"
-            });   
+            }); 
 
          } else if (!userOTP) {
             const randomOTP = Math.floor(1000 + (3000 * Math.random()))
