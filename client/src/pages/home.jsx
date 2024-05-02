@@ -3,12 +3,9 @@ import {useNavigate} from "react-router-dom";
 import {arrowRight} from "../assets/icons";
 
 import axios from "axios"
-import ReviewCard from "../components/ReviewCard.jsx";
 import Button from "../components/Button";
 
-import {bigShoe1} from "../assets/images"
-import {shoes, statistics} from "../constants"
-import ShoeCard from "../components/ShoeCard.jsx";
+import { NeonWorldArt } from "../assets/images/index.js";
 import ReviewSection from "../components/ReviewSection.jsx";
 
 
@@ -16,8 +13,6 @@ import ReviewSection from "../components/ReviewSection.jsx";
 function Home() {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
-    const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
-
 
 
     function handleClick() {
@@ -60,7 +55,7 @@ function Home() {
                             font-bold">
                                 <span className="xl:bg-white 
                                 xl:whitespace-nowrap 
-                                relative z-10 pr-10">
+                                relative z-20 pr-10">
                                     Stories Untold,
                                 </span> 
                                 <br />
@@ -82,19 +77,15 @@ function Home() {
                             flex-wrap w-full mt-30 gap-16">
                             </div>
                     </div>
-                    <div className="relative rounded-3xl
-                    border-2 border-purple-600 flex-1 flex 
-                    justify-center items-center 
-                    xl:min-h-screen max-xl:py-40 
-                    bg-cover bg-center">
-                        {/* <img 
-                            src={bigShoeImg}
-                            alt="Shoe Image"
-                            width={610}
-                            height={500}
-                            className="object-contain 
-                                relative z-10"
-                        /> */}
+                    <div className="relative
+                    flex-1 flex rounded-3xl 
+                    bg-black justify-center 
+                    items-center xl:min-h-screen 
+                    max-xl:py-40 bg-cover bg-center">
+                        <img className="object-contain 
+                        relative z-10 w-fit"
+                        src={NeonWorldArt}
+                        alt="Art" />                        
                     </div>
                 </section>
             </section>

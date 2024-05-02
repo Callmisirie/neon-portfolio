@@ -7,6 +7,7 @@ import customer2 from './customer2.svg'
 
 import footerLogowhite from './footerwhite.png'
 import headerLogoPurple from './headerpurple.png'
+import NeonWorldArt from './NeonWorldArt.png'
 
 import offer from './offer.svg'
 
@@ -31,6 +32,7 @@ export {
 
     footerLogowhite,
     headerLogoPurple,
+    NeonWorldArt,
 
     offer,
     shoe4,
