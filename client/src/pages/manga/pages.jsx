@@ -125,10 +125,12 @@ function Pages() {
     }
 
     return (
-        <section className="min-h-full">
-            <div className="flex flex-col justify-center 
-            items-center bg-white sm:p-6">
-                <div className="flex sm:flex-row flex-col justify-center items-center">
+        <section className="min-h-full bg-black">
+            <div className="flex flex-col justify-center bg-black 
+            items-center sm:p-6">
+                <div className="flex 
+                sm:flex-row flex-col justify-center 
+                items-center rounded-md bg-white">
                     <label htmlFor="toggle" className="flex items-center cursor-pointer">
                         <p className="font-montserrat 
                         text-black text-md mx-2 text-center">
@@ -183,7 +185,7 @@ function Pages() {
                 </div>
                     <button className="px-4 py-2 my-5 border 
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-black mb-5"
+                    rounded-md text-white border-white mb-5"
                     onClick={handlePreviousChapter}>
                         Previous Chapter
                     </button>
@@ -226,16 +228,16 @@ function Pages() {
                     )}        
                 </ul> 
                 <div className="flex flex-col justify-center items-center">
-                    <button className="px-4 py-2 my-2 border 
+                    <button className="px-4 py-2 border 
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-black mb-5"
+                    rounded-md text-white border-white mt-5"
                     onClick={handleNextChapter}>
                         Next Chapter
                     </button>
-                    <button className="px-4 py-2 my-2 border 
-                    font-montserrat text-md leading-none bg-green-600
-                    rounded-md text-white border-green-600 mb-5 
-                    hover:bg-green-500 hover:border-green-500 w-full"
+                    <button className="px-4 py-2 border 
+                    font-montserrat text-md leading-none bg-green-500
+                    rounded-md text-white border-green-500 my-5 
+                    hover:bg-green-600 hover:border-green-600 w-full"
                     onClick={handleGift}>
                         Gift
                     </button>

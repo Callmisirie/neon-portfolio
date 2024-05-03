@@ -34,9 +34,10 @@ function Chapters() {
     }
 
     return (
-        <section className="min-h-full">
-            <div className="flex flex-col justify-center items-center rounded-lg 
-            bg-white p-6">
+        <section className="min-h-full bg-black">
+            <div className="flex 
+            flex-col justify-center 
+            items-center bg-black">
                 {mangaContent && manga._id && (
                     <div  className="flex flex-col 
                     justify-center gap-5 items-center 

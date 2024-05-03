@@ -21,7 +21,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <section className="bg-black padding-x padding-t pb-8">
+    <section className="bg-black border-t-2 border-slate-gray padding-x padding-t pb-8">
       <footer className="max-container">
           <div className="flex 
             justify-between items-start gap-20

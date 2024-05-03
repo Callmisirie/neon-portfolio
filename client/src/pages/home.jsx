@@ -36,7 +36,8 @@ function Home() {
 
     return (
         <div className="min-h-full">
-            <section className="xl:padding-l wide:padding-r padding-b">
+            <section className="xl:padding-l 
+            wide:padding-r">
                 <section className="w-full flex 
                 xl:flex-row flex-col justify-center 
                 min-h-screen gap-10 max-container">
@@ -89,7 +90,7 @@ function Home() {
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-col 
                     justify-center items-center my-2 rounded-xl 
-                    bg-white p-6 shadow-xl mb-5 ring-slate-900/5">
+                    bg-white p-6 shadow-xl ring-slate-900/5">
                         <button >
                             <video className="rounded-lg" src="/videos/Afro%20Samurai%20-%20E2%20(14).mp4" width={500} controls muted loop>
                             </video>
@@ -99,7 +100,8 @@ function Home() {
                 </div>
             </section>
            <ReviewSection />
-            <section className="padding-x sm:py-32 py-16 w-full">
+            <section className="padding-x 
+            sm:py-32 py-16 w-full">
                 <section className="max-container
                 flex justify-between items-center 
                 max-lg:flex-col gap-10">
