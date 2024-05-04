@@ -37,63 +37,63 @@ function App() {
   const [cookies, ] = useCookies(["access_token"]);
 
   return (
-    <main className='relative'>
+      <main className='relative'>
       <Router> 
           <div className='min-h-screen'>
-            <Navbar/> 
-            <ScrollToTop />     
-            <Routes>
-              <Route path="/" element={<Home />}/>
-              <Route path="/commission" element={<Commission />}/>
-              <Route path="/commission/transactionHistory" element={<TransactionHistory />}/>
-              <Route path="/contact" element={<Contact />}/>
-              <Route path="/about" element={<About />}/>
-              <Route path="/manga" element={<Manga />}/>
-              <Route path="/gift" element={<Gift />}/>
-              <Route path="/payment" element={<Payment />}/>
-              <Route path="/auth/admin" element={<AdminAuth />}/>
-              <Route path="/auth/user" element={<UserAuth />}/>
-              <Route path="/passwordReset/generateOTP" element={<GenerateOTP />}/>
-              <Route path="/passwordReset/changePassword" element={<ChangePassword />}/>
-              <Route path="/manga/find/:mangaName" element={<Find />}/>
-              {cookies.access_token &&  (
-                <>
-                  <Route path="/manager" element={<Manager />}/>
+          <Navbar/> 
+          <ScrollToTop />     
+          <Routes>
+            <Route path="/" element={<Home />}/>
+            <Route path="/commission" element={<Commission />}/>
+            <Route path="/commission/transactionHistory" element={<TransactionHistory />}/>
+            <Route path="/contact" element={<Contact />}/>
+            <Route path="/about" element={<About />}/>
+            <Route path="/manga" element={<Manga />}/>
+            <Route path="/gift" element={<Gift />}/>
+            <Route path="/payment" element={<Payment />}/>
+            <Route path="/auth/admin" element={<AdminAuth />}/>
+            <Route path="/auth/user" element={<UserAuth />}/>
+            <Route path="/passwordReset/generateOTP" element={<GenerateOTP />}/>
+            <Route path="/passwordReset/changePassword" element={<ChangePassword />}/>
+            <Route path="/manga/find/:mangaName" element={<Find />}/>
+            {cookies.access_token &&  (
+              <>
+                <Route path="/manager" element={<Manager />}/>
 
-                  <Route path="/manager/manga" element={<MangaManager />}/>
-                  <Route path="/manager/manga/create/manga" element={<MangaCreate />}/>
-                  <Route path="/manager/manga/create/manga/chapter" element={<MangaCreate />}/>
-                  <Route path="/manager/manga/delete/manga" element={<MangaDelete />}/>
-                  <Route path="/manager/manga/delete/manga/chapter" element={<MangaDelete />}/>
-                  <Route path="/manager/manga/edit/manga" element={<MangaEdit />}/>
-                  <Route path="/manager/manga/edit/manga/chapter" element={<MangaEdit />}/>
+                <Route path="/manager/manga" element={<MangaManager />}/>
+                <Route path="/manager/manga/create/manga" element={<MangaCreate />}/>
+                <Route path="/manager/manga/create/manga/chapter" element={<MangaCreate />}/>
+                <Route path="/manager/manga/delete/manga" element={<MangaDelete />}/>
+                <Route path="/manager/manga/delete/manga/chapter" element={<MangaDelete />}/>
+                <Route path="/manager/manga/edit/manga" element={<MangaEdit />}/>
+                <Route path="/manager/manga/edit/manga/chapter" element={<MangaEdit />}/>
 
-                  <Route path="/manager/commission" element={<CommissionManager />}/>
-                  <Route path="/manager/commission/create" element={<CommissionCreate />}/>
-                  <Route path="/manager/commission/delete" element={<CommissionDelete />}/>
-                  <Route path="/manager/commission/edit" element={<CommissionEdit />}/>
+                <Route path="/manager/commission" element={<CommissionManager />}/>
+                <Route path="/manager/commission/create" element={<CommissionCreate />}/>
+                <Route path="/manager/commission/delete" element={<CommissionDelete />}/>
+                <Route path="/manager/commission/edit" element={<CommissionEdit />}/>
 
-                  <Route path="/manager/gift" element={<GiftManager />}/>
-                  <Route path="/manager/gift/create" element={<GiftCreate />}/>
-                  <Route path="/manager/gift/delete" element={<GiftDelete />}/>
-                  <Route path="/manager/gift/edit" element={<GiftEdit />}/>
+                <Route path="/manager/gift" element={<GiftManager />}/>
+                <Route path="/manager/gift/create" element={<GiftCreate />}/>
+                <Route path="/manager/gift/delete" element={<GiftDelete />}/>
+                <Route path="/manager/gift/edit" element={<GiftEdit />}/>
 
-                  <Route path="/manager/review" element={<ReviewManager />}/>
-                  <Route path="/manager/review/delete" element={<ReviewDelete />}/>
-                  <Route path="/manager/review/edit" element={<ReviewEdit />}/>
+                <Route path="/manager/review" element={<ReviewManager />}/>
+                <Route path="/manager/review/delete" element={<ReviewDelete />}/>
+                <Route path="/manager/review/edit" element={<ReviewEdit />}/>
 
-                  <Route path="/manager/transactions" element={<TransactionsManager />}/>
-                  <Route path="/manager/transactions/status" element={<TransactionsStatus />}/>
-                  <Route path="/manager/transactions/delete" element={<TransactionsDelete />}/>
-                </>
-              )}
-              <Route path="/review/create" element={<ReviewCreate />}/>
-              <Route path="/manga/:chapters" element={<Chapters />}/>
-              <Route path="/manga/:chapters/:pages" element={<Pages />}/>
-            </Routes>    
-          </div>  
-          <Footer />
-      </Router>
+                <Route path="/manager/transactions" element={<TransactionsManager />}/>
+                <Route path="/manager/transactions/status" element={<TransactionsStatus />}/>
+                <Route path="/manager/transactions/delete" element={<TransactionsDelete />}/>
+              </>
+            )}
+            <Route path="/review/create" element={<ReviewCreate />}/>
+            <Route path="/manga/:chapters" element={<Chapters />}/>
+            <Route path="/manga/:chapters/:pages" element={<Pages />}/>
+          </Routes>    
+        </div>  
+        <Footer />
+    </Router>
     </main>
   );
 }

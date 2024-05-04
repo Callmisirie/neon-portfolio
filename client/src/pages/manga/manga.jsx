@@ -26,13 +26,14 @@ function Manga() {
    
     return (
       <section className="min-h-full bg-black">
-          <div className=" flex flex-wrap justify-center items-center bg-black 
-           px-6">
+          <div className=" flex 
+          flex-wrap justify-center 
+          items-center bg-black px-6">
             <div className="flex 
             flex-col justify-center 
-            items-center rounded-md 
-            bg-white p-6 shadow-xl 
-            ring-slate-900/5">
+            min-h-screen items-center 
+            rounded-md bg-white 
+            p-6 shadow-xl ring-slate-900/5">
               <h3 className="text-4xl leading-[68px] 
               lg:max-w-md font-palanquin font-bold p-2 text-center mb-5">
                 Manga List

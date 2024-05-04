@@ -126,14 +126,16 @@ function Pages() {
 
     return (
         <section className="min-h-full bg-black">
-            <div className="flex flex-col justify-center bg-black 
+            <div className="flex 
+            flex-col justify-center 
+            bg-black min-h-screen
             items-center sm:p-6">
                 <div className="flex 
                 sm:flex-row flex-col justify-center 
-                items-center rounded-md bg-white">
+                items-center rounded-md bg-black">
                     <label htmlFor="toggle" className="flex items-center cursor-pointer">
                         <p className="font-montserrat 
-                        text-black text-md mx-2 text-center">
+                        text-white text-md mx-2 text-center">
                             {displayView}
                         </p>
                         <div className="flex items-center">
@@ -144,14 +146,16 @@ function Pages() {
                                 checked={isChecked}
                                 onChange={toggle}
                             />
-                            <div className="w-12 h-4 border  rounded-full"></div>
+                            <div className="w-12 h-4 border bg-black border-white rounded-full"></div>
                             <div className={`dot absolute w-6 h-6 ${isChecked ? 
                             'bg-purple-600' : 'bg-slate-gray'} rounded-full shadow 
                             ${isChecked ? 'translate-x-full' : ''} transition`}></div>
                         </div>
                     </label>
                     
-                    <select className="p-1 m-3 border border-black font-montserrat text-sm cursor-pointer" 
+                    <select className="p-1 m-3 border 
+                    text-white bg-black border-white 
+                    font-montserrat text-sm cursor-pointer" 
                     onChange={handleChapterChange}>
                         {manga && manga.chapters && manga.chapters.map((chapter, index)=> {
                             return (
@@ -167,7 +171,9 @@ function Pages() {
                     </select>
 
                     {!toggleView && (
-                        <select className="p-1 m-3 border border-black font-montserrat text-sm cursor-pointer"
+                        <select className="p-1 m-3 border 
+                        border-white bg-black text-white 
+                        font-montserrat text-sm cursor-pointer"
                         onChange={handlePageChange}>
                             {chapter && chapter.pages && chapter.pages.map((page, index)=> {
                                 return (
@@ -183,9 +189,10 @@ function Pages() {
                         </select>
                     )}
                 </div>
-                    <button className="px-4 py-2 my-5 border 
+                    <button className="px-4 py-2 my-5 border opacity-90
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-white mb-5"
+                    rounded-md text-white border-white mb-5 
+                    hover:opacity-100"
                     onClick={handlePreviousChapter}>
                         Previous Chapter
                     </button>
@@ -228,9 +235,10 @@ function Pages() {
                     )}        
                 </ul> 
                 <div className="flex flex-col justify-center items-center">
-                    <button className="px-4 py-2 border 
+                    <button className="px-4 py-2 border opacity-90
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-white mt-5"
+                    rounded-md text-white border-white mt-5 
+                    hover:opacity-100"
                     onClick={handleNextChapter}>
                         Next Chapter
                     </button>
