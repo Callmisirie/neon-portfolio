@@ -40,8 +40,8 @@ function Chapters() {
             items-center bg-black">
                 {mangaContent && manga._id && (
                     <div  className="flex flex-col 
-                    justify-center gap-5 items-center 
-                    p-6 rounded-lg bg-white shadow-xl">
+                    gap-5 items-center 
+                    p-6 rounded-3xl bg-white shadow-xl">
                         <h3  className="font-montserrat 
                         text-black font-bold max-w-xs
                         leading-8 mx-2 text-center text-md

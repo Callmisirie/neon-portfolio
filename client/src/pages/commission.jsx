@@ -115,7 +115,10 @@ const Commission = () => {
 
   return (
     <section className="min-h-full">
-        <div className=" flex flex-wrap justify-center items-center rounded-lg 
+      {commissions?.length && (
+        <div className=" flex 
+        lex-wrap justify-center 
+        items-center rounded-lg 
         bg-white px-6">
           <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg my-20 
             bg-white px-6 shadow-xl py-5
@@ -218,7 +221,8 @@ const Commission = () => {
               </div>
             )}
           </div>           
-        </div>
+        </div>        
+      )}
         {userID && (
           <section className="flex justify-center padding">
             <section className="max-container rounded-lg bg-white

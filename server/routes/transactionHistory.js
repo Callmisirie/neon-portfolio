@@ -29,7 +29,7 @@ router.get("/read", async(req, res) => {
         const users = await UserModel.find({});
 
         const transactionHistory = await TransactionHistoryModel.find({});
-        if (userID) {
+        if (userID && user) {
             const response = await TransactionHistoryModel.findOne({userID: user._id});
             userTransactionHistory = response
         }

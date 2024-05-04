@@ -170,211 +170,215 @@ function Payment() {
 
     return (
         <section className="min-h-full flex flex-col items-center">
-            <div className="flex flex-col sm:flex-row
-            justify-center items-center flex-wrap
-            max-container m-10 rounded-lg 
-            bg-white px-6 py-8 shadow-xl
-            ring-slate-900/5">
-                <div className="flex 
-                flex-col justify-center items-center  
+            {paypalGifts.length || cryptoGifts.length ? (        
+                <div className="flex flex-col sm:flex-row
+                justify-center items-center flex-wrap
                 max-container m-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
-                ring-slate-900/5">  
-                    <h2  className="text-3xl leading-[68px] 
-                    lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                            Choose Payment
-                    </h2> 
-                    {paypalGifts.length ? (
-                        <button 
-                            className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium my-3 mx-5
-                            bg-purple-600 rounded-md hover:bg-purple-500 "
-                            onClick={ ()=> {
-                            handleClick("Paypal")
-                        }}>
-                            Paypal
-                        </button>                        
-                    ) : null}
-                    {cryptoGifts.length ? (
-                        <button
-                            className="text-white px-4 py-2 text-sm
-                            font-montserrat font-medium my-3 mx-5
-                            bg-purple-600 rounded-md hover:bg-purple-500 " 
-                            onClick={()=> {
-                            handleClick("Crypto")
-                        }}>
-                            Crypto
-                        </button>                    
-                    ) : null}
+                ring-slate-900/5">
+                    <div className="flex 
+                    flex-col justify-center items-center  
+                    max-container m-10 rounded-lg 
+                    bg-white px-6 py-8 shadow-xl
+                    ring-slate-900/5">  
+                        <h2  className="text-3xl leading-[68px] 
+                        lg:max-w-md font-montserrat  font-bold p-2 text-center">
+                                Choose Payment
+                        </h2> 
+                        {paypalGifts.length ? (
+                            <button 
+                                className="text-white px-4 py-2 text-sm
+                                font-montserrat font-medium my-3 mx-5
+                                bg-purple-600 rounded-md hover:bg-purple-500 "
+                                onClick={ ()=> {
+                                handleClick("Paypal")
+                            }}>
+                                Paypal
+                            </button>                        
+                        ) : null}
+                        {cryptoGifts.length ? (
+                            <button
+                                className="text-white px-4 py-2 text-sm
+                                font-montserrat font-medium my-3 mx-5
+                                bg-purple-600 rounded-md hover:bg-purple-500 " 
+                                onClick={()=> {
+                                handleClick("Crypto")
+                            }}>
+                                Crypto
+                            </button>                    
+                        ) : null}
 
-                    {isClickedPaypal && 
-                        <>
-                            <PaypalGift /> 
-                        </> 
-                    }
-                    {isClickedCrypto && 
-                        <>
-                            <CryptoGift 
-                            setResetMessage={setResetMessage}
-                            cryptoName={cryptoName} 
-                            setCryptoName={setCryptoName}
-                            cryptoSymbolDetails={cryptoSymbolDetails}
-                            price={transactionDetails.price}
-                            setPriceInCrypto={setPriceInCrypto} /> 
-                        </> 
-                    }
-                    
-                </div> 
-                    {isClickedPaypal || isClickedCrypto ? (
-                        <div className="flex gap-5
-                        flex-col justify-center
-                        max-container m-10 rounded-lg 
-                        bg-white px-6 py-8 shadow-xl
-                        ring-slate-900/5">
-                            <h3 className="font-montserrat 
-                              text-black font-semibold text-lg 
-                               w-full text-center">
-                                Transaction Details 
-                            </h3>
-                            <p className="font-montserrat font-semibold
-                            text-slate-gray max-w-xs text-start
-                            text-sm">
-                                Art Style - <span className="font-montserrat 
-                                text-slate-gray text-start font-normal
-                                text-sm">{transactionDetails.commissionDetails.artStyle}</span>
-                            </p>
-                            <p className="font-montserrat font-semibold
-                            text-slate-gray max-w-xs text-start
-                            text-sm">
-                                Quantity - <span className="font-montserrat 
-                                text-slate-gray text-start font-normal
-                                text-sm">{transactionDetails.number}</span>
-                            </p>
-                            <p className="font-montserrat font-semibold
-                            text-slate-gray max-w-xs text-start
-                            text-sm">
-                                Price - <span className="font-montserrat 
-                                text-green-600 text-start font-normal
-                                text-sm">${transactionDetails.price}</span>
-                               
-                            </p>
-                            {cryptoName && (cryptoSymbolDetails && cryptoSymbolDetails.map((cryptoSymbolDetail)=> {
+                        {isClickedPaypal && 
+                            <>
+                                <PaypalGift /> 
+                            </> 
+                        }
+                        {isClickedCrypto && 
+                            <>
+                                <CryptoGift 
+                                setResetMessage={setResetMessage}
+                                cryptoName={cryptoName} 
+                                setCryptoName={setCryptoName}
+                                cryptoSymbolDetails={cryptoSymbolDetails}
+                                price={transactionDetails.price}
+                                setPriceInCrypto={setPriceInCrypto} /> 
+                            </> 
+                        }
+                        
+                    </div>                
 
 
-                                return (cryptoName === cryptoSymbolDetail.symbol ? (
-                                    <div className='flex items-center'
-                                    key={cryptoSymbolDetail.symbol}>
-                                        <p className="font-montserrat font-semibold
-                                        text-slate-gray max-w-xs text-start
-                                        text-sm">
-                                            Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
-                                            text-slate-gray text-start font-normal
-                                            text-sm">{priceInCrypto}</span>       
-                                        </p>
-                                        <div className='flex
-                                        justify-center items-center 
-                                        cursor-pointer ml-10'
-                                        onClick={() => handleCopyClipboard(priceInCrypto)}>
-                                            <img className="mx-2 
-                                            rounded-full w-4 h-4"
-                                            src={clipboardCopy}/> 
-                                            <p className="font-montserrat 
-                                            text-slate-gray text-sm
-                                             text-center">
-                                                {copyTooltip}
-                                            </p>                                                                    
-                                        </div> 
-                                       
-                                    </div>
-                                                
-                                    ) : null)
-                            }))}
-                            <p className="font-montserrat font-semibold
-                            text-slate-gray max-w-xs text-start
-                            text-sm">
-                                Discount - <span className="font-montserrat 
-                                text-slate-gray text-start font-normal
-                                text-sm">{`${transactionDetails.commissionDetails.discount}%
-                                per ${transactionDetails.commissionDetails.discountInterval} 
-                                ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
-                            </p>
-                            <p className="font-montserrat font-semibold
-                            text-slate-gray max-w-xs text-start
-                            text-sm">
-                                Payment Method - <span className="font-montserrat 
-                                text-slate-gray text-start font-normal
-                                text-sm">{paymentMethod}</span>
-                            </p>
-                            {cryptoName && (
+                        {isClickedPaypal || isClickedCrypto ? (
+                            <div className="flex gap-5
+                            flex-col justify-center
+                            max-container m-10 rounded-lg 
+                            bg-white px-6 py-8 shadow-xl
+                            ring-slate-900/5">
+                                <h3 className="font-montserrat 
+                                    text-black font-semibold text-lg 
+                                    w-full text-center">
+                                    Transaction Details 
+                                </h3>
                                 <p className="font-montserrat font-semibold
                                 text-slate-gray max-w-xs text-start
                                 text-sm">
-                                    Crypto - <span className="font-montserrat 
+                                    Art Style - <span className="font-montserrat 
                                     text-slate-gray text-start font-normal
-                                    text-sm">{cryptoName}</span>
-                                </p>                                
-                            )}
-                            
-                            <div className="flex flex-col justify-center items-center mt-5 p-2">
-                                <div className="flex justify-center items-center m-2 p-2">                      
-                                    <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
-                                        <div className="flex items-center">
-                                            <input
-                                                id="toggle"
-                                                type="checkbox"
-                                                className="sr-only"
-                                                checked={isChecked}
-                                                onChange={() => {
-                                                  toggle() 
-                                                }}
-                                            />
-                                            <div className="w-12 h-4 border  rounded-full"></div>
-                                            <div className={`dot absolute w-6 h-6 ${isChecked ? 
-                                            'bg-green-600' : 'bg-slate-gray'} rounded-full shadow 
-                                            ${isChecked ? 'translate-x-full' : ''} transition`}></div>
+                                    text-sm">{transactionDetails.commissionDetails.artStyle}</span>
+                                </p>
+                                <p className="font-montserrat font-semibold
+                                text-slate-gray max-w-xs text-start
+                                text-sm">
+                                    Quantity - <span className="font-montserrat 
+                                    text-slate-gray text-start font-normal
+                                    text-sm">{transactionDetails.number}</span>
+                                </p>
+                                <p className="font-montserrat font-semibold
+                                text-slate-gray max-w-xs text-start
+                                text-sm">
+                                    Price - <span className="font-montserrat 
+                                    text-green-600 text-start font-normal
+                                    text-sm">${transactionDetails.price}</span>
+                                    
+                                </p>
+                                {cryptoName && (cryptoSymbolDetails && cryptoSymbolDetails.map((cryptoSymbolDetail)=> {
+
+
+                                    return (cryptoName === cryptoSymbolDetail.symbol ? (
+                                        <div className='flex items-center'
+                                        key={cryptoSymbolDetail.symbol}>
+                                            <p className="font-montserrat font-semibold
+                                            text-slate-gray max-w-xs text-start
+                                            text-sm">
+                                                Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
+                                                text-slate-gray text-start font-normal
+                                                text-sm">{priceInCrypto}</span>       
+                                            </p>
+                                            <div className='flex
+                                            justify-center items-center 
+                                            cursor-pointer ml-10'
+                                            onClick={() => handleCopyClipboard(priceInCrypto)}>
+                                                <img className="mx-2 
+                                                rounded-full w-4 h-4"
+                                                src={clipboardCopy}/> 
+                                                <p className="font-montserrat 
+                                                text-slate-gray text-sm
+                                                    text-center">
+                                                    {copyTooltip}
+                                                </p>                                                                    
+                                            </div> 
+                                            
                                         </div>
-                                    </label>
-                                    <p  className="font-montserrat 
+                                                    
+                                        ) : null)
+                                }))}
+                                <p className="font-montserrat font-semibold
+                                text-slate-gray max-w-xs text-start
+                                text-sm">
+                                    Discount - <span className="font-montserrat 
+                                    text-slate-gray text-start font-normal
+                                    text-sm">{`${transactionDetails.commissionDetails.discount}%
+                                    per ${transactionDetails.commissionDetails.discountInterval} 
+                                    ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
+                                </p>
+                                <p className="font-montserrat font-semibold
+                                text-slate-gray max-w-xs text-start
+                                text-sm">
+                                    Payment Method - <span className="font-montserrat 
+                                    text-slate-gray text-start font-normal
+                                    text-sm">{paymentMethod}</span>
+                                </p>
+                                {cryptoName && (
+                                    <p className="font-montserrat font-semibold
                                     text-slate-gray max-w-xs text-start
                                     text-sm">
-                                        I hereby acknowledge that payment 
-                                        has been made for this purchase.
-                                    </p>
-                                </div>
-                                <button className={`px-4 py-2 my-2 border rounded-full text-white w-fit
-                                font-montserrat text-xs leading-none bg-green-600 border-green-600 
-                                hover:bg-green-500 hover:border-green-500
-                                ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
-                                onClick={() => {
-                                handlePayment()
-                                }}
-                                disabled={!isChecked}>
-                                    Confirm Payment
-                                </button>
-                                {message && <p className="font-montserrat max-w-xs text-center
-                                text-sm my-2"  style={{ color:`${messageColor}`}}>
-                                    {message}
-                                </p>}
+                                        Crypto - <span className="font-montserrat 
+                                        text-slate-gray text-start font-normal
+                                        text-sm">{cryptoName}</span>
+                                    </p>                                
+                                )}
+                                
+                                <div className="flex flex-col justify-center items-center mt-5 p-2">
+                                    <div className="flex justify-center items-center m-2 p-2">                      
+                                        <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
+                                            <div className="flex items-center">
+                                                <input
+                                                    id="toggle"
+                                                    type="checkbox"
+                                                    className="sr-only"
+                                                    checked={isChecked}
+                                                    onChange={() => {
+                                                        toggle() 
+                                                    }}
+                                                />
+                                                <div className="w-12 h-4 border  rounded-full"></div>
+                                                <div className={`dot absolute w-6 h-6 ${isChecked ? 
+                                                'bg-green-600' : 'bg-slate-gray'} rounded-full shadow 
+                                                ${isChecked ? 'translate-x-full' : ''} transition`}></div>
+                                            </div>
+                                        </label>
+                                        <p  className="font-montserrat 
+                                        text-slate-gray max-w-xs text-start
+                                        text-sm">
+                                            I hereby acknowledge that payment 
+                                            has been made for this purchase.
+                                        </p>
+                                    </div>
+                                    <button className={`px-4 py-2 my-2 border rounded-full text-white w-fit
+                                    font-montserrat text-xs leading-none bg-green-600 border-green-600 
+                                    hover:bg-green-500 hover:border-green-500
+                                    ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
+                                    onClick={() => {
+                                    handlePayment()
+                                    }}
+                                    disabled={!isChecked}>
+                                        Confirm Payment
+                                    </button>
+                                    {message && <p className="font-montserrat max-w-xs text-center
+                                    text-sm my-2"  style={{ color:`${messageColor}`}}>
+                                        {message}
+                                    </p>}
+                                </div> 
+                                {cryptoName && (
+                                    <div className='flex flex-col justify-center items-center'>
+                                        <p className='font-montserrat leading-8
+                                        text-xs font-semibold text-slate-gray
+                                        text-center'>
+                                            Crypto price reqoute
+                                        </p>
+                                        <p className={`font-montserrat leading-8
+                                        text-md font-semibold 
+                                        text-center ${minutes < 4 ? `text-red-500` : `text-black`}`}>
+                                                {pad(minutes)}:{pad(seconds)}
+                                        </p>
+                                        
+                                    </div>                                  
+                                )}
+
                             </div> 
-                            {cryptoName && (
-                                <div className='flex flex-col justify-center items-center'>
-                                    <p className='font-montserrat leading-8
-                                    text-xs font-semibold text-slate-gray
-                                    text-center'>
-                                        Crypto price reqoute
-                                    </p>
-                                    <p className={`font-montserrat leading-8
-                                    text-md font-semibold 
-                                    text-center ${minutes < 4 ? `text-red-500` : `text-black`}`}>
-                                            {pad(minutes)}:{pad(seconds)}
-                                    </p>
-                                 
-                                </div>                                  
-                            )}
-   
-                        </div> 
-                    ): null}
-            </div>
+                        ): null}
+                </div>
+            ) : null}
         </section>
 
     );
@@ -410,7 +414,7 @@ const PaypalGift = () => {
             <div className="flex flex-col 
             justify-center items-center 
             bg-white p-5">
-                {paypalGifts && (
+                {paypalGifts?.length ? (
                     <>
                         <h2  className="text-3xl 
                         lg:max-w-md font-palanquin 
@@ -445,7 +449,7 @@ const PaypalGift = () => {
                             })}
                         </ul>
                     </>
-                )}
+                ) : null}
             </div>
         </section>
     );
@@ -492,96 +496,99 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
 
     return (
         <section className="min-h-full">
-            <div  className="flex sm:flex-row gap-2
-            flex-col justify-center items-center 
-            p-5">
-                <div  className="flex flex-col 
-                justify-center items-center">
-                    <h2  className="text-3xl
-                    lg:max-w-md font-palanquin 
-                    font-bold p-2 text-center">
-                        Crypto
-                    </h2>
-                    <div className="flex flex-col mx-5 mt-5 w-full">
-                    {cryptoGifts && cryptoGifts.map(cryptoGift => (
-                        <p className="font-montserrat 
-                        text-slate-gray hover:text-black 
-                        text-md hover:font-semibold px-2
-                        leading-8 my-2 cursor-pointer"
-                        onClick={()=> {
-                        handleChooseCryptoGift(cryptoGift._id)
-                        setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
-                        const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
-                        selectedCrypto.map((crypto)=> {                            
-                            const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
-                            if (decimalCount < 6) {
-                               setPriceInCrypto((price / crypto.price).toFixed(2))
-                            } else {
-                                setPriceInCrypto((price / crypto.price).toFixed(6))
-                            }     
-                        })
-                        }}
-                        key={cryptoGift._id}>
-                            {cryptoGift.cryptoName}
-                        </p>
-                    ))}
-                    </div>
-                </div>
-                <ul className="flex flex-col 
-                justify-center items-center">
-                    {cryptoGifts && cryptoGifts.map(cryptoGift => (
-                    cryptoGift._id === cryptoGiftId && (
-                        <li  className="flex justify-center items-center 
-                        p-2 m-5"
-                        key={cryptoGift._id}>
-                            <div  className="flex flex-col 
-                            justify-center items-center p-2">
-                                <h3 className="font-montserrat 
-                                text-slate-gray text-lg 
-                                leading-8 my-2 text-center">
+            {cryptoGifts?.length ? (
+                <div  className="flex sm:flex-row gap-2
+                flex-col justify-center items-center 
+                p-5">
+                    <div  className="flex flex-col 
+                    justify-center items-center">
+                        <h2  className="text-3xl mx-2
+                        lg:max-w-md font-palanquin w-full
+                        font-bold p-2 text-center">
+                            Crypto
+                        </h2>
+                        <div className="flex flex-col mx-5 mt-5 w-full">
+                        {cryptoGifts && cryptoGifts.map(cryptoGift => (
+                            <p className="font-montserrat 
+                            text-slate-gray hover:text-black 
+                            text-md hover:font-semibold px-2
+                            leading-8 my-2 cursor-pointer"
+                            onClick={()=> {
+                            handleChooseCryptoGift(cryptoGift._id)
+                            setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
+                            const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
+                            selectedCrypto.map((crypto)=> {                            
+                                const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
+                                if (decimalCount < 6) {
+                                setPriceInCrypto((price / crypto.price).toFixed(2))
+                                } else {
+                                    setPriceInCrypto((price / crypto.price).toFixed(6))
+                                }     
+                            })
+                            }}
+                            key={cryptoGift._id}>
                                 {cryptoGift.cryptoName}
-                                </h3>
-                                <p className="font-montserrat 
-                                text-slate-gray text-md font-semibold
-                                my-1 text-center">
-                                Network - <span className="font-montserrat 
-                                text-slate-gray text-sm font-normal
-                                my-1">
-                                    {cryptoGift.network}
-                                </span>
-                                </p>
-                                <img className="flex flex-col 
-                                justify-center rounded-xl m-2 shadow-xl"
-                                src={`http://localhost:4001/display/${cryptoGift._id}`} 
-                                alt={`Manga ${cryptoGift.qrCodeImage}`} 
-                                style={{ width: "222px" }}
-                                />
-                                <div className='flex items-center p-2 w-full'>
-                                    <p className="font-montserrat 
-                                    text-slate-gray text-md 
+                            </p>
+                        ))}
+                        </div>
+                    </div>
+                    <ul className="flex flex-col 
+                    justify-center items-center">
+                        {cryptoGifts && cryptoGifts.map(cryptoGift => (
+                        cryptoGift._id === cryptoGiftId && (
+                            <li  className="flex justify-center items-center 
+                            p-2 m-5"
+                            key={cryptoGift._id}>
+                                <div  className="flex flex-col 
+                                justify-center items-center p-2">
+                                    <h3 className="font-montserrat 
+                                    text-slate-gray text-lg 
                                     leading-8 my-2 text-center">
-                                        {cryptoGift.address}
-                                    </p>  
-                                    <div className='flex 
-                                    justify-center items-center 
-                                    cursor-pointer m-1'
-                                    onClick={() => handleCopyClipboard(cryptoGift.address)}>
-                                        <img className="mx-2 
-                                        rounded-full w-4 h-4 
-                                        hover:h-8"
-                                        src={clipboardCopy}/> 
+                                    {cryptoGift.cryptoName}
+                                    </h3>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-md font-semibold
+                                    my-1 text-center">
+                                    Network - <span className="font-montserrat 
+                                    text-slate-gray text-sm font-normal
+                                    my-1">
+                                        {cryptoGift.network}
+                                    </span>
+                                    </p>
+                                    <img className="flex flex-col 
+                                    justify-center rounded-xl m-2 shadow-xl"
+                                    src={`http://localhost:4001/display/${cryptoGift._id}`} 
+                                    alt={`Manga ${cryptoGift.qrCodeImage}`} 
+                                    style={{ width: "222px" }}
+                                    />
+                                    <div className='flex items-center p-2 w-full'>
                                         <p className="font-montserrat 
-                                        text-slate-gray text-sm 
-                                        leading-8 text-center">
-                                            {copyTooltip}
-                                        </p>                                                                    
-                                    </div>                           
+                                        text-slate-gray text-md 
+                                        leading-8 my-2 text-center">
+                                            {cryptoGift.address}
+                                        </p>  
+                                        <div className='flex 
+                                        justify-center items-center 
+                                        cursor-pointer m-1'
+                                        onClick={() => handleCopyClipboard(cryptoGift.address)}>
+                                            <img className="mx-2 
+                                            rounded-full w-4 h-4 
+                                            hover:h-8"
+                                            src={clipboardCopy}/> 
+                                            <p className="font-montserrat 
+                                            text-slate-gray text-sm 
+                                            leading-8 text-center">
+                                                {copyTooltip}
+                                            </p>                                                                    
+                                        </div>                           
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    )))}
-                </ul>
-            </div>           
+                            </li>
+                        )))}
+                    </ul>
+                </div> 
+            ) : null}
+          
         </section>
     );
 }

@@ -126,11 +126,10 @@ function Pages() {
 
     return (
         <section className="min-h-full bg-black">
-            <div className="flex 
-            flex-col justify-center 
+            <div className="flex flex-col 
             bg-black min-h-screen
             items-center sm:p-6">
-                <div className="flex 
+                <div className="flex mt-5
                 sm:flex-row flex-col justify-center 
                 items-center rounded-md bg-black">
                     <label htmlFor="toggle" className="flex items-center cursor-pointer">
@@ -191,49 +190,51 @@ function Pages() {
                 </div>
                     <button className="px-4 py-2 my-5 border opacity-90
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-white mb-5 
+                    rounded-md text-white border-white mb-10 
                     hover:opacity-100"
                     onClick={handlePreviousChapter}>
                         Previous Chapter
                     </button>
-                <ul className="flex flex-col justify-center 
-                items-center rounded-lg bg-white p-6 shadow-xl mb-4
-                ring-slate-900/5">
-                    {chapter && (
+                    {chapter.pages?.length && (
                         <>
-                            <h3 className="font-montserrat 
-                            text-black text-xl leading-8 my-6 
-                            w-full text-center font-bold">
-                                {chapter.title}
-                            </h3>
-                            {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
-                                <div className="sm:mx-5"
-                                key={index}>
-                                    <li > 
-                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
-                                    </li>
+                            <ul className="flex flex-col 
+                            items-center rounded-3xl 
+                            bg-white min-h-screen p-6 
+                            shadow-xl mb-4 ring-slate-900/5">                        
+                                <h3 className="font-montserrat 
+                                text-black text-xl leading-8 my-6 
+                                w-full text-center font-bold">
+                                    {chapter.title}
+                                </h3>
+                                {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
+                                    <div className="sm:mx-5"
+                                    key={index}>
+                                        <li > 
+                                            <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                        </li>
+                                    </div>
+                                    ))
+                                ) : (
+                                <div className="sm:mx-5">
+                                    {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
+                                        parseInt(selectedPage, 10) === (index + 1) && (
+                                            <div className="cursor-pointer"
+                                            key={index} onClick={() => {
+                                                handleNextPageClick(chapter.pages.length, manga.chapters.length)
+                                            }}>
+                                                <li>
+                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
+                                                </li>
+                                            </div>
+                                        )
+                                    ))
+                                    }
                                 </div>
-                                ))
-                            ) : (
-                            <div className="sm:mx-5">
-                                {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
-                                    parseInt(selectedPage, 10) === (index + 1) && (
-                                        <div className="cursor-pointer"
-                                        key={index} onClick={() => {
-                                            handleNextPageClick(chapter.pages.length, manga.chapters.length)
-                                        }}>
-                                            <li>
-                                                <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
-                                            </li>
-                                        </div>
-                                    )
-                                ))
-                                }
-                            </div>
-                            )}
+                                )}
+                            </ul>    
                         </>
                     )}        
-                </ul> 
+ 
                 <div className="flex flex-col justify-center items-center">
                     <button className="px-4 py-2 border opacity-90
                     font-montserrat text-md leading-none bg-black
