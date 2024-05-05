@@ -100,7 +100,7 @@ function Navbar() {
                         </li>                  
                     </div>
                     {cookies.access_token || userCookies.userAccess_token ?  (
-                        <div className="flex justify-center gap-16 items-center ml-10 px-5">
+                        <div className="flex justify-center gap-10 items-center ml-10 px-5">
                             {cookies.access_token ? (
                                 <div className="w-full">
                                     <li className={`font-montserrat leading-normal text-center text-sm hover:text-slate-gray text-black

@@ -25,8 +25,8 @@ function Manga() {
     }
    
     return (
-      <section className="min-h-full bg-black">
-          <div className=" flex 
+      <section className="min-h-full">
+          <div className=" flex min-h-screen
           flex-wrap justify-center 
           items-center bg-black">
               {mangas.length ? 

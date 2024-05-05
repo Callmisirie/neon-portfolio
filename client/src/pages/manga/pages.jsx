@@ -125,13 +125,14 @@ function Pages() {
     }
 
     return (
-        <section className="min-h-full bg-black">
+        <section className="min-h-full">
             <div className="flex flex-col 
             bg-black min-h-screen
-            items-center sm:p-6">
-                <div className="flex mt-5
+            items-center">
+                <div className="flex mt-5 p-3
                 sm:flex-row flex-col justify-center 
-                items-center rounded-md bg-black">
+                items-center rounded-md bg-black
+                border border-white">
                     <label htmlFor="toggle" className="flex items-center cursor-pointer">
                         <p className="font-montserrat 
                         text-white text-md mx-2 text-center">
@@ -190,17 +191,17 @@ function Pages() {
                 </div>
                     <button className="px-4 py-2 my-5 border opacity-90
                     font-montserrat text-md leading-none bg-black
-                    rounded-md text-white border-white mb-10 
+                    rounded-md text-white border-white mb-5 
                     hover:opacity-100"
                     onClick={handlePreviousChapter}>
                         Previous Chapter
                     </button>
-                    {chapter.pages?.length && (
+                    {chapter.pages?.length && "/manga/" + manga.mangaID + "/" + chapter._id === location.pathname ? (
                         <>
                             <ul className="flex flex-col 
                             items-center rounded-3xl 
                             bg-white min-h-screen p-6 
-                            shadow-xl mb-4 ring-slate-900/5">                        
+                            shadow-xl ring-slate-900/5">                        
                                 <h3 className="font-montserrat 
                                 text-black text-xl leading-8 my-6 
                                 w-full text-center font-bold">
@@ -233,7 +234,7 @@ function Pages() {
                                 )}
                             </ul>    
                         </>
-                    )}        
+                    ) : null}        
  
                 <div className="flex flex-col justify-center items-center">
                     <button className="px-4 py-2 border opacity-90

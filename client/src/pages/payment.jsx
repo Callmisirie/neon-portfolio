@@ -182,14 +182,14 @@ function Payment() {
                     bg-white px-6 py-8 shadow-xl
                     ring-slate-900/5">  
                         <h2  className="text-3xl leading-[68px] 
-                        lg:max-w-md font-montserrat  font-bold p-2 text-center">
+                        lg:max-w-md font-montserrat font-bold p-2 text-center">
                                 Choose Payment
                         </h2> 
                         {paypalGifts.length ? (
                             <button 
                                 className="text-white px-4 py-2 text-sm
                                 font-montserrat font-medium my-3 mx-5
-                                bg-purple-600 rounded-md hover:bg-purple-500 "
+                                bg-purple-500 rounded-md hover:bg-purple-600 "
                                 onClick={ ()=> {
                                 handleClick("Paypal")
                             }}>
@@ -200,7 +200,7 @@ function Payment() {
                             <button
                                 className="text-white px-4 py-2 text-sm
                                 font-montserrat font-medium my-3 mx-5
-                                bg-purple-600 rounded-md hover:bg-purple-500 " 
+                                bg-purple-500 rounded-md hover:bg-purple-600 " 
                                 onClick={()=> {
                                 handleClick("Crypto")
                             }}>
@@ -345,8 +345,8 @@ function Payment() {
                                         </p>
                                     </div>
                                     <button className={`px-4 py-2 my-2 border rounded-full text-white w-fit
-                                    font-montserrat text-xs leading-none bg-green-600 border-green-600 
-                                    hover:bg-green-500 hover:border-green-500
+                                    font-montserrat text-xs leading-none bg-green-500 border-green-500 
+                                    hover:bg-green-600 hover:border-green-600
                                     ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
                                     onClick={() => {
                                     handlePayment()
@@ -411,17 +411,17 @@ const PaypalGift = () => {
 
     return (
         <section className="min-h-full">
-            <div className="flex flex-col 
-            justify-center items-center 
-            bg-white p-5">
-                {paypalGifts?.length ? (
-                    <>
+            {paypalGifts?.length ? (
+                <>
+                    <div className="flex flex-col 
+                    justify-center items-center 
+                    bg-white p-5">
                         <h2  className="text-3xl 
                         lg:max-w-md font-palanquin 
                         font-bold p-2 text-center">
                             Paypal
                         </h2>
-                        <ul className='flex flex-col mx-5 mb-5 mt-2.5'> 
+                        <ul className='flex flex-col mx-5 mb-5'> 
                             {paypalGifts.map((paypalGift)=> {
                                 return (
                                     <li key={paypalGift._id}>
@@ -448,9 +448,9 @@ const PaypalGift = () => {
                                 )
                             })}
                         </ul>
-                    </>
-                ) : null}
-            </div>
+                    </div>                        
+                </>
+            ) : null}
         </section>
     );
 }
@@ -507,9 +507,9 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                         font-bold p-2 text-center">
                             Crypto
                         </h2>
-                        <div className="flex flex-col mx-5 mt-5 w-full">
+                        <div className="flex flex-col mx-5 w-full">
                         {cryptoGifts && cryptoGifts.map(cryptoGift => (
-                            <p className="font-montserrat 
+                            <p className="font-montserrat text-center
                             text-slate-gray hover:text-black 
                             text-md hover:font-semibold px-2
                             leading-8 my-2 cursor-pointer"
@@ -587,8 +587,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                         )))}
                     </ul>
                 </div> 
-            ) : null}
-          
+            ) : null}        
         </section>
     );
 }

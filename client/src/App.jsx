@@ -56,7 +56,7 @@ function App() {
             <Route path="/passwordReset/generateOTP" element={<GenerateOTP />}/>
             <Route path="/passwordReset/changePassword" element={<ChangePassword />}/>
             <Route path="/manga/find/:mangaName" element={<Find />}/>
-            {cookies.access_token &&  (
+            {cookies.access_token ?  (
               <>
                 <Route path="/manager" element={<Manager />}/>
 
@@ -86,7 +86,7 @@ function App() {
                 <Route path="/manager/transactions/status" element={<TransactionsStatus />}/>
                 <Route path="/manager/transactions/delete" element={<TransactionsDelete />}/>
               </>
-            )}
+            ) : null}
             <Route path="/review/create" element={<ReviewCreate />}/>
             <Route path="/manga/:chapters" element={<Chapters />}/>
             <Route path="/manga/:chapters/:pages" element={<Pages />}/>

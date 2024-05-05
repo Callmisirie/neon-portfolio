@@ -34,9 +34,9 @@ function Chapters() {
     }
 
     return (
-        <section className="min-h-full bg-black">
+        <section className="min-h-full">
             <div className="flex 
-            flex-col justify-center 
+            flex-col min-h-screen 
             items-center bg-black">
                 {mangaContent && manga._id && (
                     <div  className="flex flex-col 
@@ -94,6 +94,6 @@ function Chapters() {
    
     )
 };
-
+ 
 
 export default Chapters;

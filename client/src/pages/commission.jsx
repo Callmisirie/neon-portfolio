@@ -146,11 +146,11 @@ const Commission = () => {
                 ))}
               </div>
             </div>
-            {commissions && commissionID && (
+            {commissionID ? (
               <div className="flex flex-col justify-center items-center">
                 <ul className="flex flex-col justify-center items-center">
-                  {commissions.map(commission => (
-                    commission._id === commissionID && (
+                  {commissions?.map(commission => (
+                    commission?._id === commissionID ? (
                       <li  className="flex justify-center items-center rounded-lg 
                       bg-white p-2 m-5 shadow-xl
                       ring-slate-900/5"
@@ -169,7 +169,7 @@ const Commission = () => {
                           <NumberOfOrders commission={commission}/>
                         </div>
                       </li>
-                    )
+                    ) : null
                   ))}
                 </ul>
                 <p  className="font-montserrat 
@@ -205,8 +205,8 @@ const Commission = () => {
                   </p>
                 </div>
                 <button className={`px-4 py-2 my-2 border rounded-md text-white
-                font-montserrat text-md leading-none mb-5 bg-green-600 border-green-600 
-                hover:bg-green-500 hover:border-green-500
+                font-montserrat text-md leading-none mb-5 bg-green-500 border-green-500 
+                hover:bg-green-600 hover:border-green-600
                 ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
                 onClick={() => {
                   handlePayment()
@@ -219,7 +219,7 @@ const Commission = () => {
                   {message}
                 </p>}
               </div>
-            )}
+            ) : null}
           </div>           
         </div>        
       )}
