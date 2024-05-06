@@ -86,13 +86,13 @@ function Home() {
                     </div>
                 </section>
             </section>
-            <section className="padding">
+            <section className="padding bg-purple-50 rounded-ss-3xl rounded-se-3xl">
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-col 
-                    justify-center items-center my-2 rounded-xl 
-                    bg-white p-6 shadow-xl ring-slate-900/5">
+                    justify-center items-center my-2 rounded-3xl 
+                    bg-white p-6 shadow-3xl ring-slate-900/5">
                         <button >
-                            <video className="rounded-lg" src="/videos/Afro%20Samurai%20-%20E2%20(14).mp4" width={500} controls muted loop>
+                            <video className="rounded-3xl" src="/videos/NeonArt.mp4" width={500} controls muted loop>
                             </video>
                         </button>
                         

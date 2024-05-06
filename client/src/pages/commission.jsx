@@ -115,7 +115,7 @@ const Commission = () => {
 
   return (
     <section className="min-h-full">
-      {commissions?.length && (
+      {commissions?.length ? (
         <div className=" flex 
         lex-wrap justify-center 
         items-center rounded-lg 
@@ -222,7 +222,7 @@ const Commission = () => {
             ) : null}
           </div>           
         </div>        
-      )}
+      ) : null}
         {userID && (
           <section className="flex justify-center padding">
             <section className="max-container rounded-lg bg-white

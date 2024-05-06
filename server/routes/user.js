@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import _ from "lodash";
 import nodemailer from "nodemailer";
+import validator from "email-validator"
 
 import UserModel from "../models/User.js";
 
@@ -27,12 +28,21 @@ const transporter = nodemailer.createTransport({
 
 router.post("/register", async (req, res)=> {
     const {firstName, lastName, email, password} = req.body;
-    const hash = bcrypt.hashSync(password, saltRounds);
-    const user = await UserModel.findOne({email : _.toLower(email)});
 
-    if(!user){
-        const user = new UserModel({firstName, lastName, email : _.toLower(email), password : hash });
-        const userResponse = await user.save();
+    // Validate email format
+    if (!validator.validate(email)) {
+        return res.json({
+            message: "Invalid email format",
+            color: "red"
+        });
+    }
+
+    // Check if email already exists
+    const user = await UserModel.findOne({email : _.toLower(email)});
+    if (!user) {
+        const hash = bcrypt.hashSync(password, saltRounds);
+        const newUser = new UserModel({firstName, lastName, email : _.toLower(email), password : hash });
+        const userResponse = await newUser.save();
 
         console.log(userResponse);
 
@@ -46,17 +56,16 @@ router.post("/register", async (req, res)=> {
             text: "You have successfully registered to Neon World."
          });
 
-        res.json({
+        return res.json({
             message: "User successfully Register",
             color: "green"
         });
-    } else if(user){
-        res.json({
-            message: "User already exist login",
+    } else {
+        return res.json({
+            message: "User already exists, please login",
             color: "red"
         });
     } 
-    
 });
 
 router.post("/login", async (req, res)=> {

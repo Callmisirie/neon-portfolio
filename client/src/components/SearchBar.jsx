@@ -21,7 +21,7 @@ function SearchBar() {
 
     return (
         <div className="">
-            <form className="flex justify-center items-center p-1 my-2
+            <form className="flex justify-center items-center p-1 max-w-fit
                 border rounded-md border-slate-gray hover:border-black" >
                 <button className="flex justify-center mx-1 w-5"
                 onClick={handleClick} type="submit" value="">
@@ -30,7 +30,7 @@ function SearchBar() {
                     alt="search icon"/>
                 </button>
                 <input className="p-1 text-sm bg-transparent
-                rounded-xl input font-montserrat w-fit"
+                rounded-xl input font-montserrat w-fit border-none"
                     name="search" type="search" 
                     placeholder="Manga search" 
                     autoComplete="off"
