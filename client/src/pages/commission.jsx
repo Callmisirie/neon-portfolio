@@ -120,11 +120,11 @@ const Commission = () => {
         lex-wrap justify-center 
         items-center rounded-lg 
         bg-white px-6">
-          <div  className="flex sm:flex-row flex-col justify-center items-center rounded-lg my-20 
+          <div  className="flex sm:flex-row flex-col justify-center items-start rounded-lg my-20 
             bg-white px-6 shadow-xl py-5
             ring-slate-900/5">
             <div  className="flex flex-col justify-center items-center
-            bg-white mx-2 px-6 py-5 my-5">
+            bg-white mx-2 px-6">
               <h3 className="text-4xl leading-[68px] 
               lg:max-w-md font-palanquin font-bold p-2 my-5 text-center">
                 Choose Art Style

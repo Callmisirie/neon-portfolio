@@ -19,23 +19,23 @@ function Navbar() {
     const [visible, setVisible] = useState(true);
     
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const currentScrollPos = window.scrollY;
     
-            // Check if the scroll position has changed
-            if (prevScrollPos === currentScrollPos) {
-                return;
-            }
+    //         // Check if the scroll position has changed
+    //         if (prevScrollPos === currentScrollPos) {
+    //             return;
+    //         }
     
-            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    //         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
     
-            setPrevScrollPos(currentScrollPos);
-        };
+    //         setPrevScrollPos(currentScrollPos);
+    //     };
     
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollPos]);
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, [prevScrollPos]);
     
     
     function Logout() {
@@ -65,56 +65,44 @@ function Navbar() {
                         alt="Logo"
                        />
                     </a>
-                
-                    <ul className="flex-1 flex justify-center items-center gap-4 max-lg:hidden mx-10">
+                    <ul className="flex-1 flex justify-between items-center gap-4 max-lg:hidden mx-10">
                         <li> 
                             <SearchBar /> 
                         </li>
-                        <div className="w-full">
-                            <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
-                            ${location.pathname === "/" ? "font-semibold" : " "}`}><Link to="/"> 
-                                Home </Link>
-                            </li>                        
-                        </div>
-                        <div className="w-full">
-                            <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "font-semibold" : " "}`}><Link to="/manga"> 
-                                Manga </Link>
-                            </li>                       
-                        </div>
-                        <div className="w-full">
-                            <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, commissionPath.length) === "/commission" ? "font-semibold" : " "}`}><Link to="/commission">
-                                Commission </Link>
-                            </li>                
-                        </div>
-                        <div className="w-full">
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
+                        ${location.pathname === "/" ? "font-semibold" : " "}`}><Link to="/"> 
+                            Home </Link>
+                        </li>                        
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
+                        ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "font-semibold" : " "}`}><Link to="/manga"> 
+                            Manga </Link>
+                        </li>                       
+                
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
+                        ${location.pathname.slice(0, commissionPath.length) === "/commission" ? "font-semibold" : " "}`}><Link to="/commission">
+                            Commission </Link>
+                        </li>                                   
+                        {/* <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
                             ${location.pathname.slice(0, aboutPath.length) === "/about" ? "font-semibold" : " "}`}><Link to="/about">
                                 About </Link>
                             </li>                    
-                        </div>
-                        <div className="w-full"> 
-                            <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}><Link to="/contact">
-                                Contact </Link>
-                            </li>                   
-                        </div>
-                        <div className="w-full">
-                            <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-black
-                            ${location.pathname.slice(0, authUserPath.length) === "/auth/user" ? "font-semibold" : " "}`}><Link to="/auth/user"> 
-                                Sign in / Register </Link>
-                            </li>                  
-                        </div>
+                        </div> */}               
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
+                        ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}><Link to="/contact">
+                            Contact </Link>
+                        </li>                                 
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-black
+                        ${location.pathname.slice(0, authUserPath.length) === "/auth/user" ? "font-semibold" : " "}`}><Link to="/auth/user"> 
+                            Sign in / Register </Link>
+                        </li>                                     
                         {cookies.access_token || userCookies.userAccess_token ?  (
-                            <div className="flex justify-center gap-5 items-center ml-5 px-5">
+                            <div className="flex justify-center gap-5 items-center px-5">
                                 {cookies.access_token ? (
-                                    <div className="w-full">
-                                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-black
-                                        ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}><Link to="/manager"> 
-                                            Manager </Link>
-                                        </li>                  
-                                    </div>                               
+                                    <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-black
+                                    ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}><Link to="/manager"> 
+                                        Manager </Link>
+                                    </li>                                                
                                 ) : null}
                                 <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black">
                                     <button
@@ -165,12 +153,12 @@ function Navbar() {
                                 Commission </Link>
                             </li>                
                         </div>
-                        <div className="w-full">
+                        {/* <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
                             ${location.pathname.slice(0, aboutPath.length) === "/about" ? "font-semibold" : " "}`}><Link to="/about">
                                 About </Link>
                             </li>                    
-                        </div>
+                        </div> */}
                         <div className="w-full"> 
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
                             ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}><Link to="/contact">

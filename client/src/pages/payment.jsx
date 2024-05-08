@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { clipboardCopy } from '../assets/icons';
+import bankTransferDetails from '../constants/bankTransferDetails';
 
 
 
 function Payment() {
     const [isClickedPaypal, setIsClickedPaypal] = useState(false);
     const [isClickedCrypto, setIsClickedCrypto] = useState(false);
+    const [isClickedBank, setIsClickedBank] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("");
     const [isChecked, setIsChecked] = useState(false);
     const [message, setMessage] = useState("");
@@ -15,6 +17,7 @@ function Payment() {
     const [transactionHistories, setTransactionHistories] = useState([]);
     const [resetMessage, setResetMessage] = useState(false); // Changed to state variable
     const [cryptoName, setCryptoName] = useState("");
+    const [bankCurrency, setBankCurrency] = useState("");
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(10);
     const navigate = useNavigate();
@@ -92,8 +95,10 @@ function Payment() {
             } else if (!isClickedPaypal) {
                 setIsClickedPaypal(true);
                 setIsClickedCrypto(false);
+                setIsClickedBank(false);
                 setPaymentMethod("Paypal");
                 setCryptoName("");
+                setBankCurrency("");
                 setIsChecked(false);
                 setMessage("");
             }
@@ -104,7 +109,22 @@ function Payment() {
             } else if (!isClickedCrypto) {
                 setIsClickedCrypto(true);
                 setIsClickedPaypal(false);
+                setIsClickedBank(false);
                 setPaymentMethod("Crypto")
+                setBankCurrency("");
+                setIsChecked(false);
+                setMessage("");
+            }
+        } 
+        else if (gift === "Bank Transfer") {
+            if (isClickedBank) {
+                setIsClickedBank(false);
+            } else if (!isClickedBank) {
+                setIsClickedBank(true);
+                setIsClickedPaypal(false);
+                setIsClickedCrypto(false);
+                setPaymentMethod("Bank Transfer");
+                setCryptoName("");
                 setIsChecked(false);
                 setMessage("");
             }
@@ -172,7 +192,7 @@ function Payment() {
         <section className="min-h-full flex flex-col items-center">
             {paypalGifts.length || cryptoGifts.length ? (        
                 <div className="flex flex-col sm:flex-row
-                justify-center items-center flex-wrap
+                justify-center items-start flex-wrap
                 max-container m-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
                 ring-slate-900/5">
@@ -185,28 +205,41 @@ function Payment() {
                         lg:max-w-md font-montserrat font-bold p-2 text-center">
                                 Choose Payment
                         </h2> 
-                        {paypalGifts.length ? (
-                            <button 
-                                className="text-white px-4 py-2 text-sm
-                                font-montserrat font-medium my-3 mx-5
-                                bg-purple-500 rounded-md hover:bg-purple-600 "
-                                onClick={ ()=> {
-                                handleClick("Paypal")
-                            }}>
-                                Paypal
-                            </button>                        
-                        ) : null}
-                        {cryptoGifts.length ? (
+                        <div className='flex 
+                        flex-col justify-center items-center'>
+                            {paypalGifts.length ? (
+                                <button 
+                                    className="text-white px-4 py-2 text-sm
+                                    font-montserrat font-medium my-3 mx-5
+                                    bg-purple-500 rounded-md hover:bg-purple-600 "
+                                    onClick={ ()=> {
+                                    handleClick("Paypal")
+                                }}>
+                                    Paypal
+                                </button>                        
+                            ) : null}
+                            {cryptoGifts.length ? (
+                                <button
+                                    className="text-white px-4 py-2 text-sm
+                                    font-montserrat font-medium my-3 mx-5
+                                    bg-purple-500 rounded-md hover:bg-purple-600 " 
+                                    onClick={()=> {
+                                    handleClick("Crypto")
+                                }}>
+                                    Crypto
+                                </button>                    
+                            ) : null}
                             <button
                                 className="text-white px-4 py-2 text-sm
                                 font-montserrat font-medium my-3 mx-5
                                 bg-purple-500 rounded-md hover:bg-purple-600 " 
                                 onClick={()=> {
-                                handleClick("Crypto")
+                                handleClick("Bank Transfer")
                             }}>
-                                Crypto
-                            </button>                    
-                        ) : null}
+                                Bank Transfer
+                            </button>                             
+                        </div>
+
 
                         {isClickedPaypal && 
                             <>
@@ -224,19 +257,26 @@ function Payment() {
                                 setPriceInCrypto={setPriceInCrypto} /> 
                             </> 
                         }
+                        {isClickedBank && 
+                            <>
+                                <BankGift 
+                                setBankCurrency={setBankCurrency}
+                                />
+                            </>                        
+                        }
+
                         
                     </div>                
 
 
-                        {isClickedPaypal || isClickedCrypto ? (
+                        {isClickedPaypal || isClickedCrypto || isClickedBank ? (
                             <div className="flex gap-5
                             flex-col justify-center
                             max-container m-10 rounded-lg 
                             bg-white px-6 py-8 shadow-xl
                             ring-slate-900/5">
-                                <h3 className="font-montserrat 
-                                    text-black font-semibold text-lg 
-                                    w-full text-center">
+                                <h3 className="text-3xl leading-[68px] 
+                                g:max-w-md font-montserrat font-bold p-2 text-center">
                                     Transaction Details 
                                 </h3>
                                 <p className="font-montserrat font-semibold
@@ -265,10 +305,10 @@ function Payment() {
 
 
                                     return (cryptoName === cryptoSymbolDetail.symbol ? (
-                                        <div className='flex items-center'
+                                        <div className='flex items-center max-w-fit'
                                         key={cryptoSymbolDetail.symbol}>
                                             <p className="font-montserrat font-semibold
-                                            text-slate-gray max-w-xs text-start
+                                            text-slate-gray text-start
                                             text-sm">
                                                 Price in {cryptoSymbolDetail.symbol}  - <span className="font-montserrat 
                                                 text-slate-gray text-start font-normal
@@ -416,7 +456,7 @@ const PaypalGift = () => {
                     <div className="flex flex-col 
                     justify-center items-center 
                     bg-white p-5">
-                        <h2  className="text-3xl 
+                        <h2  className="text-xl 
                         lg:max-w-md font-palanquin 
                         font-bold p-2 text-center">
                             Paypal
@@ -427,11 +467,11 @@ const PaypalGift = () => {
                                     <li key={paypalGift._id}>
                                         <p className="font-montserrat text-center
                                         text-slate-gray hover:text-black text-md
-                                        leading-8 my-2 cursor-pointer w-full"
+                                        leading-8 mt-2 cursor-pointer w-full"
                                         onClick={()=> {handleChoosePaypalGift(paypalGift._id)}}>
                                             {paypalGift.address}
                                         </p>
-                                        <ul className="flex flex-col my-2 rounded-lg 
+                                        <ul className="flex flex-col mt-2 rounded-lg 
                                         bg-white px-6">
                                             {paypalGiftId === paypalGift._id && 
                                                 
@@ -497,22 +537,22 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
     return (
         <section className="min-h-full">
             {cryptoGifts?.length ? (
-                <div  className="flex sm:flex-row gap-2
-                flex-col justify-center items-center 
+                <div  className="flex sm:flex-row
+                flex-col justify-center items-start 
                 p-5">
                     <div  className="flex flex-col 
                     justify-center items-center">
-                        <h2  className="text-3xl mx-2
+                        <h2  className="text-xl mx-2
                         lg:max-w-md font-palanquin w-full
                         font-bold p-2 text-center">
                             Crypto
                         </h2>
                         <div className="flex flex-col mx-5 w-full">
                         {cryptoGifts && cryptoGifts.map(cryptoGift => (
-                            <p className="font-montserrat text-center
+                            <p className="font-montserrat text-start sm:text-center
                             text-slate-gray hover:text-black 
-                            text-md hover:font-semibold px-2
-                            leading-8 my-2 cursor-pointer"
+                            text-sm hover:font-semibold pl-10 pr-5 sm:px-5 
+                            leading-8 mt-2 cursor-pointer"
                             onClick={()=> {
                             handleChooseCryptoGift(cryptoGift._id)
                             setCryptoName(cryptoName === cryptoGift.cryptoName ? null : cryptoGift.cryptoName) 
@@ -533,22 +573,22 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                         </div>
                     </div>
                     <ul className="flex flex-col 
-                    justify-center items-center">
+                    justify-center items-center rounded-lg 
+                    shadow-xl ">
                         {cryptoGifts && cryptoGifts.map(cryptoGift => (
                         cryptoGift._id === cryptoGiftId && (
-                            <li  className="flex justify-center items-center 
-                            p-2 m-5"
+                            <li  className="flex justify-center items-center"
                             key={cryptoGift._id}>
-                                <div  className="flex flex-col 
-                                justify-center items-center p-2">
-                                    <h3 className="font-montserrat 
-                                    text-slate-gray text-lg 
-                                    leading-8 my-2 text-center">
+                                <div  className="flex flex-col px-5 pb-5
+                                justify-center items-center">
+                                    <h3 className="text-xl
+                                    lg:max-w-md font-palanquin w-full
+                                    font-semibold p-2 text-center">
                                     {cryptoGift.cryptoName}
                                     </h3>
                                     <p className="font-montserrat 
                                     text-slate-gray text-md font-semibold
-                                    my-1 text-center">
+                                    mt-5 text-center">
                                     Network - <span className="font-montserrat 
                                     text-slate-gray text-sm font-normal
                                     my-1">
@@ -556,15 +596,15 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                     </span>
                                     </p>
                                     <img className="flex flex-col 
-                                    justify-center rounded-xl m-2 shadow-xl"
+                                    justify-center rounded-xl my-5 shadow-xl"
                                     src={`http://localhost:4001/display/${cryptoGift._id}`} 
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                     style={{ width: "222px" }}
                                     />
-                                    <div className='flex items-center p-2 w-full'>
-                                        <p className="font-montserrat 
-                                        text-slate-gray text-md 
-                                        leading-8 my-2 text-center">
+                                    <div className='max-w-sm'>
+                                        <p className="font-montserrat
+                                        text-slate-gray text-xs 
+                                        my-2">
                                             {cryptoGift.address}
                                         </p>  
                                         <div className='flex 
@@ -588,6 +628,202 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                     </ul>
                 </div> 
             ) : null}        
+        </section>
+    );
+}
+
+const BankGift = ({bankCurrency, setBankCurrency}) => {
+    const [bankGifts, setBankGifts] = useState([]);
+    const [bankGiftId, setBankGiftId] = useState(null)
+    const [copyTooltip, setCopyTooltip] = useState("Copy");
+    
+    
+
+    function handleChooseBankGift(id) {
+        setBankGiftId(id === bankGiftId ? null : id)
+        setResetMessage(true);
+    }
+    
+    function handleCopyClipboard(address) {
+        setCopyTooltip("Copied!");
+        
+        navigator.clipboard.writeText(address)
+            .then(() => {
+                console.log('Address copied to clipboard');
+                setTimeout(() => {
+                    setCopyTooltip("Copy");
+                }, 2000);
+            })
+            .catch((error) => {
+                console.error('Failed to copy address: ', error);
+            });
+    }
+
+    return (
+        <section className="min-h-full">
+                <div  className="flex sm:flex-row
+                flex-col justify-center items-start 
+                p-5">
+                    <div  className="flex flex-col 
+                    justify-center items-center">
+                        <h2  className="text-xl mx-2
+                        lg:max-w-md font-palanquin w-full
+                        font-bold p-2 text-center">
+                            Bank Transfer
+                        </h2>
+                        <div className="flex flex-col mx-5 w-full">
+                        {bankTransferDetails.map(bankDetail => (
+                            <p className="font-montserrat text-start sm:text-center
+                            text-slate-gray hover:text-black 
+                            text-sm hover:font-semibold px-5
+                            leading-8 mt-2 cursor-pointer"
+                            onClick={()=> {
+                                handleChooseBankGift(bankDetail.currency)
+                                setBankCurrency(bankCurrency === bankDetail.currency ? null : bankDetail.currency) 
+                                // const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
+                                // selectedCrypto.map((crypto)=> {                            
+                                //     const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
+                                //     if (decimalCount < 6) {
+                                //     setPriceInCrypto((price / crypto.price).toFixed(2))
+                                //     } else {
+                                //         setPriceInCrypto((price / crypto.price).toFixed(6))
+                                //     }     
+                                // })
+                            }}
+                            key={bankDetail.currency}>
+                                {bankDetail.currency}
+                            </p>
+                        ))}
+                        </div>
+                    </div>
+                    <ul className="flex flex-col rounded-lg 
+                    shadow-xl justify-center items-center">
+                        {bankTransferDetails.map(bankDetail => (
+                        bankDetail.currency === bankGiftId && (
+                            <li  className=""
+                            key={bankDetail.currency}>
+                                <div  className="flex flex-col px-5 pb-5
+                                justify-center">
+                                    <h3 className="text-xl
+                                    lg:max-w-md font-palanquin w-full
+                                    font-semibold p-2 text-center">
+                                    {bankDetail.currency}
+                                    </h3>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-xs font-semibold
+                                    mt-5">
+                                    Account Holder -  <span className="font-montserrat 
+                                    text-slate-gray text-xs font-normal
+                                    my-1">
+                                        {bankDetail.accountHolder}
+                                    </span>
+                                    </p>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-xs font-semibold
+                                    mt-5">
+                                    Account Number - <span className="font-montserrat 
+                                    text-slate-gray text-xs font-normal
+                                    my-1">
+                                        {bankDetail.accountNumber}
+                                    </span>
+                                    </p>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-xs font-semibold
+                                    mt-5">
+                                    Bank Name - <span className="font-montserrat 
+                                    text-slate-gray text-xs font-normal
+                                    my-1">
+                                        {bankDetail.bankName}
+                                    </span>
+                                    </p>
+                                    {bankDetail?.achRouting && 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        mt-5">
+                                        ACH Routing -  <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1"> {bankDetail.achRouting}
+                                        </span>
+                                        </p>                                    
+                                    }
+                                    {bankDetail?.swiftCode && 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        mt-5">
+                                        Swift Code - <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1">
+                                            {bankDetail.swiftCode}
+                                        </span>
+                                        </p>                                    
+                                    }
+                                    {bankDetail?.sortCode && 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        mt-5">
+                                        Sort Code - <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1">
+                                            {bankDetail.sortCode}
+                                        </span>
+                                        </p>                                    
+                                    }
+                                    {bankDetail?.IBAN && 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        mt-5">
+                                        IBAN - <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1">
+                                            {bankDetail.IBAN}
+                                        </span>
+                                        </p>                                    
+                                    }
+                                    {bankDetail?.bankAddress && 
+                                        <div className='max-w-sm'>
+                                            <p className="font-montserrat w-fit
+                                            text-slate-gray text-xs font-semibold
+                                            mt-5">
+                                            Bank Address - <span className="font-montserrat 
+                                            text-slate-gray text-xs font-normal
+                                            my-1">
+                                                {bankDetail.bankAddress}
+                                            </span>
+                                            </p>                                             
+                                        </div>
+                                   
+                                    }
+
+                                    {/* <div className='flex items-center p-2 w-full'>
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-md font-semibold
+                                        my-1 text-center">
+                                        Account Number - <span className="font-montserrat 
+                                        text-slate-gray text-sm font-normal
+                                        my-1">
+                                            {bankDetail.accountNumber}
+                                        </span>
+                                        </p>  
+                                        <div className='flex 
+                                        justify-center items-center 
+                                        cursor-pointer m-1'
+                                        onClick={() => handleCopyClipboard(bankDetail.accountNumber)}>
+                                            <img className="mx-2 
+                                            rounded-full w-4 h-4 
+                                            hover:h-8"
+                                            src={clipboardCopy}/> 
+                                            <p className="font-montserrat 
+                                            text-slate-gray text-sm 
+                                            leading-8 text-center">
+                                                {copyTooltip}
+                                            </p>                                                                    
+                                        </div>                           
+                                    </div> */}
+                                </div>
+                            </li>
+                        )))}
+                    </ul>
+                </div>        
         </section>
     );
 }
