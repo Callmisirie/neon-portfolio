@@ -11,26 +11,6 @@ const bankTransferDetails = [
         accountType : "checking" 
     },
     {
-        currency: "GBP",
-        accountHolder : "Kennedy Isirimah",
-        accountNumber : "63041987", 
-        bankName : "Clear Junction Limited",
-        swiftCode : "CLJUGB21XXX", 
-        sortCode : "041307",
-        IBAN : "GB25CLJU04130763041987",
-        bankAddress : "4th Floor Imperial House, 15 Kingsway, London, United Kingdom, WC2B 6UN"
-    },
-    {
-        currency:"EUR",
-        accountHolder : "Kennedy Isirimah",
-        accountNumber : "63041987", 
-        bankName : "Clear Junction Limited",
-        swiftCode : "CLJUGB21XXX", 
-        sortCode : "041307",
-        IBAN : "GB25CLJU04130763041987",
-        bankAddress : "4th Floor Imperial House, 15 Kingsway, London, United Kingdom, WC2B 6UN"
-    },
-    {
         currency: "NGN",
         accountHolder : "Kennedy Isirimah",
         accountNumber : "8543964818", 

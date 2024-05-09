@@ -135,10 +135,16 @@ function Payment() {
 
     const handlePayment = async () => {
 
+
+        console.log(bankCurrency);
        if (paymentMethod === "Crypto" && !cryptoName) {
-            setMessage("Select a crypto currency before comfirming purchase");
+            setMessage("Select a crypto currency before confirming purchase");
             setMessageColor("red");
             return;
+       } else if (paymentMethod === "Bank Transfer" && !bankCurrency) {
+            setMessage("Select a currency before confirming purchase");
+            setMessageColor("red");
+        return;
        }
         const transactionInfo = {
             paymentMethod, cryptoName, priceInCrypto,
@@ -260,7 +266,9 @@ function Payment() {
                         {isClickedBank && 
                             <>
                                 <BankGift 
+                                setResetMessage={setResetMessage}
                                 setBankCurrency={setBankCurrency}
+                                bankCurrency={bankCurrency}
                                 />
                             </>                        
                         }
@@ -338,7 +346,7 @@ function Payment() {
                                     Discount - <span className="font-montserrat 
                                     text-slate-gray text-start font-normal
                                     text-sm">{`${transactionDetails.commissionDetails.discount}%
-                                    per ${transactionDetails.commissionDetails.discountInterval} 
+                                    applies to every ${transactionDetails.commissionDetails.discountInterval} 
                                     ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
                                 </p>
                                 <p className="font-montserrat font-semibold
@@ -632,7 +640,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
     );
 }
 
-const BankGift = ({bankCurrency, setBankCurrency}) => {
+const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
     const [bankGifts, setBankGifts] = useState([]);
     const [bankGiftId, setBankGiftId] = useState(null)
     const [copyTooltip, setCopyTooltip] = useState("Copy");
@@ -704,11 +712,15 @@ const BankGift = ({bankCurrency, setBankCurrency}) => {
                             key={bankDetail.currency}>
                                 <div  className="flex flex-col px-5 pb-5
                                 justify-center">
-                                    <h3 className="text-xl
-                                    lg:max-w-md font-palanquin w-full
-                                    font-semibold p-2 text-center">
-                                    {bankDetail.currency}
-                                    </h3>
+                                    <p className="font-montserrat 
+                                    text-slate-gray text-xs font-semibold
+                                    mt-5">
+                                    Currency -  <span className="font-montserrat 
+                                    text-slate-gray text-xs font-normal
+                                    my-1">
+                                        {bankDetail.currency}
+                                    </span>
+                                    </p>
                                     <p className="font-montserrat 
                                     text-slate-gray text-xs font-semibold
                                     mt-5">
@@ -757,28 +769,6 @@ const BankGift = ({bankCurrency, setBankCurrency}) => {
                                         </span>
                                         </p>                                    
                                     }
-                                    {bankDetail?.sortCode && 
-                                        <p className="font-montserrat 
-                                        text-slate-gray text-xs font-semibold
-                                        mt-5">
-                                        Sort Code - <span className="font-montserrat 
-                                        text-slate-gray text-xs font-normal
-                                        my-1">
-                                            {bankDetail.sortCode}
-                                        </span>
-                                        </p>                                    
-                                    }
-                                    {bankDetail?.IBAN && 
-                                        <p className="font-montserrat 
-                                        text-slate-gray text-xs font-semibold
-                                        mt-5">
-                                        IBAN - <span className="font-montserrat 
-                                        text-slate-gray text-xs font-normal
-                                        my-1">
-                                            {bankDetail.IBAN}
-                                        </span>
-                                        </p>                                    
-                                    }
                                     {bankDetail?.bankAddress && 
                                         <div className='max-w-sm'>
                                             <p className="font-montserrat w-fit
@@ -791,7 +781,30 @@ const BankGift = ({bankCurrency, setBankCurrency}) => {
                                             </span>
                                             </p>                                             
                                         </div>
-                                   
+                                    }
+                                    {bankDetail?.accountType && 
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        mt-5">
+                                        Account Type - <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1">
+                                            {bankDetail.accountType}
+                                        </span>
+                                        </p>                                    
+                                    }
+                                    {bankGiftId === "NGN" && 
+                                        <div className='max-w-xs'>
+                                            <p className="font-montserrat w-fit
+                                            text-slate-gray text-xs
+                                            mt-5">
+                                            Payments to <span className='font-semibold'>NGN</span> by international clients, <a href='https://www.lemfi.com/'>
+                                            <span className="font-montserrat 
+                                            text-green-500 hover:text-green-600 
+                                            text-xs font-semibold
+                                            my-1">LemFi</span></a> platform is recommeded. 
+                                            </p>                                             
+                                        </div>
                                     }
 
                                     {/* <div className='flex items-center p-2 w-full'>
