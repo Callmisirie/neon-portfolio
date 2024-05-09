@@ -1,4 +1,4 @@
-import { facebook, instagram, shieldTick, support, truckFast, twitter } from "../assets/icons";
+import { facebook, instagram, shieldTick, support, truckFast, discord, twitter } from "../assets/icons";
 import { bigShoe1, bigShoe2, bigShoe3, customer1, customer2, shoe4, shoe5, shoe6, shoe7, thumbnailShoe1, thumbnailShoe2, thumbnailShoe3 } from "../assets/images";
 
 export const navLinks = [
@@ -98,7 +98,7 @@ export const footerLinks = [
 ];
 
 export const socialMedia = [
-    { src: facebook, alt: "facebook logo", link: "https://www.facebook.com/" },
+    { src: discord, alt: "discord logo", link: "https://www.discord.com/" },
     { src: twitter, alt: "twitter logo", link: "https://www.twitter.com/" },
     { src: instagram, alt: "instagram logo", link: "https://www.instagram.com/" },
 ];

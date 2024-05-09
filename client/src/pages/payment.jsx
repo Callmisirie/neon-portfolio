@@ -162,11 +162,15 @@ function Payment() {
             setMessage(message);
             setMessageColor(color);
             setIsChecked(false);
-            // navigate("/commission");
-            // window.scrollTo(0, 0);
+            setTimeout(() => {
+                navigate("/commission");
+            }, 5000);
         } catch (error) {
             setMessage("Error saving transaction");
             setMessageColor("red");
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
             setIsChecked(false);
             console.error(error)
         }
@@ -465,7 +469,7 @@ const PaypalGift = () => {
                     justify-center items-center 
                     bg-white p-5">
                         <h2  className="text-xl 
-                        lg:max-w-md font-palanquin 
+                        lg:max-w-md font-palanquin
                         font-bold p-2 text-center">
                             Paypal
                         </h2>
@@ -475,7 +479,7 @@ const PaypalGift = () => {
                                     <li key={paypalGift._id}>
                                         <p className="font-montserrat text-center
                                         text-slate-gray hover:text-black text-md
-                                        leading-8 mt-2 cursor-pointer w-full"
+                                        leading-8 mt-2 cursor-pointer w-full hover:font-semibold"
                                         onClick={()=> {handleChoosePaypalGift(paypalGift._id)}}>
                                             {paypalGift.address}
                                         </p>
@@ -550,12 +554,12 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                 p-5">
                     <div  className="flex flex-col 
                     justify-center items-center">
-                        <h2  className="text-xl mx-2
+                        <h2  className="text-xl mx-5
                         lg:max-w-md font-palanquin w-full
                         font-bold p-2 text-center">
                             Crypto
                         </h2>
-                        <div className="flex flex-col mx-5 w-full">
+                        <div className="flex flex-col mx-2 w-full">
                         {cryptoGifts && cryptoGifts.map(cryptoGift => (
                             <p className="font-montserrat text-start sm:text-center
                             text-slate-gray hover:text-black 
@@ -652,20 +656,32 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
         setResetMessage(true);
     }
     
-    function handleCopyClipboard(address) {
+    function handleCopyClipboard(bankDetails) {
         setCopyTooltip("Copied!");
-        
-        navigator.clipboard.writeText(address)
+    
+        const textToCopy =
+            "Currency - " + bankDetails.currency + "\n" +
+            "Account Holder - " + bankDetails.accountHolder + "\n" +
+            "Account Number - " + bankDetails.accountNumber + "\n" +
+            "Bank Name - " + bankDetails.bankName + "\n" +
+            (bankDetails.achRouting ? "ACH Routing - " + bankDetails.achRouting + "\n" : "") +
+            (bankDetails.swiftCode ? "Swift Code - " + bankDetails.swiftCode + "\n" : "") +
+            (bankDetails.bankAddress ? "Bank Address - " + bankDetails.bankAddress + "\n" : "") +
+            (bankDetails.accountType ? "Account Type - " + bankDetails.accountType + "\n" : "");
+    
+        navigator.clipboard.writeText(textToCopy)
             .then(() => {
-                console.log('Address copied to clipboard');
+                console.log('Bank details copied to clipboard');
                 setTimeout(() => {
                     setCopyTooltip("Copy");
                 }, 2000);
             })
             .catch((error) => {
-                console.error('Failed to copy address: ', error);
+                console.error('Failed to copy bank details: ', error);
             });
     }
+    
+    
 
     return (
         <section className="min-h-full">
@@ -712,15 +728,32 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
                             key={bankDetail.currency}>
                                 <div  className="flex flex-col px-5 pb-5
                                 justify-center">
-                                    <p className="font-montserrat 
-                                    text-slate-gray text-xs font-semibold
-                                    mt-5">
-                                    Currency -  <span className="font-montserrat 
-                                    text-slate-gray text-xs font-normal
-                                    my-1">
-                                        {bankDetail.currency}
-                                    </span>
-                                    </p>
+                                    <div className='flex justify-between mt-5'>
+                                        <p className="font-montserrat 
+                                        text-slate-gray text-xs font-semibold
+                                        ">
+                                        Currency -  <span className="font-montserrat 
+                                        text-slate-gray text-xs font-normal
+                                        my-1">
+                                            {bankDetail.currency}
+                                        </span>
+                                        </p> 
+                                        <div className='flex 
+                                        justify-center items-center 
+                                        cursor-pointer'
+                                        onClick={() => handleCopyClipboard(bankDetail)}>
+                                            <img className="mx-2 
+                                            rounded-full w-4 h-4 
+                                            "
+                                            src={clipboardCopy}/> 
+                                            <p className="font-montserrat 
+                                            text-slate-gray text-xs 
+                                            text-center">
+                                                {copyTooltip}
+                                            </p>                                                                    
+                                        </div>                                         
+                                    </div>
+
                                     <p className="font-montserrat 
                                     text-slate-gray text-xs font-semibold
                                     mt-5">
@@ -796,40 +829,14 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
                                     {bankGiftId === "NGN" && 
                                         <div className='max-w-xs'>
                                             <p className="font-montserrat w-fit text-slate-gray text-xs mt-5">
-                                                Payments to <span className='font-semibold'>NGN</span> by international clients,{' '}
-                                                <a href='https://www.lemfi.com/' target="_blank" rel="noopener noreferrer">
-                                                    <span className="font-montserrat text-green-500 hover:text-green-600 text-xs font-semibold my-1">
-                                                        LemFi
-                                                    </span>
-                                                </a>{' '}platform is recommended.
+                                            <a href='https://www.lemfi.com/' target="_blank" rel="noopener noreferrer">
+                                                <span className="font-montserrat text-green-500 hover:text-green-600 text-xs font-semibold my-1">
+                                                LemFi
+                                                </span>
+                                            </a>{' '}is recommended for Payments made to <span className='font-semibold'>NGN</span> by international clients.
                                             </p>                                             
                                         </div>
                                     }                                    
-                                    {/* <div className='flex items-center p-2 w-full'>
-                                        <p className="font-montserrat 
-                                        text-slate-gray text-md font-semibold
-                                        my-1 text-center">
-                                        Account Number - <span className="font-montserrat 
-                                        text-slate-gray text-sm font-normal
-                                        my-1">
-                                            {bankDetail.accountNumber}
-                                        </span>
-                                        </p>  
-                                        <div className='flex 
-                                        justify-center items-center 
-                                        cursor-pointer m-1'
-                                        onClick={() => handleCopyClipboard(bankDetail.accountNumber)}>
-                                            <img className="mx-2 
-                                            rounded-full w-4 h-4 
-                                            hover:h-8"
-                                            src={clipboardCopy}/> 
-                                            <p className="font-montserrat 
-                                            text-slate-gray text-sm 
-                                            leading-8 text-center">
-                                                {copyTooltip}
-                                            </p>                                                                    
-                                        </div>                           
-                                    </div> */}
                                 </div>
                             </li>
                         )))}

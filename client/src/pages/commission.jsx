@@ -88,6 +88,9 @@ const Commission = () => {
     if (!userID) {
       setMessage("Log in before making purchase.");
       setMessageColor("red")
+      setTimeout(() => {
+        setMessage("");
+      }, 5000);
     } else if (userID) {
       try {
         const transactionHistoryResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
@@ -104,7 +107,6 @@ const Commission = () => {
       } catch (error) {
         console.error(error)
       }
-
     }
   }
 
@@ -126,12 +128,12 @@ const Commission = () => {
             <div  className="flex flex-col justify-center items-center
             bg-white mx-2 px-6">
               <h3 className="text-4xl leading-[68px] 
-              lg:max-w-md font-palanquin font-bold p-2 my-5 text-center">
+              lg:max-w-md font-palanquin font-bold p-2 mt-5 text-center">
                 Choose Art Style
               </h3>
               <div className="flex flex-col 
               justify-center items-start
-              bg-white p-4 my-5 w-full">
+              bg-white p-4 w-full">
                 {commissions.map(commission => (
                   <p className="font-montserrat 
                   text-slate-gray hover:text-black 
