@@ -172,15 +172,13 @@ const Commission = () => {
                     ) : null
                   ))}
                 </ul>
-                <p  className="font-montserrat 
-                text-purple-600 text-start
-                text-sm font-semibold hover:font-bold">
-                    <a href="/contact">
+                <p className="font-montserrat text-purple-600 text-start text-sm font-semibold hover:font-bold">
+                  <a href="/contact" target="_blank" rel="noopener noreferrer">
                       Contact
-                    </a> <span className="font-montserrat 
-                text-slate-gray text-start font-normal
-                text-xs">NEON.</span>
+                  </a> <span className="font-montserrat 
+                  text-slate-gray text-start font-normal text-xs">NEON.</span>
                 </p>
+
                 <div className="flex justify-center items-center m-2 p-2">                      
                   <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
                       <div className="flex items-center">

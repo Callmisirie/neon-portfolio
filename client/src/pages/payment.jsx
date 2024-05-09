@@ -795,18 +795,16 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
                                     }
                                     {bankGiftId === "NGN" && 
                                         <div className='max-w-xs'>
-                                            <p className="font-montserrat w-fit
-                                            text-slate-gray text-xs
-                                            mt-5">
-                                            Payments to <span className='font-semibold'>NGN</span> by international clients, <a href='https://www.lemfi.com/'>
-                                            <span className="font-montserrat 
-                                            text-green-500 hover:text-green-600 
-                                            text-xs font-semibold
-                                            my-1">LemFi</span></a> platform is recommeded. 
+                                            <p className="font-montserrat w-fit text-slate-gray text-xs mt-5">
+                                                Payments to <span className='font-semibold'>NGN</span> by international clients,{' '}
+                                                <a href='https://www.lemfi.com/' target="_blank" rel="noopener noreferrer">
+                                                    <span className="font-montserrat text-green-500 hover:text-green-600 text-xs font-semibold my-1">
+                                                        LemFi
+                                                    </span>
+                                                </a>{' '}platform is recommended.
                                             </p>                                             
                                         </div>
-                                    }
-
+                                    }                                    
                                     {/* <div className='flex items-center p-2 w-full'>
                                         <p className="font-montserrat 
                                         text-slate-gray text-md font-semibold
