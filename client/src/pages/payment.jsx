@@ -22,9 +22,11 @@ function Payment() {
     const [minutes, setMinutes] = useState(10);
     const navigate = useNavigate();
     const [priceInCrypto, setPriceInCrypto] = useState(null);
+    const [priceInCurrency, setPriceInCurrency] = useState(null);
     const [copyTooltip, setCopyTooltip] = useState("Copy");
     const transactionDetails = JSON.parse(window.localStorage.getItem("transactionDetails"));
     const [cryptoSymbolDetails, setCryptoSymbolDetails] = useState(JSON.parse(window.localStorage.getItem("cryptoSymbolDetails")));
+    const currencyDetails = JSON.parse(window.localStorage.getItem("currencyDetails"));
     const userID = window.localStorage.getItem("userID");
     const [paypalGifts, setPaypalGifts] = useState([]);
     const [cryptoGifts, setCryptoGifts] = useState([]);
@@ -147,7 +149,7 @@ function Payment() {
         return;
        }
         const transactionInfo = {
-            paymentMethod, cryptoName, priceInCrypto,
+            paymentMethod, cryptoName, priceInCrypto, bankCurrency, priceInCurrency,
             artStyle: transactionDetails.commissionDetails.artStyle,
             price: transactionDetails.price,
             quantity: transactionDetails.number,
@@ -273,6 +275,9 @@ function Payment() {
                                 setResetMessage={setResetMessage}
                                 setBankCurrency={setBankCurrency}
                                 bankCurrency={bankCurrency}
+                                price={transactionDetails.price}
+                                currencyDetails={currencyDetails}
+                                setPriceInCurrency={setPriceInCurrency}
                                 />
                             </>                        
                         }
@@ -344,6 +349,15 @@ function Payment() {
                                                     
                                         ) : null)
                                 }))}
+                                {bankCurrency === currencyDetails.currency ? (
+                                    <p className="font-montserrat font-semibold
+                                    text-slate-gray text-start
+                                    text-sm">
+                                        Price in {currencyDetails.currency}  - <span className="font-montserrat 
+                                        text-slate-gray text-start font-normal
+                                        text-sm">&#x20A6;{priceInCurrency}</span>       
+                                    </p>                               
+                                ) : null}
                                 <p className="font-montserrat font-semibold
                                 text-slate-gray max-w-xs text-start
                                 text-sm">
@@ -368,8 +382,7 @@ function Payment() {
                                         text-slate-gray text-start font-normal
                                         text-sm">{cryptoName}</span>
                                     </p>                                
-                                )}
-                                
+                                )}                              
                                 <div className="flex flex-col justify-center items-center mt-5 p-2">
                                     <div className="flex justify-center items-center m-2 p-2">                      
                                         <label htmlFor="toggle" className="flex items-center cursor-pointer m-2">
@@ -644,7 +657,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
     );
 }
 
-const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
+const BankGift = ({bankCurrency, setBankCurrency, setResetMessage, price, currencyDetails, setPriceInCurrency}) => {
     const [bankGifts, setBankGifts] = useState([]);
     const [bankGiftId, setBankGiftId] = useState(null)
     const [copyTooltip, setCopyTooltip] = useState("Copy");
@@ -703,16 +716,8 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage}) => {
                             leading-8 mt-2 cursor-pointer"
                             onClick={()=> {
                                 handleChooseBankGift(bankDetail.currency)
-                                setBankCurrency(bankCurrency === bankDetail.currency ? null : bankDetail.currency) 
-                                // const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
-                                // selectedCrypto.map((crypto)=> {                            
-                                //     const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
-                                //     if (decimalCount < 6) {
-                                //     setPriceInCrypto((price / crypto.price).toFixed(2))
-                                //     } else {
-                                //         setPriceInCrypto((price / crypto.price).toFixed(6))
-                                //     }     
-                                // })
+                                setBankCurrency(bankCurrency === bankDetail.currency ? null : bankDetail.currency);
+                                bankDetail.currency === currencyDetails.currency ? setPriceInCurrency(( currencyDetails.rate * price ).toFixed(2)) : null ;                       
                             }}
                             key={bankDetail.currency}>
                                 {bankDetail.currency}

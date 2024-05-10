@@ -14,6 +14,9 @@ const transactionHistorySchema = new mongoose.Schema({
         cryptoName: {
             type: String
         },
+        bankCurrency: {
+            type: String
+        },
         paymentStatus: {
             type: String,
             required: true
@@ -27,6 +30,9 @@ const transactionHistorySchema = new mongoose.Schema({
             required: true,
         },
         priceInCrypto: {
+            type: Number
+        },
+        priceInSubCurrency: {
             type: Number
         },
         quantity: {

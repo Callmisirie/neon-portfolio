@@ -103,6 +103,13 @@ const TransactionHistory = () => {
                                                 </p>                                 
                                             </>                                    
                                         )}
+                                        {transactionDetail.bankCurrency ? (
+                                            <p className="font-montserrat 
+                                            text-slate-gray
+                                            text-sm leading-8 w-full">
+                                            Price In {transactionDetail.bankCurrency} - &#x20A6;{transactionDetail.priceInSubCurrency}   
+                                            </p>                               
+                                        ) : null}
                                         <p className="font-montserrat 
                                         text-slate-gray
                                         text-sm leading-8 w-full">

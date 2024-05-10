@@ -67,6 +67,32 @@ app.get("/cryptocurrency/latest", async (req, res) => {
     }
 });
 
+app.get("/currency/latest", async (req, res) => {
+    const currency = "NGN";
+
+    try {
+        const response = await axios.get("https://openexchangerates.org/api/latest.json?app_id=07c8a6e65614480f8f25430304627f31", {
+        });
+
+        let currencyDetails = response.data;
+        const {NGN} = currencyDetails.rates 
+
+        currencyDetails = NGN
+        console.log(currencyDetails);
+
+        const selectedCurrencies = {
+            currency,
+            rate:  currencyDetails,
+        };
+        
+        console.log(selectedCurrencies);
+        res.json(selectedCurrencies);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to fetch currency data" });
+    }
+});
+
 
 app.get("/display/:imageID", async (req, res) => {
     const imageID = req.params.imageID;

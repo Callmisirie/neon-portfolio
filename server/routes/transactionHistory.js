@@ -44,7 +44,8 @@ router.get("/read", async(req, res) => {
 
 router.post("/create", async (req, res) => {    
     let {
-        paymentMethod, cryptoName, priceInCrypto,
+        paymentMethod, cryptoName, priceInCrypto, 
+        bankCurrency, priceInCurrency,
         artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID
@@ -52,10 +53,13 @@ router.post("/create", async (req, res) => {
 
     let name;
     let cryptoInPrice;
+    let subCurrency;
+    let subCurrencyPrice;
 
    
     console.log({
-        paymentMethod, cryptoName, priceInCrypto,
+        paymentMethod, cryptoName, priceInCrypto, 
+        bankCurrency, priceInCurrency,
         artStyle, price, quantity, 
         discount, discountInterval,
         pricePer, userID});
@@ -63,6 +67,9 @@ router.post("/create", async (req, res) => {
     if (paymentMethod === "Crypto") {
         name = cryptoName
         cryptoInPrice = Number(priceInCrypto)
+    } else if (paymentMethod === "Bank Transfer" && bankCurrency === "NGN" ) {
+        subCurrency = bankCurrency
+        subCurrencyPrice = Number(priceInCurrency)
     }
 
     const user = await UserModel.findOne({_id : userID});
@@ -83,8 +90,8 @@ router.post("/create", async (req, res) => {
 
             const transactionDetails = {
                 paymentMethod, paymentStatus: "Pending", 
-                cryptoName: name, artStyle, 
-                price, priceInCrypto: cryptoInPrice, 
+                cryptoName: name, artStyle, bankCurrency: subCurrency,
+                price, priceInCrypto: cryptoInPrice, priceInSubCurrency: subCurrencyPrice, 
                 quantity, discount, 
                 discountInterval, pricePer,
                 date: formattedDate 

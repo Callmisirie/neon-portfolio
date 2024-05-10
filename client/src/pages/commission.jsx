@@ -82,6 +82,7 @@ const Commission = () => {
 
     let cryptoSymbols = [];
     let cryptoSymbolDetails;
+    let currencyDetails;
   
 
     if (cryptoGifts.length) {
@@ -96,14 +97,20 @@ const Commission = () => {
       }, 5000);
     } else if (userID) {
       try {
-        const transactionHistoryResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
+        const cryptoLatestResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
           params: { cryptoSymbols }
         });
 
-        cryptoSymbolDetails = transactionHistoryResponse.data;
+        cryptoSymbolDetails = cryptoLatestResponse.data;
+
+        const currencyLatestResponse = await axios.get("http://localhost:4001/currency/latest");
+
+        currencyDetails = currencyLatestResponse.data;
        
-        window.localStorage.removeItem("cryptoSymbolDetails")
-        window.localStorage.setItem("cryptoSymbolDetails", JSON.stringify(cryptoSymbolDetails))
+        window.localStorage.removeItem("cryptoSymbolDetails");
+        window.localStorage.setItem("cryptoSymbolDetails", JSON.stringify(cryptoSymbolDetails));
+        window.localStorage.removeItem("currencyDetails");
+        window.localStorage.setItem("currencyDetails", JSON.stringify(currencyDetails));
         handleTransactionDetails()
         navigate("/payment");
         window.scrollTo(0, 0);
@@ -163,12 +170,12 @@ const Commission = () => {
                         <div  className="flex flex-col justify-center items-center p-2">
                           <h3 className="font-montserrat 
                           text-slate-gray text-lg 
-                          leading-8 my-2 w-full text-center">
+                          leading-8 mt-2 w-full text-center">
                             {commission.artStyle}
                           </h3>
-                          <img className="flex 
+                          <img className="flex
                           flex-col justify-center rounded-xl 
-                          m-2 border cursor-pointer"
+                          my-5 border cursor-pointer"
                             src={`http://localhost:4001/display/${commission._id}`} 
                             alt={`Manga ${commission.artImage}`} 
                             style={{ width: "120px" }}
@@ -306,6 +313,13 @@ const Commission = () => {
                                     </p>                                 
                                   </>                                                               
                                 )}
+                                {transactionDetail.bankCurrency ? (
+                                  <p className="font-montserrat 
+                                  text-slate-gray
+                                  text-sm leading-8 w-full">
+                                    Price In {transactionDetail.bankCurrency} - &#x20A6;{transactionDetail.priceInSubCurrency}   
+                                  </p>                               
+                                ) : null}
                                 <p className="font-montserrat 
                                 text-slate-gray
                                 text-sm leading-8 w-full">
