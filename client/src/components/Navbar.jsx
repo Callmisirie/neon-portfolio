@@ -19,23 +19,23 @@ function Navbar() {
     const [visible, setVisible] = useState(true);
     
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         const currentScrollPos = window.scrollY;
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.scrollY;
     
-    //         // Check if the scroll position has changed
-    //         if (prevScrollPos === currentScrollPos) {
-    //             return;
-    //         }
+            // Check if the scroll position has changed
+            if (prevScrollPos === currentScrollPos) {
+                return;
+            }
     
-    //         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
     
-    //         setPrevScrollPos(currentScrollPos);
-    //     };
+            setPrevScrollPos(currentScrollPos);
+        };
     
-    //     window.addEventListener("scroll", handleScroll);
-    //     return () => window.removeEventListener("scroll", handleScroll);
-    // }, [prevScrollPos]);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [prevScrollPos]);
     
     
     function Logout() {

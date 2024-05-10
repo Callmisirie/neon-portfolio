@@ -4,6 +4,8 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import NumberOfOrders, { handleTransactionDetails } from "../components/NumberOfOrders";
 import ReviewSection from "../components/ReviewSection.jsx";
+import CommissionImagePopup from "../components/commissionImagePopup.jsx";
+
 
 const Commission = () => {
   const [commissions, setCommissions] = useState([]);
@@ -18,6 +20,7 @@ const Commission = () => {
   const [userCookies, setUserCookies] = useCookies(["userAccess_token"]);
   const navigate = useNavigate();
   const userID = window.localStorage.getItem("userID");
+  const [open, setOpen] = useState(false);
 
   const toggle = () => {
     setIsChecked(!isChecked);
@@ -163,13 +166,22 @@ const Commission = () => {
                           leading-8 my-2 w-full text-center">
                             {commission.artStyle}
                           </h3>
-                          <img className="flex flex-col justify-center rounded-xl m-2 shadow-xl"
+                          <img className="flex 
+                          flex-col justify-center rounded-xl 
+                          m-2 border cursor-pointer"
                             src={`http://localhost:4001/display/${commission._id}`} 
                             alt={`Manga ${commission.artImage}`} 
                             style={{ width: "120px" }}
+                            onClick={() => setOpen(true)}
                           />
                           <NumberOfOrders commission={commission}/>
-                        </div>
+                          <CommissionImagePopup 
+                          open={open} 
+                          onClose={() => setOpen(false)}
+                          commission={commission}
+                          />
+
+                        </div> 
                       </li>
                     ) : null
                   ))}
