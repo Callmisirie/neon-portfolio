@@ -344,19 +344,33 @@ function Payment() {
                                                     {copyTooltip}
                                                 </p>                                                                    
                                             </div> 
-                                            
                                         </div>
                                                     
                                         ) : null)
                                 }))}
                                 {bankCurrency === currencyDetails.currency ? (
-                                    <p className="font-montserrat font-semibold
-                                    text-slate-gray text-start
-                                    text-sm">
-                                        Price in {currencyDetails.currency}  - <span className="font-montserrat 
-                                        text-slate-gray text-start font-normal
-                                        text-sm">&#x20A6;{priceInCurrency}</span>       
-                                    </p>                               
+                                    <div className='flex items-center max-w-fit'>
+                                        <p className="font-montserrat font-semibold
+                                        text-slate-gray text-start
+                                        text-sm">
+                                            Price in {currencyDetails.currency}  - <span className="font-montserrat 
+                                            text-slate-gray text-start font-normal
+                                            text-sm">&#x20A6;{priceInCurrency}</span>       
+                                        </p>
+                                        <div className='flex
+                                        justify-center items-center 
+                                        cursor-pointer ml-10'
+                                        onClick={() => handleCopyClipboard(priceInCurrency)}>
+                                            <img className="mx-2 
+                                            rounded-full w-4 h-4"
+                                            src={clipboardCopy}/> 
+                                            <p className="font-montserrat 
+                                            text-slate-gray text-sm
+                                                text-center">
+                                                {copyTooltip}
+                                            </p>                                                                    
+                                        </div>                                         
+                                    </div>
                                 ) : null}
                                 <p className="font-montserrat font-semibold
                                 text-slate-gray max-w-xs text-start

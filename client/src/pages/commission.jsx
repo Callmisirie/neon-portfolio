@@ -138,7 +138,7 @@ const Commission = () => {
             <div  className="flex flex-col justify-center items-center
             bg-white mx-2 px-6">
               <h3 className="text-4xl leading-[68px] 
-              lg:max-w-md font-palanquin font-bold p-2 mt-5 text-center">
+              lg:max-w-md font-palanquin font-bold p-2 text-center">
                 Choose Art Style
               </h3>
               <div className="flex flex-col 
@@ -164,7 +164,7 @@ const Commission = () => {
                   {commissions?.map(commission => (
                     commission?._id === commissionID ? (
                       <li  className="flex justify-center items-center rounded-lg 
-                      bg-white p-2 m-5 shadow-xl
+                      bg-white p-2 mb-5 shadow-xl
                       ring-slate-900/5"
                       key={commission._id}>
                         <div  className="flex flex-col justify-center items-center p-2">
