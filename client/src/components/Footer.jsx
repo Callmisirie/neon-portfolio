@@ -60,9 +60,7 @@ const Footer = () => {
                       height={24}
                     />
                   </div>
-                  
                 </a>
-
               ))}
             </div>
            </div>

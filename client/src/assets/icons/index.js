@@ -16,6 +16,8 @@ import search from './search.svg'
 import hideView from './hide-view.svg'
 import showView from './show-view.svg'
 import clipboardCopy from './clipboard-copy.svg'
+import email from './email.svg'
+import worldwide from './worldwide.svg'
 
 export {
     arrowRight,
@@ -35,5 +37,7 @@ export {
     search,
     hideView,
     showView,
-    clipboardCopy
+    clipboardCopy,
+    email,
+    worldwide
 }

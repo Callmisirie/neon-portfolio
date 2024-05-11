@@ -216,7 +216,7 @@ const Commission = () => {
                           ${isChecked ? 'translate-x-full' : ''} transition`}></div>
                       </div>
                   </label>
-                  <p  className="font-montserrat 
+                  <p className="font-montserrat 
                   text-slate-gray max-w-xs text-start
                   text-sm">
                       I hereby acknowledge that i have contacted 
