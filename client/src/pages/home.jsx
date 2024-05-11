@@ -66,9 +66,9 @@ function Home() {
                                 </span> Unfold
                             </h1>  
                             <p className="font-montserrat 
-                            text-slate-gray text-lg 
+                            text-slate-gray text-lg max-w-lg
                             leading-8 mt-6 mb-14">
-                                A man who lives fully is prepared to die at anytime.
+                                It is your duty, if not your right, to inspire others just as you were inspired.
                             </p>
                             <Button label="Preview price" 
                             iconURL={arrowRight}

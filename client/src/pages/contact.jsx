@@ -18,7 +18,7 @@ function Contact() {
                     <div className="flex 
                     flex-col justify-center items-center 
                     max-w-xs py-5 px-10 bg-slate-gray/5 
-                    rounded-lg my-5">
+                    rounded-xl my-5">
                         <h3 className="text-xl 
                         lg:max-w-md font-palanquin 
                         font-bold p-2 text-center">
@@ -29,9 +29,9 @@ function Contact() {
                         text-xs">
                             Do you need to contact us? You can contact us via our email address 
                         </p>
-                    <a className=" flex justify-center items-center px-4 gap-2 py-3 mt-5 border text-white w-full
-                    font-montserrat text-sm bg-purple-500 border-purple-500 
-                    hover:bg-purple-600 hover:border-purple-600"
+                    <a className=" flex justify-center font-semibold hover:shadow-md
+                    items-center px-4 gap-3 py-2 mt-5 border text-white w-full
+                    font-montserrat text-sm bg-purple-500 border-purple-500 rounded-md"
                     href="mailto:neonworld@gmail.com">
                         <img 
                         src={email}
@@ -46,7 +46,7 @@ function Contact() {
                     <div className="flex 
                     flex-col justify-center items-center 
                     max-w-xs py-5 px-10 bg-slate-gray/5 
-                    rounded-lg my-5">
+                    rounded-xl my-5">
                         <div className="flex justify-center items-center">
                             <img 
                             src={worldwide}
