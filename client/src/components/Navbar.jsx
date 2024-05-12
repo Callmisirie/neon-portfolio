@@ -19,32 +19,57 @@ function Navbar() {
     const [visible, setVisible] = useState(true);
     
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const currentScrollPos = window.scrollY;
     
-            // Check if the scroll position has changed
-            if (prevScrollPos === currentScrollPos) {
-                return;
-            }
+    //         // Check if the scroll position has changed
+    //         if (prevScrollPos === currentScrollPos) {
+    //             return;
+    //         }
     
-            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
+    //         setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
     
-            setPrevScrollPos(currentScrollPos);
-        };
+    //         setPrevScrollPos(currentScrollPos);
+    //     };
     
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollPos]);
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, [prevScrollPos]);
     
     
     function Logout() {
         setCookies("access_token", "");
-        setUserCookies( "userAccess_token", "");
-        window.localStorage.removeItem("adminUserID")
-        window.localStorage.removeItem("userID")
+        setUserCookies("userAccess_token", "");
+        window.localStorage.removeItem("access_token");
+        window.localStorage.removeItem("userAccess_token");
+        window.localStorage.removeItem("adminUserID");
+        window.localStorage.removeItem("userID");
         Navigate("/");
     };
+
+    useEffect(() => {
+        const accessToken = cookies.access_token || localStorage.getItem("access_token");
+        const userAccessToken = userCookies.userAccess_token || localStorage.getItem("userAccess_token");
+    
+        if (accessToken) {
+            setCookies("access_token", accessToken);
+            localStorage.setItem("access_token", accessToken);
+        } else {
+            setCookies("access_token", null);
+            localStorage.removeItem("access_token");
+        }
+    
+        if (userAccessToken) {
+            setUserCookies("userAccess_token", userAccessToken);
+            localStorage.setItem("userAccess_token", userAccessToken);
+        } else {
+            setUserCookies("userAccess_token", null);
+            localStorage.removeItem("userAccess_token");
+        }
+    }, [cookies, userCookies]);
+    
+    
 
     const mangaPath = "/manga"
     const commissionPath = "/commission"
@@ -97,13 +122,14 @@ function Navbar() {
                             Sign in / Register </Link>
                         </li>                                     
                         {cookies.access_token || userCookies.userAccess_token ?  (
-                            <div className="flex justify-center gap-5 items-center px-5">
+                            <div className="flex justify-center gap-10 items-center pl-5">
                                 {cookies.access_token ? (
                                     <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-black
                                     ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}><Link to="/manager"> 
                                         Manager </Link>
                                     </li>                                                
                                 ) : null}
+                                
                                 <li className="font-montserrat leading-normal text-sm hover:text-slate-gray text-black">
                                     <button
                                         className="gap-2 px-6 py-4 border 

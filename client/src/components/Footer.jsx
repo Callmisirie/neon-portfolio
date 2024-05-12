@@ -110,9 +110,6 @@ const Footer = () => {
               />
               <p>Copyright. All right reserved.</p>
             </div>
-            <p className="font-montserrat">
-              Term & Conditions  
-            </p>
           </div>
       </footer>
     </section>

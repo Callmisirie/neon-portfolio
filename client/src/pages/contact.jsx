@@ -30,7 +30,7 @@ function Contact() {
                             Do you need to contact us? You can contact us via our email address 
                         </p>
                     <a className=" flex justify-center font-semibold hover:shadow-md
-                    items-center px-4 gap-3 py-2 mt-5 border text-white w-full
+                    items-center px-4 gap-2 py-2 mt-5 border text-white w-full
                     font-montserrat text-sm bg-purple-500 border-purple-500 rounded-md"
                     href="mailto:neonworld@gmail.com">
                         <img 
@@ -63,7 +63,7 @@ function Contact() {
                         <p className="font-montserrat 
                         text-slate-gray max-w-xs text-start
                         text-xs">
-                            follow up our socials to stay up to date on the latest news about Neon World. 
+                            Reach out or follow up our socials to stay up to date on the latest news about Neon World. 
                         </p>
                         <div className="flex items-center gap-5 mt-5">
                         {socialMedia.map((icon)=>(

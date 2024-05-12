@@ -30,11 +30,20 @@ import { useCookies } from "react-cookie";
 import ScrollToTop from './components/ScrollToTop.jsx';
 import GenerateOTP from './pages/passwordReset.js/generateOTP.jsx';
 import ChangePassword from './pages/passwordReset.js/changePassword.jsx';
+import { useEffect } from 'react';
 
 
 
 function App() {
-  const [cookies, ] = useCookies(["access_token"]);
+  const [cookies, setCookies] = useCookies(["access_token"]);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("access_token");
+
+    if (accessToken) {
+        setCookies("access_token", accessToken);
+    }
+  }, []);
 
   return (
       <main className='relative'>
