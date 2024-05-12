@@ -197,7 +197,7 @@ const Commission = () => {
                   <a href="/contact" target="_blank" rel="noopener noreferrer">
                       Contact
                   </a> <span className="font-montserrat 
-                  text-slate-gray text-start font-normal text-xs">NEON.</span>
+                  text-slate-gray text-start font-normal text-xs">NEON</span>
                 </p>
 
                 <div className="flex justify-center items-center m-2 p-2">                      

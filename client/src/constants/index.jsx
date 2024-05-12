@@ -25,6 +25,6 @@ export const footerLinks = [
 
 export const socialMedia = [
     { src: discord, alt: "discord logo", link: "https://www.discord.com/" },
-    { src: twitter, alt: "twitter logo", link: "https://www.twitter.com/" },
-    { src: instagram, alt: "instagram logo", link: "https://www.instagram.com/" },
+    { src: twitter, alt: "twitter logo", link: "https://x.com/callmineon?t=lwhIWVWMrU-gyxph52MA6A&s=09" },
+    { src: instagram, alt: "instagram logo", link: "https://www.instagram.com/callmineon?igsh=eThxb2xyZThteGly" },
 ];

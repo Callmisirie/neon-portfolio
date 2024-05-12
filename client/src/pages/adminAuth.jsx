@@ -227,11 +227,12 @@ export function Login() {
             setIsDisabled(false);
             if (response.data.token === undefined) {
                 setCookies("access_token",  null);
+                window.localStorage.setItem("adminAccess_token", null);
             }else {
                 setCookies("access_token",  response.data.token);
+                window.localStorage.setItem("adminAccess_token", response.data.token);
+                window.localStorage.setItem("adminUserID", response.data.adminUserID);
             }
-            window.localStorage.setItem("adminAccess_token", response.data.token);
-            window.localStorage.setItem("adminUserID", response.data.adminUserID);
             if (response.data.token) {
                 navigate("/manager")
             }

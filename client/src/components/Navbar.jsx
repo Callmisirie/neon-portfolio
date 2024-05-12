@@ -39,9 +39,9 @@ function Navbar() {
     
     
     function Logout() {
-        setCookies("access_token", "");
-        setUserCookies("userAccess_token", "");
-        window.localStorage.removeItem("access_token");
+        setCookies("access_token", null);
+        setUserCookies("userAccess_token", null);
+        window.localStorage.removeItem("adminAccess_token");
         window.localStorage.removeItem("userAccess_token");
         window.localStorage.removeItem("adminUserID");
         window.localStorage.removeItem("userID");
@@ -49,15 +49,15 @@ function Navbar() {
     };
 
     useEffect(() => {
-        const accessToken = cookies.access_token || localStorage.getItem("access_token");
-        const userAccessToken = userCookies.userAccess_token || localStorage.getItem("userAccess_token");
+        const accessToken = localStorage.getItem("adminAccess_token");
+        const userAccessToken =  localStorage.getItem("userAccess_token");
     
         if (accessToken) {
             setCookies("access_token", accessToken);
-            localStorage.setItem("access_token", accessToken);
+            localStorage.setItem("adminAccess_token", accessToken);
         } else {
             setCookies("access_token", null);
-            localStorage.removeItem("access_token");
+            localStorage.removeItem("adminAccess_token");
         }
     
         if (userAccessToken) {
@@ -69,7 +69,7 @@ function Navbar() {
         }
     }, [cookies, userCookies]);
     
-    
+     
 
     const mangaPath = "/manga"
     const commissionPath = "/commission"
@@ -85,7 +85,7 @@ function Navbar() {
             <nav className="flex justify-between max-lg:flex-col items-center max-container">  
                 <div className="flex justify-between items-center w-full max-container">
                     <a href="/">
-                        <img className="flex min-w-20 w-20"
+                        <img className="flex min-w-16 w-16"
                         src={headerLogoPurple}
                         alt="Logo"
                        />

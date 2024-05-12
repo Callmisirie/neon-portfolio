@@ -257,11 +257,13 @@ export function Login() {
             setIsDisabled(false);
             if (response.data.token === undefined) {
                 setCookies("userAccess_token",  null);
+                window.localStorage.setItem("userAccess_token", null);
             }else {
                 setCookies("userAccess_token",  response.data.token);
+                window.localStorage.setItem("userAccess_token", response.data.token);
+                window.localStorage.setItem("userID", response.data.userID);
             }
-            window.localStorage.setItem("userAccess_token", response.data.token);
-            window.localStorage.setItem("userID", response.data.userID);
+
             if (response.data.token) {
                 navigate("/")
             }

@@ -63,7 +63,7 @@ function Contact() {
                         <p className="font-montserrat 
                         text-slate-gray max-w-xs text-start
                         text-xs">
-                            Reach out or follow up our socials to stay up to date on the latest news about Neon World. 
+                            Reach out or follow up our socials to stay up to date on the latest news about NeonWorld. 
                         </p>
                         <div className="flex items-center gap-5 mt-5">
                         {socialMedia.map((icon)=>(
