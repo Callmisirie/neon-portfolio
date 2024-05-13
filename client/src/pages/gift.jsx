@@ -74,7 +74,7 @@ function Gift() {
                         <button 
                             className="text-white px-4 py-2 text-sm
                             font-montserrat font-medium my-3 mx-5
-                            bg-purple-500 rounded-md hover:bg-purple-600 "
+                            bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                             onClick={ ()=> {
                             handleClick("Paypal")
                         }}>
@@ -85,7 +85,7 @@ function Gift() {
                         <button
                             className="text-white px-4 py-2 text-sm
                             font-montserrat font-medium my-3 mx-5
-                            bg-purple-500 rounded-md hover:bg-purple-600 " 
+                            bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                             onClick={()=> {
                             handleClick("Crypto")
                         }}>
@@ -95,7 +95,7 @@ function Gift() {
                     <button
                         className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-500 rounded-md hover:bg-purple-600 " 
+                        bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                         onClick={()=> {
                         handleClick("Bank Transfer")
                     }}>

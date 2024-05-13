@@ -223,7 +223,7 @@ function Payment() {
                                 <button 
                                     className="text-white px-4 py-2 text-sm
                                     font-montserrat font-medium my-3 mx-5
-                                    bg-purple-500 rounded-md hover:bg-purple-600 "
+                                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                                     onClick={ ()=> {
                                     handleClick("Paypal")
                                 }}>
@@ -234,7 +234,7 @@ function Payment() {
                                 <button
                                     className="text-white px-4 py-2 text-sm
                                     font-montserrat font-medium my-3 mx-5
-                                    bg-purple-500 rounded-md hover:bg-purple-600 " 
+                                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                                     onClick={()=> {
                                     handleClick("Crypto")
                                 }}>
@@ -244,7 +244,7 @@ function Payment() {
                             <button
                                 className="text-white px-4 py-2 text-sm
                                 font-montserrat font-medium my-3 mx-5
-                                bg-purple-500 rounded-md hover:bg-purple-600 " 
+                                bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                                 onClick={()=> {
                                 handleClick("Bank Transfer")
                             }}>
@@ -423,10 +423,11 @@ function Payment() {
                                             has been made for this purchase.
                                         </p>
                                     </div>
-                                    <button className={`px-4 py-2 my-2 border rounded-full text-white w-fit
-                                    font-montserrat text-xs leading-none bg-green-500 border-green-500 
-                                    hover:bg-green-600 hover:border-green-600
-                                    ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
+                                    <button className={`px-4 py-2 
+                                    my-2 border rounded-full text-black w-fit
+                                    font-montserrat text-xs leading-none bg-green-500 
+                                    hover:bg-green-600 border-black
+                                    ${isChecked ? `opacity-100` : `opacity-85 cursor-not-allowed`}`}
                                     onClick={() => {
                                     handlePayment()
                                     }}

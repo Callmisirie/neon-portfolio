@@ -26,23 +26,22 @@ function TransactionsManager() {
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                TRANSACTIONS MANAGER
+                TRANSACTIONS
             </h2>
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
+            <div className="flex flex-wrap justify-center items-center rounded-lg 
+            bg-white p-5 shadow-xl
             ring-slate-900/5">
-                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-                bg-white px-10 py-8 shadow-xl
-                ring-slate-900/5">
+                <div className="flex flex-col justify-center items-center
+                bg-white p-5">
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleStatus}> 
                         Status
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleDelete}> 
                         Delete
                     </button>
@@ -126,6 +125,8 @@ function TransactionsStatus() {
         if (!selectedCheckbox) {
             setMessage("New status was not selected");
             setMessageColor("red")
+            setActionMessage("Update Status");
+            setIsDisabled(false);
             return
         }
 
@@ -159,17 +160,17 @@ return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
         <div className="flex flex-col justify-center items-center rounded-lg mb-10
-        bg-white px-6 shadow-xl
+        bg-white px-6 pb-6 shadow-xl
         ring-slate-900/5">
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
                 Transaction Status
             </h2>
             <ul className='flex flex-col mx-5 w-full
-                my-5 px-20 py-2 justify-center items-center'>
+            my-5 justify-center items-center'>
                 {transactionHistories.map((userTransactionHistories)=> {
                     return (
-                        <li className='w-full'
+                        <li className=''
                         key={userTransactionHistories._id}>
                             <p className="font-montserrat
                             text-black text-md leading-8 text-center
@@ -262,13 +263,12 @@ return (
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
-            ring-slate-900/5"
+            <form  className="flex flex-col justify-center items-center mx-5
+            bg-white px-6"
             onSubmit={handleSubmit}>
                 <div className="flex 
                 flex-col justify-center 
-                items-center m-5 px-6 py-4 ">
+                items-center px-6 py-4 ">
                     <p  className="font-montserrat 
                     text-slate-gray text-sm 
                     my-6 text-center">
@@ -374,17 +374,17 @@ function TransactionsDelete() {
       };
   
     return (
-        <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+        <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
         bg-white px-6">
             <div className="flex flex-col justify-center items-center rounded-lg mb-10
-            bg-white px-6 shadow-xl
+            bg-white px-6 pb-6 shadow-xl
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Transaction
                 </h2>
                 <ul className='flex flex-col mx-5 w-full
-                    my-5 px-20 py-2 justify-center items-center'>
+                    my-5 justify-center items-center'>
                     {transactionHistories.map((userTransactionHistories)=> {
                         return (
                             <li className='w-full'
@@ -410,8 +410,8 @@ function TransactionsDelete() {
                                 ring-slate-900/5">
                                     {clickedUserId === userTransactionHistories.userID 
                                     ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
-                                        <li className='w-full mb-5' key={transactionDetail._id}>
-                                            <p className="font-montserrat 
+                                        <li className='w-full' key={transactionDetail._id}>
+                                            <p className="font-montserrat my-2
                                             text-center text-slate-gray
                                             text-sm leading-8 cursor-pointer"
                                                 onClick={()=> {
@@ -430,13 +430,12 @@ function TransactionsDelete() {
                 leading-8 my-2" style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
+                <form  className="flex flex-col justify-center items-center mx-5
+                bg-white px-6"
                 onSubmit={handleSubmit}>
                     <div className="flex 
                     flex-col justify-center 
-                    items-center m-5 px-6 py-4 ">
+                    items-center px-6 py-4 ">
                         <p  className="font-montserrat 
                         text-slate-gray text-sm 
                         my-6 text-center">

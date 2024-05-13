@@ -83,8 +83,8 @@ const ReviewSection = () => {
                     })}
                 </div>
                 <div className="flex flex-col items-center justify-center mt-10">
-                    <button className="text-white px-4 py-2 text-sm
-                    font-montserrat font-medium my-3 mx-1
+                    <button className="text-black px-4 py-2 text-sm
+                    font-montserrat font-medium my-3 mx-1 border-2 border-black
                     bg-purple-600/90 rounded-full hover:bg-purple-600"
                     onClick={handleCreate}> 
                         Post Review

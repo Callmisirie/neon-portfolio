@@ -26,23 +26,22 @@ function ReviewManager() {
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                REVIEW MANAGER
+                REVIEW
             </h2>
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
+            <div className="flex flex-wrap justify-center items-center rounded-lg 
+            bg-white shadow-xl p-5
             ring-slate-900/5">
-                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-                bg-white px-10 py-8 shadow-xl
-                ring-slate-900/5">
+                <div className="flex flex-col justify-center items-center
+                bg-white p-5">
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleDelete}> 
                         Delete
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleEdit}> 
                         Edit
                     </button>
@@ -230,9 +229,9 @@ const handleDeleteReviewClick = async () => {
   return (
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
-            <div  className="flex flex-col justify-center items-center rounded-lg mb-10
-                bg-white px-10 py-4 shadow-xl
-                ring-slate-900/5">
+            <div className="flex flex-col justify-center items-center rounded-lg
+            bg-white px-5 pb-5 shadow-xl mb-10
+            ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Review
@@ -254,7 +253,7 @@ const handleDeleteReviewClick = async () => {
                                 }}
                                 key={review._id}>
                                     <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
+                                    text-slate-gray hover:text-black text-sm 
                                     leading-8 my-2 cursor-pointer w-full">
                                         {review.name}
                                     </p>
@@ -264,7 +263,7 @@ const handleDeleteReviewClick = async () => {
                     })}
                 </ul>
                 <p  className="font-montserrat 
-                text-slate-gray text-lg 
+                text-slate-gray text-sm max-w-xs
                 leading-8 my-6 text-center">
                     <span className='font-bold font-montserrat'>Write "</span>
                     {selectedReview}
@@ -373,10 +372,10 @@ function ReviewEdit() {
     };
 
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
-        <div className="flex flex-col justify-center items-center rounded-lg mb-10
-        bg-white px-6 shadow-xl
+        <div className="flex flex-col justify-center items-center rounded-lg
+        bg-white px-5 pb-5 shadow-xl mb-10
         ring-slate-900/5">
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
@@ -389,7 +388,7 @@ function ReviewEdit() {
                     return (
                         <li key={review._id}>
                             <p className="font-montserrat 
-                            text-slate-gray hover:text-black text-md 
+                            text-slate-gray hover:text-black text-sm 
                             leading-8 my-2 cursor-pointer w-full"
                                 onClick={()=> {
                                 handleClick(
@@ -405,7 +404,7 @@ function ReviewEdit() {
                 })}
             </ul>
             <h3 className="font-montserrat 
-            text-slate-gray text-xl 
+            text-slate-gray text-sm max-w-xs
             leading-8 mt-6 text-center">
                 <span className='font-montserrat font-bold'>UPDATE - </span>     
                 {email} 
@@ -414,13 +413,11 @@ function ReviewEdit() {
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
-            ring-slate-900/5"
+            <form  className="flex flex-col justify-center items-center
+            bg-white"
             onSubmit={handleSubmit}>
-                <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5">
+                <div className="flex flex-col justify-center items-center 
+                bg-white px-6 py-4">
                     <p className='mt-4 font-bold font-montserrat text-slate-gray'>Email</p>
                     <Input type="email" 
                     value={newEmail} 

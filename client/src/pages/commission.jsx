@@ -223,10 +223,11 @@ const Commission = () => {
                       NEON for commission details before making purchase.
                   </p>
                 </div>
-                <button className={`px-4 py-2 my-2 border rounded-md text-white
-                font-montserrat text-md leading-none mb-5 bg-green-500 border-green-500 
-                hover:bg-green-600 hover:border-green-600
-                ${isChecked ? `opacity-100` : `opacity-75 cursor-not-allowed`}`}
+                <button className={`px-4 py-2 
+                my-2 border rounded-md text-black
+                font-montserrat text-md leading-none mb-5 
+                bg-green-500 hover:bg-green-600 border-black 
+                ${isChecked ? `opacity-100` : `opacity-85 cursor-not-allowed`}`}
                 onClick={() => {
                   handlePayment()
                 }}

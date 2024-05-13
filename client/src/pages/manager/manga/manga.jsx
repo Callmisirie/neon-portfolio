@@ -48,10 +48,10 @@ function MangaManager() {
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                MANGA MANAGER
+                MANGA
             </h2>
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
+            <div className="flex flex-wrap justify-center items-center rounded-lg 
+            bg-white p-5 shadow-xl
             ring-slate-900/5">
                 
                 <div className="flex flex-col justify-center items-center m-10 rounded-lg 
@@ -64,13 +64,13 @@ function MangaManager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500"
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleNewManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black "
                     onClick={handleUploadChapter}> 
                         Chapter
                     </button>
@@ -86,13 +86,13 @@ function MangaManager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500"
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleDeleteManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-500 rounded-md hover:bg-purple-400"
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleDeleteChapter}> 
                         Chapter
                     </button>
@@ -108,13 +108,13 @@ function MangaManager() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black "
                     onClick={handleEditManga}> 
                         Manga
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-500 rounded-md hover:bg-purple-400"
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleEditChapter}>
                         Chapter
                     </button>
@@ -341,15 +341,14 @@ return (
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <div className="flex flex-col justify-center items-center mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 pb-6 shadow-xl
-                ring-slate-900/5">
-                    <ul className=''>
-                        {mangas.map((manga)=>
+                <div className="flex flex-col justify-center items-center mx-5 
+                bg-white px-5 pb-5">
+                    <ul className='px-5'>
+                        {mangas?.map((manga)=>
                             <li key={manga._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md 
-                                leading-8 my-2 cursor-pointer w-full"
+                                text-slate-gray hover:text-black text-sm 
+                                leading-8 my-2 cursor-pointer"
                                 onClick={()=> {
                                 setMangaID(manga._id)
                                 setMangaName(manga.name)}}>
@@ -358,15 +357,14 @@ return (
                             </li>
                         )}
                     </ul>
-                    <h3 className="font-montserrat 
-                    text-slate-gray text-lg 
-                    leading-8 my-6">
+                    <h3 className="font-montserrat max-w-sm
+                    text-slate-gray text-sm 
+                    leading-8 mt-5">
                         <span className='font-bold font-montserrat text-black'>UPLOAD TO - </span>{mangaName}
                     </h3>
                 </div>
-                <form  className="flex flex-col justify-center items-center mx-5 mt-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
+                <form  className="flex flex-col justify-center items-center mb-10 
+                bg-white px-6 py-4"
                 onSubmit={handleChapterSubmit}>
                     <input className="p-2.5 my-3
                     border border-slate-gray max-w-fit
@@ -532,10 +530,10 @@ const handleClick = (mangaId) => {
     bg-white px-6">
         {currentLocation === "/manager/manga/delete/manga" ? (
             <div  className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-6 py-4 shadow-xl
+                bg-white px-5 pb-5 shadow-xl
                 ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
-                lg:max-w-md font-palanquin font-bold p-2">
+                lg:max-w-md font-palanquin font-bold">
                     Manga
                 </h2>
                 {message && <p className="font-montserrat text-sm 
@@ -543,10 +541,9 @@ const handleClick = (mangaId) => {
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 pb-6 shadow-xl
-                ring-slate-900/5'>
-                    {mangas.map((manga)=> {
+                <ul className='flex flex-col mx-5 mb-5 rounded-lg 
+                bg-white px-5'>
+                    {mangas?.map((manga)=> {
                         return (
                             <>
                                 <li 
@@ -555,8 +552,8 @@ const handleClick = (mangaId) => {
                                 }}
                                 key={manga._id}>
                                     <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
-                                    leading-8 my-2 cursor-pointer w-full">
+                                    text-slate-gray hover:text-black text-sm
+                                    leading-8 mt-2 cursor-pointer">
                                         {manga.name}
                                     </p>
                                 </li>
@@ -564,9 +561,9 @@ const handleClick = (mangaId) => {
                         )
                     })}
                 </ul>
-                <p  className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-6 text-center">
+                <p  className="font-montserrat max-w-sm
+                text-slate-gray text-sm
+                leading-8 my-6">
                     <span className='font-bold font-montserrat'>Write "</span>
                     {selectedMangaName}
                     <span className='font-bold font-montserrat'>" to delete Manga.</span>
@@ -590,7 +587,7 @@ const handleClick = (mangaId) => {
             </div>
         ) : (
         <div className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 shadow-xl py-4
+        bg-white px-10 shadow-xl pb-5
         ring-slate-900/5">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2 text-center">
@@ -602,13 +599,13 @@ const handleClick = (mangaId) => {
                 {message}
             </p>}
             <ul className=''>
-                {mangas.map((manga)=> {
+                {mangas?.map((manga)=> {
                     return (
                         <li className=""
                             key={manga._id}>
                             <p className="font-montserrat 
-                            text-slate-gray hover:text-black text-md 
-                            leading-8 my-2 cursor-pointer w-full"
+                            text-slate-gray hover:text-black text-sm
+                            leading-8 mt-2 cursor-pointer w-full"
                                 onClick={()=> {
                                     handleClick(manga._id)
                                     setSelectedMangaID(manga._id);
@@ -616,17 +613,15 @@ const handleClick = (mangaId) => {
                                 }}>
                                 {manga.name}
                             </p>
-                            <ul  className="flex flex-col my-2 rounded-lg 
+                            <ul  className="flex flex-col mb-2 rounded-lg 
                             bg-white px-6 shadow-xl
                             ring-slate-900/5">
-                                {clickedMangaId === manga._id && mangaContents
-                                    .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                    .map((mangaContent) =>
+                                {clickedMangaId === manga._id && mangaContents?.filter((mangaContent) => mangaContent.mangaID === manga._id).map((mangaContent) =>
                                         mangaContent.chapters.map((chapter) => (
                                             <li key={chapter._id}>
                                                 <p className="font-montserrat 
-                                                text-slate-gray hover:text-black text-sm 
-                                                leading-8 my-2 cursor-pointer w-full"
+                                                text-slate-gray hover:text-black text-xs 
+                                                leading-8 mb-2 cursor-pointer w-full"
                                                     onClick={()=> {
                                                     handleChapterClick(chapter._id, chapter.title)
                                                 }}>
@@ -642,7 +637,7 @@ const handleClick = (mangaId) => {
                 })}
             </ul>
             <p className="font-montserrat 
-            text-slate-gray text-lg 
+            text-slate-gray text-md 
             leading-8 my-2 text-center">
                 <span className='font-bold font-montserrat'>Write "</span>
                 {selectedChapterTitle}
@@ -862,21 +857,20 @@ function MangaEdit() {
         bg-white px-6">
             {currentLocation === "/manager/manga/edit/manga" ? (
                 <div className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-6 shadow-xl
+                bg-white px-5 shadow-xl
                 ring-slate-900/5">
                     <h2 className="text-3xl leading-[68px] 
-                    lg:max-w-md font-palanquin font-bold p-2">
+                    lg:max-w-md font-palanquin font-bold">
                         Manga
                     </h2>
-                    <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                    bg-white px-6 py-3 shadow-xl
-                    ring-slate-900/5'>
-                        {mangas.map((manga)=> {
+                    <ul className='flex flex-col mx-5 mb-5
+                    bg-white px-5'>
+                        {mangas?.map((manga)=> {
                             return (
                                 <li key={manga._id}>
                                     <p className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
-                                    leading-8 my-2 cursor-pointer w-full"
+                                    text-slate-gray hover:text-black text-sm
+                                    leading-8 mt-2 cursor-pointer w-full"
                                         onClick={()=> {
                                         handleMangaClick(manga.name, manga.author, manga.about, manga._id)
                                     }}>
@@ -887,8 +881,8 @@ function MangaEdit() {
                         })}
                     </ul>
                     <h3 className="font-montserrat 
-                    text-slate-gray text-xl 
-                    leading-8 mt-6 text-center">
+                    text-slate-gray text-sm max-w-sm
+                    leading-8">
                         <span className='font-montserrat font-bold'>UPDATE - </span>     
                         {mangaName} 
                     </h3>
@@ -896,33 +890,32 @@ function MangaEdit() {
                     leading-8 my-2"  style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
-                    <form  className="flex flex-col justify-center items-center mx-5 my-10 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5"
+                    <form  className="flex flex-col justify-center items-center mx-5 mb-5
+                    bg-white p-5"
                     onSubmit={handleSubmit}>
-                        <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                        bg-white px-6 py-4 shadow-xl
-                        ring-slate-900/5">
-                            <p className='mb-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
+                        <div className="flex flex-col justify-center items-center mx-5 mb-5 
+                        bg-white p-5">
+                            <p className='mt-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
                             <Input type="text"
                             value={newMangaName}
                             handleChange={setNewMangaName}
                             resetMessage={setMessage}
                             placeholder={mangaName}/>
+                            <p className='mt-4 font-bold font-montserrat text-slate-gray'>Author</p>
                             <Input type="text"
                             value={newAuthor}
                             handleChange={setNewAuthor}
                             resetMessage={setMessage}
                             placeholder={author}/>
+                            <p className='mt-4 font-bold font-montserrat text-slate-gray'>About</p>
                             <TextArea type="text"
                             value={newAbout}
                             resetMessage={setMessage}
                             setValue={setNewAbout}
                             placeholder={about}/>
                         </div>                 
-                        <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                        bg-white px-6 py-4 shadow-xl
-                        ring-slate-900/5">
+                        <div className="flex flex-col justify-center items-center mx-5 mb-5
+                        bg-white px-6 py-4">
                             <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Cover Image</p>
                             <input className='block w-full text-sm text-slate-500
                             file:mr-4 file:py-2 file:px-4
@@ -951,29 +944,26 @@ function MangaEdit() {
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
                     Manga Chapter
                 </h2>
-                <ul  className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
-                ring-slate-900/5'> 
-                    {mangas.map((manga)=> {
+                <ul  className='flex flex-col mx-5 mb-5 
+                bg-white px-6'> 
+                    {mangas?.map((manga)=> {
                         return (
                             <li key={manga._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md
-                                leading-8 my-2 cursor-pointer w-full"
+                                text-slate-gray hover:text-black text-sm
+                                leading-8 mt-2 cursor-pointer w-full"
                                 onClick={()=> {handleMangaContentClick(manga.name, manga._id)}}>
                                     {manga.name}
                                 </p>
-                                <ul className="flex flex-col my-2 rounded-lg 
+                                <ul className="flex flex-col rounded-lg 
                                 bg-white px-6 shadow-xl
                                 ring-slate-900/5">
-                                    {clickedMangaId === manga._id && mangaContents
-                                        .filter((mangaContent) => mangaContent.mangaID === manga._id)
-                                        .map((mangaContent) =>
-                                            mangaContent.chapters.map((chapter) => (
+                                    {clickedMangaId === manga._id && mangaContents?.filter((mangaContent) => mangaContent.mangaID === manga._id).map((mangaContent) =>
+                                            mangaContent.chapters?.map((chapter) => (
                                                 <li key={chapter._id}>
                                                     <p className="font-montserrat 
-                                                    text-slate-gray hover:text-black text-sm
-                                                    leading-8 my-2 cursor-pointer w-full"
+                                                    text-slate-gray hover:text-black text-xs
+                                                    leading-8 mb-2 cursor-pointer w-full"
                                                     onClick={()=> {
                                                         handleChapterClick(chapter.title, chapter.chapterNumber, chapter._id)
                                                     }}>
@@ -988,16 +978,16 @@ function MangaEdit() {
                         )
                     })}
                 </ul>
-                <div className="flex flex-col justify-center items-center m-3">
-                    <div className="flex flex-col justify-center items-center m-3">
+                <div className="flex flex-col justify-center items-center ">
+                    <div className="flex flex-col justify-center items-center w-full">
                         <p  className="font-montserrat 
-                        text-slate-gray text-xl 
-                        leading-8 my3 text-center">
+                        text-slate-gray text-sm max-w-sm
+                        leading-8 my-5">
                         <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
                         </p>
                         <p className="font-montserrat 
-                        text-slate-gray text-lg 
-                        leading-8 my-3 text-center">
+                        text-slate-gray text-sm max-w-xs
+                        leading-8 mb-5">
                         <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
                         <span className='font-montserrat font-bold'>" CHAPTER.</span>
                         </p>
@@ -1009,13 +999,11 @@ function MangaEdit() {
                     style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
-                    <form className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5"
+                    <form className="flex flex-col justify-center items-center mb-10 rounded-lg 
+                    bg-white px-6 py-4"
                     onSubmit={handleChapterSubmit}>
-                        <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                        bg-white px-6 py-4 shadow-xl
-                        ring-slate-900/5">
+                        <label className="flex flex-col justify-center items-center mx-5
+                        bg-white p-5">
                         <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
                         <input className="p-2.5 mb-3
                         border border-slate-gray max-w-fit
@@ -1027,9 +1015,8 @@ function MangaEdit() {
                         }} 
                         placeholder={chapterNumber}/>
                         </label>
-                        <label className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                        bg-white px-6 py-4 shadow-xl
-                        ring-slate-900/5">
+                        <label className="flex flex-col justify-center items-center mx-5
+                        bg-white px-6 py-4">
                             <p className='mb-4 font-bold font-montserrat text-slate-gray'>Title</p> 
                             <input className="p-2.5 mb-3
                             border border-slate-gray max-w-fit
@@ -1041,9 +1028,8 @@ function MangaEdit() {
                             }} 
                             placeholder={chapterTitle}/>
                         </label>
-                        <label  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                        bg-white px-6 py-4 shadow-xl
-                        ring-slate-900/5">
+                        <label  className="flex flex-col justify-center items-center mx-5
+                        bg-white px-6 py-4">
                             <p className='mb-4 font-bold font-montserrat text-slate-gray'> Select Pages</p> 
                             <input  className='block w-full text-sm text-slate-500
                             file:mr-4 file:py-2 file:px-4

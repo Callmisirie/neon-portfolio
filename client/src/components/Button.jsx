@@ -2,10 +2,10 @@ const Button = ({label, iconURL, backgroundColor, textColor, borderColor, fullwi
   return (
     <button className={`flex justify-center 
       items-center gap-2 px-7 py-4 border 
-      font-montserrat text-lg leading-none
+      font-montserrat text-lg leading-none hover:shadow-md
       ${backgroundColor ? `${backgroundColor} 
       ${textColor} ${borderColor}`  
-      : "bg-purple-600 text-white border-purple-600"}
+      : "bg-purple-600 text-black border-black border-2 "}
       rounded-full ${fullwidth && `w-full`}`}
       type="submit"
       onClick={handleClick}

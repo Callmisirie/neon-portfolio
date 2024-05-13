@@ -200,10 +200,10 @@ function Pages() {
                         <>
                             <ul className="flex flex-col 
                             items-center rounded-3xl 
-                            bg-white min-h-screen p-6 
+                            bg-white min-h-screen p-5
                             shadow-xl ring-slate-900/5">                        
                                 <h3 className="font-montserrat 
-                                text-black text-xl leading-8 my-6 
+                                text-black text-xl leading-8 mb-5 
                                 w-full text-center font-bold">
                                     {chapter.title}
                                 </h3>
@@ -244,9 +244,9 @@ function Pages() {
                     onClick={handleNextChapter}>
                         Next Chapter
                     </button>
-                    <button className="px-4 py-2 border 
+                    <button className="px-4 py-2 border font-semibold
                     font-montserrat text-md leading-none bg-green-500
-                    rounded-md text-white border-green-500 my-5 
+                    rounded-md text-black border-green-500 my-5 
                     hover:bg-green-600 hover:border-green-600 w-full"
                     onClick={handleGift}>
                         Gift

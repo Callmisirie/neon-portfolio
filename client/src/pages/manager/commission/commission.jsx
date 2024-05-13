@@ -30,29 +30,28 @@ function CommissionManager() {
         <section className="min-h-full flex flex-col items-center">
             <h2  className="text-3xl leading-[68px] 
             lg:max-w-md font-montserrat  font-bold p-2 text-center">
-                COMMISSION MANAGER
+                COMMISSION
             </h2>
-            <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
+            <div className="flex flex-wrap justify-center items-center rounded-lg 
+            bg-white p-5 shadow-xl
             ring-slate-900/5">
-                <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-                bg-white px-10 py-8 shadow-xl
-                ring-slate-900/5">
+                <div className="flex flex-col justify-center items-center
+                bg-white p-5">
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-600 rounded-md hover:bg-purple-500"
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleCreate}> 
                         Create
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleDelete}> 
                         Delete
                     </button>
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-1 w-full
-                    bg-purple-500 rounded-md hover:bg-purple-400 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={handleEdit}> 
                         Edit
                     </button>
@@ -285,7 +284,7 @@ const handleDeleteCommissionClick = async () => {
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
     bg-white px-6">
             <div  className="flex flex-col justify-center items-center rounded-lg mb-10
-                bg-white px-10 py-4 shadow-xl
+                bg-white px-10 pb-5 shadow-xl
                 ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
@@ -296,8 +295,8 @@ const handleDeleteCommissionClick = async () => {
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 pb-6 shadow-xl
+                <ul className='flex flex-col mx-5 mb-5 rounded-lg 
+                bg-white px-5 pb-5 shadow-xl
                 ring-slate-900/5'>
                     {commissions.map((commission)=> {
                         return (
@@ -308,8 +307,8 @@ const handleDeleteCommissionClick = async () => {
                                 }}
                                 key={commission._id}>
                                     <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
-                                    leading-8 my-2 cursor-pointer w-full">
+                                    text-slate-gray hover:text-black text-sm
+                                    leading-8 mt-2 cursor-pointer w-full">
                                         {commission.artStyle}
                                     </p>
                                 </li>
@@ -318,8 +317,8 @@ const handleDeleteCommissionClick = async () => {
                     })}
                 </ul>
                 <p  className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-6 text-center">
+                text-slate-gray text-sm max-w-xs
+                leading-8 my-5 text-center">
                     <span className='font-bold font-montserrat'>Write "</span>
                     {selectedCommission}
                     <span className='font-bold font-montserrat'>" to delete Commission.</span>
@@ -463,21 +462,21 @@ function CommissionEdit() {
     <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
         bg-white px-6">
             <div className="flex flex-col justify-center items-center rounded-lg mb-10
-            bg-white px-6 shadow-xl
+            bg-white shadow-xl
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Edit Commission
                 </h2>
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
+                <ul className='flex flex-col mx-5 mb-5 rounded-lg 
+                bg-white px-5 pb-5 shadow-xl
                 ring-slate-900/5'>
                     {commissions.map((commission)=> {
                         return (
                             <li key={commission._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md 
-                                leading-8 my-2 cursor-pointer w-full"
+                                text-slate-gray hover:text-black text-sm 
+                                leading-8 mt-2 cursor-pointer w-full"
                                     onClick={()=> {
                                     handleClick(
                                         commission.artStyle,
@@ -494,8 +493,8 @@ function CommissionEdit() {
                     })}
                 </ul>
                 <h3 className="font-montserrat 
-                text-slate-gray text-xl 
-                leading-8 mt-6 text-center">
+                text-slate-gray text-sm 
+                leading-8 text-center">
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
                     {artStyle} 
                 </h3>
@@ -503,13 +502,11 @@ function CommissionEdit() {
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
+                <form  className="flex flex-col justify-center items-center mb-10
+                bg-white px-6 py-4"
                 onSubmit={handleSubmit}>
-                    <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
+                    <div className="flex flex-col justify-center items-center m-5 
+                    bg-white px-6 py-4">
                         <p className='mt-4 font-bold font-montserrat text-slate-gray'>Art Style</p>
                         <Input type="text" 
                         value={newArtStyle} 
@@ -541,9 +538,8 @@ function CommissionEdit() {
                         handleChange={setNewDiscountInterval}
                         resetMessage={setMessage} />
                     </div>                 
-                    <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
+                    <div className="flex flex-col justify-center items-center mx-5 mb-5
+                    bg-white px-6 py-4">
                         <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select Art Image</p>
                         <input className='block w-full text-sm text-slate-500
                         file:mr-4 file:py-2 file:px-4

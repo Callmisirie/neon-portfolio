@@ -31,29 +31,28 @@ function GiftManager() {
     <section className="min-h-full flex flex-col items-center">
         <h2  className="text-3xl leading-[68px] 
         lg:max-w-md font-montserrat  font-bold p-2 text-center">
-            GIFT MANAGER
+            GIFT
         </h2>
-        <div className="flex flex-wrap justify-center items-center m-10 rounded-lg 
-        bg-white px-6 py-4 shadow-xl
+        <div className="flex flex-wrap justify-center items-center rounded-lg 
+        bg-white p-5 shadow-xl
         ring-slate-900/5">
-            <div className="flex flex-col justify-center items-center m-10 rounded-lg 
-            bg-white px-10 py-8 shadow-xl
-            ring-slate-900/5">
+            <div className="flex flex-col justify-center items-center
+            bg-white p-5">
                 <button className="text-white px-4 py-2 text-sm
                 font-montserrat font-medium my-3 mx-1 w-full
-                bg-purple-600 rounded-md hover:bg-purple-500"
+                bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                 onClick={handleCreate}> 
                     Create
                 </button>
                 <button className="text-white px-4 py-2 text-sm
                 font-montserrat font-medium my-3 mx-1 w-full
-                bg-purple-500 rounded-md hover:bg-purple-400 "
+                bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                 onClick={handleDelete}> 
                     Delete
                 </button>
                 <button className="text-white px-4 py-2 text-sm
                 font-montserrat font-medium my-3 mx-1 w-full
-                bg-purple-500 rounded-md hover:bg-purple-400 "
+                bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                 onClick={handleEdit}> 
                     Edit
                 </button>
@@ -107,7 +106,7 @@ function GiftCreate() {
                 <button 
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={ ()=> {
                     handleClick("Paypal")
                 }}>
@@ -116,7 +115,7 @@ function GiftCreate() {
                 <button
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 " 
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                     onClick={()=> {
                     handleClick("Crypto")
                 }}>
@@ -206,9 +205,9 @@ const handleSubmit = async (e) => {
 
 
 return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
-        <div className="flex flex-col justify-center items-center mb-5"> 
+        <div className="flex flex-col justify-center items-center"> 
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
                 Create Paypal Gift
@@ -218,9 +217,8 @@ return (
             style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
-            ring-slate-900/5"
+            <form  className="flex flex-col justify-center items-center
+            bg-white px-5"
             onSubmit={handleSubmit}>   
                 <Input type="email" 
                 value={address} handleChange={setAddress} 
@@ -327,9 +325,9 @@ const handleSubmit = async (e) => {
 
 
 return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
-        <div className="flex flex-col justify-center items-center mb-5"> 
+        <div className="flex flex-col justify-center items-center"> 
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
                 Create Crypto Gift
@@ -339,9 +337,8 @@ return (
             style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
-            ring-slate-900/5"
+            <form  className="flex flex-col justify-center items-center
+            bg-white"
             onSubmit={handleSubmit}>   
                 <Input type="text" 
                 value={cryptoName} handleChange={setCryptoName} 
@@ -425,7 +422,7 @@ function GiftDelete() {
                 <button 
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={ ()=> {
                     handleClick("Paypal")
                 }}>
@@ -434,7 +431,7 @@ function GiftDelete() {
                 <button
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 " 
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                     onClick={()=> {
                     handleClick("Crypto")
                 }}>
@@ -516,11 +513,10 @@ const handleDeletePaypalGiftClick = async () => {
 }
 
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
-            <div  className="flex flex-col justify-center items-center rounded-lg mb-10
-                bg-white px-10 py-4 shadow-xl
-                ring-slate-900/5">
+            <div  className="flex flex-col justify-center items-center
+                bg-white px-10">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Paypal Gift
@@ -530,8 +526,8 @@ const handleDeletePaypalGiftClick = async () => {
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 pb-6 shadow-xl
+                <ul className='flex flex-col mx-5 rounded-lg 
+                bg-white px-6 shadow-xl
                 ring-slate-900/5'>
                     {paypalGifts.map((paypalGift)=> {
                         return (
@@ -541,7 +537,7 @@ const handleDeletePaypalGiftClick = async () => {
                                 }}
                                 key={paypalGift._id}>
                                     <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
+                                    text-slate-gray hover:text-black text-sm 
                                     leading-8 my-2 cursor-pointer w-full">
                                         {paypalGift.address}
                                     </p>
@@ -550,7 +546,7 @@ const handleDeletePaypalGiftClick = async () => {
                     })}
                 </ul>
                 <p  className="font-montserrat 
-                text-slate-gray text-lg 
+                text-slate-gray text-sm max-w-xs
                 leading-8 my-6 text-center">
                     <span className='font-bold font-montserrat'>Write "</span>
                     {selectedPaypalGift}
@@ -633,12 +629,11 @@ const handleDeleteCryptoGiftClick = async () => {
 }
 
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
-            <div  className="flex flex-col justify-center items-center rounded-lg mb-10
-                bg-white px-10 py-4 shadow-xl
-                ring-slate-900/5">
-                <h2 className="text-3xl leading-[68px] 
+            <div  className="flex flex-col justify-center items-center
+                bg-white">
+                <h2 className="text-3xl leading-[68px] mx-5
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Crypto Gift
                 </h2>
@@ -647,7 +642,7 @@ const handleDeleteCryptoGiftClick = async () => {
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
+                <ul className='flex flex-col mx-5 mb-5 rounded-lg 
                 bg-white px-6 pb-6 shadow-xl
                 ring-slate-900/5'>
                     {cryptoGifts.map((cryptoGift)=> {
@@ -658,7 +653,7 @@ const handleDeleteCryptoGiftClick = async () => {
                                 }}
                                 key={cryptoGift._id}>
                                     <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-md 
+                                    text-slate-gray hover:text-black text-sm 
                                     leading-8 my-2 cursor-pointer w-full">
                                         {cryptoGift.cryptoName}
                                     </p>
@@ -667,8 +662,8 @@ const handleDeleteCryptoGiftClick = async () => {
                     })}
                 </ul>
                 <p  className="font-montserrat 
-                text-slate-gray text-lg 
-                leading-8 my-6 text-center">
+                text-slate-gray text-sm max-w-xs 
+                leading-8 my-5 text-center">
                     <span className='font-bold font-montserrat'>Write "</span>
                     {selectedCryptoGift}
                     <span className='font-bold font-montserrat'>" to delete Crypto Gift.</span>
@@ -732,7 +727,7 @@ function GiftEdit() {
                 <button 
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 "
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                     onClick={ ()=> {
                     handleClick("Paypal")
                 }}>
@@ -741,7 +736,7 @@ function GiftEdit() {
                 <button
                     className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-600 rounded-md hover:bg-purple-500 " 
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                     onClick={()=> {
                     handleClick("Crypto")
                 }}>
@@ -850,23 +845,22 @@ const handleClick = (id, address, username,) => {
 
 
 return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-    bg-white px-6">
-        <div className="flex flex-col justify-center items-center rounded-lg mb-10
-        bg-white px-6 shadow-xl
-        ring-slate-900/5"> 
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg mx-5
+    bg-white">
+        <div className="flex flex-col justify-center items-center
+        bg-white"> 
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
                 Edit Paypal Gift
             </h2>
-            <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
-                bg-white px-6 py-3 shadow-xl
-                ring-slate-900/5'>
+            <ul className='flex flex-col mx-5 rounded-lg 
+            bg-white px-6 shadow-xl
+            ring-slate-900/5'>
                     {paypalGifts && paypalGifts.map((paypalGift)=> {
                         return (
                             <li key={paypalGift._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md 
+                                text-slate-gray hover:text-black text-sm 
                                 leading-8 my-2 cursor-pointer w-full"
                                     onClick={()=> {
                                     handleClick(
@@ -886,13 +880,10 @@ return (
             style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-            bg-white px-6 py-4 shadow-xl
-            ring-slate-900/5"
+            <form  className="flex flex-col justify-center items-center"
             onSubmit={handleSubmit}> 
-                <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
+                <div className="flex flex-col justify-center items-center m-5
+                    bg-white px-6 ">
                     <p className='mt-4 font-bold font-montserrat text-slate-gray'>Address</p>  
                     <Input type="email" 
                     value={newAddress} handleChange={setNewAddress} 
@@ -1018,24 +1009,23 @@ function CryptoGiftEdit() {
     };
 
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-        bg-white px-6">
-            <div className="flex flex-col justify-center items-center rounded-lg mb-10
-            bg-white px-6 shadow-xl
-            ring-slate-900/5">
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
+        bg-white">
+            <div className="flex flex-col justify-center items-center
+            bg-white">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Edit Crypto Gift
                 </h2>
-                <ul className='flex flex-col mx-5 mb-5 mt-2.5 rounded-lg 
+                <ul className='flex flex-col mx-5 mb-10 rounded-lg 
                 bg-white px-6 py-3 shadow-xl
                 ring-slate-900/5'>
                     {cryptoGifts && cryptoGifts.map((cryptoGift)=> {
                         return (
                             <li key={cryptoGift._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-md 
-                                leading-8 my-2 cursor-pointer w-full"
+                                text-slate-gray hover:text-black text-sm 
+                                leading-8 cursor-pointer w-full"
                                     onClick={()=> {
                                     handleClick(
                                         cryptoGift.cryptoName,
@@ -1050,8 +1040,8 @@ function CryptoGiftEdit() {
                     })}
                 </ul>
                 <h3 className="font-montserrat 
-                text-slate-gray text-xl 
-                leading-8 mt-6 text-center">
+                text-slate-gray text-sm 
+                leading-8 text-center">
                     <span className='font-montserrat font-bold'>UPDATE - </span>     
                     {cryptoName} 
                 </h3>
@@ -1059,13 +1049,11 @@ function CryptoGiftEdit() {
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 mb-10 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
-                ring-slate-900/5"
+                <form  className="flex flex-col justify-center items-center
+                bg-white"
                 onSubmit={handleSubmit}>
-                    <div className="flex flex-col justify-center items-center m-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
+                    <div className="flex flex-col justify-center items-center 
+                    bg-white px-6 py-4">
                         <p className='mt-4 font-bold font-montserrat text-slate-gray'>Crypto Name</p>
                         <Input type="text" 
                         value={newCryptoName} 
@@ -1085,9 +1073,8 @@ function CryptoGiftEdit() {
                         handleChange={setNewNetwork}
                         resetMessage={setMessage} />
                     </div>                 
-                    <div className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                    bg-white px-6 py-4 shadow-xl
-                    ring-slate-900/5">
+                    <div className="flex flex-col justify-center items-center mx-5 
+                    bg-white px-6 py-4">
                         <p className='mb-4 font-bold font-montserrat text-slate-gray'>Select QR Code</p>
                         <input className='block w-full text-sm text-slate-500
                         file:mr-4 file:py-2 file:px-4
