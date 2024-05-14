@@ -106,14 +106,16 @@ router.post("/create", async (req, res) => {
                     transactionHistory.save(); 
 
                     res.json({
-                        message: "Transaction saved successfully",
-                        color: "green"
+                        message: "Order saved successfully",
+                        color: "green",
+                        isTrue : true
                     });            
                 } catch (error) {
                     console.error(error);
                     res.json({
-                        message: "Error saving transaction",
-                        color: "red"
+                        message: "Error saving order",
+                        color: "red",
+                        isTrue : false
                     });
                 }
             } else if (userTransactionHistory) {
@@ -123,14 +125,16 @@ router.post("/create", async (req, res) => {
                     await userTransactionHistory.save(); 
 
                     res.json({
-                        message: "Transaction saved successfully",
-                        color: "green"
+                        message: "Order saved successfully",
+                        color: "green",
+                        isTrue : true
                     });
                 } catch (error) {
                     console.error(error);
                     res.json({
-                        message: "Error saving transaction",
-                        color: "red"
+                        message: "Error saving order",
+                        color: "red",
+                        isTrue : false
                     });
                 }    
             }
@@ -149,13 +153,15 @@ router.post("/create", async (req, res) => {
         } else {
             res.json({
                 message: "Missing fields",
-                color: "red"
+                color: "red",
+                isTrue : false
             });    
         }        
     } else {
         res.json({
             message: "User not logged in",
-            color: "red"
+            color: "red",
+            isTrue : false
         });    
     }        
   

@@ -205,7 +205,9 @@ const handleSubmit = async (e) => {
         setActionMangaMessage("Upload Manga");
         setIsDisabled(false);
         fileInputRef.current.value = null;
-    
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
         
     } catch (error) {
         setMessage("Error uploading manga");
@@ -218,6 +220,9 @@ const handleSubmit = async (e) => {
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -251,6 +256,9 @@ const handleChapterSubmit = async (e) => {
         setActionChapterMessage("Upload Chapter")
         setIsDisabled(false);
         fileInputRef.current.value = null;
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error uploading chapter");
         setMessageColor("red");
@@ -263,6 +271,9 @@ const handleChapterSubmit = async (e) => {
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -482,6 +493,9 @@ const handleDeleteMangaClick = async () => {
         setMessage(message);
         setMessageColor(color);
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         console.error(error)
         setDeleteMangaName("");
@@ -491,6 +505,9 @@ const handleDeleteMangaClick = async () => {
         setMessage("Error deleting manga");
         setMessageColor("red");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 }
 
@@ -509,6 +526,9 @@ const handleDeleteChapterClick = async () => {
         setMessage(message);
         setMessageColor(color);
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         console.error(error)
         setDeleteChapterTitle("");
@@ -518,6 +538,9 @@ const handleDeleteChapterClick = async () => {
         setMessage("Error deleting manga");
         setMessageColor("red");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
     }
 
@@ -784,6 +807,9 @@ function MangaEdit() {
             setActionMangaMessage("Edit Manga");
             setIsDisabled(false);
             fileInputRef.current.value = null;
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
             setMessage("Error updating manga");
             setMessageColor("red")
@@ -797,7 +823,10 @@ function MangaEdit() {
             setMangaID("");
             setActionMangaMessage("Edit Manga");
             setIsDisabled(false);
-            console.error(error);  
+            console.error(error);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);  
         }
     };
 
@@ -835,6 +864,9 @@ function MangaEdit() {
             setActionChapterMessage("Edit Chapter");
             setIsDisabled(false);
             fileInputRef.current.value = null;
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
             setMessage("Error updating chapter");
             setMessageColor("red");
@@ -848,6 +880,9 @@ function MangaEdit() {
             setIsDisabled(false);
             fileInputRef.current.value = null;
             console.error(error);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         }
     };
   

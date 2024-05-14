@@ -192,6 +192,9 @@ const handleSubmit = async (e) => {
         setUsername("");
         setActionMessage("Upload Paypal Gift")
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error uploading Paypal Gift");
         setMessageColor("red")
@@ -200,6 +203,9 @@ const handleSubmit = async (e) => {
         setActionMessage("Upload Paypal Gift");
         setIsDisabled(false);
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -308,6 +314,9 @@ const handleSubmit = async (e) => {
         setActionMessage("Upload Crypto Gift");
         setIsDisabled(false);
         fileInputRef.current.value = null;
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     
     } catch (error) {
         setMessage("Error uploading Crypto Gift");
@@ -320,6 +329,9 @@ const handleSubmit = async (e) => {
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -500,6 +512,9 @@ const handleDeletePaypalGiftClick = async () => {
         setSelectedPaypalGiftID("");
         setActionMessage("Delete Paypal Gift");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error deleting Paypal Gift");
         setMessageColor("red");
@@ -508,7 +523,10 @@ const handleDeletePaypalGiftClick = async () => {
         setSelectedPaypalGiftID("");
         setActionMessage("Delete Paypal Gift");
         setIsDisabled(false);
-        console.error(error)
+        console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 }
 
@@ -616,6 +634,9 @@ const handleDeleteCryptoGiftClick = async () => {
         setSelectedCryptoGiftID("");
         setActionMessage("Delete Crypto Gift");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error deleting Paypal Gift");
         setMessageColor("red");
@@ -624,7 +645,10 @@ const handleDeleteCryptoGiftClick = async () => {
         setSelectedCryptoGiftID("");
         setActionMessage("Delete Crypto Gift");
         setIsDisabled(false);
-        console.error(error)
+        console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 }
 
@@ -821,6 +845,9 @@ const handleSubmit = async (e) => {
         setPaypalGiftId("");
         setActionMessage("Update Paypal Gift")
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error updating Paypal Gift");
         setMessageColor("red");
@@ -832,6 +859,9 @@ const handleSubmit = async (e) => {
         setActionMessage("Update Paypal Gift")
         setIsDisabled(false);
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -970,41 +1000,47 @@ function CryptoGiftEdit() {
         formData.append("isClickedCrypto", isClickedCrypto);
 
         try {
-        const response = await axios.put("http://localhost:4001/manager/gift/edit", formData, {
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
-        const {message, color} = response.data;
+            const response = await axios.put("http://localhost:4001/manager/gift/edit", formData, {
+                headers: {
+                "Content-Type": "multipart/form-data"
+                }
+            });
+            const {message, color} = response.data;
 
-        setMessage(message);
-        setMessageColor(color);
-        setCryptoName("");
-        setAddress("");
-        setNetwork("");
-        setQrCodeImage("");
-        setNewCryptoName("");
-        setNewAddress("");
-        setNewNetwork("");
-        setCryptoGiftId("");
-        setActionMessage("Edit Crypto Gift");
-        setIsDisabled(false);
-        fileInputRef.current.value = null;
+            setMessage(message);
+            setMessageColor(color);
+            setCryptoName("");
+            setAddress("");
+            setNetwork("");
+            setQrCodeImage("");
+            setNewCryptoName("");
+            setNewAddress("");
+            setNewNetwork("");
+            setCryptoGiftId("");
+            setActionMessage("Edit Crypto Gift");
+            setIsDisabled(false);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
+            fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating crypto gift");
-        setMessageColor("red");
-        setCryptoName("");
-        setAddress("");
-        setNetwork("");
-        setQrCodeImage("");
-        setNewCryptoName("");
-        setNewAddress("");
-        setNewNetwork("");
-        setCryptoGiftId("");
-        setActionMessage("Edit Crypto Gift");
-        setIsDisabled(false);
-        fileInputRef.current.value = null;
-        console.error(error);  
+            setMessage("Error updating crypto gift");
+            setMessageColor("red");
+            setCryptoName("");
+            setAddress("");
+            setNetwork("");
+            setQrCodeImage("");
+            setNewCryptoName("");
+            setNewAddress("");
+            setNewNetwork("");
+            setCryptoGiftId("");
+            setActionMessage("Edit Crypto Gift");
+            setIsDisabled(false);
+            fileInputRef.current.value = null;
+            console.error(error);  
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         }
     };
 

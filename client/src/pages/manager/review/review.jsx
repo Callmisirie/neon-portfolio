@@ -91,8 +91,8 @@ const handleSubmit = async (e) => {
 
     if (!userID) {
         setMessage("Log in before making a review");
-        setMessageColor("red")
-        setActionMessage("Upload Review")
+        setMessageColor("red");
+        setActionMessage("Upload Review");
         setTimeout(() => {
             setMessage("");  
         }, 5000);
@@ -106,18 +106,22 @@ const handleSubmit = async (e) => {
             setMessageColor(color);
             setName("");
             setFeedback("");
-            setActionMessage("Upload Review")
+            setActionMessage("Upload Review");
             setIsDisabled(false);
-        
-            
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
             setMessage("Error uploading review");
             setMessageColor("red");
             setName("");
             setFeedback("");
-            setActionMessage("Upload Review")
+            setActionMessage("Upload Review");
             setIsDisabled(false);
             console.error(error);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         }        
     }
 
@@ -208,12 +212,15 @@ const handleDeleteReviewClick = async () => {
         
         const {message, color} = response.data;
         setMessage(message);
-        setMessageColor(color)
+        setMessageColor(color);
         setDeleteReview("");
         setSelectedReview("");
         setSelectedReviewID("");
         setActionMessage("Delete Review");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error deleting commission");
         setMessageColor("red");
@@ -222,7 +229,10 @@ const handleDeleteReviewClick = async () => {
         setSelectedReviewID("");
         setActionMessage("Delete Review");
         setIsDisabled(false);
-        console.error(error)
+        console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 }
 
@@ -336,38 +346,44 @@ function ReviewEdit() {
         setIsDisabled(true);
 
         try {
-        const response = await axios.put("http://localhost:4001/manager/review/edit", {
-            id: reviewID,
-            email:  newEmail,
-            name: newName,
-            feedback: newFeedback
-        });
+            const response = await axios.put("http://localhost:4001/manager/review/edit", {
+                id: reviewID,
+                email:  newEmail,
+                name: newName,
+                feedback: newFeedback
+            });
 
-        const {message, color} = response.data;
-        setMessage(message);
-        setMessageColor(color);
-        setEmail("");;
-        setName("");
-        setFeedback("");
-        setNewEmail("");
-        setNewName("");
-        setNewFeedback("");
-        setReviewID("");
-        setActionMessage("Edit Review");
-        setIsDisabled(false);
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setEmail("");;
+            setName("");
+            setFeedback("");
+            setNewEmail("");
+            setNewName("");
+            setNewFeedback("");
+            setReviewID("");
+            setActionMessage("Edit Review");
+            setIsDisabled(false);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
-        setMessage("Error updating review");
-        setMessageColor("red")
-        setEmail("");;
-        setName("");
-        setFeedback("");
-        setNewEmail("");
-        setNewName("");
-        setNewFeedback("");
-        setReviewID("");
-        setActionMessage("Edit Review");
-        setIsDisabled(false);
-        console.error(error);  
+            setMessage("Error updating review");
+            setMessageColor("red")
+            setEmail("");;
+            setName("");
+            setFeedback("");
+            setNewEmail("");
+            setNewName("");
+            setNewFeedback("");
+            setReviewID("");
+            setActionMessage("Edit Review");
+            setIsDisabled(false);
+            console.error(error); 
+            setTimeout(() => {
+                setMessage("");
+            }, 5000); 
         }
     };
 

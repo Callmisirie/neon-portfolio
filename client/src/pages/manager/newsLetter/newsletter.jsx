@@ -66,7 +66,10 @@ const handleSubmit = async (e) => {
         setTitle("");
         setFeedback("");
         setActionMessage("Send")
-        setIsDisabled(false);        
+        setIsDisabled(false);   
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);     
     } catch (error) {
         setMessage("Error uploading newsletter");
         setMessageColor("red");
@@ -75,6 +78,9 @@ const handleSubmit = async (e) => {
         setActionMessage("Send")
         setIsDisabled(false);
         console.error(error);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }        
 };
 

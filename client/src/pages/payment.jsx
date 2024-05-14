@@ -142,10 +142,16 @@ function Payment() {
        if (paymentMethod === "Crypto" && !cryptoName) {
             setMessage("Select a crypto currency before confirming purchase");
             setMessageColor("red");
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
             return;
        } else if (paymentMethod === "Bank Transfer" && !bankCurrency) {
             setMessage("Select a currency before confirming purchase");
             setMessageColor("red");
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         return;
        }
         const transactionInfo = {
@@ -160,13 +166,18 @@ function Payment() {
         }
         try {
             const response = await axios.post("http://localhost:4001/manager/transactionHistory/create", transactionInfo)
-            const {message, color} = response.data; 
+            const {message, color, isTrue} = response.data; 
             setMessage(message);
             setMessageColor(color);
             setIsChecked(false);
             setTimeout(() => {
-                navigate("/commission");
+                setMessage("");
             }, 5000);
+            if (isTrue) {
+                setTimeout(() => {
+                    navigate("/commission");
+                }, 5000);                
+            }
         } catch (error) {
             setMessage("Error saving transaction");
             setMessageColor("red");

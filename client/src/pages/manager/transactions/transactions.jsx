@@ -145,6 +145,9 @@ function TransactionsStatus() {
             setClickedTransactionHistoryID("");
             setActionMessage("Update Status");
             setIsDisabled(false);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
             setMessage("Error updating status");
             setMessageColor("red")
@@ -152,7 +155,10 @@ function TransactionsStatus() {
             setClickedTransactionHistoryID("");
             setActionMessage("Update Status");
             setIsDisabled(false);
-            console.error(error);  
+            console.error(error); 
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         }
     };
 
@@ -362,6 +368,9 @@ function TransactionsDelete() {
             setClickedTransactionHistoryID("");
             setActionMessage("Delete Transaction");
             setIsDisabled(false);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
         } catch (error) {
             setMessage("Error deleting transaction");
             setMessageColor("red")
@@ -369,7 +378,10 @@ function TransactionsDelete() {
             setClickedTransactionHistoryID("");
             setActionMessage("Delete Transaction");
             setIsDisabled(false);
-            console.error(error);  
+            console.error(error);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);  
         }
       };
   

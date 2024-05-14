@@ -134,6 +134,9 @@ const handleSubmit = async (e) => {
         setActionMessage("Upload Commission")
         setIsDisabled(false);
         fileInputRef.current.value = null;
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     
         
     } catch (error) {
@@ -149,6 +152,9 @@ const handleSubmit = async (e) => {
         setIsDisabled(false);
         console.error(error);
         fileInputRef.current.value = null;
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 };
 
@@ -268,6 +274,9 @@ const handleDeleteCommissionClick = async () => {
         setSelectedCommissionID("");
         setActionMessage("Delete Commission");
         setIsDisabled(false);
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     } catch (error) {
         setMessage("Error deleting commission");
         setMessageColor("red");
@@ -277,6 +286,9 @@ const handleDeleteCommissionClick = async () => {
         setActionMessage("Delete Commission");
         setIsDisabled(false);
         console.error(error)
+        setTimeout(() => {
+            setMessage("");
+        }, 5000);
     }
 }
 
@@ -412,49 +424,55 @@ function CommissionEdit() {
         formData.append("discountInterval", newDiscountInterval);
 
         try {
-        const response = await axios.put("http://localhost:4001/manager/commission/edit", formData, {
-            headers: {
-            "Content-Type": "multipart/form-data"
-            }
-        });
+            const response = await axios.put("http://localhost:4001/manager/commission/edit", formData, {
+                headers: {
+                "Content-Type": "multipart/form-data"
+                }
+            });
 
-        const {message, color} = response.data;
-        setMessage(message);
-        setMessageColor(color);
-        setArtStyle("");
-        setArtImage("");
-        setPrice("");
-        setPricePer("");
-        setDiscount("");
-        setDiscountInterval("");
-        setNewArtStyle("");
-        setNewPrice("");
-        setNewPricePer("");
-        setNewDiscount("");
-        setNewDiscountInterval("");
-        setCommissionID("");
-        setActionMessage("Edit Commission");
-        setIsDisabled(false);
-        fileInputRef.current.value = null;
+            const {message, color} = response.data;
+            setMessage(message);
+            setMessageColor(color);
+            setArtStyle("");
+            setArtImage("");
+            setPrice("");
+            setPricePer("");
+            setDiscount("");
+            setDiscountInterval("");
+            setNewArtStyle("");
+            setNewPrice("");
+            setNewPricePer("");
+            setNewDiscount("");
+            setNewDiscountInterval("");
+            setCommissionID("");
+            setActionMessage("Edit Commission");
+            setIsDisabled(false);
+            setTimeout(() => {
+                setMessage("");
+            }, 5000);
+            fileInputRef.current.value = null;
         } catch (error) {
-        setMessage("Error updating commission");
-        setMessageColor("red")
-        setArtStyle("");
-        setArtImage("");
-        setPrice("");
-        setPricePer("");
-        setDiscount("");
-        setDiscountInterval("");
-        setNewArtStyle("");
-        setNewPrice("");
-        setNewPricePer("");
-        setNewDiscount("");
-        setNewDiscountInterval("");
-        setCommissionID("");
-        setActionMessage("Edit Commission");
-        setIsDisabled(false);
-        fileInputRef.current.value = null;
-        console.error(error);  
+            setMessage("Error updating commission");
+            setMessageColor("red")
+            setArtStyle("");
+            setArtImage("");
+            setPrice("");
+            setPricePer("");
+            setDiscount("");
+            setDiscountInterval("");
+            setNewArtStyle("");
+            setNewPrice("");
+            setNewPricePer("");
+            setNewDiscount("");
+            setNewDiscountInterval("");
+            setCommissionID("");
+            setActionMessage("Edit Commission");
+            setIsDisabled(false);
+            fileInputRef.current.value = null;
+            console.error(error); 
+            setTimeout(() => {
+                setMessage("");
+            }, 5000); 
         }
     };
 
