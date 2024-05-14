@@ -15,6 +15,7 @@ import Manager from './pages/manager/manager.jsx';
 import MangaManager from "./pages/manager/manga/manga.jsx";
 import CommissionManager from './pages/manager/commission/commission.jsx';
 import GiftManager from './pages/manager/gift/gift.jsx';
+import NewsLetterUpdateManager from './pages/manager/newsLetter/newsletter.jsx';
 import ReviewManager from './pages/manager/review/review.jsx';
 import TransactionsManager from './pages/manager/transactions/transactions.jsx';
 import { MangaCreate, MangaDelete, MangaEdit } from './pages/manager/manga/manga.jsx';
@@ -22,6 +23,7 @@ import { CommissionCreate, CommissionDelete, CommissionEdit } from './pages/mana
 import { GiftCreate, GiftDelete, GiftEdit } from './pages/manager/gift/gift.jsx';
 import { ReviewCreate, ReviewDelete, ReviewEdit } from './pages/manager/review/review.jsx';
 import { TransactionsStatus, TransactionsDelete } from './pages/manager/transactions/transactions.jsx';
+import { CreateNewsletterUpdate } from './pages/manager/newsLetter/newsletter.jsx';
 import AdminAuth from "./pages/adminAuth.jsx";
 import UserAuth from './pages/userAuth.jsx';
 import Navbar from "./components/Navbar.jsx";
@@ -94,6 +96,9 @@ function App() {
                 <Route path="/manager/transactions" element={<TransactionsManager />}/>
                 <Route path="/manager/transactions/status" element={<TransactionsStatus />}/>
                 <Route path="/manager/transactions/delete" element={<TransactionsDelete />}/>
+
+                <Route path="/manager/newsletterUpdate" element={<NewsLetterUpdateManager />}/>
+                <Route path="/manager/newsletterUpdate/create" element={<CreateNewsletterUpdate />}/>
               </>
             ) : null}
             <Route path="/review/create" element={<ReviewCreate />}/>

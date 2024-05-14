@@ -13,4 +13,20 @@ const newsletterSchema = new mongoose.Schema({
 const NewsletterModel = mongoose.model("newsletter", newsletterSchema );
 
 
+const newsletterUpdateSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
+    }
+});
+
+
+const NewsletterUpdateModel = mongoose.model("newsletterUpdate", newsletterUpdateSchema );
+
 export default NewsletterModel;
+
+export {NewsletterUpdateModel};
