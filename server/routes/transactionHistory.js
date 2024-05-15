@@ -103,11 +103,12 @@ router.post("/create", async (req, res) => {
                         userID: user._id,
                         transactionDetails: [transactionDetails]
                     });
-                    transactionHistory.save(); 
+                    await transactionHistory.save(); 
 
                     res.json({
                         message: "Order saved successfully",
                         color: "green",
+                        orderResponse: transactionDetails,
                         isTrue : true
                     });            
                 } catch (error) {
@@ -127,6 +128,7 @@ router.post("/create", async (req, res) => {
                     res.json({
                         message: "Order saved successfully",
                         color: "green",
+                        orderResponse: transactionDetails,
                         isTrue : true
                     });
                 } catch (error) {

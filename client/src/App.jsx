@@ -6,6 +6,7 @@ import Chapters from "./pages/manga/chapters.jsx";
 import Pages from "./pages/manga/pages.jsx";
 import Gift from './pages/gift.jsx';
 import Payment from './pages/payment.jsx';
+import Order from './pages/order.jsx';
 import Commission from './pages/commission.jsx';
 import TransactionHistory from './pages/transactionHistory.jsx';
 import Contact from "./pages/contact.jsx";
@@ -38,6 +39,7 @@ import { useEffect } from 'react';
 
 function App() {
   const [cookies, setCookies] = useCookies(["access_token"]);
+  const orderDetails = JSON.parse(window.localStorage.getItem("orderDetails"));
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");
@@ -61,7 +63,8 @@ function App() {
             <Route path="/about" element={<About />}/>
             <Route path="/manga" element={<Manga />}/>
             <Route path="/gift" element={<Gift />}/>
-            <Route path="/payment" element={<Payment />}/>
+            <Route path="commission/payment" element={<Payment />}/>
+            <Route path="/commission/payment/order" element={<Order />}/>
             <Route path="/auth/admin" element={<AdminAuth />}/>
             <Route path="/auth/user" element={<UserAuth />}/>
             <Route path="/passwordReset/generateOTP" element={<GenerateOTP />}/>

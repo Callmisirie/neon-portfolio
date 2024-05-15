@@ -133,13 +133,13 @@ const TransactionHistory = () => {
                         }) : null}
                         </ul>
                         <div className="mb-5">
-                        <p  className="font-montserrat 
-                        text-purple-600 text-center hover:font-bold
-                        text-md font-semibold">
-                            <a href="/commission">
-                            Back to commission
-                            </a>
-                        </p>
+                            <p  className="font-montserrat 
+                            text-purple-600 text-center hover:font-bold
+                            text-md font-semibold">
+                                <a href="/commission">
+                                Back to commission
+                                </a>
+                            </p>
                         </div>                    
                     </div>              
                 </section>

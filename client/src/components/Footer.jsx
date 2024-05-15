@@ -46,13 +46,11 @@ const Footer = () => {
               hiding during all those lean years.
             </p>
             <div className="flex items-center gap-5 mt-8">
-              {socialMedia.map((icon)=>(
-                <a href={icon.link} target="_blank" rel="noopener noreferrer">
+              {socialMedia.map((icon, index)=>(
+                <a href={icon.link} target="_blank" rel="noopener noreferrer" key={icon.src}>
                   <div className="flex justify-center 
                     items-center w-12 h-12 bg-white
-                    rounded-full cursor-pointer"
-                    key={icon.src}
-                  >
+                    rounded-full cursor-pointer">
                     <img 
                       src={icon.src}
                       alt={icon.alt}

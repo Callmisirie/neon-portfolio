@@ -112,7 +112,7 @@ const Commission = () => {
         window.localStorage.removeItem("currencyDetails");
         window.localStorage.setItem("currencyDetails", JSON.stringify(currencyDetails));
         handleTransactionDetails()
-        navigate("/payment");
+        navigate("/commission/payment");
         window.scrollTo(0, 0);
       } catch (error) {
         console.error(error)
@@ -129,10 +129,10 @@ const Commission = () => {
     <section className="min-h-full">
       {commissions?.length ? (
         <div className=" flex 
-        lex-wrap justify-center 
+        flex-wrap justify-center 
         items-center rounded-lg 
         bg-white px-6">
-          <div  className="flex sm:flex-row flex-col justify-center items-start rounded-lg my-20 
+          <div  className="flex sm:flex-row flex-col justify-center items-start rounded-lg 
             bg-white px-6 shadow-xl py-5
             ring-slate-900/5">
             <div  className="flex flex-col justify-center items-center

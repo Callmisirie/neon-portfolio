@@ -82,7 +82,7 @@ function Navbar() {
         <header className={`padding-x 
         border-b bg-white top-0 py-2 
         z-50 w-full ${visible ? "sticky" : ""}`}>
-            <nav className="flex justify-between max-lg:flex-col items-center max-container">  
+            <nav className="flex justify-between max-xl:flex-col items-center max-container">  
                 <div className="flex justify-between items-center w-full max-container">
                     <a href="/">
                         <img className="flex min-w-20 w-20"
@@ -90,11 +90,11 @@ function Navbar() {
                         alt="Logo"
                        />
                     </a>
-                    <ul className="flex-1 flex justify-between items-center gap-4 max-lg:hidden mx-10">
+                    <ul className="flex-1 flex justify-between items-center gap-4 max-xl:hidden mx-10">
                         <li> 
                             <SearchBar /> 
                         </li>
-                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray
+                        <li className={`font-montserrat leading-normal text-center text-sm hover:text-purple-600 text-slate-gray 
                         ${location.pathname === "/" ? "font-semibold" : " "}`}><Link to="/"> 
                             Home </Link>
                         </li>                        
@@ -142,7 +142,7 @@ function Navbar() {
                             </div>         
                         ) : null}
                     </ul>
-                    <div className="hidden max-lg:block">
+                    <div className="hidden max-xl:block">
                         <img className="cursor-pointer" 
                         src={!openNavigation ? hamburger : hamburgerCancel}
                         alt="Hamburger"
@@ -157,25 +157,37 @@ function Navbar() {
 
 
                 {openNavigation ? (
-                    <ul className="flex-1 flex-col justify-center items-center gap-4 lg:hidden my-5">
+                    <ul className="flex-1 flex-col justify-center items-center gap-4 xl:hidden my-5">
                         <li className="flex justify-center mb-5 items-center"> 
                             <SearchBar /> 
                         </li>
                         <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
-                            ${location.pathname === "/" ? "font-semibold" : " "}`}><Link to="/"> 
+                            ${location.pathname === "/" ? "font-semibold" : " "}`}
+                                onClick={() => {
+                                    setOpenNavigation(!openNavigation)
+                                }}
+                            ><Link to="/"> 
                                 Home </Link>
                             </li>                        
                         </div>
                         <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "font-semibold" : " "}`}><Link to="/manga"> 
+                            ${location.pathname.slice(0, mangaPath.length) === "/manga" ? "font-semibold" : " "}`}
+                            onClick={() => {
+                                setOpenNavigation(!openNavigation)
+                            }}
+                            ><Link to="/manga"> 
                                 Manga </Link>
                             </li>                       
                         </div>
                         <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, commissionPath.length) === "/commission" ? "font-semibold" : " "}`}><Link to="/commission">
+                            ${location.pathname.slice(0, commissionPath.length) === "/commission" ? "font-semibold" : " "}`}
+                            onClick={() => {
+                                    setOpenNavigation(!openNavigation)
+                                }}                            
+                            ><Link to="/commission">
                                 Commission </Link>
                             </li>                
                         </div>
@@ -187,13 +199,21 @@ function Navbar() {
                         </div> */}
                         <div className="w-full"> 
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray
-                            ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}><Link to="/contact">
+                            ${location.pathname.slice(0, contactPath.length) === "/contact" ? "font-semibold" : " "}`}
+                            onClick={() => {
+                                setOpenNavigation(!openNavigation)
+                            }}                            
+                            ><Link to="/contact">
                                 Contact </Link>
                             </li>                   
                         </div>
                         <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-black
-                            ${location.pathname.slice(0, authUserPath.length) === "/auth/user" ? "font-semibold" : " "}`}><Link to="/auth/user"> 
+                            ${location.pathname.slice(0, authUserPath.length) === "/auth/user" ? "font-semibold" : " "}`}
+                            onClick={() => {
+                                setOpenNavigation(!openNavigation)
+                            }}                      
+                            ><Link to="/auth/user"> 
                                 Sign in / Register </Link>
                             </li>                  
                         </div>
@@ -202,7 +222,11 @@ function Navbar() {
                                 {cookies.access_token ? (
                                     <div className="w-full">
                                         <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-black
-                                        ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}><Link to="/manager"> 
+                                        ${location.pathname.slice(0, managerPath.length) === "/manager" ? "font-semibold" : " "}`}
+                                        onClick={() => {
+                                            setOpenNavigation(!openNavigation)
+                                        }}
+                                        ><Link to="/manager"> 
                                             Manager </Link>
                                         </li>                  
                                     </div>                               
@@ -212,7 +236,10 @@ function Navbar() {
                                         className="gap-2 px-6 py-4 border 
                                         font-montserrat text-sm leading-none bg-black
                                         rounded-full text-white border-black"
-                                        onClick={Logout}> 
+                                        onClick={() => {
+                                            Logout()   
+                                            setOpenNavigation(!openNavigation) 
+                                        }}> 
                                         Logout 
                                     </button>
                                 </li> 

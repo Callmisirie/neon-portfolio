@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { clipboardCopy } from '../assets/icons';
@@ -166,7 +166,8 @@ function Payment() {
         }
         try {
             const response = await axios.post("http://localhost:4001/manager/transactionHistory/create", transactionInfo)
-            const {message, color, isTrue} = response.data; 
+            const {message, color, orderResponse, isTrue} = response.data; 
+            console.log(orderResponse);
             setMessage(message);
             setMessageColor(color);
             setIsChecked(false);
@@ -174,12 +175,12 @@ function Payment() {
                 setMessage("");
             }, 5000);
             if (isTrue) {
-                setTimeout(() => {
-                    navigate("/commission");
-                }, 5000);                
+                navigate("/commission/payment/order"); 
+                window.localStorage.removeItem("orderDetails");
+                window.localStorage.setItem("orderDetails", JSON.stringify(orderResponse))             
             }
         } catch (error) {
-            setMessage("Error saving transaction");
+            setMessage("Error saving order");
             setMessageColor("red");
             setTimeout(() => {
                 setMessage("");
@@ -195,18 +196,18 @@ function Payment() {
         setMessage("");
     }
 
-    function handleCopyClipboard(address) {
+    function handleCopyClipboard(content) {
         setCopyTooltip("Copied!");
         
-        navigator.clipboard.writeText(address)
+        navigator.clipboard.writeText(content)
             .then(() => {
-                console.log('Address copied to clipboard');
+                console.log('Copied to clipboard');
                 setTimeout(() => {
                     setCopyTooltip("Copy");
                 }, 2000);
             })
             .catch((error) => {
-                console.error('Failed to copy address: ', error);
+                console.error('Failed to copy: ', error);
             });
     }
 
@@ -216,7 +217,7 @@ function Payment() {
             {paypalGifts.length || cryptoGifts.length ? (        
                 <div className="flex flex-col sm:flex-row
                 justify-center items-start flex-wrap
-                max-container m-10 rounded-lg 
+                max-container mb-10 rounded-lg 
                 bg-white px-6 py-8 shadow-xl
                 ring-slate-900/5">
                     <div className="flex 

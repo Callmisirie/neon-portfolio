@@ -17,11 +17,7 @@ function Find() {
             }
         }
         fetchManga();
-    }, []);
-
-    useEffect(()=> {
-        console.log(foundMangas);
-    }, [foundMangas])
+    }, [foundMangas]);
 
     function handleClick(id) {
         navigate("/manga/" + id)
@@ -29,10 +25,10 @@ function Find() {
 
    return (
     <section className="min-h-full">
-        <div  className=" flex flex-col items-center justify-center mx-20 rounded-lg
+        <div  className=" flex flex-col items-center rounded-lg
           bg-white px-6">
             <h2 className="text-3xl leading-[68px] 
-              lg:max-w-md font-palanquin font-bold p-2 text-center mb-5">
+              lg:max-w-md font-palanquin font-bold p-2 text-center">
               Manga result
             </h2>
             {foundMangas && (
@@ -43,7 +39,7 @@ function Find() {
                         ring-slate-900/5"
                         key={manga._id}>
                             <h3 className="font-montserrat 
-                            text-slate-gray hover:text-black text-lg 
+                            text-slate-gray hover:text-black text-md max-w-xs
                             leading-8 my-2 cursor-pointer w-full text-center hover:font-semibold"
                             onClick={()=> {
                             handleClick(manga._id)
