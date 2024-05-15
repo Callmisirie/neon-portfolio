@@ -54,6 +54,10 @@ function Payment() {
           cryptoGifts.map(cryptoGift => cryptoSymbols.push(cryptoGift.cryptoName))
         }
         
+        if (!transactionDetails) {
+            navigate("/commission")
+        };
+
         const interval = setInterval( async () => {
             if (seconds === 0) {
                 if (minutes === 0) {
@@ -177,6 +181,7 @@ function Payment() {
             if (isTrue) {
                 navigate("/commission/payment/order"); 
                 window.localStorage.removeItem("orderDetails");
+                window.localStorage.removeItem("transactionDetails")
                 window.localStorage.setItem("orderDetails", JSON.stringify(orderResponse))             
             }
         } catch (error) {

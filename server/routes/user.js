@@ -53,7 +53,7 @@ router.post("/register", async (req, res)=> {
             }, // sender address
             to: userResponse.email, // list of receivers
             subject: "User Registration", // Subject line
-            text: "You have successfully registered to Neon World."
+            html: `<p>You have successfully registered to Neon World.</p>`
          });
 
         return res.json({

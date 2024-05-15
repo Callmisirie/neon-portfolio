@@ -44,9 +44,8 @@ router.post("/generateOTP", async (req, res)=> {
                   address:  process.env.EMAIL_USER
                }, // sender address
                to: user.email, // list of receivers
-               subject: "Your OTP", // Subject line
-               text: `Your OTP is: ${randomOTP}`,
-               html: `<b>Your OTP is:</b> ${randomOTP}`,
+               subject: "Password Reset", // Subject line
+               html: `<p>Your OTP is: ${randomOTP}</p>`
             });
 
             res.json({
@@ -140,7 +139,8 @@ router.post("/changePassword", async (req, res)=> {
                   }, // sender address
                   to: user.email, // list of receivers
                   subject: "Password Change", // Subject line
-                  text: "Your password was successfully changed"
+                  html: `<p>Your password was successfully changed.</p>`
+                  
                });
 
                res.json({

@@ -15,27 +15,8 @@ function Navbar() {
     const location = useLocation();
     const [openNavigation, setOpenNavigation] = useState(false)
 
-    const [prevScrollPos, setPrevScrollPos] = useState(0);
-    const [visible, setVisible] = useState(true);
-    
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
-    
-            // Check if the scroll position has changed
-            if (prevScrollPos === currentScrollPos) {
-                return;
-            }
-    
-            setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-    
-            setPrevScrollPos(currentScrollPos);
-        };
-    
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [prevScrollPos]);
+
     
     
     function Logout() {
@@ -79,9 +60,9 @@ function Navbar() {
     const authUserPath = "/auth/user"
 
     return (   
-        <header className={`padding-x 
+        <header className="padding-x 
         border-b bg-white top-0 py-2 
-        z-50 w-full ${visible ? "sticky" : ""}`}>
+        z-50 w-full sticky">
             <nav className="flex justify-between max-xl:flex-col items-center max-container">  
                 <div className="flex justify-between items-center w-full max-container">
                     <a href="/">

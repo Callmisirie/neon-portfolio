@@ -41,7 +41,7 @@ function AdminAuth() {
                     </h2>
                     <button className="text-white px-4 py-2 text-sm
                         font-montserrat font-medium my-3 mx-5
-                        bg-purple-600 rounded-md hover:bg-purple-500 "
+                        bg-purple-600 rounded-md hover:shadow-md border-2 border-black"
                         onClick={ ()=> {
                         handleClick("Register")
                     }}>
@@ -49,7 +49,7 @@ function AdminAuth() {
                     </button>    
                     <button className="text-white px-4 py-2 text-sm
                     font-montserrat font-medium my-3 mx-5
-                    bg-purple-400 rounded-md hover:bg-purple-300 " 
+                    bg-purple-600 rounded-md hover:shadow-md border-2 border-black" 
                         onClick={()=> {
                         handleClick("Login")
                     }}>

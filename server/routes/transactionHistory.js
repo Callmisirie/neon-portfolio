@@ -148,7 +148,8 @@ router.post("/create", async (req, res) => {
                 }, // sender address
                 to: user.email, // list of receivers
                 subject: "Commission Order", // Subject line
-                text: "Congratulation on making this order, payment comfirmation is processing.",
+                html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
+                
              });
              
 
@@ -194,8 +195,8 @@ router.put("/status", async (req, res)=> {
                     }, // sender address
                     to: user.email, // list of receivers
                     subject: "Order Payment", // Subject line
-                    text: `Your order status is - ${checkboxValue}`,
-                    html: `<b>Your order status is - </b> ${checkboxValue}`,
+                    html: `<p>Your order status is -  ${checkboxValue}</p>`
+                    
                  });
 
                 res.json({
