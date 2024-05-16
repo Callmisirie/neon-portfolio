@@ -293,8 +293,7 @@ const handleDeleteCommissionClick = async () => {
 }
 
   return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-    bg-white px-6">
+    <div className="min-h-full flex flex-wrap justify-center items-center">
             <div  className="flex flex-col justify-center items-center rounded-lg mb-10
                 bg-white px-10 pb-5 shadow-xl
                 ring-slate-900/5">
@@ -518,10 +517,10 @@ function CommissionEdit() {
                 leading-8 my-2"  style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mb-10
-                bg-white px-6 py-4"
+                <form  className="flex flex-col justify-center items-center
+                bg-white p-5"
                 onSubmit={handleSubmit}>
-                    <div className="flex flex-col justify-center items-center m-5 
+                    <div className="flex flex-col justify-center items-center 
                     bg-white px-6 py-4">
                         <p className='mt-4 font-bold font-montserrat text-slate-gray'>Art Style</p>
                         <Input type="text" 

@@ -534,8 +534,8 @@ const handleDeletePaypalGiftClick = async () => {
     <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
     bg-white px-6">
             <div  className="flex flex-col justify-center items-center
-                bg-white px-10">
-                <h2 className="text-3xl leading-[68px] 
+                bg-white">
+                <h2 className="text-3xl 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Paypal Gift
                 </h2>
@@ -657,7 +657,7 @@ const handleDeleteCryptoGiftClick = async () => {
     bg-white px-6">
             <div  className="flex flex-col justify-center items-center
                 bg-white">
-                <h2 className="text-3xl leading-[68px] mx-5
+                <h2 className="text-3xl  mx-5
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Crypto Gift
                 </h2>
@@ -912,8 +912,8 @@ return (
             </p>}
             <form  className="flex flex-col justify-center items-center"
             onSubmit={handleSubmit}> 
-                <div className="flex flex-col justify-center items-center m-5
-                    bg-white px-6 ">
+                <div className="flex flex-col justify-center items-center
+                    bg-white px-5 ">
                     <p className='mt-4 font-bold font-montserrat text-slate-gray'>Address</p>  
                     <Input type="email" 
                     value={newAddress} handleChange={setNewAddress} 

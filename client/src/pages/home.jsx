@@ -86,11 +86,11 @@ function Home() {
                     </div>
                 </section>
             </section>
-            <section className="padding bg-purple-50 rounded-ss-3xl rounded-se-3xl">
+            <section className="padding bg-purple-50">
                 <div className="flex flex-col justify-center items-center">
                     <div className="flex flex-col 
-                    justify-center items-center my-2 rounded-3xl 
-                    bg-white p-6 shadow-3xl ring-slate-900/5">
+                    justify-center items-center  rounded-3xl 
+                    shadow-3xl ring-slate-900/5">
                         <button >
                             <video className="rounded-3xl" src="/videos/NeonArt.mp4" width={500} controls muted loop>
                             </video>

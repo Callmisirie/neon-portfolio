@@ -199,8 +199,8 @@ function Pages() {
                     {chapter.pages?.length && "/manga/" + manga.mangaID + "/" + chapter._id === location.pathname ? (
                         <>
                             <ul className="flex flex-col 
-                            items-center rounded-3xl 
-                            bg-white min-h-screen p-5
+                            items-center rounded-3xl
+                            bg-white min-h-screen px-5 pt-5 pb-10 
                             shadow-xl ring-slate-900/5">                        
                                 <h3 className="font-montserrat 
                                 text-black text-xl leading-8 mb-5 
@@ -210,7 +210,7 @@ function Pages() {
                                 {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
                                     <div className="sm:mx-5"
                                     key={index}>
-                                        <li > 
+                                        <li className="border-2 border-black" > 
                                             <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
                                         </li>
                                     </div>
@@ -223,7 +223,7 @@ function Pages() {
                                             key={index} onClick={() => {
                                                 handleNextPageClick(chapter.pages.length, manga.chapters.length)
                                             }}>
-                                                <li>
+                                                <li className="border-2 border-black">
                                                     <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
                                                 </li>
                                             </div>

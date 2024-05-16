@@ -5,12 +5,11 @@ function About() {
             justify-center h-svh
              bg-black">
                 <div className="flex flex-col 
-                justify-evenly items-center rounded-lg 
-                bg-white p-6 shadow-xl
-                ring-slate-900/5">
+                justify-evenly items-center 
+                bg-white py-5 px-10">
                     <div className="flex 
                     flex-col justify-center items-center 
-                    max-w-lg py-5 px-10 
+                    max-w-lg p-5  
                     rounded-xl">
                         <h3 className="text-3xl 
                         lg:max-w-md font-palanquin 
@@ -27,7 +26,7 @@ function About() {
                     </div>
                     <div className="flex 
                     flex-col justify-center items-center 
-                    max-w-lg py-5 px-10 
+                    max-w-lg p-5  
                     rounded-xl">
                         <h3 className="text-xl 
                         lg:max-w-md font-palanquin 
@@ -44,7 +43,7 @@ function About() {
                     </div>
                     <div className="flex 
                     flex-col justify-center items-center 
-                    max-w-lg py-5 px-10 
+                    max-w-lg p-5 
                     rounded-xl">
                         <h3 className="text-xl 
                         lg:max-w-md font-palanquin 

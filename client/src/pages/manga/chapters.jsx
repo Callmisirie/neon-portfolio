@@ -41,7 +41,7 @@ function Chapters() {
                 {mangaContent && manga._id && (
                     <div  className="flex flex-col 
                     gap-5 items-center min-h-screen
-                    p-6 bg-white shadow-xl">
+                    p-10 bg-white shadow-xl">
                         <h3  className="font-montserrat 
                         text-black font-bold max-w-xs
                         leading-8 mx-2 text-center text-md
@@ -54,9 +54,9 @@ function Chapters() {
                             {manga.about}
                         </p>
                         <div className="flex flex-col justify-center 
-                        items-center rounded-lg bg-white p-6 shadow-xl mb-4 mx-5
+                        items-center rounded-lg bg-white p-5 shadow-xl
                         ring-slate-900/5">
-                            <div className="flex flex-col justify-center items-center mx-5 mb-5 p-5">
+                            <div className="flex flex-col justify-center items-center p-5">
                                
                                 <img className="flex flex-col justify-center rounded-xl mt-5 mb-10 mx-20 shadow-xl"
                                 src={`http://localhost:4001/display/${manga._id}`} 

@@ -131,15 +131,14 @@ const Order = () => {
                     text-sm">
                         Payment Status - <span className="font-montserrat 
                         text-slate-gray text-start font-normal
-                        text-sm">{orderDetails.paymentStatus}</span>
+                        text-sm">{orderDetails.paymentStatus}...</span>
                     </p>  
                     <div className='max-w-xs mt-5'>
                         <p className="font-montserrat w-fit text-slate-gray text-xs">
-                            An {" "}
-                            <span className="font-montserrat text-green-500 text-xs font-semibold my-1">
-                            Email {" "}
+                            <span className="font-montserrat text-green-500 text-sm font-semibold my-1">
+                            Congratulations {" "}
                             </span>
-                            will be sent to you, when payment is confirmed.
+                            on placing your order! An email will be sent to you once the payment is confirmed.
                         </p>                                             
                     </div> 
                     <div className="">

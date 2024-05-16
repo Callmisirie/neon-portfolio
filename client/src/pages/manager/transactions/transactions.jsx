@@ -163,22 +163,22 @@ function TransactionsStatus() {
     };
 
 return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-    bg-white px-6">
+    <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
+    bg-white">
         <div className="flex flex-col justify-center items-center rounded-lg mb-10
-        bg-white px-6 pb-6 shadow-xl
+        bg-white px-5 pb-5 shadow-xl
         ring-slate-900/5">
             <h2 className="text-3xl leading-[68px] 
             lg:max-w-md font-palanquin font-bold p-2">
                 Transaction Status
             </h2>
-            <ul className='flex flex-col mx-5 w-full
+            <ul className='flex flex-col
             my-5 justify-center items-center'>
                 {transactionHistories.map((userTransactionHistories)=> {
                     return (
                         <li className=''
                         key={userTransactionHistories._id}>
-                            <p className="font-montserrat
+                            <p className="font-montserrat max-w-xs
                             text-black text-md leading-8 text-center
                             my-2 font-semibold cursor-pointer"
                             onClick={()=> {
@@ -195,13 +195,13 @@ return (
                                     </p>
                                 ))
                             })}
-                            <ul  className="flex flex-col-reverse mt-5 px-10
+                            <ul  className="flex flex-col-reverse mt-5 px-5
                             bg-white shadow-xl justify-center items-center
                             ring-slate-900/5">
                                 {clickedUserId === userTransactionHistories.userID 
                                 ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
                                     <li className='w-full' key={transactionDetail._id}>
-                                        <p className="font-montserrat 
+                                        <p className="font-montserrat max-w-xs
                                         text-center text-slate-gray
                                         text-sm leading-8 cursor-pointer"
                                             onClick={()=> {
@@ -210,7 +210,7 @@ return (
                                             Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
                                         </p>
                                         <ul className="flex flex-col 
-                                        mb-5 rounded-lg bg-white px-10
+                                        mb-5 rounded-lg bg-white
                                          shadow-xl ring-slate-900/5">
                                         {clickedTransactionHistoryID === transactionDetail._id && 
                                             <>
@@ -270,8 +270,8 @@ return (
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
                 {message}
             </p>}
-            <form  className="flex flex-col justify-center items-center mx-5
-            bg-white px-6"
+            <form  className="flex flex-col justify-center items-center
+            bg-white mx-5"
             onSubmit={handleSubmit}>
                 <div className="flex 
                 flex-col justify-center 
@@ -388,19 +388,19 @@ function TransactionsDelete() {
   
     return (
         <div className="min-h-full flex flex-wrap justify-center items-center rounded-lg 
-        bg-white px-6">
+        bg-white">
             <div className="flex flex-col justify-center items-center rounded-lg mb-10
-            bg-white px-6 pb-6 shadow-xl
+            bg-white px-5 pb-5 shadow-xl
             ring-slate-900/5">
                 <h2 className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2">
                     Delete Transaction
                 </h2>
-                <ul className='flex flex-col mx-5 w-full
+                <ul className='flex flex-col
                     my-5 justify-center items-center'>
                     {transactionHistories.map((userTransactionHistories)=> {
                         return (
-                            <li className='w-full'
+                            <li className=''
                             key={userTransactionHistories._id}>
                             <p className="font-montserrat
                             text-black text-md leading-8 text-center
@@ -419,14 +419,14 @@ function TransactionsDelete() {
                                     </p>
                                 ))
                             })}                              
-                                <ul  className="flex flex-col-reverse mt-5 px-10
+                                <ul  className="flex flex-col-reverse mt-5 px-5
                                 bg-white shadow-xl justify-center items-center
                                 ring-slate-900/5">
                                     {clickedUserId === userTransactionHistories.userID 
                                     ? userTransactionHistories.transactionDetails.map((transactionDetail) =>  
                                         <li className='w-full' key={transactionDetail._id}>
-                                            <p className="font-montserrat my-2
-                                            text-center text-slate-gray
+                                            <p className="font-montserrat max-w-xs
+                                            text-center text-slate-gray my-1
                                             text-sm leading-8 cursor-pointer"
                                                 onClick={()=> {
                                                 handleTransactionDetailsClick(transactionDetail._id)
@@ -445,7 +445,7 @@ function TransactionsDelete() {
                     {message}
                 </p>}
                 <form  className="flex flex-col justify-center items-center mx-5
-                bg-white px-6"
+                bg-white"
                 onSubmit={handleSubmit}>
                     <div className="flex 
                     flex-col justify-center 

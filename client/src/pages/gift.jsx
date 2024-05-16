@@ -291,13 +291,13 @@ const CryptoGift = () => {
                                     justify-center rounded-xl my-5 shadow-xl"
                                     src={`http://localhost:4001/display/${cryptoGift._id}`} 
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
-                                    style={{ width: "222px" }}
+                                    style={{ width: "220px" }}
                                     />
                                     <div className='max-w-sm'>
                                         <p className="font-montserrat
                                         text-slate-gray text-xs 
                                         my-2">
-                                            {cryptoGift.address}
+                                            {/* {cryptoGift.address} */}
                                         </p>  
                                         <div className='flex 
                                         justify-center items-center 
@@ -310,7 +310,7 @@ const CryptoGift = () => {
                                             <p className="font-montserrat 
                                             text-slate-gray text-sm 
                                             leading-8 text-center">
-                                                {copyTooltip}
+                                                {copyTooltip} Address
                                             </p>                                                                    
                                         </div>                             
                                     </div>
@@ -411,8 +411,7 @@ const BankGift = () => {
                                         cursor-pointer'
                                         onClick={() => handleCopyClipboard(bankDetail)}>
                                             <img className="mx-2 
-                                            rounded-full w-4 h-4 
-                                            "
+                                            rounded-full w-4 h-4 "
                                             src={clipboardCopy}/> 
                                             <p className="font-montserrat 
                                             text-slate-gray text-xs 

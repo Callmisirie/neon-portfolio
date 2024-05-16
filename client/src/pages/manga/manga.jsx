@@ -41,10 +41,10 @@ function Manga() {
                     <ul className="">
                       {mangas.map(manga => (
                         <li  className="flex flex-col justify-center items-center rounded-lg 
-                        bg-white p-3 mx-5 mb-6 shadow-xl
+                        bg-white mx-10 mb-10 shadow-xl
                         ring-slate-900/5"
                           key={manga._id}>
-                          <div  className="flex flex-col justify-center items-center m-5 p-5">
+                          <div  className="flex flex-col justify-center items-center my-10 p-5">
                             <h3 className="font-montserrat 
                             text-slate-gray font-semibold 
                             hover:text-black text-md leading-8 my-2 

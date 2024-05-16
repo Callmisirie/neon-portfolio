@@ -278,8 +278,7 @@ const handleChapterSubmit = async (e) => {
 };
 
 return (
-    <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-    bg-white px-6">
+    <div className="min-h-full flex flex-wrap justify-center items-center">
         {currentLocation === "/manager/manga/create/manga" ? (
             <div className="flex flex-col justify-center items-center"> 
                 <h2 className="text-3xl leading-[68px] 
@@ -291,13 +290,13 @@ return (
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <form  className="flex flex-col justify-center items-center mx-5 mb-5 rounded-lg 
-                bg-white px-6 py-4 shadow-xl
+                <form  className="flex flex-col justify-center items-center rounded-lg 
+                bg-white px-10 py-5 shadow-xl
                 ring-slate-900/5"
                 onSubmit={handleSubmit}>
                     <div className="flex flex-col justify-center 
-                    items-center mx-5 mb-5
-                    bg-white px-6 py-4">
+                    items-center mb-5
+                    bg-white p-5">
                         <Input type="text"
                         value={name}
                         handleChange={setName}
@@ -341,7 +340,7 @@ return (
             </div>
         ) : (
             <div className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-6 shadow-xl
+                bg-white shadow-xl py-5 px-10
                 ring-slate-900/5">
                 <h2  className="text-3xl leading-[68px] 
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
@@ -352,13 +351,13 @@ return (
                 style={{ color:`${messageColor}`}}>
                     {message}
                 </p>}
-                <div className="flex flex-col justify-center items-center mx-5 
-                bg-white px-5 pb-5">
-                    <ul className='px-5'>
+                <div className="flex flex-col justify-center items-center 
+                bg-white pb-5">
+                    <ul className='w-full'>
                         {mangas?.map((manga)=>
                             <li key={manga._id}>
                                 <p className="font-montserrat 
-                                text-slate-gray hover:text-black text-sm 
+                                text-slate-gray hover:text-black hover:font-semibold text-sm 
                                 leading-8 my-2 cursor-pointer"
                                 onClick={()=> {
                                 setMangaID(manga._id)
@@ -374,8 +373,8 @@ return (
                         <span className='font-bold font-montserrat text-black'>UPLOAD TO - </span>{mangaName}
                     </h3>
                 </div>
-                <form  className="flex flex-col justify-center items-center mb-10 
-                bg-white px-6 py-4"
+                <form  className="flex flex-col justify-center items-center
+                bg-white p-5"
                 onSubmit={handleChapterSubmit}>
                     <input className="p-2.5 my-3
                     border border-slate-gray max-w-fit
@@ -886,17 +885,16 @@ function MangaEdit() {
   
 
     return (
-        <div className="min-h-full flex flex-wrap justify-center items-center mx-20 rounded-lg 
-        bg-white px-6">
+        <div className="min-h-full flex flex-wrap justify-center items-center">
             {currentLocation === "/manager/manga/edit/manga" ? (
                 <div className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-5 shadow-xl
+                bg-white shadow-xl px-5
                 ring-slate-900/5">
                     <h2 className="text-3xl leading-[68px] 
                     lg:max-w-md font-palanquin font-bold">
                         Manga
                     </h2>
-                    <ul className='flex flex-col mx-5 mb-5
+                    <ul className='flex flex-col mb-5
                     bg-white px-5'>
                         {mangas?.map((manga)=> {
                             return (
@@ -923,10 +921,10 @@ function MangaEdit() {
                     leading-8 my-2"  style={{ color:`${messageColor}`}}>
                         {message}
                     </p>}
-                    <form  className="flex flex-col justify-center items-center mx-5 mb-5
-                    bg-white p-5"
+                    <form  className="flex flex-col justify-center items-center mb-5
+                    bg-white"
                     onSubmit={handleSubmit}>
-                        <div className="flex flex-col justify-center items-center mx-5 mb-5 
+                        <div className="flex flex-col justify-center items-center mb-5 
                         bg-white p-5">
                             <p className='mt-4 font-bold font-montserrat text-slate-gray'>Manga Name</p>
                             <Input type="text"
@@ -977,7 +975,7 @@ function MangaEdit() {
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
                     Manga Chapter
                 </h2>
-                <ul  className='flex flex-col mx-5 mb-5 
+                <ul  className='flex flex-col mb-5 
                 bg-white px-6'> 
                     {mangas?.map((manga)=> {
                         return (
@@ -1016,13 +1014,13 @@ function MangaEdit() {
                         <p  className="font-montserrat 
                         text-slate-gray text-sm max-w-sm
                         leading-8 my-5">
-                        <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
+                            <span className='font-montserrat font-bold'>MANGA - </span>{mangaName}
                         </p>
                         <p className="font-montserrat 
                         text-slate-gray text-sm max-w-xs
                         leading-8 mb-5">
-                        <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
-                        <span className='font-montserrat font-bold'>" CHAPTER.</span>
+                            <span className='font-montserrat font-bold'> UPDATE "</span>{chapterTitle}
+                            <span className='font-montserrat font-bold'>" CHAPTER.</span>
                         </p>
                     </div>
 
@@ -1033,9 +1031,9 @@ function MangaEdit() {
                         {message}
                     </p>}
                     <form className="flex flex-col justify-center items-center mb-10 rounded-lg 
-                    bg-white px-6 py-4"
+                    bg-white"
                     onSubmit={handleChapterSubmit}>
-                        <label className="flex flex-col justify-center items-center mx-5
+                        <label className="flex flex-col justify-center items-center
                         bg-white p-5">
                         <p className='mb-4 font-bold font-montserrat text-slate-gray'>Chapter Number</p> 
                         <input className="p-2.5 mb-3
