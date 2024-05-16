@@ -223,7 +223,7 @@ function Payment() {
                 <div className="flex flex-col sm:flex-row
                 justify-center items-start flex-wrap
                 max-container mb-10 rounded-lg 
-                bg-white px-6 py-8 shadow-xl
+                bg-white shadow-xl
                 ring-slate-900/5">
                     <div className="flex 
                     flex-col justify-center items-center  
@@ -339,7 +339,7 @@ function Payment() {
 
 
                                     return (cryptoName === cryptoSymbolDetail.symbol ? (
-                                        <div className='flex items-center max-w-fit'
+                                        <div className='flex justify-between items-center max-w-xs'
                                         key={cryptoSymbolDetail.symbol}>
                                             <p className="font-montserrat font-semibold
                                             text-slate-gray text-start
@@ -350,7 +350,7 @@ function Payment() {
                                             </p>
                                             <div className='flex
                                             justify-center items-center 
-                                            cursor-pointer ml-10'
+                                            cursor-pointer'
                                             onClick={() => handleCopyClipboard(priceInCrypto)}>
                                                 <img className="mx-2 
                                                 rounded-full w-4 h-4"
@@ -366,7 +366,7 @@ function Payment() {
                                         ) : null)
                                 }))}
                                 {bankCurrency === currencyDetails.currency ? (
-                                    <div className='flex items-center max-w-fit'>
+                                    <div className='flex justify-between items-center max-w-xs'>
                                         <p className="font-montserrat font-semibold
                                         text-slate-gray text-start
                                         text-sm">
@@ -376,7 +376,7 @@ function Payment() {
                                         </p>
                                         <div className='flex
                                         justify-center items-center 
-                                        cursor-pointer ml-10'
+                                        cursor-pointer'
                                         onClick={() => handleCopyClipboard(priceInCurrency)}>
                                             <img className="mx-2 
                                             rounded-full w-4 h-4"
@@ -512,7 +512,7 @@ const PaypalGift = () => {
                 <>
                     <div className="flex flex-col 
                     justify-center items-center 
-                    bg-white p-5">
+                    bg-white py-5">
                         <h2  className="text-xl 
                         lg:max-w-md font-palanquin
                         font-bold p-2 text-center">
@@ -595,10 +595,9 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
         <section className="min-h-full">
             {cryptoGifts?.length ? (
                 <div  className="flex sm:flex-row
-                flex-col justify-center items-start 
-                p-5">
+                flex-col justify-center items-start">
                     <div  className="flex flex-col 
-                    justify-center items-center">
+                    justify-center items-center py-5">
                         <h2  className="text-xl mx-5
                         lg:max-w-md font-palanquin w-full
                         font-bold p-2 text-center">
@@ -639,7 +638,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                 <div  className="flex flex-col px-5 pb-5
                                 justify-center items-center">
                                     <h3 className="text-xl
-                                    lg:max-w-md font-palanquin w-full
+                                    lg:max-w-md font-palanquin
                                     font-semibold p-2 text-center">
                                     {cryptoGift.cryptoName}
                                     </h3>
@@ -656,13 +655,13 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                     justify-center rounded-xl my-5 shadow-xl"
                                     src={`http://localhost:4001/display/${cryptoGift._id}`} 
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
-                                    style={{ width: "222px" }}
+                                    style={{ width: "220px" }}
                                     />
                                     <div className='max-w-sm'>
                                         <p className="font-montserrat
                                         text-slate-gray text-xs 
                                         my-2">
-                                            {cryptoGift.address}
+                                            {/* {cryptoGift.address} */}
                                         </p>  
                                         <div className='flex 
                                         justify-center items-center 
@@ -675,7 +674,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                             <p className="font-montserrat 
                                             text-slate-gray text-sm 
                                             leading-8 text-center">
-                                                {copyTooltip}
+                                                {copyTooltip} Address
                                             </p>                                                                    
                                         </div>                           
                                     </div>
@@ -732,7 +731,7 @@ const BankGift = ({bankCurrency, setBankCurrency, setResetMessage, price, curren
         <section className="min-h-full">
                 <div  className="flex sm:flex-row
                 flex-col justify-center items-start 
-                p-5">
+                py-5">
                     <div  className="flex flex-col 
                     justify-center items-center">
                         <h2  className="text-xl mx-2

@@ -131,7 +131,7 @@ const Commission = () => {
         <div className=" flex 
         flex-wrap justify-center 
         items-center rounded-lg 
-        bg-white px-6">
+        bg-white">
           <div  className="flex sm:flex-row flex-col justify-center items-start rounded-lg 
             bg-white px-6 shadow-xl py-5
             ring-slate-900/5">

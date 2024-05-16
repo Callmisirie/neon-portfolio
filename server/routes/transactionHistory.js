@@ -121,6 +121,18 @@ router.post("/create", async (req, res) => {
                         subject: "Commission Order", // Subject line
                         html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
                     });
+
+                    
+                    transporter.sendMail({
+                        from: {
+                        name: "Neon World",
+                        address:  process.env.EMAIL_USER
+                        }, // sender address
+                        to: process.env.EMAIL_USER, // list of receivers
+                        subject: "New Order", // Subject line
+                        html: `<p>An order was was placed by UserID - ${user._id}</p>` 
+                    });
+
                 } catch (error) {
                     console.error(error);
                     res.json({
@@ -151,6 +163,17 @@ router.post("/create", async (req, res) => {
                         subject: "Commission Order", // Subject line
                         html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
                     });
+
+                    transporter.sendMail({
+                        from: {
+                        name: "Neon World",
+                        address:  process.env.EMAIL_USER
+                        }, // sender address
+                        to: process.env.EMAIL_USER, // list of receivers
+                        subject: "New Order", // Subject line
+                        html: `<p>An order was was placed by UserID - ${user._id}</p>` 
+                    });
+
                 } catch (error) {
                     console.error(error);
                     res.json({
