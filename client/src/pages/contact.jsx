@@ -67,7 +67,8 @@ function Contact() {
                         </p>
                         <div className="flex items-center gap-5 mt-5">
                         {socialMedia.map((icon)=>(
-                            <a href={icon.link} target="_blank" rel="noopener noreferrer">
+                            <a href={icon.link} target="_blank" rel="noopener noreferrer"
+                            key={icon.src}>
                             <div className="flex justify-center
                                 items-center w-12 h-12 bg-white
                                 rounded-full cursor-pointer"

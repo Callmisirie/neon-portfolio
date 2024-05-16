@@ -2,12 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { search } from "../assets/icons"
 
-function SearchBar() {
+function SearchBar({setOpenNavigation, openNavigation}) {
     const navigate = useNavigate();
-    const [mangaName, setMangaName] = useState();
+    const [mangaName, setMangaName] = useState("");
 
     const handleClick = async (e) => {
         e.preventDefault();
+        
+        if (openNavigation) {
+            setOpenNavigation(!openNavigation)            
+        }
+        
         try {
             navigate("/manga/find/" + mangaName);
             setMangaName("");

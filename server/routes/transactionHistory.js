@@ -110,7 +110,17 @@ router.post("/create", async (req, res) => {
                         color: "green",
                         orderResponse: transactionDetails,
                         isTrue : true
-                    });            
+                    }); 
+                    
+                    const info = transporter.sendMail({
+                        from: {
+                           name: "Neon World",
+                           address:  process.env.EMAIL_USER
+                        }, // sender address
+                        to: user.email, // list of receivers
+                        subject: "Commission Order", // Subject line
+                        html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
+                    });
                 } catch (error) {
                     console.error(error);
                     res.json({
@@ -131,6 +141,16 @@ router.post("/create", async (req, res) => {
                         orderResponse: transactionDetails,
                         isTrue : true
                     });
+
+                    const info = transporter.sendMail({
+                        from: {
+                           name: "Neon World",
+                           address:  process.env.EMAIL_USER
+                        }, // sender address
+                        to: user.email, // list of receivers
+                        subject: "Commission Order", // Subject line
+                        html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
+                    });
                 } catch (error) {
                     console.error(error);
                     res.json({
@@ -141,16 +161,7 @@ router.post("/create", async (req, res) => {
                 }    
             }
 
-            const info = transporter.sendMail({
-                from: {
-                   name: "Neon World",
-                   address:  process.env.EMAIL_USER
-                }, // sender address
-                to: user.email, // list of receivers
-                subject: "Commission Order", // Subject line
-                html: `<p>Congratulation on making this order, payment confirmation is processing.</p>`
-                
-             });
+
              
 
         } else {

@@ -312,19 +312,17 @@ const handleDeleteCommissionClick = async () => {
                 ring-slate-900/5'>
                     {commissions.map((commission)=> {
                         return (
-                            <>
-                                <li 
-                                onClick={()=> {
-                                    handleCommissionClick(commission._id, commission.artStyle )
-                                }}
-                                key={commission._id}>
-                                    <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-sm
-                                    leading-8 mt-2 cursor-pointer w-full">
-                                        {commission.artStyle}
-                                    </p>
-                                </li>
-                            </>
+                            <li 
+                            onClick={()=> {
+                                handleCommissionClick(commission._id, commission.artStyle )
+                            }}
+                            key={commission._id}>
+                                <p  className="font-montserrat 
+                                text-slate-gray hover:text-black text-sm
+                                leading-8 mt-2 cursor-pointer w-full">
+                                    {commission.artStyle}
+                                </p>
+                            </li>
                         )
                     })}
                 </ul>

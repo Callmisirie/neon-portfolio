@@ -189,7 +189,8 @@ return (
                             {users && users.map((user)=> {
                                 return (user._id === userTransactionHistories.userID && (
                                     <p className="font-montserrat
-                                    my-2 text-black text-xs text-center">
+                                    my-2 text-black text-xs text-center"
+                                    key={userTransactionHistories.userID}>
                                         Name - {user.firstName} {user.lastName}
                                     </p>
                                 ))
@@ -412,7 +413,8 @@ function TransactionsDelete() {
                             {users && users.map((user)=> {
                                 return (user._id === userTransactionHistories.userID && (
                                     <p className="font-montserrat
-                                    my-2 text-black text-xs text-center">
+                                    my-2 text-black text-xs text-center"
+                                    key={userTransactionHistories.userID}>
                                         Name - {user.firstName} {user.lastName}
                                     </p>
                                 ))

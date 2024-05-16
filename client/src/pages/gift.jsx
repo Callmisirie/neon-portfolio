@@ -332,7 +332,6 @@ const BankGift = () => {
 
     function handleChooseBankGift(id) {
         setBankGiftId(id === bankGiftId ? null : id)
-        setResetMessage(true);
     }
     
     function handleCopyClipboard(bankDetails) {
@@ -381,17 +380,7 @@ const BankGift = () => {
                             text-sm hover:font-semibold px-5
                             leading-8 mt-2 cursor-pointer"
                             onClick={()=> {
-                                handleChooseBankGift(bankDetail.currency)
-                                setBankCurrency(bankCurrency === bankDetail.currency ? null : bankDetail.currency) 
-                                // const selectedCrypto = cryptoSymbolDetails.filter(cryptoSymbolDetail => cryptoSymbolDetail.symbol.includes(cryptoGift.cryptoName))
-                                // selectedCrypto.map((crypto)=> {                            
-                                //     const decimalCount = (( price / crypto.price).toString().split('.')[1] || '').length;
-                                //     if (decimalCount < 6) {
-                                //     setPriceInCrypto((price / crypto.price).toFixed(2))
-                                //     } else {
-                                //         setPriceInCrypto((price / crypto.price).toFixed(6))
-                                //     }     
-                                // })
+                                handleChooseBankGift(bankDetail.currency) 
                             }}
                             key={bankDetail.currency}>
                                 {bankDetail.currency}

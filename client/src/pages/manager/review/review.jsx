@@ -256,19 +256,17 @@ const handleDeleteReviewClick = async () => {
                 ring-slate-900/5'>
                     {reviews.map((review)=> {
                         return (
-                            <>
-                                <li 
-                                onClick={()=> {
-                                    handleReviewClick(review._id, review.email )
-                                }}
-                                key={review._id}>
-                                    <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-sm 
-                                    leading-8 my-2 cursor-pointer w-full">
-                                        {review.name}
-                                    </p>
-                                </li>
-                            </>
+                            <li 
+                            onClick={()=> {
+                                handleReviewClick(review._id, review.email )
+                            }}
+                            key={review._id}>
+                                <p  className="font-montserrat 
+                                text-slate-gray hover:text-black text-sm 
+                                leading-8 my-2 cursor-pointer w-full">
+                                    {review.name}
+                                </p>
+                            </li>
                         )
                     })}
                 </ul>

@@ -568,19 +568,17 @@ const handleClick = (mangaId) => {
                 bg-white px-5'>
                     {mangas?.map((manga)=> {
                         return (
-                            <>
-                                <li 
-                                onClick={()=> {
-                                    handleMangaClick(manga._id, manga.name )
-                                }}
-                                key={manga._id}>
-                                    <p  className="font-montserrat 
-                                    text-slate-gray hover:text-black text-sm
-                                    leading-8 mt-2 cursor-pointer">
-                                        {manga.name}
-                                    </p>
-                                </li>
-                            </>
+                            <li 
+                            onClick={()=> {
+                                handleMangaClick(manga._id, manga.name )
+                            }}
+                            key={manga._id}>
+                                <p  className="font-montserrat 
+                                text-slate-gray hover:text-black text-sm
+                                leading-8 mt-2 cursor-pointer">
+                                    {manga.name}
+                                </p>
+                            </li>
                         )
                     })}
                 </ul>

@@ -89,9 +89,8 @@ const ChangePassword = () => {
                 lg:max-w-md font-palanquin font-bold p-2 text-center">
                     Change Password
                 </h2>
-                <form className="flex flex-col justify-center items-center rounded-lg 
-                bg-white px-6 py-6 shadow-xl
-                ring-slate-900/5"
+                <form className="flex flex-col justify-center items-center 
+                bg-white p-6"
                 onSubmit={handleGenerateOTPSubmit}>
                     {message && <p className="font-montserrat 
                     text-sm max-w-xs text-center

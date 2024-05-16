@@ -140,7 +140,10 @@ function Navbar() {
                 {openNavigation ? (
                     <ul className="flex-1 flex-col justify-center items-center gap-4 xl:hidden my-5">
                         <li className="flex justify-center mb-5 items-center"> 
-                            <SearchBar /> 
+                            <SearchBar 
+                                setOpenNavigation={setOpenNavigation}
+                                openNavigation={openNavigation}
+                                /> 
                         </li>
                         <div className="w-full">
                             <li className={`font-montserrat leading-normal text-center text-sm mb-5 hover:text-purple-600 text-slate-gray

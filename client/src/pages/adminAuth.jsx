@@ -127,9 +127,8 @@ export function Register() {
     };
 
     return (
-        <form className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 py-6 shadow-xl
-        ring-slate-900/5"
+        <form className="flex flex-col justify-center items-center 
+        bg-white px-6 py-6"
         onSubmit={handleRegisterSubmit}>
             <h2 className="font-montserrat 
             text-slate-gray text-lg 
@@ -246,9 +245,8 @@ export function Login() {
     };
 
     return (
-        <form className="flex flex-col justify-center items-center rounded-lg 
-        bg-white px-6 py-6 shadow-xl
-        ring-slate-900/5"
+        <form className="flex flex-col justify-center items-center 
+        bg-white px-6 py-6"
         onSubmit={handleLoginSubmit}>
             <h2 className="font-montserrat 
             text-slate-gray text-lg 
