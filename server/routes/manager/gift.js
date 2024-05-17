@@ -130,7 +130,7 @@ router.delete("/delete", async (req, res) => {
                     color: "red"
                 });
             }
-        } else if (paypalGift && !paypalAddress === paypalGift.address) {
+        } else if (paypalGift && paypalAddress !== paypalGift.address) {
             res.json({
                 message: "Failed to delete paypal gift, paypal address does not match",
                 color: "red"
@@ -162,7 +162,7 @@ router.delete("/delete", async (req, res) => {
                     color: "red"
                 });
             }
-        } else if (cryptoGift && !cryptoName === cryptoGift.cryptoName) {
+        } else if (cryptoGift && cryptoName !== cryptoGift.cryptoName) {
             res.json({
                 message: "Failed to delete crypto gift, crypto name does not match",
                 color: "red"

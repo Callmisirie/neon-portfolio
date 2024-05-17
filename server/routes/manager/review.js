@@ -45,13 +45,13 @@ router.post("/create", async (req, res) => {
 
 
 router.delete("/delete", async (req, res) => {
-    const {id, email} = req.body;
+    const {id, name} = req.body;
     console.log("Deleting review with ID:", id);
     console.log("Testing:", req.body);
 
     if (id) {
         const review = await ReviewModel.findOne({_id: id});   
-        if (review && email === review.email) {
+        if (review && name === review.name) {
             try {
                 const review = await ReviewModel.findOneAndDelete({_id: id});
                 console.log("Deleted review:", review);
@@ -74,9 +74,9 @@ router.delete("/delete", async (req, res) => {
                     color: "red"
                 });
             }
-        } else if (!email === review.email) {
+        } else if (name !== review.name) {
             res.json({
-                message: "Failed to delete review, review email does not match",
+                message: "Failed to delete review, name does not match",
                 color: "red"
             });
         }
@@ -90,14 +90,12 @@ router.delete("/delete", async (req, res) => {
 
 
 router.put("/edit", async (req, res) => { 
-    const { id, email, name, feedback } = req.body;
+    const { id, name, feedback } = req.body;
 
         if (id) {
             try {
-                if (email || name || feedback){
-                    if (email) {
-                        await ReviewModel.findOneAndUpdate({_id: id}, { email }, { new: true });   
-                    }   if (name) {
+                if (name || feedback){  
+                    if (name) {
                         await ReviewModel.findOneAndUpdate({_id: id}, { name }, { new: true });   
                     }   if (feedback) {
                         await ReviewModel.findOneAndUpdate({_id: id}, { feedback }, { new: true });   
@@ -106,7 +104,7 @@ router.put("/edit", async (req, res) => {
                         message: "Review updated successfully",
                         color: "green"
                     });     
-                } else if (!email && !name && !feedback) {
+                } else if (!name && !feedback) {
                     res.json({
                         message: "Failed to edit review, missing fields",
                         color: "red"

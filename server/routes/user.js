@@ -7,6 +7,8 @@ import nodemailer from "nodemailer";
 import validator from "email-validator"
 
 import UserModel from "../models/User.js";
+import NewsletterModel from "../models/Newsletter.js";
+
 
 const router = express.Router();
 const saltRounds = 10;
@@ -43,6 +45,13 @@ router.post("/register", async (req, res)=> {
         const hash = bcrypt.hashSync(password, saltRounds);
         const newUser = new UserModel({firstName, lastName, email : _.toLower(email), password : hash });
         const userResponse = await newUser.save();
+
+        const newsletterSignup = await NewsletterModel.findOne({email : _.toLower(email)});
+        if (!newsletterSignup) {
+            const newsletter = new NewsletterModel({email : _.toLower(email)});
+            newsletter.save();            
+        }
+
 
         console.log(userResponse);
 

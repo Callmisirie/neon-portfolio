@@ -98,7 +98,7 @@ router.delete("/delete", async (req, res) => {
                     color: "red"
                 });
             }
-        } else if (!artStyle === commission.artStyle) {
+        } else if (artStyle !== commission.artStyle) {
             res.json({
                 message: "Failed to delete commission, commission art style does not match",
                 color: "red"

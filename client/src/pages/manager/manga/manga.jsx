@@ -303,8 +303,8 @@ return (
                         resetMessage={setMessage}
                         placeholder="Manga Name" /> 
                         <Input type="text"
-                        value={about}
-                        handleChange={setAbout}
+                        value={author}
+                        handleChange={setAuthor}
                         resetMessage={setMessage}
                         placeholder="Author" /> 
                         <TextArea type="text"

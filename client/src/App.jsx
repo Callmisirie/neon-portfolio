@@ -63,7 +63,7 @@ function App() {
             <Route path="/about" element={<About />}/>
             <Route path="/manga" element={<Manga />}/>
             <Route path="/gift" element={<Gift />}/>
-            <Route path="commission/payment" element={<Payment />}/>
+            <Route path="/commission/payment" element={<Payment />}/>
             <Route path="/commission/payment/order" element={<Order />}/>
             <Route path="/auth/admin" element={<AdminAuth />}/>
             <Route path="/auth/user" element={<UserAuth />}/>

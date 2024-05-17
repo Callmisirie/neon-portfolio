@@ -30,7 +30,7 @@ function Gift() {
         if (gift === "Paypal") { 
             if (isClickedPaypal) {
                 setIsClickedPaypal(false);
-            } else if (!isClickedPaypal) {
+            } else if (!isClickedPaypal) { 
                 setIsClickedPaypal(true);
                 setIsClickedCrypto(false);
                 setIsClickedBank(false);

@@ -208,7 +208,7 @@ const handleDeleteReviewClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://localhost:4001/manager/review/delete", { data: {id: selectedReviewID, email: deleteReview} });
+        const response = await axios.delete("http://localhost:4001/manager/review/delete", { data: {id: selectedReviewID, name: deleteReview} });
         
         const {message, color} = response.data;
         setMessage(message);
@@ -258,7 +258,7 @@ const handleDeleteReviewClick = async () => {
                         return (
                             <li 
                             onClick={()=> {
-                                handleReviewClick(review._id, review.email )
+                                handleReviewClick(review._id, review.name)
                             }}
                             key={review._id}>
                                 <p  className="font-montserrat 
@@ -284,7 +284,7 @@ const handleDeleteReviewClick = async () => {
                     setDeleteReview(e.target.value)
                     setMessage("");
                     }} 
-                placeholder="Email" 
+                placeholder="Name" 
                 value={deleteReview} />
                 <button className="gap-2 px-7 py-4 my-2 border 
                 font-montserrat text-lg leading-none bg-black
@@ -304,10 +304,8 @@ const handleDeleteReviewClick = async () => {
 function ReviewEdit() {
     const [reviews, setReviews] = useState([]);
     const [reviewID, setReviewID] = useState("");
-    const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [feedback, setFeedback] = useState("");
-    const [newEmail, setNewEmail] = useState("");
     const [newName, setNewName] = useState("");
     const [newFeedback, setNewFeedback] = useState("");
     const [message, setMessage] = useState("");
@@ -328,8 +326,7 @@ function ReviewEdit() {
         fetchReview();
     }, [reviews]);
 
-    const handleClick = (email, name, feedback, id) => {
-        setEmail(email);
+    const handleClick = (name, feedback, id) => {
         setName(name);
         setFeedback(feedback);
         setReviewID(id);
@@ -346,7 +343,6 @@ function ReviewEdit() {
         try {
             const response = await axios.put("http://localhost:4001/manager/review/edit", {
                 id: reviewID,
-                email:  newEmail,
                 name: newName,
                 feedback: newFeedback
             });
@@ -354,10 +350,8 @@ function ReviewEdit() {
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
-            setEmail("");;
             setName("");
             setFeedback("");
-            setNewEmail("");
             setNewName("");
             setNewFeedback("");
             setReviewID("");
@@ -369,10 +363,8 @@ function ReviewEdit() {
         } catch (error) {
             setMessage("Error updating review");
             setMessageColor("red")
-            setEmail("");;
             setName("");
             setFeedback("");
-            setNewEmail("");
             setNewName("");
             setNewFeedback("");
             setReviewID("");
@@ -406,7 +398,6 @@ function ReviewEdit() {
                             leading-8 my-2 cursor-pointer w-full"
                                 onClick={()=> {
                                 handleClick(
-                                    review.email,
                                     review.name,
                                     review.feedback,
                                     review._id)
@@ -421,7 +412,7 @@ function ReviewEdit() {
             text-slate-gray text-sm max-w-xs
             leading-8 mt-6 text-center">
                 <span className='font-montserrat font-bold'>UPDATE - </span>     
-                {email} 
+                {name} 
             </h3>
             {message && <p className="font-montserrat text-sm 
             leading-8 my-2"  style={{ color:`${messageColor}`}}>
@@ -432,12 +423,6 @@ function ReviewEdit() {
             onSubmit={handleSubmit}>
                 <div className="flex flex-col justify-center items-center 
                 bg-white px-6 py-4">
-                    <p className='mt-4 font-bold font-montserrat text-slate-gray'>Email</p>
-                    <Input type="email" 
-                    value={newEmail} 
-                    placeholder={email} 
-                    handleChange={setNewEmail}
-                    resetMessage={setMessage} />
                     <p className='mt-4 font-bold font-montserrat text-slate-gray'>Name</p>
                     <Input type="text" 
                     value={newName} 

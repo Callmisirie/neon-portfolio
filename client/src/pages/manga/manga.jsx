@@ -33,7 +33,7 @@ function Manga() {
                 <>
                   <div className="flex flex-col 
                   min-h-screen items-center bg-white 
-                  p-6 shadow-xl ring-slate-900/5">
+                  py-5 px-10 shadow-xl ring-slate-900/5">
                     <h3 className="text-4xl leading-[68px] 
                     lg:max-w-md font-palanquin font-bold p-2 text-center mb-5">
                       Manga List
