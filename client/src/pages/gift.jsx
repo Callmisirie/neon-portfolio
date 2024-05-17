@@ -293,11 +293,16 @@ const CryptoGift = () => {
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                     style={{ width: "220px" }}
                                     />
-                                    <div className='max-w-sm'>
+                                    <div className='flex justify-center items-center flex-col max-w-sm'>
+                                        <h3 className="text-lg
+                                        font-palanquin w-full
+                                        font-semibold text-center">
+                                            Address
+                                        </h3>
                                         <p className="font-montserrat
                                         text-slate-gray text-xs 
                                         my-2">
-                                            {/* {cryptoGift.address} */}
+                                            {cryptoGift.address?.slice(0,20)} <br/> {cryptoGift.address?.slice(20,cryptoGift.address.length)}
                                         </p>  
                                         <div className='flex 
                                         justify-center items-center 
@@ -306,11 +311,13 @@ const CryptoGift = () => {
                                             <img className="mx-2 
                                             rounded-full w-4 h-4 
                                             hover:h-8"
-                                            src={clipboardCopy}/> 
+                                            src={clipboardCopy}
+                                            alt="Copy to clipboard"
+                                            /> 
                                             <p className="font-montserrat 
                                             text-slate-gray text-sm 
                                             leading-8 text-center">
-                                                {copyTooltip} Address
+                                                {copyTooltip}
                                             </p>                                                                    
                                         </div>                             
                                     </div>

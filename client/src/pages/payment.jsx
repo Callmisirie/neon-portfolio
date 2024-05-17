@@ -394,9 +394,8 @@ function Payment() {
                                 text-sm">
                                     Discount - <span className="font-montserrat 
                                     text-slate-gray text-start font-normal
-                                    text-sm">{`${transactionDetails.commissionDetails.discount}%
-                                    applies to every ${transactionDetails.commissionDetails.discountInterval} 
-                                    ${transactionDetails.commissionDetails.pricePer}${transactionDetails.number > (1) ? "s" : ""}`}</span>   
+                                    text-sm">applies {`${transactionDetails.commissionDetails.discount}% to every ${transactionDetails.commissionDetails.discountInterval} 
+                                    ${transactionDetails.commissionDetails.pricePer}s`}</span>   
                                 </p>
                                 <p className="font-montserrat font-semibold
                                 text-slate-gray max-w-xs text-start
@@ -657,12 +656,17 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                     style={{ width: "220px" }}
                                     />
-                                    <div className='max-w-sm'>
+                                    <div className='flex justify-center items-center flex-col max-w-sm'>
+                                        <h3 className="text-lg
+                                        font-palanquin w-full
+                                        font-semibold text-center">
+                                            Address
+                                        </h3>
                                         <p className="font-montserrat
                                         text-slate-gray text-xs 
                                         my-2">
-                                            {/* {cryptoGift.address} */}
-                                        </p>  
+                                            {cryptoGift.address?.slice(0,20)} <br/> {cryptoGift.address?.slice(20,cryptoGift.address.length)}
+                                        </p> 
                                         <div className='flex 
                                         justify-center items-center 
                                         cursor-pointer m-1'
@@ -674,7 +678,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                             <p className="font-montserrat 
                                             text-slate-gray text-sm 
                                             leading-8 text-center">
-                                                {copyTooltip} Address
+                                                {copyTooltip}
                                             </p>                                                                    
                                         </div>                           
                                     </div>

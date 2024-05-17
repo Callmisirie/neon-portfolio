@@ -219,8 +219,8 @@ const Commission = () => {
                   <p className="font-montserrat 
                   text-slate-gray max-w-xs text-start
                   text-sm">
-                      I hereby acknowledge that i have contacted 
-                      NEON for commission details before making purchase.
+                      I hereby acknowledge that I have contacted 
+                      NEON for commission details before making this order.
                   </p>
                 </div>
                 <button className={`px-4 py-2 
