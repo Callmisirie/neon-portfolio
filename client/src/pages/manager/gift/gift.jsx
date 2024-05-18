@@ -147,7 +147,7 @@ function PaypalGiftCreate() {
     const [username, setUsername] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Upload Paypal Gift");
+    const [actionMessage, setActionMessage] = useState("Create");
    
 
 useEffect(() => {
@@ -190,7 +190,7 @@ const handleSubmit = async (e) => {
         setMessageColor(color);
         setAddress("");
         setUsername("");
-        setActionMessage("Upload Paypal Gift")
+        setActionMessage("Create")
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -200,7 +200,7 @@ const handleSubmit = async (e) => {
         setMessageColor("red")
         setAddress("");
         setUsername("");
-        setActionMessage("Upload Paypal Gift");
+        setActionMessage("Create");
         setIsDisabled(false);
         console.error(error);
         setTimeout(() => {
@@ -258,7 +258,7 @@ function CryptoGiftCreate() {
     const [qrCodeImage, setQrCodeImage] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Upload Crypto Gift");
+    const [actionMessage, setActionMessage] = useState("Create");
     const fileInputRef = useRef(null);
 
 
@@ -311,7 +311,7 @@ const handleSubmit = async (e) => {
         setAddress("");
         setNetwork("");
         setQrCodeImage("");
-        setActionMessage("Upload Crypto Gift");
+        setActionMessage("Create");
         setIsDisabled(false);
         fileInputRef.current.value = null;
         setTimeout(() => {
@@ -325,7 +325,7 @@ const handleSubmit = async (e) => {
         setAddress("");
         setNetwork("");
         setQrCodeImage("");
-        setActionMessage("Upload Crypto Gift");
+        setActionMessage("Create");
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
@@ -474,7 +474,7 @@ function PaypalGiftDelete() {
     const [deletePaypalGift, setDeletePaypalGift] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Delete Paypal Gift");
+    const [actionMessage, setActionMessage] = useState("Delete");
 
 
     useEffect(() => {
@@ -510,7 +510,7 @@ const handleDeletePaypalGiftClick = async () => {
         setDeletePaypalGift("");
         setSelectedPaypalGift("");
         setSelectedPaypalGiftID("");
-        setActionMessage("Delete Paypal Gift");
+        setActionMessage("Delete");
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -521,7 +521,7 @@ const handleDeletePaypalGiftClick = async () => {
         setDeletePaypalGift("");
         setSelectedPaypalGift("");
         setSelectedPaypalGiftID("");
-        setActionMessage("Delete Paypal Gift");
+        setActionMessage("Delete");
         setIsDisabled(false);
         console.error(error);
         setTimeout(() => {
@@ -597,7 +597,7 @@ function CryptoGiftDelete() {
     const [deleteCryptoGift, setDeleteCryptoGift] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("")
-    const [actionMessage, setActionMessage] = useState("Delete Crypto Gift");
+    const [actionMessage, setActionMessage] = useState("Delete");
 
 
     useEffect(() => {
@@ -632,7 +632,7 @@ const handleDeleteCryptoGiftClick = async () => {
         setDeleteCryptoGift("");
         setSelectedCryptoGift("");
         setSelectedCryptoGiftID("");
-        setActionMessage("Delete Crypto Gift");
+        setActionMessage("Delete");
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -643,7 +643,7 @@ const handleDeleteCryptoGiftClick = async () => {
         setDeleteCryptoGift("");
         setSelectedCryptoGift("");
         setSelectedCryptoGiftID("");
-        setActionMessage("Delete Crypto Gift");
+        setActionMessage("Delete");
         setIsDisabled(false);
         console.error(error);
         setTimeout(() => {
@@ -795,7 +795,7 @@ function PaypalGiftEdit() {
     const [newUsername, setNewUsername] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Update Paypal Gift");
+    const [actionMessage, setActionMessage] = useState("Edit");
 
 
 
@@ -843,7 +843,7 @@ const handleSubmit = async (e) => {
         setNewAddress("");
         setNewUsername("");   
         setPaypalGiftId("");
-        setActionMessage("Update Paypal Gift")
+        setActionMessage("Edit")
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -856,7 +856,7 @@ const handleSubmit = async (e) => {
         setNewAddress("");
         setNewUsername("");
         setPaypalGiftId("");
-        setActionMessage("Update Paypal Gift")
+        setActionMessage("Edit")
         setIsDisabled(false);
         console.error(error);
         setTimeout(() => {
@@ -954,7 +954,7 @@ function CryptoGiftEdit() {
     const [newNetwork, setNewNetwork] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Edit Crypto Gift");
+    const [actionMessage, setActionMessage] = useState("Edit");
     const fileInputRef = useRef(null);
 
 
@@ -1017,7 +1017,7 @@ function CryptoGiftEdit() {
             setNewAddress("");
             setNewNetwork("");
             setCryptoGiftId("");
-            setActionMessage("Edit Crypto Gift");
+            setActionMessage("Edit");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -1034,7 +1034,7 @@ function CryptoGiftEdit() {
             setNewAddress("");
             setNewNetwork("");
             setCryptoGiftId("");
-            setActionMessage("Edit Crypto Gift");
+            setActionMessage("Edit");
             setIsDisabled(false);
             fileInputRef.current.value = null;
             console.error(error);  

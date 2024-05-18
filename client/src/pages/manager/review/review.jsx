@@ -61,7 +61,7 @@ function ReviewCreate() {
     const [feedback, setFeedback] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Upload Review");
+    const [actionMessage, setActionMessage] = useState("Create");
     const [isDisabled, setIsDisabled] = useState(false);
     const userID = window.localStorage.getItem("userID");
 
@@ -92,7 +92,7 @@ const handleSubmit = async (e) => {
     if (!userID) {
         setMessage("Log in before making a review");
         setMessageColor("red");
-        setActionMessage("Upload Review");
+        setActionMessage("Create");
         setTimeout(() => {
             setMessage("");  
         }, 5000);
@@ -106,7 +106,7 @@ const handleSubmit = async (e) => {
             setMessageColor(color);
             setName("");
             setFeedback("");
-            setActionMessage("Upload Review");
+            setActionMessage("Create");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -116,7 +116,7 @@ const handleSubmit = async (e) => {
             setMessageColor("red");
             setName("");
             setFeedback("");
-            setActionMessage("Upload Review");
+            setActionMessage("Create");
             setIsDisabled(false);
             console.error(error);
             setTimeout(() => {
@@ -180,7 +180,7 @@ function ReviewDelete() {
     const [deleteReview, setDeleteReview] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Delete Review");
+    const [actionMessage, setActionMessage] = useState("Delete");
     const [isDisabled, setIsDisabled] = useState(false);
 
 
@@ -216,7 +216,7 @@ const handleDeleteReviewClick = async () => {
         setDeleteReview("");
         setSelectedReview("");
         setSelectedReviewID("");
-        setActionMessage("Delete Review");
+        setActionMessage("Delete");
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -227,7 +227,7 @@ const handleDeleteReviewClick = async () => {
         setDeleteReview("");
         setSelectedReview("");
         setSelectedReviewID("");
-        setActionMessage("Delete Review");
+        setActionMessage("Delete");
         setIsDisabled(false);
         console.error(error);
         setTimeout(() => {
@@ -310,7 +310,7 @@ function ReviewEdit() {
     const [newFeedback, setNewFeedback] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Edit Review");
+    const [actionMessage, setActionMessage] = useState("Edit");
     const [isDisabled, setIsDisabled] = useState(false);
 
 
@@ -330,7 +330,7 @@ function ReviewEdit() {
         setName(name);
         setFeedback(feedback);
         setReviewID(id);
-        setMessage("");;
+        setMessage("");
         
     }
 
@@ -355,7 +355,7 @@ function ReviewEdit() {
             setNewName("");
             setNewFeedback("");
             setReviewID("");
-            setActionMessage("Edit Review");
+            setActionMessage("Edit");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -368,7 +368,7 @@ function ReviewEdit() {
             setNewName("");
             setNewFeedback("");
             setReviewID("");
-            setActionMessage("Edit Review");
+            setActionMessage("Edit");
             setIsDisabled(false);
             console.error(error); 
             setTimeout(() => {

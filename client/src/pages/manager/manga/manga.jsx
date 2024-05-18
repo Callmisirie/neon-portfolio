@@ -143,8 +143,8 @@ function MangaCreate() {
     const [coverImage, setCoverImage] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMangaMessage, setActionMangaMessage] = useState("Upload Manga");
-    const [actionChapterMessage, setActionChapterMessage] = useState("Upload Chapter");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Create");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Create");
     const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -202,7 +202,7 @@ const handleSubmit = async (e) => {
         setCoverImage("");
         setAbout("");
         setMessageColor(color);
-        setActionMangaMessage("Upload Manga");
+        setActionMangaMessage("Create");
         setIsDisabled(false);
         fileInputRef.current.value = null;
         setTimeout(() => {
@@ -216,7 +216,7 @@ const handleSubmit = async (e) => {
         setCoverImage("");
         setAbout("");
         setMessageColor("red");
-        setActionMangaMessage("Upload Manga");
+        setActionMangaMessage("Create");
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
@@ -253,7 +253,7 @@ const handleChapterSubmit = async (e) => {
         setPages([]);
         setMangaName("");
         setMangaID("");
-        setActionChapterMessage("Upload Chapter")
+        setActionChapterMessage("Create")
         setIsDisabled(false);
         fileInputRef.current.value = null;
         setTimeout(() => {
@@ -267,7 +267,7 @@ const handleChapterSubmit = async (e) => {
         setPages([]);
         setMangaName("");
         setMangaID("");
-        setActionChapterMessage("Upload Chapter")
+        setActionChapterMessage("Create")
         setIsDisabled(false);
         fileInputRef.current.value = null;
         console.error(error);
@@ -440,8 +440,8 @@ function MangaDelete() {
     const [selectedChapterTitle, setSelectedChapterTitle] = useState("");
     const [selectedChapterID, setSelectedChapterID] = useState("");
     const [deleteChapterTitle, setDeleteChapterTitle] = useState("");
-    const [actionMangaMessage, setActionMangaMessage] = useState("Delete Manga");
-    const [actionChapterMessage, setActionChapterMessage] = useState("Delete Chapter");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Delete");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Delete");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
@@ -488,7 +488,7 @@ const handleDeleteMangaClick = async () => {
         setDeleteMangaName("");
         setSelectedMangaName("");
         setSelectedMangaID("");
-        setActionMangaMessage("Delete Manga");
+        setActionMangaMessage("Delete");
         setMessage(message);
         setMessageColor(color);
         setIsDisabled(false);
@@ -500,7 +500,7 @@ const handleDeleteMangaClick = async () => {
         setDeleteMangaName("");
         setSelectedMangaName("");
         setSelectedMangaID("");
-        setActionMangaMessage("Delete Manga");
+        setActionMangaMessage("Delete");
         setMessage("Error deleting manga");
         setMessageColor("red");
         setIsDisabled(false);
@@ -521,7 +521,7 @@ const handleDeleteChapterClick = async () => {
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
         setSelectedChapterID("");
-        setActionChapterMessage("Delete Chapter");
+        setActionChapterMessage("Delete");
         setMessage(message);
         setMessageColor(color);
         setIsDisabled(false);
@@ -533,7 +533,7 @@ const handleDeleteChapterClick = async () => {
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
         setSelectedChapterID("");
-        setActionChapterMessage("Delete Chapter");
+        setActionChapterMessage("Delete");
         setMessage("Error deleting manga");
         setMessageColor("red");
         setIsDisabled(false);
@@ -709,8 +709,8 @@ function MangaEdit() {
     const [newChapterNumber, setNewChapterNumber] = useState("");
     const [coverImage, setCoverImage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMangaMessage, setActionMangaMessage] = useState("Edit Manga");
-    const [actionChapterMessage, setActionChapterMessage] = useState("Edit Chapter");
+    const [actionMangaMessage, setActionMangaMessage] = useState("Edit");
+    const [actionChapterMessage, setActionChapterMessage] = useState("Edit");
     const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -801,7 +801,7 @@ function MangaEdit() {
             setNewAbout("");
             setCoverImage("");
             setMangaID("");
-            setActionMangaMessage("Edit Manga");
+            setActionMangaMessage("Edit");
             setIsDisabled(false);
             fileInputRef.current.value = null;
             setTimeout(() => {
@@ -818,7 +818,7 @@ function MangaEdit() {
             setNewAbout("");
             setCoverImage("");
             setMangaID("");
-            setActionMangaMessage("Edit Manga");
+            setActionMangaMessage("Edit");
             setIsDisabled(false);
             console.error(error);
             setTimeout(() => {
@@ -858,7 +858,7 @@ function MangaEdit() {
             setNewChapterNumber("");
             setPages([]);
             setChapterID("");
-            setActionChapterMessage("Edit Chapter");
+            setActionChapterMessage("Edit");
             setIsDisabled(false);
             fileInputRef.current.value = null;
             setTimeout(() => {
@@ -873,7 +873,7 @@ function MangaEdit() {
             setNewChapterNumber("");
             setPages([]);
             setChapterID("");
-            setActionChapterMessage("Edit Chapter");
+            setActionChapterMessage("Edit");
             setIsDisabled(false);
             fileInputRef.current.value = null;
             console.error(error);

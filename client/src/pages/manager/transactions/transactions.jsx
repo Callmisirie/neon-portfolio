@@ -66,7 +66,7 @@ function TransactionsStatus() {
   const [users, setUsers] = useState("");
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState("");
-  const [actionMessage, setActionMessage] = useState("Update Status");
+  const [actionMessage, setActionMessage] = useState("Update");
   const [isDisabled, setIsDisabled] = useState(false);
 
 
@@ -125,7 +125,7 @@ function TransactionsStatus() {
         if (!selectedCheckbox) {
             setMessage("New status was not selected");
             setMessageColor("red")
-            setActionMessage("Update Status");
+            setActionMessage("Update");
             setIsDisabled(false);
             return
         }
@@ -143,7 +143,7 @@ function TransactionsStatus() {
             setMessageColor(color);
             setTransactionHistoryID("");
             setClickedTransactionHistoryID("");
-            setActionMessage("Update Status");
+            setActionMessage("Update");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -153,7 +153,7 @@ function TransactionsStatus() {
             setMessageColor("red")
             setTransactionHistoryID("");
             setClickedTransactionHistoryID("");
-            setActionMessage("Update Status");
+            setActionMessage("Update");
             setIsDisabled(false);
             console.error(error); 
             setTimeout(() => {
@@ -313,7 +313,7 @@ function TransactionsDelete() {
     const [users, setUsers] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Delete Transaction");
+    const [actionMessage, setActionMessage] = useState("Delete");
     const [isDisabled, setIsDisabled] = useState(false);
   
   
@@ -367,7 +367,7 @@ function TransactionsDelete() {
             setMessageColor(color);
             setTransactionHistoryID("");
             setClickedTransactionHistoryID("");
-            setActionMessage("Delete Transaction");
+            setActionMessage("Delete");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -377,7 +377,7 @@ function TransactionsDelete() {
             setMessageColor("red")
             setTransactionHistoryID("");
             setClickedTransactionHistoryID("");
-            setActionMessage("Delete Transaction");
+            setActionMessage("Delete");
             setIsDisabled(false);
             console.error(error);
             setTimeout(() => {

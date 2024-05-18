@@ -75,7 +75,7 @@ function CommissionCreate() {
     const [discountInterval, setDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Upload Commission");
+    const [actionMessage, setActionMessage] = useState("Create");
     const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -131,7 +131,7 @@ const handleSubmit = async (e) => {
         setPricePer("");
         setDiscount("");
         setDiscountInterval("");
-        setActionMessage("Upload Commission")
+        setActionMessage("Create")
         setIsDisabled(false);
         fileInputRef.current.value = null;
         setTimeout(() => {
@@ -148,7 +148,7 @@ const handleSubmit = async (e) => {
         setPricePer("");
         setDiscount("");
         setDiscountInterval("");
-        setActionMessage("Upload Commission")
+        setActionMessage("Create")
         setIsDisabled(false);
         console.error(error);
         fileInputRef.current.value = null;
@@ -236,7 +236,7 @@ function CommissionDelete() {
     const [deleteCommission, setDeleteCommission] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Delete Commission");
+    const [actionMessage, setActionMessage] = useState("Delete");
     const [isDisabled, setIsDisabled] = useState(false);
 
 
@@ -272,7 +272,7 @@ const handleDeleteCommissionClick = async () => {
         setDeleteCommission("");
         setSelectedCommission("");
         setSelectedCommissionID("");
-        setActionMessage("Delete Commission");
+        setActionMessage("Delete");
         setIsDisabled(false);
         setTimeout(() => {
             setMessage("");
@@ -283,7 +283,7 @@ const handleDeleteCommissionClick = async () => {
         setDeleteCommission("");
         setSelectedCommission("");
         setSelectedCommissionID("");
-        setActionMessage("Delete Commission");
+        setActionMessage("Delete");
         setIsDisabled(false);
         console.error(error)
         setTimeout(() => {
@@ -372,7 +372,7 @@ function CommissionEdit() {
     const [newDiscountInterval, setNewDiscountInterval] = useState("");
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Edit Commission");
+    const [actionMessage, setActionMessage] = useState("Edit");
     const [isDisabled, setIsDisabled] = useState(false);
     const fileInputRef = useRef(null);
 
@@ -442,7 +442,7 @@ function CommissionEdit() {
             setNewDiscount("");
             setNewDiscountInterval("");
             setCommissionID("");
-            setActionMessage("Edit Commission");
+            setActionMessage("Edit");
             setIsDisabled(false);
             setTimeout(() => {
                 setMessage("");
@@ -463,7 +463,7 @@ function CommissionEdit() {
             setNewDiscount("");
             setNewDiscountInterval("");
             setCommissionID("");
-            setActionMessage("Edit Commission");
+            setActionMessage("Edit");
             setIsDisabled(false);
             fileInputRef.current.value = null;
             console.error(error); 
