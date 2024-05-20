@@ -40,21 +40,21 @@ function Home() {
             wide:padding-r">
                 <section className="w-full flex 
                 xl:flex-row flex-col justify-center 
-                min-h-screen gap-10 max-container">
+                gap-10 max-container">
                     <div className="relative 
                     xl:w-2/5 flex flex-col 
-                    justify-center items-start 
-                    w-full max-xl:padding-x pt-28"> 
+                     items-start mt-28 max-xl:mt-14
+                    w-full max-xl:padding-x"> 
                             <p className="text-xl 
-                            font-montserrat 
+                            font-montserrat mb-5
                             text-purple-600">
                                 Create your world.
                             </p>
-                            <h1 className="mt-10 
+                            <h1 className="mt-10 max-xl:mt-5
                             font-palanquin text-8xl 
-                            max-sm:text-[72px] 
+                            max-sm:text-4xl 
                             font-bold">
-                                <span className="xl:bg-white 
+                                <span className="lg:bg-white 
                                 xl:whitespace-nowrap 
                                 relative z-20 pr-10">
                                     Stories Untold,
@@ -74,12 +74,10 @@ function Home() {
                             iconURL={arrowRight}
                             handleClick={handleClick}/>
                     </div>
-                    <div className="relative
-                    flex-1 flex rounded-3xl 
-                    bg-black justify-center 
-                    items-center xl:min-h-screen 
-                    max-xl:py-40 bg-cover bg-center">
+                    <div className="relative max-xl:hidden
+                      mt-28 max-xl:mt-14">
                         <img className="object-contain 
+                        rounded-xl border-2 border-purple-600
                         relative z-10 w-fit"
                         src={NeonWorldArt}
                         alt="Art" />                        
