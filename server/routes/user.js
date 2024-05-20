@@ -57,12 +57,12 @@ router.post("/register", async (req, res)=> {
 
         const info = transporter.sendMail({
             from: {
-               name: "Neon World",
+               name: "CallmiNeon",
                address:  process.env.EMAIL_USER
             }, // sender address
             to: userResponse.email, // list of receivers
             subject: "User Registration", // Subject line
-            html: `<p>You have successfully registered to Neon World.</p>`
+            html: `<p>You have successfully registered to CallmiNeon.</p>`
          });
 
         return res.json({

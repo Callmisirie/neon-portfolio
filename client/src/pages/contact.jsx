@@ -38,7 +38,7 @@ function Contact() {
                         width={24}
                         height={24} />
                         <button >
-                            neonworld@gmail.com                         
+                            callmineon@gmail.com                         
                         </button>
                     </a>    
                     </div>
@@ -62,7 +62,7 @@ function Contact() {
                         <p className="font-montserrat 
                         text-slate-gray max-w-xs text-start
                         text-xs">
-                            Reach out or follow up our socials to stay up to date on the latest news about NeonWorld. 
+                            Reach out or follow up our socials to stay up to date on the latest news about CallmiNeon. 
                         </p>
                         <div className="flex items-center gap-5 mt-5">
                         {socialMedia.map((icon)=>(

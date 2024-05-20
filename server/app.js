@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static('uploads'));
 
-mongoose.connect("mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/neonworld?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://kensirie:"+ password +"@mangacontent.byftaxk.mongodb.net/callmineon?retryWrites=true&w=majority");
 
 app.use("/newsletter", newsletterRouter);
 app.use("/auth/admin", adminRouter);

@@ -47,7 +47,7 @@ router.post("/update", async (req, res) => {
             try {
                 const info = transporter.sendMail({
                     from: {
-                       name: "Neon World",
+                       name: "CallmiNeon",
                        address:  process.env.EMAIL_USER
                     }, // sender address
                     to: newsletterSignups, // list of receivers

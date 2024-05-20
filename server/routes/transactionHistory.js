@@ -114,7 +114,7 @@ router.post("/create", async (req, res) => {
                     
                     const info = transporter.sendMail({
                         from: {
-                           name: "Neon World",
+                           name: "CallmiNeon",
                            address:  process.env.EMAIL_USER
                         }, // sender address
                         to: user.email, // list of receivers
@@ -125,7 +125,7 @@ router.post("/create", async (req, res) => {
                     
                     transporter.sendMail({
                         from: {
-                        name: "Neon World",
+                        name: "CallmiNeon",
                         address:  process.env.EMAIL_USER
                         }, // sender address
                         to: process.env.EMAIL_USER, // list of receivers
@@ -156,7 +156,7 @@ router.post("/create", async (req, res) => {
 
                     const info = transporter.sendMail({
                         from: {
-                           name: "Neon World",
+                           name: "CallmiNeon",
                            address:  process.env.EMAIL_USER
                         }, // sender address
                         to: user.email, // list of receivers
@@ -166,7 +166,7 @@ router.post("/create", async (req, res) => {
 
                     transporter.sendMail({
                         from: {
-                        name: "Neon World",
+                        name: "CallmiNeon",
                         address:  process.env.EMAIL_USER
                         }, // sender address
                         to: process.env.EMAIL_USER, // list of receivers
@@ -224,7 +224,7 @@ router.put("/status", async (req, res)=> {
 
                 const info = transporter.sendMail({
                     from: {
-                       name: "Neon World",
+                       name: "CallmiNeon",
                        address:  process.env.EMAIL_USER
                     }, // sender address
                     to: user.email, // list of receivers

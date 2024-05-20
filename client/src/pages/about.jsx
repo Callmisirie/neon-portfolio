@@ -14,12 +14,12 @@ function About() {
                         <h3 className="text-3xl 
                         lg:max-w-md font-palanquin 
                         font-bold p-2 text-center">
-                            About NeonWorld
+                            About CallmiNeon
                         </h3>
                         <p className="font-montserrat 
                         text-slate-gray max-w-xs text-start
                         text-xs">
-                            Welcome to NeonWorld, your gateway to a world of vibrant and captivating art! 
+                            Welcome to CallmiNeon, your gateway to a world of vibrant and captivating art! 
                             NeonWorld is more than just a platform; it's a creative journey where art lovers and creators converge to explore, 
                             appreciate, and commission stunning artwork.
                         </p>
@@ -36,7 +36,7 @@ function About() {
                         <p className="font-montserrat 
                         text-slate-gray max-w-xs text-start
                         text-xs">
-                            One of the unique features of NeonWorld is our commissioning service.  
+                            One of the unique features of CallmiNeon is our commissioning service.  
                             Our artists are here to bring your vision to life. Our easy-to-use commissioning process allows you to collaborate directly with artists, 
                             ensuring that the final piece is tailored to your specifications.
                         </p>
@@ -54,7 +54,7 @@ function About() {
                         text-slate-gray max-w-xs text-start
                         text-xs">
                             Whether you're an artist looking to showcase your work or an art enthusiast seeking the perfect piece, 
-                            NeonWorld is here for you. Join our community today and experience the magic of art like never before.
+                            CallmiNeon is here for you. Join our community today and experience the magic of art like never before.
                         </p>
                     </div>
                 </div>

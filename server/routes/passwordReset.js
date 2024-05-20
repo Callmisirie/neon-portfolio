@@ -40,7 +40,7 @@ router.post("/generateOTP", async (req, res)=> {
 
             const info = transporter.sendMail({
                from: {
-                  name: "Neon World",
+                  name: "CallmiNeon",
                   address:  process.env.EMAIL_USER
                }, // sender address
                to: user.email, // list of receivers
@@ -134,7 +134,7 @@ router.post("/changePassword", async (req, res)=> {
 
                const info = transporter.sendMail({
                   from: {
-                     name: "Neon World",
+                     name: "CallmiNeon",
                      address:  process.env.EMAIL_USER
                   }, // sender address
                   to: user.email, // list of receivers
