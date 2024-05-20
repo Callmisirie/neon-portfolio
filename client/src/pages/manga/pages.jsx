@@ -207,31 +207,32 @@ function Pages() {
                                 w-full text-center font-bold">
                                     {chapter.title}
                                 </h3>
-                                {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
-                                    <div className="sm:mx-5"
-                                    key={index}>
-                                        <li className="border-2 border-black" > 
-                                            <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
-                                        </li>
+                                <div className="border-2 border-black sm:mx-5" >
+                                    {toggleView ? ("/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages && chapter.pages.map((page, index)=>(
+                                        <div className=""
+                                        key={index}>
+                                            <li> 
+                                                <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                            </li>
+                                        </div>
+                                        ))
+                                    ) : (
+                                    <div>
+                                        {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
+                                            parseInt(selectedPage, 10) === (index + 1) && (
+                                                <div className="cursor-pointer"
+                                                key={index} onClick={() => {
+                                                    handleNextPageClick(chapter.pages.length, manga.chapters.length)
+                                                }}>
+                                                    <li className="">
+                                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
+                                                    </li>
+                                                </div>
+                                            )
+                                        ))}
                                     </div>
-                                    ))
-                                ) : (
-                                <div className="sm:mx-5">
-                                    {"/manga/" + manga.mangaID + "/" + chapter._id === location.pathname && chapter.pages.map((page, index) => (
-                                        parseInt(selectedPage, 10) === (index + 1) && (
-                                            <div className="cursor-pointer"
-                                            key={index} onClick={() => {
-                                                handleNextPageClick(chapter.pages.length, manga.chapters.length)
-                                            }}>
-                                                <li className="border-2 border-black">
-                                                    <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
-                                                </li>
-                                            </div>
-                                        )
-                                    ))
-                                    }
+                                    )}                                    
                                 </div>
-                                )}
                             </ul>    
                         </>
                     ) : null}        
