@@ -3,6 +3,7 @@ import axios from "axios";
 import { copyrightSign } from "../assets/icons";
 import { footerLogowhite } from "../assets/images";
 import { footerLinks, socialMedia } from "../constants";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const [commissions, setCommissions] = useState([]);
@@ -83,7 +84,7 @@ const Footer = () => {
                         cursor-pointer"
                         key={link.name}
                     >
-                        <a href={link.link}>{link.name}</a>
+                        <Link to={link.link}>{link.name}</Link>
                       </li>
                     ))}
                   </ul>
