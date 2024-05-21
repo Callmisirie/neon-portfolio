@@ -1,5 +1,5 @@
 import express from "express";
-import { ReviewModel } from "../../models/review.js";
+import { ReviewModel } from "../../models/Review.js";
 import UserModel from "../../models/User.js";
 
 const router = express.Router();
