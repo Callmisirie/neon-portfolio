@@ -14,7 +14,7 @@ const TransactionHistory = () => {
         const fetchTransactionHistories = async () =>{
         try {
     
-            const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read", {
+            const transactionHistoryResponse = await axios.get("http://app.callmineon.com/manager/transactionHistory/read", {
                 params: { userID }
             });
     

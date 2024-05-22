@@ -59,7 +59,7 @@ const handleSubmit = async (e) => {
     setIsDisabled(true);
     
     try {
-        const response = await axios.post("http://localhost:4001/newsletter/update", {title, message: feedback});
+        const response = await axios.post("http://app.callmineon.com/newsletter/update", {title, message: feedback});
         const {message, color} = response.data;
         setMessage(message);
         setMessageColor(color);

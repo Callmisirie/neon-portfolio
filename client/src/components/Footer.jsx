@@ -12,7 +12,7 @@ const Footer = () => {
   useEffect(() => {
       const fetchCommission = async () =>{
           try {
-              const response = await axios.get("http://localhost:4001/manager/commission/read") 
+              const response = await axios.get("http://app.callmineon.com/manager/commission/read") 
               setCommissions(response.data)
           } catch (error) {
              console.error(error);

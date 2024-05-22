@@ -28,7 +28,7 @@ const ReviewSection = () => {
     useEffect(() => {
         const fetchReview = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/review/read") 
+                const response = await axios.get("http://app.callmineon.com/manager/review/read") 
                 setReviews(response.data)
             } catch (error) {
                 console.error(error);

@@ -31,10 +31,10 @@ const Commission = () => {
   useEffect(() => {
     const fetchCommission = async () =>{
       try {
-        const commissionResponse = await axios.get("http://localhost:4001/manager/commission/read") 
+        const commissionResponse = await axios.get("http://app.callmineon.com/manager/commission/read") 
         setCommissions(commissionResponse.data)
 
-        const cryptoGiftResponse = await axios.get("http://localhost:4001/manager/gift/read") 
+        const cryptoGiftResponse = await axios.get("http://app.callmineon.com/manager/gift/read") 
         setCryptoGifts(cryptoGiftResponse.data.cryptoGift)
       } catch (error) {
         console.error(error);
@@ -46,7 +46,7 @@ const Commission = () => {
   useEffect(() => {
     const fetchTransactionHistory = async () =>{
       try {
-        const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read", {
+        const transactionHistoryResponse = await axios.get("http://app.callmineon.com/manager/transactionHistory/read", {
           params: { userID }
         });
 
@@ -97,13 +97,13 @@ const Commission = () => {
       }, 5000);
     } else if (userID) {
       try {
-        const cryptoLatestResponse = await axios.get("http://localhost:4001/cryptocurrency/latest", {
+        const cryptoLatestResponse = await axios.get("http://app.callmineon.com/cryptocurrency/latest", {
           params: { cryptoSymbols }
         });
 
         cryptoSymbolDetails = cryptoLatestResponse.data;
 
-        const currencyLatestResponse = await axios.get("http://localhost:4001/currency/latest");
+        const currencyLatestResponse = await axios.get("http://app.callmineon.com/currency/latest");
 
         currencyDetails = currencyLatestResponse.data;
        
@@ -176,7 +176,7 @@ const Commission = () => {
                           <img className="flex
                           flex-col justify-center rounded-xl 
                           my-5 border cursor-pointer"
-                            src={`http://localhost:4001/display/${commission._id}`} 
+                            src={`http://app.callmineon.com/display/${commission._id}`} 
                             alt={`Manga ${commission.artImage}`} 
                             style={{ width: "120px" }}
                             onClick={() => setOpen(true)}

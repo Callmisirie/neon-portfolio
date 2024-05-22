@@ -69,7 +69,7 @@ function ReviewCreate() {
 useEffect(() => {
     const fetchReview = async () =>{
         try {
-            const response = await axios.get("http://localhost:4001/manager/review/read") 
+            const response = await axios.get("http://app.callmineon.com/manager/review/read") 
             setReviews(response.data)
         } catch (error) {
             console.error(error);
@@ -99,7 +99,7 @@ const handleSubmit = async (e) => {
         setIsDisabled(false); 
     } else if (userID) {
         try {
-            const response = await axios.post("http://localhost:4001/manager/review/create", {userID, name, feedback});
+            const response = await axios.post("http://app.callmineon.com/manager/review/create", {userID, name, feedback});
 
             const {message, color} = response.data;
             setMessage(message);
@@ -187,7 +187,7 @@ function ReviewDelete() {
     useEffect(() => {
         const fetchReview = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/review/read") 
+                const response = await axios.get("http://app.callmineon.com/manager/review/read") 
                 setReviews(response.data)
             } catch (error) {
                 console.error(error);
@@ -208,7 +208,7 @@ const handleDeleteReviewClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://localhost:4001/manager/review/delete", { data: {id: selectedReviewID, name: deleteReview} });
+        const response = await axios.delete("http://app.callmineon.com/manager/review/delete", { data: {id: selectedReviewID, name: deleteReview} });
         
         const {message, color} = response.data;
         setMessage(message);
@@ -317,7 +317,7 @@ function ReviewEdit() {
     useEffect(() => {
         const fetchReview = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/review/read") 
+                const response = await axios.get("http://app.callmineon.com/manager/review/read") 
                 setReviews(response.data)
             } catch (error) {
                 console.error(error);
@@ -341,7 +341,7 @@ function ReviewEdit() {
         setIsDisabled(true);
 
         try {
-            const response = await axios.put("http://localhost:4001/manager/review/edit", {
+            const response = await axios.put("http://app.callmineon.com/manager/review/edit", {
                 id: reviewID,
                 name: newName,
                 feedback: newFeedback

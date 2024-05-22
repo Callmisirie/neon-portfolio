@@ -10,7 +10,7 @@ function Manga() {
     useEffect(() => {
         const fetchCoverImage = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manga") 
+                const response = await axios.get("http://app.callmineon.com/manga") 
                 setMangas(response.data)
             } catch (error) {
                console.error(error);
@@ -56,7 +56,7 @@ function Manga() {
                               {manga.name}
                             </h3>
                             <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
-                              src={`http://localhost:4001/display/${manga._id}`} 
+                              src={`http://app.callmineon.com/display/${manga._id}`} 
                               alt={`Manga ${manga.coverImage}`} 
                               style={{ width: "160px" }}
                               />

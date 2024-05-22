@@ -25,7 +25,7 @@ function Home() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4001/newsletter", {email});
+            const response = await axios.post("http://app.callmineon.com/newsletter", {email});
             console.log(response);
             setEmail("");
         } catch (error) {

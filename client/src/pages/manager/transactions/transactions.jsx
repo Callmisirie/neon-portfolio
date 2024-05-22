@@ -73,7 +73,7 @@ function TransactionsStatus() {
   useEffect(() => {
     const fetchTransactionHistories = async () =>{
         try {
-            const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
+            const transactionHistoryResponse = await axios.get("http://app.callmineon.com/manager/transactionHistory/read");
             const {transactionHistory, users} = transactionHistoryResponse.data;
 
             setTransactionHistories(transactionHistory)
@@ -131,7 +131,7 @@ function TransactionsStatus() {
         }
 
         try {
-            const response = await axios.put("http://localhost:4001/manager/transactionHistory/status", {
+            const response = await axios.put("http://app.callmineon.com/manager/transactionHistory/status", {
                 userID : clickedUserId,
                 transactionHistoryID: transactionHistoryID,
                 transactionDetailID: clickedTransactionHistoryID,
@@ -320,7 +320,7 @@ function TransactionsDelete() {
     useEffect(() => {
         const fetchTransactionHistories = async () =>{
             try {
-                const transactionHistoryResponse = await axios.get("http://localhost:4001/manager/transactionHistory/read");
+                const transactionHistoryResponse = await axios.get("http://app.callmineon.com/manager/transactionHistory/read");
                 const {transactionHistory, users} = transactionHistoryResponse.data;
 
                 setTransactionHistories(transactionHistory)
@@ -356,7 +356,7 @@ function TransactionsDelete() {
   
 
         try {
-            const response = await axios.delete("http://localhost:4001/manager/transactionHistory/delete", {data: {
+            const response = await axios.delete("http://app.callmineon.com/manager/transactionHistory/delete", {data: {
                 userID : clickedUserId,
                 transactionHistoryID: transactionHistoryID,
                 transactionDetailID: clickedTransactionHistoryID,

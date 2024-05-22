@@ -109,7 +109,7 @@ export function Register() {
         });
 
         try {
-            const response = await axios.post("http://localhost:4001/auth/admin/register", registerInfo);
+            const response = await axios.post("http://app.callmineon.com/auth/admin/register", registerInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
@@ -218,7 +218,7 @@ export function Login() {
         });
 
         try {
-            const response = await axios.post("http://localhost:4001/auth/admin/login", loginInfo);
+            const response = await axios.post("http://app.callmineon.com/auth/admin/login", loginInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);

@@ -153,7 +153,7 @@ function MangaCreate() {
 useEffect(() => {
     const fetchCoverImage = async () =>{
         try {
-            const response = await axios.get("http://localhost:4001/manga") 
+            const response = await axios.get("http://app.callmineon.com/manga") 
             setMangas(response.data)
         } catch (error) {
             console.error(error);
@@ -189,7 +189,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.post("http://localhost:4001/manager/manga/create/manga", formData, {
+        const response = await axios.post("http://app.callmineon.com/manager/manga/create/manga", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -241,7 +241,7 @@ const handleChapterSubmit = async (e) => {
     });
 
     try {
-        const response = await axios.post("http://localhost:4001/manager/manga/create/manga/chapter", formData, {headers: {
+        const response = await axios.post("http://app.callmineon.com/manager/manga/create/manga/chapter", formData, {headers: {
             "Content-Type": "multipart/form-data"
         }});
 
@@ -455,9 +455,9 @@ function MangaDelete() {
 useEffect(()=> {
     const fetchManga = async () => {
         try {
-            const MangaResponse = await axios.get("http://localhost:4001/manga");
+            const MangaResponse = await axios.get("http://app.callmineon.com/manga");
             setMangas(MangaResponse.data);
-            const mangaContentsResponse = await axios.get("http://localhost:4001/chapterContent");
+            const mangaContentsResponse = await axios.get("http://app.callmineon.com/chapterContent");
             setMangaContents(mangaContentsResponse.data);
         } catch (error) {
             console.error(error);
@@ -483,7 +483,7 @@ const handleDeleteMangaClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://localhost:4001/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
+        const response = await axios.delete("http://app.callmineon.com/manager/manga/delete/manga", { data: {id: selectedMangaID, name: deleteMangaName} });
         const {message, color} = response.data;
         setDeleteMangaName("");
         setSelectedMangaName("");
@@ -516,7 +516,7 @@ const handleDeleteChapterClick = async () => {
     setActionChapterMessage("Processing...");
 
     try {
-        const response = await axios.delete("http://localhost:4001/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
+        const response = await axios.delete("http://app.callmineon.com/manager/manga/delete/manga/chapter",{data: {mangaID: selectedMangaID, chapterID: selectedChapterID, title: deleteChapterTitle}});
         const {message, color} = response.data;
         setDeleteChapterTitle("");
         setSelectedChapterTitle("");
@@ -722,9 +722,9 @@ function MangaEdit() {
     useEffect(()=> {
         const fetchManga = async () => {
             try {
-                const MangaResponse = await axios.get("http://localhost:4001/manga");
+                const MangaResponse = await axios.get("http://app.callmineon.com/manga");
                 setMangas(MangaResponse.data);
-                const mangaContentsResponse = await axios.get("http://localhost:4001/chapterContent");
+                const mangaContentsResponse = await axios.get("http://app.callmineon.com/chapterContent");
                 setMangaContents(mangaContentsResponse.data);
             } catch (error) {
                 console.error(error);
@@ -784,7 +784,7 @@ function MangaEdit() {
         formData.append("coverImage", coverImage);
 
         try {
-            const response = await axios.put("http://localhost:4001/manager/manga/edit/manga", formData, {
+            const response = await axios.put("http://app.callmineon.com/manager/manga/edit/manga", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -843,7 +843,7 @@ function MangaEdit() {
 
 
         try {
-            const response = await axios.put("http://localhost:4001/manager/manga/edit/manga/chapter", formData, {
+            const response = await axios.put("http://app.callmineon.com/manager/manga/edit/manga/chapter", formData, {
                 headers: {
                 "Content-Type": "multipart/form-data"
                 }

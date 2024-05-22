@@ -30,7 +30,7 @@ function GenerateOTP() {
 
     const handleGenerateOTP = async () => {
         try {
-            const response = await axios.post("http://localhost:4001/passwordReset/generateOTP", generateOTPInfo);
+            const response = await axios.post("http://app.callmineon.com/passwordReset/generateOTP", generateOTPInfo);
             const {message, color} = response.data;
             setMessage(message);
             setMessageColor(color);
@@ -51,7 +51,7 @@ function GenerateOTP() {
 
         if (generateOTPInfo.id && generateOTPInfo.code){
             try {
-                const response = await axios.post("http://localhost:4001/passwordReset/comfirmOTP", generateOTPInfo);
+                const response = await axios.post("http://app.callmineon.com/passwordReset/comfirmOTP", generateOTPInfo);
                 const {message, color, isMatch} = response.data;
                 setMessage(message);
                 setMessageColor(color);

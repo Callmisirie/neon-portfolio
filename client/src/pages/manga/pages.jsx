@@ -23,7 +23,7 @@ function Pages() {
     useEffect(()=>{
         const fetchPages = async () =>{
             try {
-                const response = await axios.get(`http://localhost:4001${location.pathname}`);
+                const response = await axios.get(`http://app.callmineon.com${location.pathname}`);
                 const {chapter, manga} = response.data; 
                 setChapter(chapter);
                 setManga(manga);
@@ -212,7 +212,7 @@ function Pages() {
                                         <div className=""
                                         key={index}>
                                             <li> 
-                                                <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
+                                                <img src={`http://app.callmineon.com/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }}/>
                                             </li>
                                         </div>
                                         ))
@@ -225,7 +225,7 @@ function Pages() {
                                                     handleNextPageClick(chapter.pages.length, manga.chapters.length)
                                                 }}>
                                                     <li className="">
-                                                        <img src={`http://localhost:4001/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
+                                                        <img src={`http://app.callmineon.com/display/${page._id}`} alt={`Manga ${page.name}`} style={{ width: "666px" }} />
                                                     </li>
                                                 </div>
                                             )

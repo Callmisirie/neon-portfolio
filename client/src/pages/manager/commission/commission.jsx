@@ -84,7 +84,7 @@ function CommissionCreate() {
 useEffect(() => {
     const fetchCommission = async () =>{
         try {
-            const response = await axios.get("http://localhost:4001/manager/commission/read") 
+            const response = await axios.get("http://app.callmineon.com/manager/commission/read") 
             setCommissions(response.data)
         } catch (error) {
             console.error(error);
@@ -116,7 +116,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.post("http://localhost:4001/manager/commission/create", formData, {
+        const response = await axios.post("http://app.callmineon.com/manager/commission/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -243,7 +243,7 @@ function CommissionDelete() {
     useEffect(() => {
         const fetchCommission = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/commission/read") 
+                const response = await axios.get("http://app.callmineon.com/manager/commission/read") 
                 setCommissions(response.data)
             } catch (error) {
                 console.error(error);
@@ -264,7 +264,7 @@ const handleDeleteCommissionClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://localhost:4001/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
+        const response = await axios.delete("http://app.callmineon.com/manager/commission/delete", { data: {id: selectedCommissionID, artStyle: deleteCommission} });
         
         const {message, color} = response.data;
         setMessage(message);
@@ -380,7 +380,7 @@ function CommissionEdit() {
     useEffect(() => {
         const fetchCommission = async () =>{
             try {
-                const response = await axios.get("http://localhost:4001/manager/commission/read") 
+                const response = await axios.get("http://app.callmineon.com/manager/commission/read") 
                 setCommissions(response.data)
             } catch (error) {
                 console.error(error);
@@ -421,7 +421,7 @@ function CommissionEdit() {
         formData.append("discountInterval", newDiscountInterval);
 
         try {
-            const response = await axios.put("http://localhost:4001/manager/commission/edit", formData, {
+            const response = await axios.put("http://app.callmineon.com/manager/commission/edit", formData, {
                 headers: {
                 "Content-Type": "multipart/form-data"
                 }
