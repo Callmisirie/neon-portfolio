@@ -78,7 +78,7 @@ router.post("/generateOTP", async (req, res)=> {
    }
 });
 
-router.post("/comfirmOTP", async (req, res)=> {
+router.post("/confirmOTP", async (req, res)=> {
    const {id, code} = req.body;
    const OTP = code;
 

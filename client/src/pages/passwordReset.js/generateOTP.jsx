@@ -12,7 +12,7 @@ function GenerateOTP() {
     const [isDisabled, setIsDisabled] = useState(false);
     const [message, setMessage] = useState("");
     const [messageColor, setMessageColor] = useState("");
-    const [actionMessage, setActionMessage] = useState("Comfirm Code");
+    const [actionMessage, setActionMessage] = useState("confirm Code");
 
     const navigate = useNavigate();
 
@@ -51,11 +51,11 @@ function GenerateOTP() {
 
         if (generateOTPInfo.id && generateOTPInfo.code){
             try {
-                const response = await axios.post("https://app.callmineon.com/passwordReset/comfirmOTP", generateOTPInfo);
+                const response = await axios.post("https://app.callmineon.com/passwordReset/confirmOTP", generateOTPInfo);
                 const {message, color, isMatch} = response.data;
                 setMessage(message);
                 setMessageColor(color);
-                setActionMessage("Comfirm Code");
+                setActionMessage("confirm Code");
                 setIsDisabled(false);
                 if(isMatch) {
                     navigate("/passwordReset/changePassword")
@@ -63,16 +63,16 @@ function GenerateOTP() {
                 window.localStorage.removeItem("generateOTPInfo")
                 window.localStorage.setItem("generateOTPInfo",  JSON.stringify(generateOTPInfo));
             } catch (error) {
-                setMessage("Error comfirming code");
+                setMessage("Error Confirming code");
                 setMessageColor("red");
-                setActionMessage("Comfirm Code");
+                setActionMessage("confirm Code");
                 setIsDisabled(false);
                 console.error(error)
             }            
         } else {
-            setMessage("Error comfirming code, missing field");
+            setMessage("Error Confirming code, missing field");
             setMessageColor("red");
-            setActionMessage("Comfirm Code");
+            setActionMessage("confirm Code");
             setIsDisabled(false);
         }
         

@@ -41,18 +41,17 @@ function Manga() {
                     <ul className="">
                       {mangas.map(manga => (
                         <li  className="flex flex-col justify-center items-center rounded-lg 
-                        bg-white mx-10 mb-10 shadow-xl
+                        bg-white mx-10 mb-10 shadow-xl cursor-pointer
                         ring-slate-900/5"
-                          key={manga._id}>
+                          key={manga._id}
+                          onClick={()=>{
+                            handleClick(manga._id)
+                          }}>
                           <div  className="flex flex-col justify-center items-center my-10 p-5">
                             <h3 className="font-montserrat 
                             text-slate-gray font-semibold 
                             hover:text-black text-md leading-8 my-2 
-                            cursor-pointer max-w-xs text-center hover:font-bold"
-                              onClick={()=>{
-                                handleClick(manga._id)
-                              }}
-                            >
+                            cursor-pointer max-w-xs text-center hover:font-bold">
                               {manga.name}
                             </h3>
                             <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
