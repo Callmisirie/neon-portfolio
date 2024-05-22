@@ -14,7 +14,7 @@ function Chapters() {
     useEffect(()=>{
         const fetchChapters = async () =>{
             try {
-                const response = await axios.get(`http://app.callmineon.com${location.pathname}`);
+                const response = await axios.get(`https://app.callmineon.com${location.pathname}`);
                 const {mangaContent, manga} = response.data;
                 setMangaContent(mangaContent)
                 setManga(manga)
@@ -59,7 +59,7 @@ function Chapters() {
                             <div className="flex flex-col justify-center items-center p-5">
                                
                                 <img className="flex flex-col justify-center rounded-xl mt-5 mb-10 mx-20 shadow-xl"
-                                src={`http://app.callmineon.com/display/${manga._id}`} 
+                                src={`https://app.callmineon.com/display/${manga._id}`} 
                                 alt={`Manga ${manga.coverImage}`} style={{ width: "120px" }}/>
                                 <h3 className="font-montserrat 
                                 text-black text-md w-full text-center

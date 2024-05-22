@@ -14,7 +14,7 @@ function CommissionImagePopup({open, onClose, commission}) {
             <img className={`flex 
             flex-col justify-center rounded-xl 
             m-2`}
-            src={`http://app.callmineon.com/display/${commission._id}`} 
+            src={`https://app.callmineon.com/display/${commission._id}`} 
             alt={`Manga ${commission.artImage}`} 
             style={{ width: "330px" }} 
             />

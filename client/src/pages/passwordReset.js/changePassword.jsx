@@ -44,7 +44,7 @@ const ChangePassword = () => {
 
         if (changePasswordInfo.newPassword === changePasswordInfo.confirmPassword){
             try {
-                const response = await axios.post("http://app.callmineon.com/passwordReset/changePassword", {...generateOTPInfo, ...changePasswordInfo});
+                const response = await axios.post("https://app.callmineon.com/passwordReset/changePassword", {...generateOTPInfo, ...changePasswordInfo});
                 const {message, color, isMatch} = response.data;
                 setMessage(message);
                 setMessageColor(color);

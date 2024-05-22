@@ -34,7 +34,7 @@ function Payment() {
     useEffect(() => {
         const fetchGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {paypalGift, cryptoGift} = response.data;
     
                 setPaypalGifts(paypalGift);
@@ -63,7 +63,7 @@ function Payment() {
                 if (minutes === 0) {
                     setMinutes(10)
                     try {
-                        const transactionHistoryResponse = await axios.get("http://app.callmineon.com/cryptocurrency/latest", {
+                        const transactionHistoryResponse = await axios.get("https://app.callmineon.com/cryptocurrency/latest", {
                             params: { cryptoSymbols }
                         });
                         const cryptoSymbolDetails = transactionHistoryResponse.data;  
@@ -169,7 +169,7 @@ function Payment() {
             userID
         }
         try {
-            const response = await axios.post("http://app.callmineon.com/manager/transactionHistory/create", transactionInfo)
+            const response = await axios.post("https://app.callmineon.com/manager/transactionHistory/create", transactionInfo)
             const {message, color, orderResponse, isTrue} = response.data; 
             console.log(orderResponse);
             setMessage(message);
@@ -488,7 +488,7 @@ const PaypalGift = () => {
     useEffect(() => {
         const fetchPaypalGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {paypalGift} = response.data;
                 setPaypalGifts(paypalGift)
             } catch (error) {
@@ -560,7 +560,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
     useEffect(() => {
         const fetchCryptoGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
             const {cryptoGift} = response.data;
                 setCryptoGifts(cryptoGift)
             } catch (error) {
@@ -652,7 +652,7 @@ const CryptoGift = ({ setResetMessage, cryptoName, setCryptoName, cryptoSymbolDe
                                     </p>
                                     <img className="flex flex-col 
                                     justify-center rounded-xl my-5 shadow-xl"
-                                    src={`http://app.callmineon.com/display/${cryptoGift._id}`} 
+                                    src={`https://app.callmineon.com/display/${cryptoGift._id}`} 
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                     style={{ width: "220px" }}
                                     />

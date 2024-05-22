@@ -13,7 +13,7 @@ function Gift() {
     useEffect(() => {
         const fetchGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {paypalGift, cryptoGift} = response.data;
             
                 setPaypalGifts(paypalGift)
@@ -133,7 +133,7 @@ const PaypalGift = () => {
     useEffect(() => {
         const fetchPaypalGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {paypalGift} = response.data;
                 setPaypalGifts(paypalGift)
             } catch (error) {
@@ -206,7 +206,7 @@ const CryptoGift = () => {
     useEffect(() => {
         const fetchCryptoGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
             const {cryptoGift} = response.data;
                 setCryptoGifts(cryptoGift)
             } catch (error) {
@@ -289,7 +289,7 @@ const CryptoGift = () => {
                                     </p>
                                     <img className="flex flex-col 
                                     justify-center rounded-xl my-5 shadow-xl"
-                                    src={`http://app.callmineon.com/display/${cryptoGift._id}`} 
+                                    src={`https://app.callmineon.com/display/${cryptoGift._id}`} 
                                     alt={`Manga ${cryptoGift.qrCodeImage}`} 
                                     style={{ width: "220px" }}
                                     />

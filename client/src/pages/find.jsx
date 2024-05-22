@@ -10,7 +10,7 @@ function Find() {
     useEffect(()=> {
         const fetchManga = async ()=> {
             try {
-                const response = await axios.get(`http://app.callmineon.com${location.pathname}`);
+                const response = await axios.get(`https://app.callmineon.com${location.pathname}`);
                 setFoundMangas(response.data)
             } catch (error) {
                 console.error(error);
@@ -47,7 +47,7 @@ function Find() {
                                 {manga.name}
                             </h3>
                             <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
-                            src={`http://app.callmineon.com/display/${manga._id}`} 
+                            src={`https://app.callmineon.com/display/${manga._id}`} 
                             alt={`Manga ${manga.coverImage}`} 
                             style={{ width: "160px" }}/>
                         </div>

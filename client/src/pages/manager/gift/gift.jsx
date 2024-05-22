@@ -153,7 +153,7 @@ function PaypalGiftCreate() {
 useEffect(() => {
     const fetchPaypalGift = async () =>{
         try {
-            const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+            const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
             const {paypalGift} = response.data
             setPaypalGifts(paypalGift)
         } catch (error) {
@@ -179,7 +179,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.post("http://app.callmineon.com/manager/gift/create", formData, {
+        const response = await axios.post("https://app.callmineon.com/manager/gift/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -266,7 +266,7 @@ function CryptoGiftCreate() {
 useEffect(() => {
     const fetchCrptoGift = async () =>{
         try {
-            const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+            const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
             const {cryptoGift} = response.data
             setCryptoGifts(cryptoGift)
         } catch (error) {
@@ -298,7 +298,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.post("http://app.callmineon.com/manager/gift/create", formData, {
+        const response = await axios.post("https://app.callmineon.com/manager/gift/create", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -480,7 +480,7 @@ function PaypalGiftDelete() {
     useEffect(() => {
         const fetchPaypalGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {paypalGift} = response.data
                 setPaypalGifts(paypalGift)
             } catch (error) {
@@ -501,7 +501,7 @@ const handleDeletePaypalGiftClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://app.callmineon.com/manager/gift/delete", { data: {paypalGiftId: selectedPaypalGiftID, paypalAddress: deletePaypalGift} });
+        const response = await axios.delete("https://app.callmineon.com/manager/gift/delete", { data: {paypalGiftId: selectedPaypalGiftID, paypalAddress: deletePaypalGift} });
         const {message, color} = response.data;
         
 
@@ -603,7 +603,7 @@ function CryptoGiftDelete() {
     useEffect(() => {
         const fetchCryptoGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {cryptoGift} = response.data
                 setCryptoGifts(cryptoGift)
             } catch (error) {
@@ -624,7 +624,7 @@ const handleDeleteCryptoGiftClick = async () => {
     setIsDisabled(true);
 
     try {
-        const response = await axios.delete("http://app.callmineon.com/manager/gift/delete", { data: {cryptoGiftId: selectedCryptoGiftID, cryptoName: deleteCryptoGift} });
+        const response = await axios.delete("https://app.callmineon.com/manager/gift/delete", { data: {cryptoGiftId: selectedCryptoGiftID, cryptoName: deleteCryptoGift} });
         const {message, color} = response.data;
         
         setMessage(message);
@@ -802,7 +802,7 @@ function PaypalGiftEdit() {
 useEffect(() => {
     const fetchPaypalGift = async () =>{
         try {
-            const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+            const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
             const {paypalGift} = response.data
             setPaypalGifts(paypalGift)
         } catch (error) {
@@ -829,7 +829,7 @@ const handleSubmit = async (e) => {
 
 
     try {
-        const response = await axios.put("http://app.callmineon.com/manager/gift/edit", formData, {
+        const response = await axios.put("https://app.callmineon.com/manager/gift/edit", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -961,7 +961,7 @@ function CryptoGiftEdit() {
     useEffect(() => {
         const fetchCryptoGift = async () =>{
             try {
-                const response = await axios.get("http://app.callmineon.com/manager/gift/read") 
+                const response = await axios.get("https://app.callmineon.com/manager/gift/read") 
                 const {cryptoGift} = response.data;
                 setCryptoGifts(cryptoGift)
             } catch (error) {
@@ -1000,7 +1000,7 @@ function CryptoGiftEdit() {
         formData.append("isClickedCrypto", isClickedCrypto);
 
         try {
-            const response = await axios.put("http://app.callmineon.com/manager/gift/edit", formData, {
+            const response = await axios.put("https://app.callmineon.com/manager/gift/edit", formData, {
                 headers: {
                 "Content-Type": "multipart/form-data"
                 }
