@@ -15,18 +15,18 @@ const saltRounds = 10;
 const secret = process.env.SECRET_KEY;
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // Use false for TLS
+    host: "smtp.hostinger.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER, // your Hostinger email address
+        pass: process.env.EMAIL_PASS  // your Hostinger email password
     },
     tls: {
-        rejectUnauthorized: false // Add this line to disable certificate validation
+        rejectUnauthorized: false // Allow self-signed certificates
     }
 });
+
 
 router.post("/register", async (req, res)=> {
     const {firstName, lastName, email, password} = req.body;
