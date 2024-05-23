@@ -210,7 +210,7 @@ return (
                                             Transaction ID: <span className="text-xs">{transactionDetail._id}</span> 
                                         </p>
                                         <ul className="flex flex-col 
-                                        mb-5 rounded-lg bg-white
+                                        mb-5 rounded-lg bg-white px-3
                                          shadow-xl ring-slate-900/5">
                                         {clickedTransactionHistoryID === transactionDetail._id && 
                                             <>

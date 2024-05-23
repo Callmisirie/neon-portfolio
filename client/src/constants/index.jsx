@@ -18,7 +18,7 @@ export const footerLinks = [
     {
         title: "Get in touch",
         links: [
-            { name: "callmineon@gmail.com", link: "mailto:callmineon@gmail.com" },
+            { name: "info@callmineon.com", link: "mailto:info@callmineon.com" },
         ],
     },
 ];

@@ -80,7 +80,7 @@ const TransactionHistory = () => {
                                     </div>
                                 </div>       
                                 <ul className="flex flex-col 
-                                mb-5 rounded-lg bg-white
+                                mb-5 rounded-lg bg-white px-3
                                 shadow-xl ring-slate-900/5">
                                     {clickedTransactionHistoryId === transactionDetail._id && 
                                     <li key={transactionDetail._id}>

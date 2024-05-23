@@ -38,7 +38,7 @@ function Contact() {
                         width={24}
                         height={24} />
                         <button >
-                            callmineon@gmail.com                         
+                            info@callmineon.com                         
                         </button>
                     </a>    
                     </div>

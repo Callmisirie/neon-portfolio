@@ -37,13 +37,13 @@ function Find() {
                         <div className="flex flex-col justify-center items-center rounded-lg 
                         bg-white p-6 shadow-xl mb-10
                         ring-slate-900/5"
-                        key={manga._id}>
+                        key={manga._id}
+                        onClick={()=> {
+                            handleClick(manga._id)
+                        }}>
                             <h3 className="font-montserrat 
                             text-slate-gray hover:text-black text-md max-w-xs
-                            leading-8 my-2 cursor-pointer w-full text-center hover:font-semibold"
-                            onClick={()=> {
-                            handleClick(manga._id)
-                            }}>
+                            leading-8 my-2 cursor-pointer w-full text-center hover:font-semibold">
                                 {manga.name}
                             </h3>
                             <img className="flex flex-col justify-center rounded-xl m-5 shadow-xl"
